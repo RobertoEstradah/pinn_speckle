@@ -1,4 +1,4 @@
-# 🔬 Simulación Acelerada de Speckle Óptico mediante PINNs
+# 🔬 Simulación acelerada de speckle óptico mediante PINNs
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.4+-ee4c2c?logo=pytorch)](https://pytorch.org/)
