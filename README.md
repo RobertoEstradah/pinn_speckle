@@ -166,7 +166,7 @@ Este proyecto está bajo la licencia MIT. Ver [LICENSE](LICENSE) para más detal
 
 ## ✉️ Contacto
 
-**Roberto Hernández Estrada**  
+**Roberto Hernández Estrada**  || robertohernandezestrd@gmail.com
 Universidad Juárez Autónoma de Tabasco  
 Maestría en Ciencias de la Computación  
 
