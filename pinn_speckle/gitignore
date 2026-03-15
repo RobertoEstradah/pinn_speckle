@@ -1,0 +1,63 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+
+# ── Entornos virtuales ────────────────────────────────────────────────────────
+.env
+.venv
+env/
+venv/
+ENV/
+
+# ── Jupyter Notebook ──────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+*.ipynb_checkpoints
+
+# ── PyTorch — modelos entrenados ──────────────────────────────────────────────
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# ── Resultados grandes (usar Git LFS si es necesario) ────────────────────────
+results/figures/*.png
+results/figures/*.pdf
+results/metrics/*.csv
+
+# ── MacOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Windows ───────────────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── VS Code ───────────────────────────────────────────────────────────────────
+.vscode/
+*.code-workspace
+
+# ── Datos sensibles ───────────────────────────────────────────────────────────
+*.key
+*.secret
+.env.local
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Temporales ────────────────────────────────────────────────────────────────
+*.tmp
+*.bak
+*.swp
+tmp/
+temp/

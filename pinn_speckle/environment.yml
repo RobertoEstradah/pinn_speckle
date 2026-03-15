@@ -1,0 +1,42 @@
+name: pinn_speckle
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+  - pip
+
+  # ── PyTorch con CUDA 12.6 ─────────────────────────────────────────────────
+  - pytorch=2.4
+  - torchvision
+  - pytorch-cuda=12.6
+
+  # ── Ciencia y matemáticas ─────────────────────────────────────────────────
+  - numpy
+  - scipy
+  - matplotlib
+  - scikit-learn
+
+  # ── Jupyter ───────────────────────────────────────────────────────────────
+  - jupyter
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+
+  # ── Utilidades ────────────────────────────────────────────────────────────
+  - tqdm
+  - pyyaml
+
+  - pip:
+    # ── PINNs ─────────────────────────────────────────────────────────────
+    - deepxde
+
+    # ── FEM benchmark ─────────────────────────────────────────────────────
+    - fenics-dolfinx
+
+    # ── Análisis y reporte ────────────────────────────────────────────────
+    - pandas
+    - seaborn
