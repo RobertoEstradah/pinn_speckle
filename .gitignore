@@ -84,8 +84,6 @@ quality_reports/
 explorations/
 master_supporting_docs/
 
-# ── Resultados figuras versiones antiguas ─────────────────────────────────────
-results/figures/v1_exploracion_cpu/
 
 # ── Logs de experimentos ──────────────────────────────────────────────────────
 results/*.txt
