@@ -11,32 +11,32 @@ dependencies:
 
   # ── PyTorch con CUDA 12.6 ─────────────────────────────────────────────────
   - pytorch=2.4
-  - torchvision
+  - torchvision=0.19
   - pytorch-cuda=12.6
 
   # ── Ciencia y matemáticas ─────────────────────────────────────────────────
-  - numpy
-  - scipy
-  - matplotlib
-  - scikit-learn
+  - numpy>=1.26
+  - scipy>=1.13
+  - matplotlib>=3.9
+  - scikit-learn>=1.5
+
+  # ── Análisis y visualización ──────────────────────────────────────────────
+  - pandas>=2.2
+  - seaborn>=0.13
 
   # ── Jupyter ───────────────────────────────────────────────────────────────
   - jupyter
-  - jupyterlab
+  - jupyterlab>=4.2
   - ipykernel
   - ipywidgets
 
   # ── Utilidades ────────────────────────────────────────────────────────────
-  - tqdm
-  - pyyaml
+  - tqdm>=4.66
+  - pyyaml>=6.0
 
-  - pip:
-    # ── PINNs ─────────────────────────────────────────────────────────────
-    - deepxde
-
-    # ── FEM benchmark ─────────────────────────────────────────────────────
-    - fenics-dolfinx
-
-    # ── Análisis y reporte ────────────────────────────────────────────────
-    - pandas
-    - seaborn
+  # ── FEM benchmark (NB04) ──────────────────────────────────────────────────
+  # FEniCSx no está disponible en Windows vía pip ni conda-forge nativo.
+  # Opciones recomendadas:
+  #   A) WSL2 (Ubuntu):  conda install -c conda-forge fenics-dolfinx
+  #   B) Docker:         docker pull dolfinx/dolfinx:stable
+  # El notebook NB04 asume entorno Linux/Docker con FEniCSx instalado.

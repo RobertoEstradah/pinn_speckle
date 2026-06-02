@@ -43,7 +43,7 @@ def helmholtz_residual_1d(model, x_dominio, k):
         create_graph=True
     )[0]
 
-    residual = E_xx + k**2 * E
+    residual = E_xx + float(k)**2 * E
     return residual, E
 
 
@@ -89,8 +89,9 @@ def helmholtz_residual_2d(model, xy_colloc, k):
                                    create_graph=True)[0][:, 1:2]
         return f_xx + f_yy
 
-    res_real = laplacian(E_real) + k**2 * E_real
-    res_imag = laplacian(E_imag) + k**2 * E_imag
+    k_sq = float(k) ** 2
+    res_real = laplacian(E_real) + k_sq * E_real
+    res_imag = laplacian(E_imag) + k_sq * E_imag
 
     return res_real, res_imag, E_real, E_imag
 

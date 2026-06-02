@@ -1,0 +1,144 @@
+% ============================================================
+% Sección 2: Marco Teórico
+% ============================================================
+
+\section{Marco Teórico}
+\label{sec:teoria}
+
+\subsection{Ecuación de Helmholtz para el campo óptico}
+\label{subsec:helmholtz}
+
+La propagación de luz coherente en un medio homogéneo e isótropo está gobernada
+por la ecuación de Helmholtz escalar:
+%
+\begin{equation}
+  \nabla^2 E(\mathbf{r}) + k^2 E(\mathbf{r}) = 0,
+  \label{eq:helmholtz}
+\end{equation}
+%
+donde $E(\mathbf{r}) \in \mathbb{C}$ es la amplitud compleja del campo eléctrico,
+$k = 2\pi/\lambda$ es el número de onda y $\lambda$ la longitud de onda del láser.
+En dos dimensiones espaciales, con $\mathbf{r} = (x, y)$, la ecuación toma la forma:
+%
+\begin{equation}
+  \frac{\partial^2 E}{\partial x^2} + \frac{\partial^2 E}{\partial y^2} + k^2 E = 0.
+  \label{eq:helmholtz2d}
+\end{equation}
+
+Como las redes neuronales operan sobre números reales, el campo complejo se descompone
+en sus partes real e imaginaria: $E = E_{\mathrm{real}} + i\,E_{\mathrm{imag}}$.
+Ambas componentes satisfacen la \cref{eq:helmholtz2d} de forma independiente:
+%
+\begin{equation}
+  \nabla^2 E_{\mathrm{real}} + k^2 E_{\mathrm{real}} = 0, \qquad
+  \nabla^2 E_{\mathrm{imag}} + k^2 E_{\mathrm{imag}} = 0.
+  \label{eq:helmholtz_split}
+\end{equation}
+%
+La intensidad del speckle, observable físicamente, se calcula como:
+%
+\begin{equation}
+  I(x,y) = |E|^2 = E_{\mathrm{real}}^2 + E_{\mathrm{imag}}^2.
+  \label{eq:intensidad}
+\end{equation}
+
+\subsection{Redes Neuronales Informadas por Física (PINNs)}
+\label{subsec:pinns}
+
+Las PINNs, introducidas por \citet{Raissi2019_PINNs} y revisadas extensamente en
+\citet{Karniadakis2021_review} y \citet{Cuomo2022_review}, aproximan la solución de una
+EDP mediante una red neuronal $\mathcal{N}_\theta(\mathbf{r})$ cuyos parámetros $\theta$
+se optimizan minimizando una función de pérdida compuesta:
+%
+\begin{equation}
+  \mathcal{L}(\theta) = \mathcal{L}_{\mathrm{datos}}(\theta)
+                      + \lambda\,\mathcal{L}_{\mathrm{física}}(\theta),
+  \label{eq:loss_total}
+\end{equation}
+%
+donde $\mathcal{L}_{\mathrm{datos}}$ penaliza el error en las condiciones de frontera y
+$\mathcal{L}_{\mathrm{física}}$ penaliza la violación de la EDP en el interior del dominio.
+Para la ecuación de Helmholtz 2D con campo complejo:
+%
+\begin{align}
+  \mathcal{L}_{\mathrm{datos}}(\theta) &=
+    \frac{1}{N_b}\sum_{j=1}^{N_b}
+    \left\|\mathcal{N}_\theta(\mathbf{r}_j^b) - E(\mathbf{r}_j^b)\right\|^2,
+  \label{eq:loss_datos} \\
+  \mathcal{L}_{\mathrm{física}}(\theta) &=
+    \frac{1}{N_c}\sum_{i=1}^{N_c}
+    \left[R_{\mathrm{real}}(\mathbf{r}_i^c)^2 + R_{\mathrm{imag}}(\mathbf{r}_i^c)^2\right],
+  \label{eq:loss_fisica}
+\end{align}
+%
+donde $R_{\mathrm{real}} = \nabla^2 E_{\mathrm{real}} + k^2 E_{\mathrm{real}}$ y
+$R_{\mathrm{imag}} = \nabla^2 E_{\mathrm{imag}} + k^2 E_{\mathrm{imag}}$ son los
+residuos de Helmholtz, $\{\mathbf{r}_j^b\}_{j=1}^{N_b}$ son los puntos de frontera
+y $\{\mathbf{r}_i^c\}_{i=1}^{N_c}$ son los puntos de colocación interiores.
+Las derivadas $\nabla^2 E$ se obtienen mediante diferenciación automática \citep{Baydin2018_autodiff}.
+
+\subsection{Redes SIREN}
+\label{subsec:siren}
+
+Las activaciones estándar (ReLU, tanh) producen derivadas de segundo orden inestables y
+exhiben \textit{spectral bias}: tienden a aprender frecuencias bajas antes que las altas,
+lo que dificulta capturar los detalles finos del patrón de speckle.
+\citet{Sitzmann2020_SIREN} proponen las redes SIREN (\textit{Sinusoidal Representation
+Networks}), que utilizan la activación $\phi(z) = \sin(\omega_0 z)$ con una inicialización
+específica que preserva la distribución de activaciones a través de todas las capas.
+
+La arquitectura SIREN con $L$ capas ocultas de dimensión $d$ se define como:
+%
+\begin{equation}
+  \mathbf{h}_0 = \mathbf{x}, \qquad
+  \mathbf{h}_\ell = \sin\!\left(\omega_0\,(\mathbf{W}_\ell\,\mathbf{h}_{\ell-1} + \mathbf{b}_\ell)\right),
+  \quad \ell = 1, \ldots, L,
+  \label{eq:siren}
+\end{equation}
+%
+donde $\omega_0$ es la frecuencia de la capa de entrada y las matrices $\mathbf{W}_\ell$
+se inicializan según $\mathcal{U}(-\sqrt{6/d},\,\sqrt{6/d})$ para capas intermedias
+y $\mathcal{U}(-1/n_{\mathrm{in}},\,1/n_{\mathrm{in}})$ para la primera capa
+\citep{Sitzmann2020_SIREN}.
+Esta inicialización garantiza que las distribuciones de activación sean aproximadamente
+uniformes en $[-1, 1]$, condición necesaria para la estabilidad de derivadas de orden
+arbitrario.
+
+\subsection{Estadística del speckle completamente desarrollado}
+\label{subsec:speckle}
+
+Cuando una superficie rugosa con variación de fase $\Delta\phi \gg 2\pi$ es iluminada
+por luz coherente, las contribuciones de los distintos puntos de la superficie interfieren
+constructiva y destructivamente de forma aleatoria.
+Por el teorema del límite central, el campo complejo resultante
+$E = E_{\mathrm{real}} + i\,E_{\mathrm{imag}}$ sigue una distribución gaussiana circular
+compleja \citep{Goodman2007_Speckle}:
+%
+\begin{equation}
+  E_{\mathrm{real}},\; E_{\mathrm{imag}} \sim \mathcal{N}(0, \sigma_E^2),
+  \quad \text{independientes.}
+  \label{eq:campo_gaussiano}
+\end{equation}
+
+La intensidad $I = |E|^2$ sigue entonces una distribución exponencial negativa:
+%
+\begin{equation}
+  p(I) = \frac{1}{\langle I \rangle}\exp\!\left(-\frac{I}{\langle I \rangle}\right),
+  \quad I \geq 0,
+  \label{eq:pdf_intensidad}
+\end{equation}
+%
+con valor esperado $\langle I \rangle = 2\sigma_E^2$ y desviación estándar
+$\sigma_I = \langle I \rangle$.
+El \textit{contraste del speckle} es:
+%
+\begin{equation}
+  C = \frac{\sigma_I}{\langle I \rangle} = 1,
+  \label{eq:contraste}
+\end{equation}
+%
+que vale exactamente 1 para speckle completamente desarrollado y disminuye
+cuando el campo pierde coherencia o cuando la rugosidad es insuficiente.
+Este criterio estadístico es la métrica de validación principal en NB03,
+complementada con el test de Kolmogorov-Smirnov (KS) contra la distribución
+exponencial teórica.

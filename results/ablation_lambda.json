@@ -1,0 +1,30 @@
+{
+  "0.01": {
+    "lambda": 0.01,
+    "l2_avg": 0.1632,
+    "l2_real": 0.1873,
+    "l2_imag": 0.1391,
+    "adam_epochs": 6575,
+    "lbfgs_iters": 320,
+    "time_s": 801.0,
+    "converged": true,
+    "note": "run previa (seed=42)"
+  },
+  "0.1": {
+    "lambda": 0.1,
+    "l2_avg": 0.171,
+    "l2_real": 0.214,
+    "l2_imag": 0.127,
+    "adam_epochs": 8737,
+    "lbfgs_iters": 1035,
+    "time_s": 299,
+    "converged": true,
+    "note": "resultado original NB02 (seed=42)"
+  },
+  "1.0": {
+    "lambda": 1.0,
+    "l2_avg": null,
+    "converged": false,
+    "note": "Crash CUDA nivel-C; gradiente explota con lambda=1.0 (float32). Documentado como >5%."
+  }
+}

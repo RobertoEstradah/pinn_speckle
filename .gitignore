@@ -61,3 +61,32 @@ logs/
 *.swp
 tmp/
 temp/
+
+# ── LaTeX auxiliares (generados por compilación) ──────────────────────────────
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.run.xml
+*.xdv
+*-SAVE-ERROR
+paper/main.log
+
+# ── Carpetas internas / scaffold AI ──────────────────────────────────────────
+.claude/
+CLAUDE.md
+MEMORY.md
+SESSION_REPORT.md
+quality_reports/
+explorations/
+master_supporting_docs/
+
+# ── Notebooks versiones antiguas ──────────────────────────────────────────────
+notebooks/v1_exploracion_cpu/
+results/figures/v1_exploracion_cpu/
+
+# ── Logs de experimentos ──────────────────────────────────────────────────────
+results/*.txt

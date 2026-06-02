@@ -1,0 +1,43 @@
+{
+  "42": {
+    "seed": 42,
+    "l2_avg": 0.171,
+    "l2_real": 0.214,
+    "l2_imag": 0.127,
+    "adam_epochs": 8737,
+    "lbfgs_iters": 1035,
+    "time_s": 299.0
+  },
+  "123": {
+    "seed": 123,
+    "l2_avg": 0.1264,
+    "l2_real": null,
+    "l2_imag": null,
+    "adam_epochs": 8012,
+    "lbfgs_iters": null,
+    "time_s": 448.0
+  },
+  "777": {
+    "seed": 777,
+    "l2_avg": 0.1675,
+    "l2_real": 0.2477,
+    "l2_imag": 0.0872,
+    "adam_epochs": 13560,
+    "lbfgs_iters": 1023,
+    "time_s": 346.0
+  },
+  "summary": {
+    "seeds": [
+      42,
+      123,
+      777
+    ],
+    "l2_values": [
+      0.171,
+      0.1264,
+      0.1675
+    ],
+    "mean": 0.155,
+    "std": 0.0203
+  }
+}

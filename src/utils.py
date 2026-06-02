@@ -102,7 +102,7 @@ def load_model(model, name, notebook_dir=None, device=None):
         )
 
     map_loc = device if device else 'cpu'
-    model.load_state_dict(torch.load(str(path), map_location=map_loc))
+    model.load_state_dict(torch.load(str(path), map_location=map_loc, weights_only=True))
     if device:
         model.to(device)
     print(f'Modelo cargado desde: {path}')

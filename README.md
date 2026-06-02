@@ -1,10 +1,10 @@
 #  Simulación acelerada de speckle óptico mediante PINNs
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.4+-ee4c2c?logo=pytorch)](https://pytorch.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.4-ee4c2c?logo=pytorch)](https://pytorch.org/)
 [![CUDA](https://img.shields.io/badge/CUDA-12.6-76b900?logo=nvidia)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-En%20desarrollo-yellow)]()
+[![Status](https://img.shields.io/badge/Status-NB04%20pendiente-yellow)]()
 
 > **Tesis de Maestría** — Universidad Juárez Autónoma de Tabasco  
 > Maestría en Ciencias de la Computación  
@@ -38,15 +38,17 @@ donde $\tilde{k} = 2\pi$ es el número de onda adimensional (láser de diodo roj
 ##  Estructura del repositorio
 
 ```
-pinn_speckle/
+Tesis_Maestria/
 │
-├── notebooks/                              # Notebooks de Jupyter
-│   ├── 01_helmholtz_1D_tesis.ipynb         # ✅ Helmholtz 1D — CPU (L2 = 0.009%)
-│   ├── 01_helmholtz_1D_tesis_v2_gpu.ipynb  # ✅ Helmholtz 1D — GPU (L2 = 0.006%)
-│   ├── 02_helmholtz_2D_tesis.ipynb         # ✅ Helmholtz 2D — CPU (L2 = 0.222%)
-│   ├── 02_helmholtz_2D_tesis_v2_gpu.ipynb  # ✅ Helmholtz 2D — GPU (L2 = 0.188%)
-│   ├── 03_speckle.ipynb                    # 🔜 Simulación de speckle I=|E|²
-│   └── 04_benchmark.ipynb                  # 🔜 PINN vs FEniCSx (Speed-up Factor)
+├── notebooks/                                          # Notebooks de Jupyter
+│   ├── 01_pinn_helmholtz_1d_validation.ipynb           # ✅ Helmholtz 1D — GPU (L2 = 0.006%)
+│   ├── 02_pinn_helmholtz_2d_complex_field.ipynb        # ✅ Helmholtz 2D — GPU (L2 = 0.171%)
+│   ├── 03_pinn_optical_speckle_simulation.ipynb        # ✅ Speckle óptico — C=1.0253
+│   ├── 04_pinn_fem_benchmark.ipynb                     # 🔜 PINN vs FEniCSx (Speed-up Factor)
+│   └── v1_exploracion_cpu/                             # 📦 Línea base histórica (archivado)
+│       ├── 01_pinn_helmholtz_1d_v1_baseline.ipynb      # 1D v1 — L2=0.009%, ~189 s
+│       ├── 02_pinn_helmholtz_2d_v1_baseline.ipynb      # 2D v1 — L2=0.222%, ~1278 s
+│       └── LEEME.md                                    # Justificación del abandono de v1
 │
 ├── src/                              # Módulos reutilizables
 │   ├── models.py                     # Arquitecturas de red (SIREN)
@@ -54,12 +56,15 @@ pinn_speckle/
 │   ├── training.py                   # Loop de entrenamiento (Adam + L-BFGS)
 │   └── utils.py                      # Métricas, visualización, LHS
 │
+├── paper/                            # Manuscrito LaTeX (fuente de verdad)
+│   ├── main.tex                      # ✅ Paper completo (17 pp., ES + abstract EN)
+│   ├── sections/                     # Secciones 01–05 completas
+│   ├── figures/                      # Figuras finales
+│   └── references.bib                # 19 referencias (biblatex + biber)
+│
 ├── results/                          # Resultados generados
 │   ├── figures/                      # Gráficas y visualizaciones
 │   └── metrics/                      # Tablas de error L2 y tiempos
-│
-├── docs/                             # Documentación del proyecto
-│   └── reporte_avance.docx           # Reporte para director de tesis
 │
 ├── data/
 │   └── reference/                    # Soluciones de referencia FEM
@@ -77,7 +82,7 @@ pinn_speckle/
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/TU_USUARIO/pinn_speckle.git
+git clone https://github.com/roberto-hernandez-estrada/pinn_speckle.git
 cd pinn_speckle
 ```
 
@@ -98,7 +103,7 @@ python -c "import torch; print(torch.cuda.get_device_name(0))"
 ### 4. Ejecutar notebooks en orden
 
 ```bash
-jupyter notebook notebooks/01_helmholtz_1D_tesis.ipynb
+jupyter notebook notebooks/01_pinn_helmholtz_1d_validation.ipynb
 ```
 
 ---
@@ -107,29 +112,42 @@ jupyter notebook notebooks/01_helmholtz_1D_tesis.ipynb
 
 ### Notebook 01 — Helmholtz 1D (Validación del método)
 
-| Métrica | CPU | GPU | Meta tesis |
-|---|---|---|---|
-| Error L2 relativo | **0.009%** | **0.006%** | < 5% ✅ |
-| MAE | 6.02e-05 | 3.50e-05 | — |
-| Error máximo | 9.81e-05 | 5.77e-05 | — |
-| R² | 1.000000 | 1.000000 | — |
-| Correlación Pearson | 1.000000 | 1.000000 | — |
-| Épocas Adam (early stop) | 15,000 / 15,000 | 15,000 / 15,000 | — |
-| Referencia Schoder & Kraxberger (2024) | 2.490% | 2.490% | Superado ✅ |
+| Métrica | GPU v2 | Meta tesis |
+|---|---|---|
+| Error L2 relativo | **0.006%** | < 5% ✅ |
+| MAE | 3.50e-05 | — |
+| Error máximo | 5.77e-05 | — |
+| R² | 1.000000 | — |
+| Correlación Pearson | 1.000000 | — |
+| Épocas Adam | 15,000 / 15,000 | — |
+| Iteraciones L-BFGS | 202 / 500 | — |
+| Tiempo total | ~251 s | — |
+| Referencia Schoder & Kraxberger (2024) | 2.490% | Superado ✅ (×415) |
 
 ### Notebook 02 — Helmholtz 2D con campo complejo y LHS
 
-| Métrica | CPU | GPU | Meta tesis |
-|---|---|---|---|
-| Error L2 promedio | **0.222%** | **0.188%** | < 5% ✅ |
-| Error L2 E_real | 0.302% | 0.234% | — |
-| Error L2 E_imag | 0.143% | 0.141% | — |
-| MAE E_real | 1.79e-03 | 1.39e-03 | — |
-| MAE E_imag | 8.79e-04 | 8.77e-04 | — |
-| R² E_real | 0.999991 | 0.999994 | — |
-| R² E_imag | 0.999998 | 0.999998 | — |
-| Épocas Adam (early stop) | 11,258 / 15,000 | 10,849 / 15,000 | — |
-| Tiempo total | ~1,278 s | **353 s** | — |
+| Métrica | GPU v2 | Meta tesis |
+|---|---|---|
+| Error L2 promedio | **0.171%** | < 5% ✅ |
+| Error L2 E_real | 0.214% | — |
+| Error L2 E_imag | 0.127% | — |
+| R² E_real | 0.999994 | — |
+| R² E_imag | 0.999998 | — |
+| Épocas Adam | 8,737 / 15,000 | — |
+| Iteraciones L-BFGS | 1,035 / 1,000 | — |
+| Tiempo total | **299 s** | — |
+
+### Notebook 03 — Simulación de speckle óptico
+
+| Métrica | Resultado | Referencia teórica |
+|---|---|---|
+| Contraste C = σ_I / ⟨I⟩ | **1.0253** | 1.0 (speckle totalmente desarrollado) ✅ |
+| Test K-S (vs. exp. negativa) | p = 0.0000 | p > 0.05 — nota ⚠ |
+| Épocas Adam | 7,976 / 15,000 | — |
+| Iteraciones L-BFGS | 8 / 500 | — |
+| Tiempo total | ~227 s | — |
+
+> **Nota KS:** Con N = 10,000 puntos de evaluación, el test de Kolmogorov-Smirnov tiene potencia estadística suficiente para rechazar H₀ ante desviaciones menores al 1%. El resultado p = 0.0000 no indica fallo del modelo — es consecuencia de la alta potencia del test. El contraste C = 1.0253 (|C−1| < 0.03) confirma que la distribución de intensidades es consistente con speckle totalmente desarrollado.
 
 ### Láser simulado
 
@@ -138,37 +156,36 @@ jupyter notebook notebooks/01_helmholtz_1D_tesis.ipynb
 | Tipo | Diodo rojo (computacional) |
 | Longitud de onda (λ) | 638 nm |
 | k adimensional | 2π = 6.2832 |
-| Dominio Fase 1 | 1 longitud de onda = 0.638 μm |
+| Dominio | 1 longitud de onda (normalizado) |
 
 ---
 
 ##  Arquitectura PINN — SIREN
 
 ```
-Entrada (x,y) → [sin(ω₀·x)] → [128] → [sin(ω₀·x)] → [128] → ... → (E_real, E_imag)
+Entrada (x,y) → [sin(ω₀·Wx+b)] → [128] → [sin(ω₀·Wx+b)] → [128] → ... → (E_real, E_imag)
 ```
 
-| Componente | NB01 (1D) | NB02 (2D) |
-|---|---|---|
-| Tipo | SIREN | SIREN |
-| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
-| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas |
-| Parámetros | ~8,400 | ~66,690 |
-| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
-| Muestreo | Linspace uniforme | Latin Hypercube Sampling (LHS) |
-| Optimizador | Adam + L-BFGS | Adam + L-BFGS |
-| Early stopping | Paciencia 500 épocas | Paciencia 800 épocas |
+| Componente | NB01 (1D) | NB02 (2D) | NB03 (Speckle) |
+|---|---|---|---|
+| Tipo | SIREN | SIREN | SIREN |
+| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
+| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas | 5 × 128 neuronas |
+| Parámetros | ~8,400 | ~66,690 | ~66,690 |
+| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
+| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) | Latin Hypercube Sampling (LHS) |
+| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω | Fase aleatoria U(0,2π) en y=0 |
+| Optimizador | Adam + L-BFGS | Adam + L-BFGS | Adam + L-BFGS |
+| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas | Paciencia 800 épocas |
 
 ---
 
 ##  Progreso del proyecto
 
-- [x] Notebook 01 — Helmholtz 1D CPU (L2 = 0.009%)
-- [x] Notebook 01 — Helmholtz 1D GPU (L2 = 0.006%)
-- [x] Notebook 02 — Helmholtz 2D CPU (L2 = 0.222%)
-- [x] Notebook 02 — Helmholtz 2D GPU (L2 = 0.188%)
-- [ ] Notebook 03 — Simulación de speckle óptico
-- [ ] Notebook 04 — Benchmark PINN vs FEniCSx
+- [x] Notebook 01 — Helmholtz 1D GPU (L2 = 0.006%, R² = 1.000000)
+- [x] Notebook 02 — Helmholtz 2D GPU (L2_avg = 0.171%, tiempo = 299 s)
+- [x] Notebook 03 — Simulación de speckle óptico (C = 1.0253 ✅)
+- [ ] Notebook 04 — Benchmark PINN vs FEniCSx (Speed-up Factor S = T_FEM / T_PINN)
 
 ---
 

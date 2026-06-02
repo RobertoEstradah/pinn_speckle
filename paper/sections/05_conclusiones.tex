@@ -1,0 +1,72 @@
+% ============================================================
+% Sección 5: Conclusiones
+% ============================================================
+
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+Este trabajo presentó una implementación de Redes Neuronales Informadas por Física
+con activación sinusoidal (PINN-SIREN) para la simulación acelerada del speckle óptico
+mediante un paradigma \textit{libre de malla} (\textit{mesh-free})
+\citep{Karniadakis2021_review, Cuomo2022_review}.
+Se resolvió la ecuación de Helmholtz 2D con campo complejo y condición de frontera de
+fase aleatoria, eliminando la necesidad de discretización espacial del dominio.
+
+Las conclusiones principales son:
+
+\begin{enumerate}
+  \item \textbf{Precisión excepcional en 1D y 2D.}
+    La arquitectura SIREN alcanzó errores L2 de $0.006\%$ (1D) y $0.171\%$ (2D),
+    superando en factores de $\times 415$ y $\times 11.2$ al estado del arte de
+    \citet{Schoder2024_PINN_acoustics}.
+    Ambos valores cumplen holgadamente el umbral de tesis ($< 5\%$).
+
+  \item \textbf{La arquitectura es agnóstica a la condición de frontera.}
+    La misma SIREN $5\times128$ resuelve Helmholtz tanto con onda plana suave (NB02)
+    como con fase rugosa aleatoria (NB03), sin modificar la arquitectura ni la función
+    de pérdida.
+    Solo cambia el dato impuesto en $y = 0$.
+    Esto demuestra la generalidad del método para cualquier perfil de rugosidad superficial.
+
+  \item \textbf{Validación estadística del speckle.}
+    El patrón generado satisface el criterio de \citet{Goodman2007_Speckle}
+    para speckle completamente desarrollado: contraste $C = 1.0253$ ($|C-1| = 0.025 < 0.1$)
+    y distribución de colas consistente con el valor teórico $e^{-2} \approx 0.135$.
+    El test KS falla formalmente ($p < 0.0001$), atribuible a la alta potencia estadística
+    con $N = 10{,}000$ puntos y a la ausencia de condición absorbente en $y = 1$.
+
+  \item \textbf{La estrategia Adam + L-BFGS es esencial.}
+    Adam proporciona exploración global robusta; L-BFGS refina la solución con
+    información de curvatura de segundo orden.
+    El uso exclusivo de cualquiera de los dos optimizadores produce resultados inferiores.
+
+  \item \textbf{El peso físico $\lambda = 0.1$ equilibra datos y física en 2D.}
+    En el caso 2D, la función de pérdida física incluye dos residuos (real e imaginario),
+    duplicando efectivamente el peso de la física si se usa $\lambda = 1.0$.
+    La calibración a $\lambda = 0.1$ fue crítica para la convergencia.
+\end{enumerate}
+
+\subsection*{Trabajo futuro}
+
+Las extensiones naturales de este trabajo incluyen:
+
+\begin{itemize}
+  \item \textbf{Benchmark FEM} (NB04): comparación cuantitativa contra FEniCSx para
+    múltiples realizaciones de speckle, cuantificando el \textit{Speed-up Factor}
+    $S = T_{\mathrm{FEM}} / T_{\mathrm{PINN}}$ \citep{Thuerey2021_PBDL} y la
+    huella de memoria pico (\textit{Peak Memory Footprint}), según los objetivos
+    de la investigación.
+
+  \item \textbf{Medios inhomogéneos} (NB05--NB06): extensión a la ecuación de Helmholtz
+    con índice de refracción variable $n(\mathbf{r})$, relevante para speckle en
+    materiales GRIN y tejidos biológicos.
+
+  \item \textbf{Speckle en medios GRIN} (NB07): combinación de las extensiones anteriores
+    para simular speckle en materiales con perfiles de índice gradiente,
+    con potencial impacto en imágenes biomédicas y comunicaciones ópticas.
+
+  \item \textbf{Condición de radiación de Sommerfeld}: incorporar
+    $\mathcal{L}_{\mathrm{rad}} = |\partial E/\partial n - ikE|^2$
+    en $y = 1$ para modelar propagación libre saliente, eliminando reflexiones espurias
+    y mejorando la fidelidad estadística del speckle en el test KS.
+\end{itemize}
