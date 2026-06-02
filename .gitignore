@@ -84,8 +84,7 @@ quality_reports/
 explorations/
 master_supporting_docs/
 
-# ── Notebooks versiones antiguas ──────────────────────────────────────────────
-notebooks/v1_exploracion_cpu/
+# ── Resultados figuras versiones antiguas ─────────────────────────────────────
 results/figures/v1_exploracion_cpu/
 
 # ── Logs de experimentos ──────────────────────────────────────────────────────
