@@ -5,7 +5,7 @@ Arquitectura fija: SIREN 5x128, omega_0=1.0, SEED=42, LHS N_c=3000, N_b=300.
 Guarda resultados en results/ablation_lambda.json
 """
 import sys, os, json, time, gc
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 import numpy as np
 import torch
@@ -124,7 +124,7 @@ def train_one(lambda_phys, seed=42):
         torch.cuda.empty_cache()
     return result
 
-out_path = os.path.join(os.path.dirname(__file__), '..', 'results', 'ablation_lambda.json')
+out_path = os.path.join(os.path.dirname(__file__), '..', '..', 'results', 'ablation_lambda.json')
 # Pre-fill with known lam=0.01 result from prior run
 results = {
     '0.01': {'lambda': 0.01, 'l2_avg': 0.1632, 'l2_real': 0.1873, 'l2_imag': 0.1391,

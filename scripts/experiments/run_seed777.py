@@ -1,6 +1,6 @@
 """Single-seed run: seed=777, lambda=0.1, writes to results/seed777_result.json"""
 import sys, os, json, time
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 import numpy as np, torch
 from scipy.stats import qmc
 from src.models import PINN_2D_SIREN
@@ -71,7 +71,7 @@ l2_i = np.linalg.norm(E_pred[:, 1]-E_i_exact)/np.linalg.norm(E_i_exact)*100
 l2_avg = (l2_r + l2_i) / 2
 print("L2_avg=%.4f%% (real=%.4f%%, imag=%.4f%%)" % (l2_avg, l2_r, l2_i), flush=True)
 
-out = os.path.join(os.path.dirname(__file__), '..', 'results', 'seed777_result.json')
+out = os.path.join(os.path.dirname(__file__), '..', '..', 'results', 'seed777_result.json')
 with open(out, 'w') as f:
     json.dump({'seed': SEED, 'l2_avg': round(l2_avg, 4), 'l2_real': round(l2_r, 4),
                'l2_imag': round(l2_i, 4), 'adam_epochs': adam_epochs,

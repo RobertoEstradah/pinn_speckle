@@ -4,7 +4,7 @@ Entrena NB02 (Helmholtz 2D, lambda=0.1) con semillas 42, 123, 777.
 Guarda resultados en results/multiseed_results.json
 """
 import sys, os, json, time
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 import numpy as np
 import torch
@@ -118,7 +118,7 @@ for seed in [123, 777]:
         print("  ERROR:", str(e), flush=True)
         results.append({'seed': seed, 'error': str(e)})
 
-out = os.path.join(os.path.dirname(__file__), '..', 'results', 'multiseed_results.json')
+out = os.path.join(os.path.dirname(__file__), '..', '..', 'results', 'multiseed_results.json')
 with open(out, 'w', encoding='utf-8') as f:
     json.dump(results, f, indent=2)
 

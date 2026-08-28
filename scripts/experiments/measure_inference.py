@@ -4,14 +4,14 @@ Mide el tiempo de inferencia de PINN_2D_SIREN para 10,000 puntos (malla 100x100)
 Usa el modelo guardado en results/models/nb02_helmholtz2d.pt
 """
 import sys, os, time
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 import torch
 import numpy as np
 from src.models import PINN_2D_SIREN
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'results', 'models', 'nb02_helmholtz2d.pt')
+MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'results', 'models', 'nb02_helmholtz2d.pt')
 
 # Cargar modelo
 model = PINN_2D_SIREN.load(MODEL_PATH, hidden_dim=128, num_layers=5, omega_0=1.0, device=DEVICE)
