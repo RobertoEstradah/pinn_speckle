@@ -17,9 +17,7 @@ Las conclusiones principales son:
 \begin{enumerate}
   \item \textbf{Precisión excepcional en 1D y 2D.}
     La arquitectura SIREN alcanzó errores L2 de $0.006\%$ (1D) y $0.171\%$ (2D),
-    superando en factores de $\times 415$ y $\times 11.2$ al estado del arte de
-    \citet{Schoder2024_PINN_acoustics}.
-    Ambos valores cumplen holgadamente el umbral de tesis ($< 5\%$).
+    ambos varios órdenes de magnitud por debajo del umbral de tesis ($< 5\%$).
 
   \item \textbf{La arquitectura es agnóstica a la condición de frontera.}
     La misma SIREN $5\times128$ resuelve Helmholtz tanto con onda plana suave (NB02)
@@ -57,7 +55,7 @@ Las extensiones naturales de este trabajo incluyen:
     huella de memoria pico (\textit{Peak Memory Footprint}), según los objetivos
     de la investigación.
 
-  \item \textbf{Medios inhomogéneos} (NB05--NB06): extensión a la ecuación de Helmholtz
+  \item \textbf{Medios inhomogéneos} (NB05-NB06): extensión a la ecuación de Helmholtz
     con índice de refracción variable $n(\mathbf{r})$, relevante para speckle en
     materiales GRIN y tejidos biológicos.
 

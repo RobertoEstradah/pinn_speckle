@@ -5,7 +5,7 @@
 \section{Resultados}
 \label{sec:resultados}
 
-\subsection{Validación 1D --- Helmholtz con solución analítica}
+\subsection{Validación 1D, Helmholtz con solución analítica}
 \label{subsec:resultados1d}
 
 La \cref{tab:resultados1d} muestra las métricas de precisión obtenidas para la
@@ -14,7 +14,7 @@ ecuación de Helmholtz 1D con la arquitectura SIREN $5\times64$, $\omega_0 = 1.0
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Métricas de precisión --- PINN-SIREN 1D ($k = 2\pi$)}
+\caption{Métricas de precisión -- PINN-SIREN 1D ($k = 2\pi$)}
 \label{tab:resultados1d}
 \begin{tabular}{lc}
 \toprule
@@ -43,9 +43,7 @@ Tiempo total           & 251 s \\
 \end{threeparttable}
 \end{table}
 
-El error L2 de $0.006\%$ supera el umbral de la tesis ($< 5\%$) por casi tres órdenes de magnitud
-y mejora en un factor de $\times 415$ el resultado de \citet{Schoder2024_PINN_acoustics},
-que reporta un error del $2.49\%$ para Helmholtz 1D con PINNs convencionales.
+El error L2 de $0.006\%$ supera el umbral de la tesis ($< 5\%$) por casi tres órdenes de magnitud.
 El ajuste es prácticamente perfecto: $R^2 = 1.000000$ y correlación de Pearson $= 1.000000$
 en toda la malla de evaluación.
 
@@ -72,7 +70,7 @@ en toda la malla de evaluación.
   \label{fig:metricas1d}
 \end{figure}
 
-\subsection{Validación 2D --- Helmholtz con campo complejo}
+\subsection{Validación 2D, Helmholtz con campo complejo}
 \label{subsec:resultados2d}
 
 La \cref{tab:resultados2d} reporta las métricas para la validación 2D con la arquitectura
@@ -81,7 +79,7 @@ optimizada SIREN $5\times128$, $\omega_0 = 1.0$, y muestreo LHS de 3{,}000 punto
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Métricas de precisión --- PINN-SIREN 2D ($k = 2\pi$, $k_x = k_y = k/\sqrt{2}$)}
+\caption{Métricas de precisión -- PINN-SIREN 2D ($k = 2\pi$, $k_x = k_y = k/\sqrt{2}$)}
 \label{tab:resultados2d}
 \begin{tabular}{lcc}
 \toprule
@@ -112,10 +110,8 @@ Error L2 promedio (\%) & \multicolumn{2}{c}{0.171} \\
 \end{table}
 
 El error L2 promedio de $0.171\%$ supera el umbral de la tesis ($< 5\%$) por más de un
-orden de magnitud y mejora en $\times 11.2$ el resultado de
-\citet{Schoder2024_PINN_acoustics} para Helmholtz 2D ($1.91\%$).
-La precisión se mantiene alta en ambas componentes del campo complejo, con $R^2 > 0.9999$
-para $E_{\mathrm{real}}$ y $E_{\mathrm{imag}}$.
+orden de magnitud. La precisión se mantiene alta en ambas componentes del campo complejo,
+con $R^2 > 0.9999$ para $E_{\mathrm{real}}$ y $E_{\mathrm{imag}}$.
 
 El aumento de capacidad de $d = 64$ a $d = 128$ fue determinante: con $d = 64$ el error
 promedio era $0.436\%$; con $d = 128$ se redujo a $0.171\%$, una mejora de $2.5\times$.
@@ -156,7 +152,7 @@ $\phi(x) \sim \mathcal{U}(0, 2\pi)$ en $y = 0$.
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Validación estadística del speckle --- PINN-SIREN NB03}
+\caption{Validación estadística del speckle -- PINN-SIREN NB03}
 \label{tab:resultados_speckle}
 \begin{tabular}{lcc}
 \toprule
@@ -167,9 +163,9 @@ $|C - 1|$                                    & $0.0253$ & $< 0.1$ \\
 KS $p$-valor                                 & $< 0.0001$ & $> 0.05$ \\
 Frac.\ $I > 2\langle I \rangle$              & ${\approx}\,0.135$ & $e^{-2} \approx 0.1353$ \\
 \midrule
-Épocas Adam                                  & $7{,}976 / 15{,}000$ & --- \\
-Iteraciones L-BFGS                           & $8 / 500$ & --- \\
-Tiempo total (s)                             & $227$ & --- \\
+Épocas Adam                                  & $7{,}976 / 15{,}000$ & - \\
+Iteraciones L-BFGS                           & $8 / 500$ & - \\
+Tiempo total (s)                             & $227$ & - \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
@@ -197,7 +193,7 @@ abierto físico actuaría como frontera absorbente.
 La incorporación de esta condición es parte del trabajo futuro (véase \cref{sec:conclusiones}).
 
 La misma arquitectura SIREN $5\times128$ resuelve la ecuación de Helmholtz con cualquier
-condición de frontera --- la transición de onda plana (NB02) a fase rugosa (NB03) no
+condición de frontera: la transición de onda plana (NB02) a fase rugosa (NB03) no
 requiere modificación alguna de la arquitectura, lo que demuestra la generalidad del
 método.
 
@@ -218,37 +214,34 @@ método.
   \label{fig:speckle}
 \end{figure}
 
-\subsection{Comparativa con métodos de referencia}
+\subsection{Contexto en la literatura}
 \label{subsec:comparativa}
 
-La \cref{tab:comparativa} resume el rendimiento de la PINN-SIREN propuesta
-frente al estado del arte.
+La \cref{tab:comparativa} sitúa los resultados de precisión de la PINN-SIREN
+propuesta junto al antecedente más cercano en la literatura.
 
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Comparativa de error L2 --- PINN-SIREN vs estado del arte}
+\caption{Error L2 relativo: PINN-SIREN y antecedente de la literatura}
 \label{tab:comparativa}
 \begin{tabular}{lccc}
 \toprule
-Método & Dimensión & Error L2 (\%) & Factor de mejora \\
+Método & Dimensión & Comparación & Error L2 (\%) \\
 \midrule
-\citet{Schoder2024_PINN_acoustics} & 1D & 2.490 & ---        \\
-\citet{Schoder2024_PINN_acoustics} & 2D & 1.910 & ---        \\
-\textbf{PINN-SIREN (este trabajo)} & \textbf{1D} & \textbf{0.006} & $\times 415$ \\
-\textbf{PINN-SIREN (este trabajo)} & \textbf{2D} & \textbf{0.171} & $\times 11.2$   \\
+\citet{Schoder2024_PINN_acoustics} & 3D (acústica) & PINN vs.\ FEM (malla fina) & 2.49 \\
+\textbf{PINN-SIREN (este trabajo)} & \textbf{1D (óptica)} & PINN vs.\ solución analítica & \textbf{0.006} \\
+\textbf{PINN-SIREN (este trabajo)} & \textbf{2D (óptica)} & PINN vs.\ solución analítica & \textbf{0.171} \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item El factor de mejora es la razón entre el error de Schoder et al.\ (2024)
-      y el error de la PINN-SIREN propuesta.
-      Ambos trabajan con la ecuación de Helmholtz escalar en dominios normalizados.
-      \citet{Schoder2024_PINN_acoustics} aborda el caso 3D con dominio físico y PINNs
-      de activación \textit{tanh}; este trabajo opera en 1D/2D adimensionales con
-      arquitectura SIREN.
-      El factor de mejora refleja tanto la ventaja arquitectural de SIREN sobre
-      \textit{tanh}/ReLU como la diferencia de complejidad dimensional.
+\item Los tres resultados no son directamente comparables entre sí: difieren en
+      dimensionalidad, dominio físico (acústico vs.\ óptico) y tipo de solución
+      de referencia (FEM vs.\ analítica). Se presentan como contexto de la
+      literatura, no como línea base de comparación cuantitativa. Los resultados
+      propios se validan contra el umbral fijo de la tesis ($L^2 < 5\%$),
+      independiente de trabajos externos.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}

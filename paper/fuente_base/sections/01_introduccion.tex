@@ -6,7 +6,7 @@
 \label{sec:intro}
 
 El speckle óptico es el patrón granular de alta intensidad que emerge cuando luz coherente
----como la de un láser--- se dispersa sobre una superficie rugosa.
+(como la de un láser) se dispersa sobre una superficie rugosa.
 Este fenómeno está presente en aplicaciones de metrología óptica, tomografía de coherencia
 óptica, imagenología biomédica, criptografía óptica y comunicaciones de fibra
 \citep{Goodman2007_Speckle}.
@@ -47,22 +47,21 @@ FEM de referencia.
 Sin embargo, hasta donde alcanza nuestro conocimiento, la aplicación sistemática de este
 paradigma a la simulación del speckle óptico de alta resolución no ha sido abordada.
 
-En este trabajo presentamos una implementación PINN-SIREN para la simulación acelerada del
-speckle óptico que cubre este vacío.
-La contribución central es la resolución de la ecuación de Helmholtz bidimensional con campo
-complejo y condición de frontera de fase aleatoria $\phi(x) \sim \mathcal{U}(0, 2\pi)$,
-que modela una superficie con rugosidad $\sigma_h \gg \lambda$.
-Demostramos que la misma arquitectura SIREN $5\times128$ que resuelve la propagación de onda
-plana (Error $L^2 = 0.171\%$) es capaz de generar patrones de speckle estadísticamente
-válidos según el criterio de \citet{Goodman2007_Speckle}: contraste
-$C = \sigma_I / \langle I \rangle \approx 1$ y distribución de intensidades exponencial
-negativa, confirmando speckle completamente desarrollado.
+En este trabajo presentamos una implementación PINN-SIREN para la resolución de la ecuación
+de Helmholtz bidimensional con campo complejo, sentando las bases para la futura simulación
+acelerada del speckle óptico.
+La contribución principal es la validación de la arquitectura SIREN $5\times128$ en dos
+escenarios de complejidad creciente: validación 1D con solución analítica exacta
+(Error $L^2 = 0.006\%$) y validación 2D con onda plana compleja (Error $L^2 = 0.171\%$),
+ambos varios órdenes de magnitud por debajo del umbral de tesis ($5\%$).
+La generación de patrones de speckle con condición de frontera de fase aleatoria
+$\phi(x) \sim \mathcal{U}(0, 2\pi)$ constituye el siguiente paso planificado de esta investigación.
 
 El artículo está organizado como sigue.
-La \cref{sec:teoria} presenta el marco teórico: la ecuación de Helmholtz, la formulación PINN
-y la arquitectura SIREN, y la estadística del speckle.
+La \cref{sec:teoria} presenta el marco teórico: la ecuación de Helmholtz, la formulación PINN,
+la arquitectura SIREN y la estadística del speckle.
 La \cref{sec:metodologia} describe la formulación del problema, el muestreo LHS y la
 estrategia de optimización Adam + L-BFGS.
-La \cref{sec:resultados} reporta los resultados en tres etapas: validación 1D, validación 2D
-y generación de speckle.
+La \cref{sec:resultados} reporta los resultados de la validación 1D y 2D, y la comparativa
+con el estado del arte.
 La \cref{sec:conclusiones} sintetiza las contribuciones y señala direcciones futuras.

@@ -1,4 +1,4 @@
-# latexmkrc — Project build configuration
+﻿# latexmkrc — Project build configuration
 # Works locally (latexmk) and on Overleaf (reads this file automatically).
 # Overleaf ignores $pdf_mode — compiler is set via the project menu.
 

@@ -16,12 +16,17 @@ Bajo esta normalización, el número de onda adimensional es $\tilde{k} = 2\pi$.
 La ecuación de Helmholtz unidimensional en $x \in [0,1]$ con condición de Dirichlet:
 %
 \begin{equation}
-  \frac{d^2 E}{dx^2} + k^2 E = 0, \quad E(0) = 1, \quad E(1) = \cos(k),
+  \frac{d^2 E}{dx^2} + k^2 E = 0, \quad
+  E(x_j) = \cos(k x_j), \quad x_j \in \{0,\ 0.25,\ 0.5,\ 0.75,\ 1\},
   \label{eq:helmholtz1d}
 \end{equation}
 %
 admite la solución analítica $E_{\mathrm{exacta}}(x) = \cos(kx)$, utilizada para
-validar la arquitectura SIREN.
+validar la arquitectura SIREN. Se imponen cinco puntos de frontera en lugar de
+únicamente los dos extremos: la condición simétrica $E(0) = E(1) = 1$ colapsa
+la red hacia la solución constante trivial durante el entrenamiento, ya que
+ambos extremos son consistentes con $E \equiv 1$; los tres puntos intermedios
+rompen esa simetría y estabilizan la convergencia.
 
 \paragraph{Validación 2D.}
 La ecuación de Helmholtz 2D en $\Omega = [0,1]^2$ con condición de onda plana en los
@@ -33,23 +38,6 @@ cuatro bordes:
 \end{equation}
 %
 que satisface $k_x^2 + k_y^2 = k^2$.
-
-\paragraph{Speckle óptico.}
-La ecuación de Helmholtz 2D en $\Omega = [0,1]^2$ con condición de frontera rugosa
-en $y = 0$ y bordes libres en $x = 0$, $x = 1$, $y = 1$:
-%
-\begin{equation}
-  E(x, 0) = e^{i\phi(x)}, \quad \phi(x) \sim \mathcal{U}(0, 2\pi),
-  \label{eq:frontera_rugosa}
-\end{equation}
-%
-donde $\phi(x)$ es muestreada en $N_\phi = 256$ puntos equiespaciados.
-Esta condición modela una pantalla de fase aleatoria cuya desviación estándar cumple
-$\sigma_\phi > 2\pi$, condición suficiente para speckle completamente desarrollado
-\citep{Goodman2007_Speckle, Fang2020_scattering}.
-A diferencia de los métodos basados en malla \citep{Jin2014_FEM}, el enfoque PINN permite
-resolver el campo en el interior del dominio sin construir una malla espacial,
-reduciendo drásticamente el costo de almacenamiento.
 
 \subsection{Arquitectura SIREN}
 \label{subsec:arquitectura}
@@ -101,7 +89,7 @@ La \cref{tab:ablacion_lambda} cuantifica el efecto sobre el error $L^2$ promedio
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Ablación del peso de física $\lambda_{\mathrm{fís}}$ --- NB02}
+\caption{Ablación del peso de física $\lambda_{\mathrm{fís}}$ - NB02}
 \label{tab:ablacion_lambda}
 \begin{tabular}{lccc}
 \toprule
@@ -127,14 +115,14 @@ $\lambda_{\mathrm{fís}}$ & Error $L^2$ prom.\ (\%) & Converge & Observación \\
 
 El entrenamiento sigue una estrategia bifásica:
 
-\paragraph{Fase 1 --- Adam.}
+\paragraph{Fase 1 - Adam.}
 Optimizador Adam con tasa de aprendizaje $\eta = 10^{-3}$, hasta 15{,}000 épocas,
 con \textit{early stopping} por paciencia de 800 épocas sin mejora mayor que
 $\delta = 10^{-7}$.
 Adam realiza exploración global del espacio de parámetros y proporciona un punto
 de inicio próximo al mínimo global.
 
-\paragraph{Fase 2 --- L-BFGS.}
+\paragraph{Fase 2 - L-BFGS.}
 Optimizador L-BFGS con búsqueda de línea \textit{strong Wolfe}, máximo de 1{,}000
 iteraciones y tamaño de historial 100.
 L-BFGS aprovecha la información de curvatura del paisaje de pérdida para realizar
@@ -155,11 +143,6 @@ precisión final y a L-BFGS puro en robustez ante mínimos locales.
 %
 evaluado sobre una malla uniforme de $100 \times 100$ puntos.
 El umbral de la tesis es $\varepsilon_{L2} < 5\%$.
-
-\paragraph{Contraste y test KS} (NB03):
-El contraste $C = \sigma_I / \langle I \rangle$ debe satisfacer $|C - 1| < 0.1$,
-y el test de Kolmogorov-Smirnov contra la distribución exponencial teórica debe
-arrojar $p > 0.05$.
 
 \subsection{Implementación}
 \label{subsec:implementacion}
