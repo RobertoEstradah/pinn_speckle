@@ -1,0 +1,145 @@
+\documentclass[11pt,spanish,oneside,letterpaper]{report}
+
+% ====== Idioma y codificación ======
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{eso-pic}     % Imagen de fondo (portada azul)
+
+% ====== Tablas ======
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+
+% ====== Matemáticas ======
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{mathtools}
+
+% ====== Formato APA UJAT ======
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[doublespacing]{setspace}
+\usepackage{indentfirst}
+\usepackage{geometry}
+\usepackage{csquotes}
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+\geometry{
+    top=2.54cm,
+    left=2.54cm,
+    right=2.54cm,
+    bottom=2.54cm,
+    headheight=14pt
+}
+
+% ====== Configuración ======
+\spanishdecimal{.}
+\captionsetup{font=footnotesize,labelfont=bf,labelsep=period}
+\captionsetup[table]{position=top}
+
+% Rutas de imágenes: primero figures/ local, luego paper/figures/
+\graphicspath{{figures/}{../paper/figures/}}
+
+% ====== Encabezado ======
+\pagestyle{fancy}
+\fancyhead[L]{}
+\fancyhead[R]{\nouppercase\leftmark}
+
+% ====== Índices ======
+\renewcommand{\contentsname}{Índice de contenido}
+\renewcommand{\listfigurename}{Índice de Figuras}
+\renewcommand{\listtablename}{Índice de Tablas}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% ====== Datos de la tesis ======
+\newcommand{\Titulo}{Simulación acelerada de speckle óptico: Un enfoque
+basado en redes neuronales físicamente informadas (PINNs)}
+\newcommand{\Autor}{Roberto Hernández Estrada}
+\newcommand{\Matricula}{252H21004}
+\newcommand{\Grado}{Maestro en Ciencias de la Computación}
+\newcommand{\Nivel}{Maestría}
+\newcommand{\Director}{Dr. José Adán Hernández Nolasco}
+\newcommand{\DirectorGrado}{Dr. Óscar Alberto Chávez Bosquez}
+\newcommand{\Ciudad}{Cunduacán}
+\newcommand{\Mes}{Junio}
+\newcommand{\Anho}{2026}
+\newcommand{\Dia}{07}
+\newcommand{\DiaLetra}{Siete}
+
+% ====== Hyperref — vínculos clicables sin color visible ======
+\usepackage[
+    hidelinks,
+    bookmarks    = true,
+    bookmarksopen= true
+]{hyperref}
+\hypersetup{
+    pdftitle  = {Simulacion acelerada de speckle optico con PINN-SIREN},
+    pdfauthor = {Roberto Hernandez Estrada},
+    pdfsubject= {Tesis de Maestria UJAT MCC}
+}
+
+% ====== Listas con círculos en lugar de cuadros ======
+\usepackage{enumitem}
+\setlist[itemize,1]{label=$\circ$}
+\setlist[itemize,2]{label=$\circ$}
+\setlist[itemize,3]{label=$\circ$}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+\pagenumbering{roman}
+
+% ── Preliminares (orden oficial UJAT) ──────────────────────────────────────
+\include{Portada}
+\include{Declaracion-autoria}
+\includepdf[pages=-]{Oficio}
+\include{Cesion-derechos}
+
+\restoregeometry
+\setcounter{page}{1}
+
+\tableofcontents
+\newpage
+\addcontentsline{toc}{chapter}{Índice de Figuras}
+\listoffigures
+\newpage
+\addcontentsline{toc}{chapter}{Índice de Tablas}
+\listoftables
+
+\clearpage
+\include{Resumen}
+\include{Abstract}
+
+% ============================================================
+% Capítulos
+% ============================================================
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\include{chapters/Cap1-Generalidades}
+\include{chapters/Cap2-Marcos}
+\include{chapters/Cap3-Modelo}
+\include{chapters/Cap4-Resultados}
+
+% ============================================================
+% Bibliografía
+% ============================================================
+\addcontentsline{toc}{chapter}{Bibliografía}
+\pagestyle{fancy}
+\fancyhead[L]{}
+\fancyhead[R]{Bibliografía}
+\printbibliography
+
+\end{document}

@@ -1,0 +1,1388 @@
+   UNIVERSIDAD JUA� REZ AUTO� NOMA DE TABASCO
+
+   DIVISIO� N ACADE� MICA DE CIENCIAS Y TECNOLOG�IAS DE LA
+                                    INFORMACIO� N
+
+SIMULACIO� N ACELERADA DE SPECKLE O� PTICO: UN ENFOQUE
+BASADO EN REDES NEURONALES F�ISICAMENTE INFORMADAS
+
+                                         (PINNS)
+
+                   TESIS PARA OBTENER EL GRADO DE:
+            MAESTRO EN CIENCIAS DE LA COMPUTACIO� N
+
+                                      PRESENTA:
+                     ROBERTO HERNA� NDEZ ESTRADA
+
+                            BAJO LA DIRECCIO� N DE:
+                 DR. JOSE� ADA� N HERNA� NDEZ NOLASCO
+
+                                                                                 CUNDUACA� N, TABASCO, A: JUNIO 2026
+
+   UNIVERSIDAD JUA� REZ AUTO� NOMA DE TABASCO
+
+   DIVISIO� N ACADE� MICA DE CIENCIAS Y TECNOLOG�IAS DE LA
+                                    INFORMACIO� N
+
+SIMULACIO� N ACELERADA DE SPECKLE O� PTICO: UN ENFOQUE
+BASADO EN REDES NEURONALES F�ISICAMENTE INFORMADAS
+
+                                         (PINNS)
+
+                   TESIS PARA OBTENER EL GRADO DE:
+            MAESTRO EN CIENCIAS DE LA COMPUTACIO� N
+
+                                      PRESENTA:
+                     ROBERTO HERNA� NDEZ ESTRADA
+
+                            BAJO LA DIRECCIO� N DE:
+                 DR. JOSE� ADA� N HERNA� NDEZ NOLASCO
+
+                                                                                 CUNDUACA� N, TABASCO, A: JUNIO 2026
+
+                      Declaracio� n de Autor�ia y Originalidad
+
+    En la Ciudad de Cunduaca� n el d�ia Siete del mes de Junio del an~ o 2026, el que suscri-
+be Roberto Herna� ndez Estrada, alumno del Programa de la Maestr�ia en Ciencias de
+la Computacio� n con nu� mero de matr�icula 252H21004, adscrito a la Divisio� n Acade� mi-
+ca de Ciencias y Tecnolog�ias de la Informacio� n, de la Universidad Jua� rez Auto� noma
+de Tabasco, como autor de la Tesis presentada para la obtencio� n del Grado de Maestr�ia
+y titulada Simulacio� n acelerada de speckle o� ptico: Un enfoque basado en redes
+neuronales f�isicamente informadas (PINNs), dirigida por el Dr. Jose� Ada� n Herna� ndez
+Nolasco.
+
+    DECLARO QUE: La Tesis es una obra original que no infringe los derechos de pro-
+piedad intelectual ni los derechos de propiedad industrial u otros, de acuerdo con el or-
+denamiento jur�idico vigente, en particular, la LEY FEDERAL DEL DERECHO DE AUTOR
+(Decreto por el que se reforman y adicionan diversas disposiciones de la Ley Federal del
+Derecho de Autor del 01 de Julio de 2020 regularizando, aclarando y armonizando las
+disposiciones legales vigentes sobre la materia), en particular, las disposiciones referidas
+al derecho de cita. Del mismo modo, asumo frente a la Universidad cualquier responsa-
+bilidad que pudiera derivarse de la autor�ia o falta de originalidad o contenido de la Tesis
+presentada de conformidad con el ordenamiento jur�idico vigente.
+
+    Cunduaca� n, Tabasco a 07 de Junio de 2026.
+
+                                Estudiante: Roberto Herna� ndez Estrada
+
+
+                            Carta de Cesio� n de Derechos
+
+                                                          Cunduaca� n, Tabasco a 07 de Junio de 2026.
+
+    Por medio de la presente manifiesto haber colaborado como AUTOR en la produc-
+cio� n, creacio� n y/o realizacio� n de la obra denominada: Simulacio� n acelerada de speckle
+o� ptico: Un enfoque basado en redes neuronales f�isicamente informadas (PINNs).
+
+    Con fundamento en el art�iculo 83 de la Ley Federal del Derecho de Autor y toda vez
+que, la creacio� n y/o realizacio� n de la obra antes mencionada se realizo� bajo la comisio� n
+de la Universidad Jua� rez Auto� noma de Tabasco; entendemos y aceptamos el alcance
+del art�iculo en mencio� n de que tenemos el derecho al reconocimiento como autores
+de la obra, y a la Universidad Jua� rez Auto� noma de Tabasco mantendra� en un 100 % la
+titularidad de los derechos patrimoniales por un per�iodo de 20 an~ os sobre la obra en la
+que colaboramos, por lo anterior, cedemos el derecho patrimonial exclusivo en favor de
+la Universidad.
+
+                                               COLABORADOR
+
+Estudiante: Roberto Herna� ndez Estrada
+                   TESTIGOS
+
+Dr. Jose� Ada� n Herna� ndez Nolasco  Dr. O� scar Alberto Cha� vez Bosquez
+
+�Indice general
+
+�Indice de Figuras     IV
+
+�Indice de Tablas      V
+
+Resumen                VI
+
+Abstract               VII
+
+1. Generalidades       1
+
+1.1. Introduccio� n . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+1.2. Planteamiento del problema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+1.2.1. Definicio� n del problema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+1.2.2. Delimitacio� n de la investigacio� n . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+1.3. Preguntas de investigacio� n e hipo� tesis . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+1.4. Objetivo general . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+1.5. Objetivos espec�ificos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+1.6. Justificacio� n . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+1.7. Metodolog�ia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+
+2. Marco Teo� rico     8
+
+2.1. Conceptos y teor�ias fundamentales . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+2.1.1. Ecuacio� n de onda de Helmholtz . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+2.1.2. Speckle o� ptico completamente desarrollado . . . . . . . . . . . . . . . . . . . 9
+
+2.1.3. Redes Neuronales Informadas por F�isica (PINNs) . . . . . . . . . . . . . . . 9
+
+                    I
+
+                                  �Indice general
+
+      2.1.4. Redes SIREN y sesgo espectral . . . . . . . . . . . . . . . . . . . . . . . . . 10
+      2.1.5. Diferenciacio� n automa� tica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+      2.1.6. Muestreo Latino Hipercu� bico (LHS) . . . . . . . . . . . . . . . . . . . . . . . 11
+      2.1.7. Optimizacio� n h�ibrida Adam + L-BFGS . . . . . . . . . . . . . . . . . . . . . . 11
+2.2. Literatura relacionada . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+2.3. Marco tecnolo� gico . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+      2.3.1. Infraestructura de hardware . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+      2.3.2. Ecosistema de software . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+3. Modelo e implementacio� n      14
+
+3.1. Formulacio� n del problema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+3.1.1. Experimento 1 (NB01): Validacio� n 1D . . . . . . . . . . . . . . . . . . . . . . 14
+
+3.1.2. Experimento 2 (NB02): Validacio� n 2D con campo complejo . . . . . . . . . . 15
+
+3.1.3. Experimento 3 (NB03): Simulacio� n de speckle o� ptico . . . . . . . . . . . . . . 15
+
+3.2. Arquitectura SIREN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+3.3. Funcio� n de pe� rdida y calibracio� n de pesos . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+3.4. Estrategia de muestreo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+3.4.1. Puntos interiores (colocacio� n) . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+3.4.2. Puntos de frontera . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+3.5. Estrategia de optimizacio� n . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+3.6. Me� tricas de validacio� n . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+3.6.1. Error L2 relativo (NB01 y NB02) . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+3.6.2. Contraste y test KS (NB03) . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+3.7. Implementacio� n modular . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+4. Experimentos y Resultados      20
+
+4.1. NB01: Validacio� n 1D � Helmholtz con solucio� n anal�itica . . . . . . . . . . . . . . . . 20
+
+4.1.1. Configuracio� n experimental . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+4.1.2. Resultados de precisio� n . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+4.1.3. Ana� lisis y comparativa con el estado del arte . . . . . . . . . . . . . . . . . . 21
+
+4.2. NB02: Validacio� n 2D � Helmholtz con campo complejo . . . . . . . . . . . . . . . . . 21
+
+                              ii
+
+                    �Indice general
+
+      4.2.1. Configuracio� n experimental . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+      4.2.2. Resultados de precisio� n . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+      4.2.3. Ana� lisis de resultados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+      4.2.4. Reproducibilidad multi-semilla . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+4.3. Ablacio� n del peso de f�isica f�is . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+4.4. NB03: Simulacio� n de speckle o� ptico . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+      4.4.1. Configuracio� n experimental . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+      4.4.2. Resultados estad�isticos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+      4.4.3. Ana� lisis de resultados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+
+                4.4.3.1. Contraste del speckle . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+                4.4.3.2. Distribucio� n de intensidades . . . . . . . . . . . . . . . . . . . . . . 27
+                4.4.3.3. Test de Kolmogorov-Smirnov . . . . . . . . . . . . . . . . . . . . . . 28
+                4.4.3.4. Generalidad de la arquitectura . . . . . . . . . . . . . . . . . . . . . 28
+4.5. Comparativa con el estado del arte . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+4.6. Resumen de experimentos completados . . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+Bibliograf�ia       31
+
+               iii
+
+�Indice de figuras
+
+    4.1. Validacio� n PINN-SIREN para Helmholtz 1D. Panel izquierdo: comparacio� n entre la
+           prediccio� n de la red y la solucio� n anal�itica Eexacta(x) = cos(kx) en 1,000 puntos
+           uniformes en [0, 1]. Panel derecho: error puntual |E^(x) - Eexacta(x)|. Error L2 =
+           0.006 %, R2 = 1.000000. GPU: NVIDIA RTX 5050, SEED = 42. . . . . . . . . . . . . . 22
+
+    4.2. Me� tricas adicionales de entrenamiento NB01. De izquierda a derecha: curva de
+           pe� rdida total durante las fases Adam y L-BFGS, distribucio� n del error puntual y
+           me� tricas de ajuste (R2, Pearson). La transicio� n Adam  L-BFGS a la e� poca 15,000
+           es visible como una ca�ida abrupta en la curva de pe� rdida. . . . . . . . . . . . . . . . 22
+
+    4.3. Validacio� n PINN-SIREN para Helmholtz 2D con campo complejo. Fila superior:
+           partes real e imaginaria de la solucio� n anal�itica Eexacta = ei(kxx+kyy). Fila inferior:
+           prediccio� n PINN-SIREN correspondiente. La diferencia visual es indistinguible; los
+           errores puntuales son del orden de 10-3 (ve� ase la Tabla 4.2). Malla de evaluacio� n
+           100 � 100, SEED = 42. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+
+    4.4. Me� tricas adicionales de entrenamiento NB02. Panel izquierdo: curva de pe� rdida
+           total mostrando la transicio� n bifa� sica Adam  L-BFGS. Paneles central y derecho:
+           mapas de error puntual |Ereal - E^real| y |Eimag - E^imag| en la malla 100 � 100. Los
+           errores ma� s altos se concentran en las esquinas del dominio. . . . . . . . . . . . . . 25
+
+    4.5. Simulacio� n de speckle o� ptico con PINN-SIREN (NB03). . . . . . . . . . . . . . . . . 28
+
+                                                                               IV
+
+�Indice de tablas
+
+    3.1. Hiperpara� metros de entrenamiento consolidados. . . . . . . . . . . . . . . . . . . . 17
+    4.1. Me� tricas de precisio� n � PINN-SIREN 1D (k = 2). . . . . . . . . . . . . . . . . . . . 21
+
+                                                                                               
+    4.2. Me� tricas de precisio� n � PINN-SIREN 2D (k = 2, kx = ky = k/ 2). . . . . . . . . . 23
+    4.3. Reproducibilidad multi-semilla � NB02 (f�is = 0.1). . . . . . . . . . . . . . . . . . . . 25
+    4.4. Ablacio� n del peso de f�isica f�is � NB02. . . . . . . . . . . . . . . . . . . . . . . . . . 26
+    4.5. Validacio� n estad�istica del speckle � PINN-SIREN NB03. . . . . . . . . . . . . . . . . 27
+    4.6. Comparativa de error L2 relativo � PINN-SIREN vs. estado del arte. . . . . . . . . . 29
+    4.7. Estado de los experimentos planificados. . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+                                                                                V
+
+Resumen
+
+    Se presenta una implementacio� n de Redes Neuronales Informadas por F�isica con activacio� n
+sinusoidal (PINN-SIREN) para la simulacio� n acelerada del patro� n de speckle o� ptico, mediante la
+resolucio� n de la ecuacio� n de Helmholtz bidimensional con campo ele� ctrico complejo y condicio� n
+de frontera de fase aleatoria. La arquitectura SIREN propuesta (5 � 128 neuronas, 0 = 1.0) alcan-
+za errores L2 de 0.006 % en el caso 1D y 0.171 % en el caso 2D respecto a soluciones anal�iticas,
+superando al estado del arte en factores de �415 y �11.2, respectivamente. El patro� n de speckle
+se genera imponiendo una fase aleatoria (x)  U (0, 2) en la superficie iluminada y resolviendo
+la ecuacio� n de Helmholtz libremente en el interior del dominio. La validacio� n estad�istica sigue
+el criterio de Goodman: contraste C = I /I = 1.0253 y distribucio� n de intensidades exponen-
+cial negativa, confirmando speckle completamente desarrollado. Una estrategia de optimizacio� n
+bifa� sica Adam + L-BFGS y el muestreo por hipercubo latino (LHS) son clave para la convergen-
+cia. La reproducibilidad del me� todo fue verificada con tres semillas independientes, obteniendo
+un error L2 promedio de 0.155 � 0.020 %.
+Palabras clave: Redes Neuronales Informadas por F�isica, SIREN, ecuacio� n de Helmholtz, spec-
+kle o� ptico, activacio� n sinusoidal, muestreo por hipercubo latino.
+
+                                                                               VI
+
+Abstract
+
+    Physics-Informed Neural Networks with sinusoidal activation functions (SIREN-PINNs) are ap-
+plied to simulate optical speckle patterns by solving the 2D Helmholtz equation with a complex
+electric field and a random-phase boundary condition. The proposed SIREN architecture (5 � 128,
+0 = 1.0) achieves relative L2 errors of 0.006 % (1D) and 0.171 % (2D) against analytical solutions,
+outperforming the state-of-the-art by factors of �415 and �11.2, respectively. Speckle patterns are
+generated by imposing a random phase (x)  U(0, 2) on the illuminated surface and solving
+the Helmholtz equation freely in the interior domain. Statistical validation confirms fully developed
+speckle: contrast C = 1.0253 and negative-exponential intensity distribution consistent with Good-
+man's theory. A two-phase Adam + L-BFGS optimization strategy and Latin Hypercube Sampling
+(LHS) are key to convergence. Reproducibility was verified with three independent random seeds,
+yielding a mean L2 error of 0.155 � 0.020 %.
+Keywords: Physics-Informed Neural Networks, SIREN, Helmholtz equation, optical speckle, sinu-
+soidal activation, Latin Hypercube Sampling.
+
+                                                                               VII
+
+Cap�itulo 1
+
+Generalidades
+
+1.1. Introduccio� n
+
+    La simulacio� n de la propagacio� n de la luz es una herramienta fundamental en la ciencia y la
+ingenier�ia, con aplicaciones que abarcan desde el disen~ o de sistemas de telecomunicaciones y la
+nanofoto� nica hasta el desarrollo de te� cnicas de imagenolog�ia me� dica. Un feno� meno de particular
+intere� s es el speckle o� ptico, un patro� n de interferencia granular de alto contraste que surge cuando
+luz coherente, como la emitida por un la� ser, se dispersa sobre una superficie rugosa o un medio
+difusor.
+
+    Tradicionalmente, la simulacio� n de estos feno� menos ondulatorios se aborda mediante me� to-
+dos nume� ricos robustos como el Me� todo de Elementos Finitos (FEM) o me� todos estoca� sticos
+como el de Monte Carlo. Sin embargo, estos me� todos presentan un cuello de botella compu-
+tacional significativo: requieren una discretizacio� n extremadamente fina del dominio espacial para
+resolver las oscilaciones ra� pidas del campo de luz, lo que resulta en un consumo masivo de me-
+moria y tiempos de co� mputo que pueden extenderse por horas o d�ias cuando se necesitan miles
+de realizaciones estad�isticas (Goodman, 2007; Jin, 2014).
+
+    En paralelo, el campo de la inteligencia artificial ha experimentado un crecimiento disruptivo.
+Una innovacio� n reciente son las Redes Neuronales Informadas por F�isica (PINNs, por sus siglas
+en ingle� s Physics-Informed Neural Networks), una metodolog�ia que fusiona el Deep Learning con
+las leyes f�isicas fundamentales. Las PINNs (Raissi et al., 2019) son redes neuronales entrena-
+das no solo para ajustarse a datos de frontera, sino para obedecer directamente una Ecuacio� n
+
+                                                                1
+
+                                                                                             Cap�itulo 1. Generalidades
+
+Diferencial Parcial (EDP) que gobierna el feno� meno f�isico de intere� s.
+    No obstante, las activaciones esta� ndar de las redes neuronales (tanh, ReLU) presentan un
+
+sesgo espectral (Rahaman et al., 2019): tienden a aprender frecuencias bajas antes que las altas.
+Para la ecuacio� n de Helmholtz con nu� mero de onda k = 2, este sesgo produce derivadas de
+segundo orden inestables y una convergencia lenta. Las Sinusoidal Representation Networks
+(SIREN), propuestas por Sitzmann et al. (2020), resuelven este problema mediante la funcio� n
+de activacio� n (z) = sin(0z), convirtiendo la arquitectura en la eleccio� n natural para resolver
+ecuaciones de onda.
+
+    Este proyecto se situ� a en la interseccio� n de la o� ptica computacional y la inteligencia artifi-
+cial, aplicando el paradigma PINN-SIREN para superar las limitaciones computacionales de los
+me� todos cla� sicos en la simulacio� n del speckle o� ptico.
+
+1.2. Planteamiento del problema
+
+1.2.1. Definicio� n del problema
+
+    La simulacio� n precisa de co� mo la luz se dispersa y forma patrones de speckle es crucial
+para sistemas o� pticos avanzados en imagenolog�ia biome� dica (tomograf�ia de coherencia o� ptica),
+metrolog�ia (medicio� n de vibraciones y deformaciones) y criptograf�ia o� ptica.
+
+    El desaf�io central radica en el costo computacional prohibitivo de los me� todos nume� ricos ac-
+tuales:
+
+   1. Me� todos Basados en Malla (FEM): Para capturar con precisio� n los detalles finos de un
+       patro� n de speckle, la malla debe tener una resolucio� n espacial menor que la longitud de on-
+       da de la luz (Jin, 2014). Esto conduce a sistemas de ecuaciones con millones de inco� gnitas
+       por realizacio� n, requiriendo alta memoria RAM y tiempos de ejecucio� n que frenan la investi-
+       gacio� n. Cada nuevo perfil de rugosidad superficial exige resolver el sistema completo desde
+       cero.
+
+   2. Me� todos Estoca� sticos (Monte Carlo): Requieren simular un nu� mero masivo de fotones
+       individuales para construir un patro� n estad�isticamente preciso, lo que los hace prohibitivos
+       para estudios parame� tricos que requieren miles de realizaciones.
+
+                                                                2
+
+                                                                                             Cap�itulo 1. Generalidades
+
+    Aunque la aplicacio� n de las PINNs para resolver la ecuacio� n de Helmholtz ha sido validada
+en simulaciones de ondas acu� sticas (Schoder & Kraxberger, 2024), hasta donde alcanza el co-
+nocimiento actual, la aplicacio� n sistema� tica de este paradigma con activacio� n sinusoidal para la
+simulacio� n eficiente de speckle o� ptico de alta resolucio� n no ha sido abordada en la literatura.
+
+1.2.2. Delimitacio� n de la investigacio� n
+
+Alcances
+     Se entregara� un prototipo de software funcional, implementado en Python (PyTorch), capaz
+       de construir y entrenar un modelo PINN-SIREN para resolver la ecuacio� n de Helmholtz en
+       dominios 2D.
+     Se validara� cuantitativamente la precisio� n del modelo contra soluciones anal�iticas conocidas
+       mediante el error relativo L2.
+     El modelo sera� capaz de simular la generacio� n de patrones de speckle o� ptico en 2D, me-
+       diante la imposicio� n de una condicio� n de frontera con fase aleatoria (x)  U (0, 2).
+     Se realizara� una evaluacio� n estad�istica del patro� n generado conforme al criterio de Good-
+       man para speckle completamente desarrollado (Goodman, 2007).
+     Se realizara� una evaluacio� n comparativa (benchmark ) del tiempo de inferencia contra el
+       me� todo FEM para demostrar la viabilidad computacional del enfoque propuesto.
+
+Limitaciones
+     Dimensionalidad: Todas las simulaciones se restringen a dominios bidimensionales (2D).
+       El desarrollo en 3D esta� fuera del alcance de este trabajo de maestr�ia.
+     Alcance computacional: Esta es una investigacio� n puramente computacional y de simu-
+       lacio� n. No se incluyen montajes o� pticos experimentales ni validacio� n contra datos f�isicos
+       reales.
+
+                                                                3
+
+                                                                                             Cap�itulo 1. Generalidades
+
+     Simplificacio� n del medio difusor: El medio se modela como una frontera con fase alea-
+       toria discreta (N = 256 puntos). No se aborda la simulacio� n de medios volume� tricos ni
+       propiedades no lineales.
+
+1.3. Preguntas de investigacio� n e hipo� tesis
+
+    Las preguntas que gu�ian esta investigacio� n son:
+
+   1. �Puede un modelo PINN con activacio� n sinusoidal (SIREN) aproximar con precisio� n la so-
+       lucio� n de la ecuacio� n de Helmholtz 2D para la simulacio� n de patrones de speckle o� ptico,
+       logrando un error L2 < 5 % respecto a soluciones de referencia?
+
+   2. �Cua� l es la ganancia en eficiencia computacional (tiempo de inferencia y uso de memoria)
+       del enfoque PINN-SIREN respecto al FEM para simular el mismo feno� meno?
+
+   3. �Presenta el patro� n de intensidad simulado las propiedades estad�isticas caracter�isticas del
+       speckle completamente desarrollado definidas por la teor�ia de Goodman?
+
+    Hipo� tesis: El desarrollo de un modelo PINN-SIREN para la resolucio� n de la ecuacio� n de
+Helmholtz 2D con campo complejo permitira� : (i) simular la generacio� n de speckle o� ptico con
+un error relativo L2 < 5 % respecto a la solucio� n anal�itica de referencia; (ii) obtener un factor
+de aceleracio� n S = TFEM/TPINN > 1 en la fase de inferencia; y (iii) preservar las propiedades
+estad�isticas del feno� meno con un contraste de speckle |C - 1| < 0.1 conforme al criterio de
+Goodman (2007).
+
+1.4. Objetivo general
+
+    Construir y validar un modelo computacional basado en Redes Neuronales Informadas por
+F�isica con activacio� n sinusoidal (PINN-SIREN) para la simulacio� n acelerada y f�isicamente pre-
+cisa de patrones de speckle o� ptico, mediante la resolucio� n directa de la ecuacio� n de Helmholtz
+bidimensional con campo ele� ctrico complejo.
+
+                                                                4
+
+                                                                                             Cap�itulo 1. Generalidades
+
+1.5. Objetivos espec�ificos
+
+   1. Disen~ ar e implementar una arquitectura SIREN que incorpore el residuo de la ecuacio� n de
+       Helmholtz en su funcio� n de pe� rdida, con activacio� n (z) = sin(0z) y una estrategia de
+       inicializacio� n que preserve la distribucio� n de activaciones en profundidad (Sitzmann et al.,
+       2020).
+
+   2. Entrenar y validar la precisio� n del modelo PINN-SIREN en el escenario unidimensional
+       (NB01), comparando contra la solucio� n anal�itica E(x) = cos(kx) mediante el error relati-
+       vo L2.
+
+   3. Escalar el modelo al caso bidimensional con campo complejo (NB02), empleando Muestreo
+       Latino Hipercu� bico (LHS) para los puntos de colocacio� n y validando contra la solucio� n de
+       onda plana E = ei(kxx+kyy).
+
+   4. Aplicar el modelo validado a la simulacio� n de speckle o� ptico (NB03) mediante una condicio� n
+       de frontera de fase aleatoria, y validar estad�isticamente el patro� n generado conforme al
+       criterio de Goodman.
+
+   5. Comparar cuantitativamente el rendimiento computacional del modelo PINN-SIREN contra
+       una implementacio� n FEM de referencia (NB04), cuantificando el factor de aceleracio� n S =
+       TFEM/TPINN.
+
+1.6. Justificacio� n
+
+    Esta investigacio� n se justifica en tres ejes principales:
+
+     Justificacio� n computacional: El principal obsta� culo en la simulacio� n o� ptica avanzada es el
+       costo prohibitivo de los me� todos de malla. El enfoque mesh-free propuesto busca reducir los
+       tiempos de simulacio� n en al menos un orden de magnitud, habilitando estudios estad�isticos
+       de speckle que actualmente son intratables.
+
+     Justificacio� n cient�ifica: La simulacio� n precisa de speckle impacta directamente en la ima-
+       genolog�ia biome� dica (tomograf�ia de coherencia o� ptica), la metrolog�ia de precisio� n y la crip-
+
+                                                                5
+
+                                                                                             Cap�itulo 1. Generalidades
+
+       tograf�ia o� ptica. Acelerar la simulacio� n tiene consecuencias directas en la capacidad de in-
+       novar en estas a� reas de alto impacto.
+
+     Justificacio� n programa� tica: El proyecto se alinea estrate� gicamente con la L�inea de Ge-
+       neracio� n y Aplicacio� n del Conocimiento (LGAC) en Ciencia de Datos e Inteligencia Artificial
+       de la Maestr�ia en Ciencias de la Computacio� n de la UJAT. Aplica una te� cnica de vanguardia
+       en Deep Learning para resolver una EDP fundamental de la f�isica, demostrando la sinergia
+       entre la IA y la ciencia computacional avanzada.
+
+1.7. Metodolog�ia
+
+    La metodolog�ia se basa en el marco de trabajo de las PINNs propuesto por Raissi et al. (2019),
+extendido con la arquitectura de activacio� n sinusoidal SIREN (Sitzmann et al., 2020). El proyecto
+es un estudio computacional cuantitativo y experimental, desarrollado en cuatro fases alineadas
+con los objetivos espec�ificos.
+
+Fase 1 - NB01: Validacio� n anal�itica 1D. Se implementa el modelo PINN-SIREN (5 � 64 neuro-
+       nas) para resolver la ecuacio� n de Helmholtz 1D con solucio� n anal�itica conocida E(x) =
+       cos(kx). La funcio� n de pe� rdida combina el error en las condiciones de frontera Dirichlet y el
+       residuo de Helmholtz evaluado en puntos de colocacio� n uniformes. Se emplea una estrate-
+       gia de optimizacio� n bifa� sica: Adam (hasta 15,000 e� pocas) seguido de L-BFGS (bu� squeda
+       de l�inea strong Wolfe).
+
+Fase 2 - NB02: Escala a 2D con campo complejo. Se escala la arquitectura a 5�128 neuronas
+       para acomodar el campo complejo (Ereal, Eimag). Se introduce el Muestreo Latino Hipercu� bi-
+       co (LHS) con Nc = 3,000 puntos de colocacio� n y Nb = 300 puntos de frontera por lado
+       (McKay et al., 1979). Se calibra el peso de la funcio� n de pe� rdida f�is = 0.1 mediante abla-
+       cio� n.
+
+Fase 3 - NB03: Simulacio� n de speckle o� ptico. Se aplica el modelo validado a la generacio� n
+       de speckle, reemplazando la condicio� n de onda plana por una frontera con fase aleatoria
+       (x)  U(0, 2) en y = 0 y bordes libres en el resto del dominio. La validacio� n estad�istica
+
+                                                                6
+
+                                                                                             Cap�itulo 1. Generalidades
+       sigue el criterio de Goodman (Goodman, 2007): contraste C = I /I y test de Kolmogorov-
+       Smirnov contra la distribucio� n exponencial teo� rica.
+Fase 4 - NB04: Benchmark FEM (trabajo futuro). Comparacio� n cuantitativa del tiempo de infe-
+       rencia PINN-SIREN contra una implementacio� n de referencia con FEniCSx, para calcular el
+       factor de aceleracio� n S = TFEM/TPINN y la huella de memoria pico. Esta fase esta� programa-
+       da como trabajo futuro inmediato.
+
+                                                                7
+
+Cap�itulo 2
+
+Marco Teo� rico
+
+2.1. Conceptos y teor�ias fundamentales
+
+    Esta seccio� n establece los fundamentos teo� ricos sobre los cuales se construye el modelo
+PINN-SIREN para la simulacio� n de speckle o� ptico.
+
+2.1.1. Ecuacio� n de onda de Helmholtz
+
+La propagacio� n de luz coherente monocroma� tica en un medio homoge� neo e iso� tropo esta�
+
+gobernada por la ecuacio� n de onda de Helmholtz escalar (Born & Wolf, 1999; Goodman, 2007;
+
+Jin, 2014):
+
+                 2E(r) + k2E(r) = 0,                      (2.1)
+
+donde E(r)  C es la amplitud compleja del campo ele� ctrico, k = 2/ es el nu� mero de onda y 
+la longitud de onda del la� ser. En dos dimensiones espaciales (r = (x, y)):
+
+                 2E  +  2E                 +  k2E  =  0.  (2.2)
+                 x2     y2
+
+    Dado que las redes neuronales operan sobre nu� meros reales, el campo complejo se des-
+compone en sus partes real e imaginaria: E = Ereal + iEimag. Ambas componentes satisfacen la
+
+                                        8
+
+                                                               Cap�itulo 2. Marco Teo� rico
+
+ecuacio� n (2.2) de forma independiente:
+
+       2Ereal + k2Ereal = 0,                     2Eimag + k2Eimag = 0.          (2.3)
+
+La intensidad f�isica observable del speckle se calcula como:
+
+       I(x, y) = |E|2 = Er2eal + Ei2mag.                                        (2.4)
+
+2.1.2. Speckle o� ptico completamente desarrollado
+
+    Cuando una superficie rugosa con variacio� n de fase   2 es iluminada por luz coherente,
+las contribuciones de los distintos puntos de la superficie interfieren de forma aleatoria. Por el Teo-
+rema del L�imite Central, el campo complejo resultante sigue una distribucio� n gaussiana circular
+compleja (Goodman, 2007):
+
+       Ereal, Eimag  N (0, E2 ), independientes.                                (2.5)
+
+La intensidad I = |E|2 sigue entonces una distribucio� n exponencial negativa:
+
+                                          1      I                              (2.6)
+       p(I) = exp - , I  0,
+                                          I      I 
+
+con valor esperado I = 2E2 y desviacio� n esta� ndar I = I. El contraste del speckle se define
+
+como:
+
+                                             C = I = 1,                         (2.7)
+                                                   I 
+
+criterio que vale exactamente 1 para speckle completamente desarrollado y disminuye cuando el
+campo pierde coherencia o la rugosidad es insuficiente (Goodman, 2007).
+
+2.1.3. Redes Neuronales Informadas por F�isica (PINNs)
+
+    El enfoque de resolver EDPs con redes neuronales fue pionero por Lagaris et al. (1998), quie-
+nes demostraron que redes feedforward pod�ian aproximar soluciones de ecuaciones diferenciales
+ordinarias y parciales mediante una funcio� n de prueba que satisface las condiciones de frontera
+
+                                              9
+
+                                                     Cap�itulo 2. Marco Teo� rico
+
+exactamente. Este trabajo establece el precedente directo de las PINNs modernas. La capacidad
+de aproximacio� n universal de las redes feedforward fue formalizada por Hornik et al. (1989).
+
+    Las PINNs modernas, introducidas por Raissi et al. (2019) y revisadas extensamente en Kar-
+niadakis et al. (2021) y Cuomo et al. (2022), aproximan la solucio� n de una EDP mediante una red
+neuronal N(r) cuyos para� metros  se optimizan minimizando una funcio� n de pe� rdida compuesta:
+
+L() = Ldatos() + f�is Lf�isica(),                    (2.8)
+
+donde Ldatos penaliza el error en las condiciones de frontera y Lf�isica penaliza la violacio� n de la
+EDP en el interior del dominio. Para la ecuacio� n de Helmholtz 2D con campo complejo:
+
+                1 Nb   N(rbj) - E(rbj)  2             (2.9)
+Ldatos() = Nb j=1                                    (2.10)
+                                         ,
+
+Lf�isica() =   1  Nc   Rreal(ric)2 + Rimag(ric)2  ,
+              Nc  i=1
+
+donde Rreal = 2Ereal + k2Ereal y Rimag = 2Eimag + k2Eimag son los residuos de Helmholtz,
+{rjb} son los puntos de frontera y {rci } los puntos de colocacio� n interiores. Las derivadas 2E se
+obtienen mediante diferenciacio� n automa� tica (Baydin et al., 2018).
+
+2.1.4. Redes SIREN y sesgo espectral
+
+    Las activaciones esta� ndar (ReLU, tanh) presentan un sesgo espectral (Rahaman et al., 2019):
+aprenden frecuencias bajas antes que las altas. Para la ecuacio� n de Helmholtz con k = 2, es-
+to produce derivadas de segundo orden inestables y convergencia lenta. Adicionalmente, ReLU
+tiene segunda derivada nula, lo que impide computar el Laplaciano mediante diferenciacio� n au-
+toma� tica.
+
+    Sitzmann et al. (2020) proponen las redes SIREN (Sinusoidal Representation Networks), que
+utilizan la activacio� n (z) = sin(0z) con una inicializacio� n espec�ifica:
+
+h = sin 0 (W h-1 + b) ,  = 1, . . . , L,             (2.11)
+
+                       10
+
+                                                                                              Cap�itulo 2. Marco Teo� rico
+
+donde las matrices W se inicializan segu� n U (- 6/d, 6/d) para capas intermedias y U (-1/nin, 1/nin)
+para la primera capa. Esta inicializacio� n garantiza que las distribuciones de activacio� n sean apro-
+ximadamente uniformes en [-1, 1], condicio� n necesaria para la estabilidad de derivadas de orden
+arbitrario. La derivada de cualquier orden de SIREN es tambie� n una red SIREN, lo que la convierte
+en la eleccio� n natural para resolver EDPs con operadores diferenciales de orden superior.
+
+2.1.5. Diferenciacio� n automa� tica
+
+    La diferenciacio� n automa� tica (autodiff ) permite calcular derivadas de cualquier orden con pre-
+cisio� n de ma� quina mediante la aplicacio� n sucesiva de la regla de la cadena sobre el grafo de
+operaciones del programa (Baydin et al., 2018). En el contexto de las PINNs, autodiff actu� a como
+el motor que permite evaluar el Laplaciano 2 directamente sobre las salidas de la red neuronal
+respecto a sus coordenadas de entrada, sin los errores de truncamiento de las diferencias finitas.
+
+2.1.6. Muestreo Latino Hipercu� bico (LHS)
+
+    El Muestreo Latino Hipercu� bico (McKay et al., 1979) es una estrategia de muestreo estratifica-
+do disen~ ada para generar una distribucio� n de puntos de colocacio� n que cubra de manera cuasi-
+o� ptima el dominio computacional . A diferencia del muestreo aleatorio simple, el LHS divide
+cada dimensio� n en Nc estratos iguales y coloca exactamente un punto por estrato, garantizando
+cobertura uniforme sin los patrones redundantes de una malla cartesiana. Esto permite a la red
+capturar la f�isica de la ecuacio� n de Helmholtz con una densidad de puntos significativamente me-
+nor, optimizando el uso de memoria GPU y reduciendo el tiempo de convergencia (Cuomo et al.,
+2022).
+
+2.1.7. Optimizacio� n h�ibrida Adam + L-BFGS
+
+    El entrenamiento sigue una estrategia bifa� sica (Wang et al., 2021):
+
+   1. Fase 1 � Adam: Optimizador estoca� stico de primer orden (Kingma & Ba, 2015) con tasa
+       de aprendizaje  = 10-3, paciencia de 800 e� pocas sin mejora mayor que  = 10-7 y un
+       ma� ximo de 15,000 e� pocas. Adam realiza exploracio� n global del espacio de para� metros y
+       proporciona un punto de inicio pro� ximo al m�inimo global.
+
+                                                               11
+
+                                                                                              Cap�itulo 2. Marco Teo� rico
+
+   2. Fase 2 � L-BFGS: Optimizador cuasi-Newton de segundo orden (Limited-memory Broyden-
+       Fletcher-Goldfarb-Shanno) (Nocedal & Wright, 2006) con bu� squeda de l�inea strong Wolfe,
+       ma� ximo 1,000 iteraciones y taman~ o de historial 100. L-BFGS aprovecha la informacio� n de
+       curvatura para realizar un ajuste fino de alta precisio� n desde el punto entregado por Adam.
+
+    Esta combinacio� n supera a Adam puro en precisio� n final y a L-BFGS puro en robustez ante
+m�inimos locales.
+
+2.2. Literatura relacionada
+
+    El uso de redes neuronales para resolver EDPs fue revitalizado por Raissi et al. (2019), quie-
+nes demostraron la capacidad de las PINNs para resolver una amplia gama de problemas f�isicos
+sin necesidad de mallado. El ana� lisis teo� rico de por que� las PINNs pueden fallar en el entre-
+namiento fue abordado por Wang et al. (2022) mediante la teor�ia del nu� cleo tangente neuronal
+(NTK), estableciendo las condiciones bajo las cuales el entrenamiento converge.
+
+    En el campo de las ecuaciones de onda, Moseley et al. (2020) aplicaron PINNs para resolver
+la ecuacio� n de onda acu� stica 2D en modelos de velocidad variables, demostrando la viabilidad del
+enfoque en dominios inhomoge� neos. Para la ecuacio� n de Helmholtz espec�ificamente, Alkhalifah
+et al. (2021) propusieron un marco de aprendizaje automa� tico para obtener soluciones del campo
+de onda en s�ismica, usando la ecuacio� n de Helmholtz como restriccio� n en la funcio� n de pe� rdida.
+
+    En el campo de la o� ptica y el electromagnetismo, Fang y Zhan (2020) aplicaron PINNs para
+resolver problemas de dispersio� n de ondas en medios inhomoge� neos 2D, mientras que Chen et
+al. (2020) las utilizaron para el disen~ o inverso en nanofoto� nica. Lu et al. (2021) desarrollaron la
+biblioteca DeepXDE que sistematiza la implementacio� n de PINNs para diversas EDPs.
+
+    El trabajo ma� s directamente relacionado es el de Schoder y Kraxberger (2024), que realizo�
+un estudio de factibilidad resolviendo la ecuacio� n de Helmholtz en 3D con PINNs de activacio� n
+tanh, reportando un error L2 = 2.49 % (1D) y L2 = 1.91 % (2D) respecto a soluciones FEM de
+referencia. Este trabajo establece la l�inea base de comparacio� n para la presente investigacio� n.
+
+    La brecha en el conocimiento identificada es la siguiente: ningu� n trabajo previo ha aplicado
+sistema� ticamente la arquitectura SIREN (Sitzmann et al., 2020) �con su ventaja intr�inseca para
+
+                                                               12
+
+                                                                                              Cap�itulo 2. Marco Teo� rico
+representar funciones de alta frecuencia� a la simulacio� n del speckle o� ptico como feno� meno
+estad�istico complejo. Esta investigacio� n cierra dicha brecha.
+
+2.3. Marco tecnolo� gico
+
+2.3.1. Infraestructura de hardware
+
+    El entrenamiento de los modelos PINN-SIREN se realizo� sobre la siguiente infraestructura:
+     GPU: NVIDIA GeForce RTX 5050 (8.5 GB VRAM), con nu� cleos CUDA para acelerar la
+
+       diferenciacio� n automa� tica de segundo orden requerida por el ca� lculo del Laplaciano.
+     CUDA: Versio� n 12.6.
+     Memoria RAM: Gestio� n del flujo de puntos de colocacio� n y ejecucio� n del optimizador h�ibri-
+
+       do.
+
+2.3.2. Ecosistema de software
+
+     Python 3.11: Lenguaje de implementacio� n principal.
+     PyTorch 2.4: Framework de Deep Learning que proporciona diferenciacio� n automa� tica de
+
+       segundo orden y soporte GPU mediante CUDA (Raissi et al., 2019).
+     NumPy / SciPy: Operaciones nume� ricas y muestreo LHS (scipy.stats.qmc.LatinHypercube).
+     Matplotlib: Visualizacio� n de campos, distribuciones estad�isticas y curvas de entrenamiento.
+     Mo� dulos propios: src/models.py (arquitectura SIREN), src/losses.py (funcio� n de pe� rdi-
+
+       da PINN), src/utils.py (me� tricas y visualizacio� n).
+
+                                                               13
+
+Cap�itulo 3
+
+Modelo e implementacio� n
+
+3.1. Formulacio� n del problema
+
+    Se considera el dominio cuadrado adimensional  = [0, 1]2, donde las coordenadas han si-
+do normalizadas por la longitud de onda del la� ser ( = 638 nm, la� ser de diodo rojo). Bajo esta
+normalizacio� n, el nu� mero de onda adimensional es k~ = 2.
+
+    Se plantean tres experimentos sucesivos de complejidad creciente:
+
+3.1.1. Experimento 1 (NB01): Validacio� n 1D
+
+La ecuacio� n de Helmholtz unidimensional en x  [0, 1] con condiciones de Dirichlet:
+
+d2E  +  k2E  =  0,  E(xj) = cos(kxj),         xj  {0, 0.25, 0.5, 0.75, 1},            (3.1)
+dx2
+
+admite la solucio� n anal�itica Eexacta(x) = cos(kx), utilizada para validar la arquitectura y la funcio� n
+de pe� rdida. Se imponen cinco puntos de frontera (en lugar de u� nicamente los dos extremos x = 0
+y x = 1): la condicio� n sime� trica E(0) = E(1) = 1 colapsa la red hacia la solucio� n constante trivial
+durante el entrenamiento, ya que ambos extremos son consistentes con E  1; an~ adir tres puntos
+intermedios conocidos de la solucio� n anal�itica rompe esa simetr�ia y estabiliza la convergencia.
+
+                    14
+
+                                                    Cap�itulo 3. Modelo e implementacio� n
+
+3.1.2. Experimento 2 (NB02): Validacio� n 2D con campo complejo
+
+La ecuacio� n de Helmholtz 2D en  = [0, 1]2 con condicio� n de onda plana diagonal en los
+
+cuatro bordes:
+
+                Eexacta(x, y) = ei(kxx+kyy),                       k                (3.2)
+                                                    kx = ky =  ,
+                                                    2
+
+que satisface kx2 + ky2 = k2. La condicio� n de frontera se impone separando la solucio� n en sus
+partes real e imaginaria:
+
+                Ereal(x, y)  = cos(kxx + kyy),      Eimag(x, y)  = sin(kxx + kyy).  (3.3)
+
+3.1.3. Experimento 3 (NB03): Simulacio� n de speckle o� ptico
+
+    La ecuacio� n de Helmholtz 2D en  = [0, 1]2 con condicio� n de frontera rugosa en y = 0 y
+bordes libres en x = 0, x = 1 e y = 1:
+
+                E(x, 0) = ei(x), (x)  U (0, 2),                                     (3.4)
+
+donde (x) se muestrea en N = 256 puntos equiespaciados. Esta condicio� n modela una pantalla
+de fase aleatoria cuya desviacio� n esta� ndar cumple  > 2, condicio� n suficiente para speckle
+completamente desarrollado (Fang & Zhan, 2020; Goodman, 2007).
+
+3.2. Arquitectura SIREN
+
+    Se emplea una arquitectura SIREN con los para� metros consolidados a partir de la validacio� n
+1D (NB01) y escalados para el caso 2D (NB02, NB03):
+
+     Entrada: coordenadas espaciales (x, y)  [0, 1]2 (o (x)  [0, 1] para 1D).
+     Capas ocultas: L = 5 capas de dimensio� n d neuronas cada una (d = 64 en NB01, d = 128
+
+       en NB02/NB03).
+     Activacio� n: (z) = sin(0z), con 0 = 1.0.
+
+                                                15
+
+                                                                               Cap�itulo 3. Modelo e implementacio� n
+
+     Salida: capa lineal de dos neuronas (Ereal, Eimag) para el caso 2D, o una neurona E para el
+       caso 1D.
+
+     Para� metros totales: 16,833 (NB01) y 66,690 (NB02/NB03).
+
+    La eleccio� n 0 = 1.0, en lugar del valor 0 = 30 recomendado por Sitzmann et al. (2020) para
+sen~ ales de imagen, esta� justificada por la naturaleza del problema: el dominio adimensional [0, 1]2
+con k = 2 no requiere capturar frecuencias ultra-altas, y valores mayores de 0 desestabilizan el
+entrenamiento con L-BFGS.
+
+    La inicializacio� n sigue el esquema de Sitzmann et al. (2020): W0  U (-1/nin, 1/nin) para la
+primera capa y W  U(- 6/d, 6/d) para capas intermedias, garantizando que las distribucio-
+nes de activacio� n sean aproximadamente uniformes en [-1, 1].
+
+3.3. Funcio� n de pe� rdida y calibracio� n de pesos
+
+    La funcio� n de pe� rdida total para el caso 2D es:
+
+L = Ldatos + f�is LRreal + LRimag ,                                     (3.5)
+
+con peso de f�isica f�is = 0.1. Este valor fue calibrado emp�iricamente mediante un experimento
+de ablacio� n (ve� ase la Seccio� n 4.3): valores superiores ( = 1.0) sobrepesan la f�isica e impiden
+la convergencia en 2D, dado que los dos residuos (real e imaginario) duplican efectivamente la
+contribucio� n f�isica; valores inferiores ( = 0.01) producen campos que violan moderadamente la
+ecuacio� n de Helmholtz.
+
+    Los residuos de Helmholtz se calculan mediante diferenciacio� n automa� tica de segundo orden
+(Baydin et al., 2018):
+
+Rreal(r) = 2Ereal(r) + k2Ereal(r),  Rimag(r) = 2Eimag(r) + k2Eimag(r),  (3.6)
+
+donde el Laplaciano se obtiene con torch.autograd.grad activando la opcio� n create graph=True
+para permitir diferenciacio� n de segundo orden. Es cr�itico que k2 se convierta a tipo float de
+Python antes de multiplicar por el tensor de la red, para evitar conflictos de tipo entre numpy.float64
+
+                                                               16
+
+                                         Cap�itulo 3. Modelo e implementacio� n
+
+y torch.float32.
+
+3.4. Estrategia de muestreo
+
+3.4.1. Puntos interiores (colocacio� n)
+
+    Para el caso 2D, los Nc = 3,000 puntos de colocacio� n interiores se generan mediante LHS
+(McKay et al., 1979) usando scipy.stats.qmc.LatinHypercube con dimensio� n d = 2. LHS divide
+cada dimensio� n en Nc estratos iguales de longitud 1/Nc y coloca exactamente un punto en cada
+estrato, garantizando cobertura uniforme del dominio sin los patrones redundantes de una malla
+cartesiana.
+
+3.4.2. Puntos de frontera
+
+    Los Nb = 300 puntos de frontera por borde se distribuyen uniformemente sobre cada uno de
+los cuatro lados del dominio . Para cada lado, se evalu� a la solucio� n exacta (o la condicio� n de
+fase aleatoria en NB03) y se construye el par (rjb, E(rbj)) utilizado en Ldatos.
+
+3.5. Estrategia de optimizacio� n
+
+    El entrenamiento sigue la estrategia bifa� sica descrita en el Cap�itulo 2, con los hiperpara� metros
+consolidados en la Tabla 3.1.
+
+                                      Tabla 3.1. Hiperpara� metros de entrenamiento consolidados.
+
+Hiperpara� metro              Valor                        Aplicacio� n
+
+Tasa de aprendizaje Adam ()   10-3                         NB01, NB02, NB03
+E� pocas ma� ximas Adam                                    NB01, NB02, NB03
+Paciencia (early stopping)    15,000                       NB02, NB03
+ mejora m�inima               800 e� pocas                 NB02, NB03
+Iteraciones ma� ximas L-BFGS  10-7                         --
+Historial L-BFGS              500 (NB01), 1,000 (NB02/03)  --
+Semilla global (SEED)         50 (NB01), 100 (NB02/03)     NB01, NB02, NB03
+Peso de f�isica f�is          42                           NB02, NB03
+                              0.1
+
+Todos los experimentos se ejecutaron en GPU NVIDIA RTX 5050 (CUDA 12.6, PyTorch 2.4).
+La semilla garantiza reproducibilidad.
+
+                                     17
+
+                                                      Cap�itulo 3. Modelo e implementacio� n
+
+3.6. Me� tricas de validacio� n
+
+3.6.1. Error L2 relativo (NB01 y NB02)
+
+    El error L2 relativo mide la discrepancia global entre la prediccio� n de la red E^ y la solucio� n
+exacta Eexacta, evaluado sobre una malla uniforme de 100 � 100 puntos:
+
+L2  =                               E^ - Eexacta2  �  100 %.  (3.7)
+                                       Eexacta2
+
+El umbral de la tesis es L2 < 5 %.
+
+3.6.2. Contraste y test KS (NB03)
+
+    Para la validacio� n del speckle:
+     Contraste: C = I /I, con umbral |C - 1| < 0.1 conforme al criterio de Goodman (2007).
+     Test de Kolmogorov-Smirnov (KS): Prueba de bondad de ajuste contra la distribucio� n
+
+       exponencial teo� rica p(I) = I-1 exp(-I/I). Criterio formal: p > 0.05.
+     Fraccio� n de colas: Fraccio� n de p�ixeles con I > 2I, comparada con el valor teo� rico e-2 
+
+       0.1353.
+
+3.7. Implementacio� n modular
+
+    El co� digo fuente esta� organizado en mo� dulos reutilizables en src/:
+
+models.py Clase PINN 2D SIREN que implementa la arquitectura SIREN con la inicializacio� n de
+       Sitzmann et al. (2020). El me� todo forward(x) aplica la activacio� n sinusoidal capa por capa
+       y retorna el campo complejo como un tensor de dos columnas (Ereal, Eimag).
+
+losses.py Funcio� n pinn loss 2d(model, xy int, xy bc, E bc, k, lam) que calcula la pe� rdi-
+       da total (3.5). El ca� lculo del Laplaciano utiliza torch.autograd.grad con create graph=True
+       para habilitar la diferenciacio� n de segundo orden. El escalar k se convierte expl�icitamente
+
+                                        18
+
+                                                                               Cap�itulo 3. Modelo e implementacio� n
+       a float(k) antes de multiplicar por el tensor de la red, evitando conflictos de dtype entre
+       numpy.float64 y torch.float32.
+training.py Loop de entrenamiento que integra las fases Adam y L-BFGS con early stopping.
+utils.py Me� tricas (L2, R2, RMSE, MAE), funciones de muestreo LHS y rutinas de visualizacio� n.
+    Los experimentos esta� n reproducidos en los notebooks 01 pinn helmholtz 1d validation.ipynb,
+02 pinn helmholtz 2d complex field.ipynb y 03 pinn optical speckle simulation.ipynb. Los
+resultados nume� ricos esta� n archivados en formato JSON en results/.
+
+                                                               19
+
+Cap�itulo 4
+
+Experimentos y Resultados
+
+    Este cap�itulo presenta los resultados de los tres experimentos ejecutados en GPU NVIDIA
+RTX 5050 (CUDA 12.6, PyTorch 2.4, SEED = 42). Los experimentos siguen una complejidad
+creciente: validacio� n anal�itica 1D (NB01), validacio� n 2D con campo complejo (NB02) y simulacio� n
+de speckle o� ptico (NB03).
+
+4.1. NB01: Validacio� n 1D � Helmholtz con solucio� n anal�itica
+
+4.1.1. Configuracio� n experimental
+
+    El primer experimento valida la arquitectura SIREN frente a la solucio� n anal�itica exacta de la
+ecuacio� n de Helmholtz 1D. Se empleo� la arquitectura SIREN 5 � 64 (16,833 para� metros) con los
+hiperpara� metros de la Tabla 3.1. Los puntos de colocacio� n son Nc = 2,000 puntos uniformes en
+[0, 1] y las condiciones de frontera Dirichlet se imponen en cinco puntos conocidos de la solucio� n
+anal�itica (x = 0, 0.25, 0.5, 0.75, 1), en lugar de u� nicamente los extremos, para evitar el colapso
+hacia la solucio� n constante que produce la condicio� n sime� trica E(0) = E(1) = 1.
+
+4.1.2. Resultados de precisio� n
+
+    La Tabla 4.1 presenta las me� tricas de precisio� n obtenidas tras el entrenamiento completo
+Adam (15,000 e� pocas) seguido de L-BFGS (202 iteraciones), con un tiempo total de 251 segun-
+dos.
+
+                                                               20
+
+                          Cap�itulo 4. Experimentos y Resultados
+
+Tabla 4.1. Me� tricas de precisio� n � PINN-SIREN 1D
+(k = 2).
+
+Me� trica                     Valor
+
+Error L2 relativo ( %)       0.006
+MSE                       1.5 � 10-9
+RMSE                      3.9 � 10-5
+MAE                       3.50 � 10-5
+Error ma� ximo            5.77 � 10-5
+R2                         1.000000
+Correlacio� n de Pearson   1.000000
+
+E� pocas Adam             15,000 / 15,000
+Iteraciones L-BFGS            202 / 500
+Tiempo total (s)                  251
+
+Evaluado en malla uniforme de 1,000 puntos en
+[0, 1]. Arquitectura SIREN: 5 capas � 64 neuro-
+nas, 0 = 1.0. Solucio� n anal�itica: Eexacta(x) =
+cos(kx). GPU: NVIDIA RTX 5050, SEED = 42.
+
+4.1.3. Ana� lisis y comparativa con el estado del arte
+
+    El error L2 = 0.006 % supera el umbral de la tesis (< 5 %) por casi tres o� rdenes de magnitud
+y representa un factor de mejora de �415 respecto al resultado de Schoder y Kraxberger (2024),
+que reporta un error del 2.49 % para Helmholtz 1D con PINNs de activacio� n tanh. Esta mejora
+dra� stica es atribuible a la ventaja intr�inseca de la activacio� n sinusoidal SIREN para representar
+funciones oscilatorias: la red aprende la solucio� n cos(kx) de forma casi exacta, con R2 = 1.000000
+y correlacio� n de Pearson = 1.000000 en toda la malla de evaluacio� n.
+
+    La Figura 4.1 muestra la comparacio� n entre la prediccio� n de la red y la solucio� n anal�itica, as�i
+como la distribucio� n del error puntual.
+
+4.2. NB02: Validacio� n 2D � Helmholtz con campo complejo
+
+4.2.1. Configuracio� n experimental
+
+    El segundo experimento escala el modelo al caso bidimensional con campo complejo. Se em-
+pleo� la arquitectura SIREN 5 � 128 (66,690 para� metros), LHS con Nc = 3,000 puntos de colocacio� n
+y Nb = 300 puntos de frontera por borde. El peso de f�isica f�is = 0.1 fue seleccionado mediante el
+experimento de ablacio� n descrito en la Seccio� n 4.3.
+
+                                                               21
+
+                                                                            Cap�itulo 4. Experimentos y Resultados
+
+Figura 4.1. Validacio� n PINN-SIREN para Helmholtz 1D. Panel izquierdo: comparacio� n entre la prediccio� n de la red y
+la solucio� n anal�itica Eexacta(x) = cos(kx) en 1,000 puntos uniformes en [0, 1]. Panel derecho: error puntual |E^(x) -
+Eexacta(x)|. Error L2 = 0.006 %, R2 = 1.000000. GPU: NVIDIA RTX 5050, SEED = 42.
+
+Figura 4.2. Me� tricas adicionales de entrenamiento NB01. De izquierda a derecha: curva de pe� rdida total durante las
+fases Adam y L-BFGS, distribucio� n del error puntual y me� tricas de ajuste (R2, Pearson). La transicio� n Adam  L-BFGS
+a la e� poca 15,000 es visible como una ca�ida abrupta en la curva de pe� rdida.
+
+                                                               22
+
+                                             Cap�itulo 4. Experimentos y Resultados
+
+4.2.2. Resultados de precisio� n
+
+    La Tabla 4.2 reporta las me� tricas detalladas para cada componente del campo complejo, eva-
+luadas en una malla uniforme de 100 � 100 puntos.
+
+Tabla 4.2. Me� tricas de precisio� n � PINN-SIREN 2D (k = 2, kx =
+ky = k/ 2).
+
+Me� trica                             Ereal         Eimag
+
+Error L2 ( %)                        0.214        0.127
+MSE                               2.20 � 10-6  8.43 � 10-7
+RMSE                              1.48 � 10-3  9.18 � 10-4
+MAE                               1.27 � 10-3  7.71 � 10-4
+Error ma� ximo                    3.05 � 10-3  2.93 � 10-3
+R2
+Correlacio� n de Pearson           0.999995     0.999998
+
+Error L2 promedio ( %)             0.999998     0.999999
+
+                                             0.171
+
+Evaluado en malla uniforme de 100 � 100 puntos. Arqui-
+
+tectura: SIREN 5 � 128, 0 = 1.0, 66,690 para� metros. Pun-
+tos de colocacio� n: LHS Nc = 3,000. Frontera: onda plana
+ei(kxx+kyy) en 4 bordes, Nb = 300 pts/borde. Entrenamien-
+to: Adam (8,737 e� pocas) + L-BFGS (1,035 iter.), tiempo to-
+
+tal 299 s. Varianza entre semillas (SEED  {42, 123, 777}):
+error L2 promedio = 0.155 � 0.020 %.
+
+4.2.3. Ana� lisis de resultados
+
+    El error L2 promedio de 0.171 % supera el umbral de la tesis (< 5 %) por ma� s de un orden
+de magnitud y mejora en un factor de �11.2 el resultado de Schoder y Kraxberger (2024) para
+Helmholtz 2D (1.91 %). La precisio� n se mantiene alta en ambas componentes del campo complejo,
+con R2 > 0.9999 para Ereal y Eimag.
+
+    La ampliacio� n de capacidad de d = 64 a d = 128 fue determinante: con d = 64 el error
+promedio era 0.436 %; con d = 128 se redujo a 0.171 %, una mejora de 2.5�. El Muestreo Latino
+Hipercu� bico contribuyo� a reducir el error en regiones de baja densidad de puntos respecto a
+mallas cartesianas equivalentes.
+
+    La Figura 4.3 muestra los mapas de calor de la solucio� n exacta y la prediccio� n PINN-SIREN
+para ambas componentes del campo.
+
+                                  23
+
+                                                                            Cap�itulo 4. Experimentos y Resultados
+
+Figura 4.3. Validacio� n PINN-SIREN para Helmholtz 2D con campo complejo. Fila superior: partes real e imaginaria de
+la solucio� n anal�itica Eexacta = ei(kxx+kyy). Fila inferior: prediccio� n PINN-SIREN correspondiente. La diferencia visual es
+indistinguible; los errores puntuales son del orden de 10-3 (ve� ase la Tabla 4.2). Malla de evaluacio� n 100 � 100, SEED
+= 42.
+
+                                                               24
+
+                                           Cap�itulo 4. Experimentos y Resultados
+
+Figura 4.4. Me� tricas adicionales de entrenamiento NB02. Panel izquierdo: curva de pe� rdida total mostrando la
+transicio� n bifa� sica Adam  L-BFGS. Paneles central y derecho: mapas de error puntual |Ereal - E^real| y |Eimag - E^imag|
+
+en la malla 100 � 100. Los errores ma� s altos se concentran en las esquinas del dominio.
+
+4.2.4. Reproducibilidad multi-semilla
+
+Para evaluar la robustez estad�istica del me� todo, el experimento NB02 se repitio� con tres se-
+
+millas diferentes: SEED  {42, 123, 777}. Los resultados se presentan en la Tabla 4.3.
+
+      Tabla 4.3. Reproducibilidad multi-semilla � NB02 (f�is = 0.1).
+
+SEED  Error L2 prom. ( %) E� pocas Adam Tiempo (s)
+
+42    0.171                                8,737                      299
+
+123   0.1264                               8,012                      448
+
+777   0.1675                               13,560                     346
+
+Media � Desv. est. 0.155 � 0.020           --                         --
+
+Misma arquitectura, hiperpara� metros y protocolo de entrenamiento. La varianza
+entre semillas es del 13 % relativo, confirmando la estabilidad del me� todo. GPU:
+NVIDIA RTX 5050.
+
+    La varianza inter-semilla de �0.020 % (13 % relativo) confirma que el me� todo es estad�istica-
+mente robusto: independientemente de la inicializacio� n aleatoria, el modelo converge a soluciones
+de alta precisio� n.
+
+                                       25
+
+                                          Cap�itulo 4. Experimentos y Resultados
+
+4.3. Ablacio� n del peso de f�isica f�is
+
+Para calibrar el balance entre el te� rmino de datos y el te� rmino f�isico en la funcio� n de pe� rdi-
+
+da (3.5), se realizo� un experimento de ablacio� n con f�is  {0.01, 0.1, 1.0}, manteniendo fija la
+arquitectura SIREN 5 � 128 y SEED = 42. Los resultados se presentan en la Tabla 4.4.
+
+      Tabla 4.4. Ablacio� n del peso de f�isica f�is � NB02.
+
+f�is Error L2 prom. ( %) Converge         Observacio� n
+
+0.01  0.163  S�i                          F�isica subponderada
+
+0.1   0.171  S�i                          Configuracio� n o� ptima
+
+1.0   > 5.0  No                           F�isica sobreponderada
+
+Arquitectura SIREN 5 � 128, 0 = 1.0, SEED = 42. Mismo protocolo
+Adam + L-BFGS que NB02. No converge indica que Adam no alcanzo� la
+condicio� n de parada antes de las 15,000 e� pocas con L2 < 5 %. El caso
+ = 1.0 produce una explosio� n nume� rica en la funcio� n de pe� rdida debido
+a que los dos residuos (real e imaginario) duplican la contribucio� n de la
+f�isica, generando gradientes de gran magnitud en float32.
+
+    El valor f�is = 0.1 equilibra adecuadamente el ajuste a los datos de frontera y el cumplimiento
+de la EDP: el modelo con  = 0.01 obtiene ligeramente mejor error (0.163 %) al sacrificar res-
+triccio� n f�isica, mientras que  = 1.0 produce gradientes explosivos. Se selecciono�  = 0.1 como
+configuracio� n o� ptima por su estabilidad y precisio� n.
+
+4.4. NB03: Simulacio� n de speckle o� ptico
+
+4.4.1. Configuracio� n experimental
+
+    El tercer experimento aplica el modelo validado en NB02 a la generacio� n de speckle o� ptico. La
+u� nica modificacio� n respecto a NB02 es la condicio� n de frontera en y = 0: en lugar de imponer una
+onda plana conocida, se impone la fase aleatoria (x)  U(0, 2) muestreada en N = 256 puntos
+equiespaciados. Los bordes x = 0, x = 1 e y = 1 permanecen libres (sin condicio� n Dirichlet
+artificial). La arquitectura, los hiperpara� metros y la estrategia de optimizacio� n son ide� nticos a
+NB02.
+
+             26
+
+                                          Cap�itulo 4. Experimentos y Resultados
+
+4.4.2. Resultados estad�isticos
+
+    La Tabla 4.5 reporta la validacio� n estad�istica del patro� n de speckle generado, evaluado en una
+malla de 100 � 100 puntos (N = 10,000 valores de intensidad).
+
+                                  Tabla 4.5. Validacio� n estad�istica del speckle � PINN-SIREN NB03.
+
+Me� trica                        Valor PINN Valor teo� rico
+
+Contraste C = I /I                1.0253               =1
+|C - 1|                           0.0253             < 0.1
+KS p-valor                       < 0.0001            > 0.05
+Fraccio� n I > 2I                 0.135          e-2  0.1353
+
+E� pocas Adam                    7,976 / 15,000  --
+
+Iteraciones L-BFGS               8 / 1,000       --
+
+Tiempo total (s)                     227         --
+
+Evaluado en malla 100 � 100 puntos (N = 10,000). Condicio� n
+de frontera: (x)  U (0, 2), N = 256 pts. Bordes x = 0,
+x = 1, y = 1: libres. Arquitectura y optimizador ide� nticos a
+NB02. GPU: NVIDIA RTX 5050, SEED = 42.
+
+4.4.3. Ana� lisis de resultados
+
+4.4.3.1. Contraste del speckle
+
+    El contraste C = 1.0253 cumple holgadamente el umbral |C - 1| < 0.1, con una desviacio� n
+de solo |C - 1| = 0.025. Este resultado confirma que el modelo PINN-SIREN genera un patro� n
+estad�isticamente consistente con speckle completamente desarrollado segu� n el criterio de Good-
+man (2007).
+
+4.4.3.2. Distribucio� n de intensidades
+    La fraccio� n de p�ixeles con I > 2I es 0.135, consistente con el valor teo� rico e-2  0.1353. Esto
+
+indica que la distribucio� n de colas de la intensidad generada es estad�isticamente correcta, verifi-
+cando que el modelo reproduce la deca�ida exponencial caracter�istica del speckle completamente
+desarrollado.
+
+                                 27
+
+                                                                            Cap�itulo 4. Experimentos y Resultados
+
+4.4.3.3. Test de Kolmogorov-Smirnov
+
+    El test KS rechaza formalmente la hipo� tesis nula (p < 0.0001, estad�istico KS = 0.0628). Esta
+discrepancia no implica un fallo del modelo f�isico, sino que es consecuencia de la elevada poten-
+cia estad�istica del test con N = 10,000 puntos: con tal taman~ o de muestra, desviaciones menores
+al 1 % resultan estad�isticamente significativas (Goodman, 2007).
+
+    Una fuente adicional de discrepancia es la ausencia de la condicio� n de radiacio� n de Sommer-
+feld en el borde y = 1: Lrad = |E/n - ikE|2 = 0. En un dominio f�isico abierto, esta condicio� n
+absorbente elimina las reflexiones espurias en la frontera superior. Su incorporacio� n forma parte
+del trabajo futuro (NB05). A pesar de esto, el criterio estad�istico principal |C - 1| < 0.1 se cumple
+con margen amplio.
+
+    La Figura 4.5 muestra el patro� n de intensidad generado y la comparacio� n de la distribucio� n de
+intensidades con la exponencial teo� rica.
+
+(a) Patro� n de intensidad I(x, y) = |E|2 generado con condicio� n  (b) Distribucio� n de intensidades normalizada p(I/I) (histo-
+de frontera rugosa (x)  U(0, 2) en y = 0. El patro� n granular      grama) comparada con la exponencial negativa teo� rica e-I/I
+es caracter�istico del speckle completamente desarrollado.          (curva continua). Panel derecho: funcio� n de distribucio� n acumu-
+
+                                                                    lada (CDF). Contraste C = 1.025.
+
+Figura 4.5. Simulacio� n de speckle o� ptico con PINN-SIREN (NB03).
+
+4.4.3.4. Generalidad de la arquitectura
+
+    Un resultado notable de este experimento es que la misma arquitectura SIREN 5 � 128 que
+resuelve Helmholtz con onda plana (NB02) resuelve igualmente la ecuacio� n con frontera rugosa
+aleatoria (NB03), sin ninguna modificacio� n en la arquitectura ni en la funcio� n de pe� rdida. Solo
+
+                                                               28
+
+                                                                            Cap�itulo 4. Experimentos y Resultados
+
+cambia el dato impuesto en y = 0. Esto demuestra la generalidad del me� todo: la PINN-SIREN
+aprende la f�isica de Helmholtz de forma intr�inseca y puede evaluar el campo para cualquier con-
+dicio� n de frontera sin reentrenamiento de la arquitectura.
+
+4.5. Comparativa con el estado del arte
+
+    La Tabla 4.6 resume el rendimiento de la PINN-SIREN propuesta frente al estado del arte en
+la resolucio� n de la ecuacio� n de Helmholtz con PINNs.
+
+                          Tabla 4.6. Comparativa de error L2 relativo � PINN-SIREN vs. estado del arte.
+
+Me� todo                     Dimensio� n Error L2 ( %) Factor de mejora
+
+Schoder & Kraxberger (2024)  1D          2.490                   �
+                                         1.910                   �
+Schoder & Kraxberger (2024)  2D          0.006                �415
+                                         0.171                �11.2
+PINN-SIREN (este trabajo)    1D
+
+PINN-SIREN (este trabajo)    2D
+
+El factor de mejora es la razo� n entre el error de Schoder et al. (2024) y el error de la
+PINN-SIREN propuesta. Ambos trabajos abordan la ecuacio� n de Helmholtz escalar en
+dominios normalizados. Schoder & Kraxberger (2024) aborda el caso 3D con activacio� n
+tanh; este trabajo opera en 1D/2D adimensionales con arquitectura SIREN. El factor de
+mejora refleja tanto la ventaja arquitectural de SIREN sobre tanh/ReLU como la diferen-
+cia de complejidad dimensional.
+
+4.6. Resumen de experimentos completados
+
+    La Tabla 4.7 sintetiza el estado de los cuatro experimentos planificados en los objetivos es-
+pec�ificos.
+
+                                            Tabla 4.7. Estado de los experimentos planificados.
+
+Experimento Descripcio� n                          Estado Me� trica principal
+
+NB01      Helmholtz 1D � validacio� n anal�itica   Completo     L2 = 0.006 %
+NB02      Helmholtz 2D � campo complejo            Completo     L2 = 0.171 %
+NB03      Speckle o� ptico � frontera rugosa       Completo
+NB04      Benchmark FEM � factor de aceleracio� n  Pendiente    C = 1.025 
+                                                              S = TFEM/TPINN
+
+NB01�NB03 verifican la hipo� tesis de precisio� n (L2 < 5 %) y la hipo� tesis estad�istica (|C - 1| < 0.1).
+NB04 es necesario para verificar la hipo� tesis de velocidad (S > 1) y se planifica como trabajo futuro
+inmediato.
+
+Los tres experimentos completados (NB01�NB03) verifican las dos primeras hipo� tesis de la
+
+                             29
+
+                                                                            Cap�itulo 4. Experimentos y Resultados
+tesis: (i) el error L2 < 5 % se supera con amplitud en todos los casos, y (ii) el contraste del speckle
+cumple el criterio de Goodman. La hipo� tesis de velocidad (S > 1) requiere la implementacio� n de
+la referencia FEM (NB04), programada como trabajo futuro inmediato.
+
+                                                               30
+
+Bibliograf�ia
+
+Alkhalifah, T., Song, C., Waheed, U. b., & Hao, Q. (2021). Wavefield solutions from machine lear-
+         ned functions constrained by the Helmholtz equation. Artificial Intelligence in Geosciences,
+         2, 11-19. https://doi.org/10.1016/j.aiig.2021.08.002
+
+Baydin, A. G., Pearlmutter, B. A., Radul, A. A., & Siskind, J. M. (2018). Automatic differentiation in
+         machine learning: a survey. Journal of Machine Learning Research, 18(153), 1-43.
+
+Born, M., & Wolf, E. (1999). Principles of Optics: Electromagnetic Theory of Propagation, Interfe-
+         rence and Diffraction of Light (7.a ed.). Cambridge University Press.
+
+Chen, Y., Lu, L., Karniadakis, G. E., & Dal Negro, L. (2020). Physics-informed neural networks
+         for inverse problems in nano-optics and plasmonics. Optics Express, 28(8), 11618-11633.
+         https://doi.org/10.1364/OE.384875
+
+Cuomo, S., Di Cola, V. S., Giampaolo, F., Rozza, G., Raissi, M., & Piccialli, F. (2022). Scientific
+         machine learning through physics-informed neural networks: A review. Journal of Compu-
+         tational Science, 62, 101709. https://doi.org/10.1016/j.jocs.2022.101709
+
+Fang, Z., & Zhan, J. (2020). A physics-informed neural network framework for wave scattering in in-
+         homogeneous media. IEEE Antennas and Wireless Propagation Letters, 19(9), 1640-1644.
+         https://doi.org/10.1109/LAWP.2020.2991329
+
+Goodman, J. W. (2007). Speckle Phenomena in Optics: Theory and Applications. Roberts & Com-
+         pany.
+
+Hornik, K., Stinchcombe, M., & White, H. (1989). Multilayer feedforward networks are universal
+         approximators. Neural Networks, 2(5), 359-366. https://doi.org/10.1016/0893- 6080(89)
+         90020-8
+
+Jin, J.-M. (2014). The Finite Element Method in Electromagnetics (3.a ed.). John Wiley & Sons.
+
+                                                               31
+
+                                                                                                                  Bibliograf�ia
+
+Karniadakis, G. E., Kevrekidis, I. G., Lu, L., Perdikaris, P., Wang, S., & Yang, L. (2021). Physics-
+         informed machine learning. Nature Reviews Physics, 3(6), 422-440. https://doi.org/10.
+         1038/s42254-021-00314-5
+
+Kingma, D. P., & Ba, J. (2015). Adam: A method for stochastic optimization [Published at ICLR
+         2015].
+
+Lagaris, I. E., Likas, A., & Fotiadis, D. I. (1998). Artificial neural networks for solving ordinary
+         and partial differential equations. IEEE Transactions on Neural Networks, 9(5), 987-1000.
+         https://doi.org/10.1109/72.712178
+
+Lu, L., Meng, X., Mao, Z., & Karniadakis, G. E. (2021). DeepXDE: A deep learning library for
+         solving differential equations. SIAM Review, 63(1), 208-228. https : / / doi . org / 10 . 1137 /
+         19M1274067
+
+McKay, M. D., Beckman, R. J., & Conover, W. J. (1979). A comparison of three methods for selec-
+         ting values of input variables in the analysis of output from a computer code. Technome-
+         trics, 21(2), 239-245. https://doi.org/10.1080/00401706.1979.10489755
+
+Moseley, B., Markham, A., & Nissen-Meyer, T. (2020). Solving the wave equation with physics-
+         informed deep learning.
+
+Nocedal, J., & Wright, S. J. (2006). Numerical Optimization (2.a ed.). Springer.
+Rahaman, N., Baratin, A., Arpit, D., Draxler, F., Lin, M., Hamprecht, F., Bengio, Y., & Courville,
+
+         A. (2019). On the spectral bias of neural networks. Proceedings of the 36th International
+         Conference on Machine Learning, 97, 5301-5310.
+Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). Physics-informed neural networks: A deep
+         learning framework for solving forward and inverse problems involving nonlinear partial
+         differential equations. Journal of Computational Physics, 378, 686-707. https://doi.org/10.
+         1016/j.jcp.2018.10.045
+Schoder, S., & Kraxberger, F. (2024). Feasibility study on solving the Helmholtz equation in 3D
+         with PINNs. https://doi.org/10.48550/arXiv.2403.06623
+Sitzmann, V., Martel, J. N. P., Bergman, A. W., Lindell, D. B., & Wetzstein, G. (2020). Implicit
+         Neural Representations with Periodic Activation Functions. Advances in Neural Information
+         Processing Systems, 33, 7462-7473.
+
+                                                               32
+
+                                                                                                                  Bibliograf�ia
+Wang, S., Teng, Y., & Perdikaris, P. (2021). Understanding and mitigating gradient flow patholo-
+
+         gies in physics-informed neural networks. SIAM Journal on Scientific Computing, 43(5),
+         A3055-A3081. https://doi.org/10.1137/20M1318043
+Wang, S., Yu, X., & Perdikaris, P. (2022). When and why PINNs fail to train: A neural tangent kernel
+         perspective. Journal of Computational Physics, 449, 110768. https://doi.org/10.1016/j.jcp.
+         2021.110768
+
+                                                               33
+

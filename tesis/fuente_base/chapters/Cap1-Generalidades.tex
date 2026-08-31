@@ -1,0 +1,247 @@
+\chapter{Generalidades}\label{cap1:generalidades}
+
+\section{Introducción}
+
+La simulación de la propagación de la luz es una herramienta fundamental en la
+ciencia y la ingeniería, con aplicaciones que abarcan desde el diseño de sistemas
+de telecomunicaciones y la nanofotónica hasta el desarrollo de técnicas de
+imagenología médica. Un fenómeno de particular interés es el \textit{speckle}
+óptico, un patrón de interferencia granular de alto contraste que surge cuando
+luz coherente, como la emitida por un láser, se dispersa sobre una superficie
+rugosa o un medio difusor.
+
+Tradicionalmente, la simulación de estos fenómenos ondulatorios se aborda
+mediante métodos numéricos robustos como el Método de Elementos Finitos
+(\textit{FEM}) o métodos estocásticos como el de Monte Carlo. Sin embargo,
+estos métodos presentan un cuello de botella computacional significativo:
+requieren una discretización extremadamente fina del dominio espacial para
+resolver las oscilaciones rápidas del campo de luz, lo que resulta en un
+consumo masivo de memoria y tiempos de cómputo que pueden extenderse por horas
+o días cuando se necesitan miles de realizaciones estadísticas
+\parencite{jin2014finite, goodman2007speckle}.
+
+En paralelo, el campo de la inteligencia artificial ha experimentado un
+crecimiento disruptivo. Una innovación reciente son las Redes Neuronales
+Informadas por Física (\textit{PINNs}, por sus siglas en inglés
+\textit{Physics-Informed Neural Networks}), una metodología que fusiona el
+\textit{Deep Learning} con las leyes físicas fundamentales. Las \textit{PINNs}
+\parencite{raissi2019physics} son redes neuronales entrenadas no solo para
+ajustarse a datos de frontera, sino para obedecer directamente una Ecuación
+Diferencial Parcial (EDP) que gobierna el fenómeno físico de interés.
+
+No obstante, las activaciones estándar de las redes neuronales (tanh, ReLU)
+presentan un sesgo espectral \parencite{rahaman2019spectral}: tienden a aprender
+frecuencias bajas antes que las altas. Para la ecuación de Helmholtz con número
+de onda $k = 2\pi$, este sesgo produce derivadas de segundo orden inestables y
+una convergencia lenta. Las \textit{Sinusoidal Representation Networks (SIREN)},
+propuestas por \textcite{sitzmann2020siren}, resuelven este problema mediante la
+función de activación $\phi(z) = \sin(\omega_0 z)$, convirtiendo la arquitectura
+en la elección natural para resolver ecuaciones de onda.
+
+Este proyecto se sitúa en la intersección de la óptica computacional y la
+inteligencia artificial, aplicando el paradigma PINN-SIREN para superar las
+limitaciones computacionales de los métodos clásicos en la simulación del
+\textit{speckle} óptico.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Planteamiento del problema}
+
+\subsection{Definición del problema}
+
+La simulación precisa de cómo la luz se dispersa y forma patrones de
+\textit{speckle} es crucial para sistemas ópticos avanzados en imagenología
+biomédica (tomografía de coherencia óptica), metrología (medición de
+vibraciones y deformaciones) y criptografía óptica.
+
+El desafío central radica en el costo computacional prohibitivo de los métodos
+numéricos actuales:
+
+\begin{enumerate}
+    \item \textbf{Métodos Basados en Malla (FEM):} Para capturar con precisión
+    los detalles finos de un patrón de \textit{speckle}, la malla debe tener
+    una resolución espacial menor que la longitud de onda de la luz
+    \parencite{jin2014finite}. Esto conduce a sistemas de ecuaciones con millones
+    de incógnitas por realización, requiriendo alta memoria RAM y tiempos de
+    ejecución que frenan la investigación. Cada nuevo perfil de rugosidad
+    superficial exige resolver el sistema completo desde cero.
+
+    \item \textbf{Métodos Estocásticos (Monte Carlo):} Requieren simular un
+    número masivo de fotones individuales para construir un patrón estadísticamente
+    preciso, lo que los hace prohibitivos para estudios paramétricos que requieren
+    miles de realizaciones.
+\end{enumerate}
+
+Aunque la aplicación de las \textit{PINNs} para resolver la ecuación de
+Helmholtz ha sido validada en simulaciones de ondas acústicas
+\parencite{schoder2024helmholtz}, hasta donde alcanza el conocimiento actual, la
+aplicación sistemática de este paradigma con activación sinusoidal para la
+simulación eficiente de \textit{speckle} óptico de alta resolución no ha sido
+abordada en la literatura.
+
+\subsection{Delimitación de la investigación}
+
+\subsubsection*{Alcances}
+\begin{itemize}
+    \item Se entregará un prototipo de \textit{software} funcional, implementado
+    en Python (PyTorch), capaz de construir y entrenar un modelo PINN-SIREN para
+    resolver la ecuación de Helmholtz en dominios 2D.
+
+    \item Se validará cuantitativamente la precisión del modelo contra soluciones
+    analíticas conocidas mediante el error relativo $L^2$.
+
+    \item El modelo será capaz de simular la generación de patrones de
+    \textit{speckle} óptico en 2D, mediante la imposición de una condición de
+    frontera con fase aleatoria $\phi(x) \sim \mathcal{U}(0, 2\pi)$.
+
+    \item Se realizará una evaluación estadística del patrón generado conforme
+    al criterio de Goodman para \textit{speckle} completamente desarrollado
+    \parencite{goodman2007speckle}.
+
+    \item Se realizará una evaluación comparativa (\textit{benchmark}) del tiempo
+    de inferencia contra el método FEM para demostrar la viabilidad computacional
+    del enfoque propuesto.
+\end{itemize}
+
+\subsubsection*{Limitaciones}
+\begin{itemize}
+    \item \textbf{Dimensionalidad:} Todas las simulaciones se restringen a
+    dominios bidimensionales (2D). El desarrollo en 3D está fuera del alcance
+    de este trabajo de maestría.
+
+    \item \textbf{Alcance computacional:} Esta es una investigación puramente
+    computacional y de simulación. No se incluyen montajes ópticos experimentales
+    ni validación contra datos físicos reales.
+
+    \item \textbf{Simplificación del medio difusor:} El medio se modela como
+    una frontera con fase aleatoria discreta ($N_\phi = 256$ puntos). No se
+    aborda la simulación de medios volumétricos ni propiedades no lineales.
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Preguntas de investigación e hipótesis}
+
+Las preguntas que guían esta investigación son:
+
+\begin{enumerate}
+    \item ¿Puede un modelo PINN con activación sinusoidal (SIREN) aproximar
+    con precisión la solución de la ecuación de Helmholtz 2D para la simulación
+    de patrones de \textit{speckle} óptico, logrando un error $L^2 < 5\%$
+    respecto a soluciones de referencia?
+
+    \item ¿Cuál es la ganancia en eficiencia computacional (tiempo de inferencia
+    y uso de memoria) del enfoque PINN-SIREN respecto al FEM para simular el
+    mismo fenómeno?
+
+    \item ¿Presenta el patrón de intensidad simulado las propiedades estadísticas
+    características del \textit{speckle} completamente desarrollado definidas por
+    la teoría de Goodman?
+\end{enumerate}
+
+\textbf{Hipótesis:} El desarrollo de un modelo PINN-SIREN para la resolución de
+la ecuación de Helmholtz 2D con campo complejo permitirá:
+(i) simular la generación de \textit{speckle} óptico con un error relativo
+$L^2 < 5\%$ respecto a la solución analítica de referencia;
+(ii) obtener un factor de aceleración $S = T_\text{FEM} / T_\text{PINN} > 1$ en
+la fase de inferencia; y
+(iii) preservar las propiedades estadísticas del fenómeno con un contraste de
+\textit{speckle} $|C - 1| < 0.1$ conforme al criterio de \textcite{goodman2007speckle}.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Objetivo general}
+
+Construir y validar un modelo computacional basado en Redes Neuronales
+Informadas por Física con activación sinusoidal (PINN-SIREN) para la simulación
+acelerada y físicamente precisa de patrones de \textit{speckle} óptico, mediante
+la resolución directa de la ecuación de Helmholtz bidimensional con campo
+eléctrico complejo.
+
+\section{Objetivos específicos}
+
+\begin{enumerate}
+    \item Diseñar e implementar una arquitectura SIREN que incorpore el residuo
+    de la ecuación de Helmholtz en su función de pérdida, con activación
+    $\phi(z) = \sin(\omega_0 z)$ y una estrategia de inicialización que preserve
+    la distribución de activaciones en profundidad \parencite{sitzmann2020siren}.
+
+    \item Entrenar y validar la precisión del modelo PINN-SIREN en el escenario
+    unidimensional (NB01), comparando contra la solución analítica
+    $E(x) = \cos(kx)$ mediante el error relativo $L^2$.
+
+    \item Escalar el modelo al caso bidimensional con campo complejo (NB02),
+    empleando Muestreo Latino Hipercúbico (LHS) para los puntos de colocación y
+    validando contra la solución de onda plana $E = e^{i(k_x x + k_y y)}$.
+
+    \item Aplicar el modelo validado a la simulación de \textit{speckle} óptico
+    (NB03) mediante una condición de frontera de fase aleatoria, y validar
+    estadísticamente el patrón generado conforme al criterio de Goodman.
+
+    \item Comparar cuantitativamente el rendimiento computacional del modelo
+    PINN-SIREN contra una implementación FEM de referencia (NB04), cuantificando
+    el factor de aceleración $S = T_\text{FEM} / T_\text{PINN}$.
+\end{enumerate}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Justificación}
+
+Esta investigación se justifica en tres ejes principales:
+
+\begin{itemize}
+    \item \textbf{Justificación computacional:} El principal obstáculo en la
+    simulación óptica avanzada es el costo prohibitivo de los métodos de malla.
+    El enfoque \textit{mesh-free} propuesto busca reducir los tiempos de
+    simulación en al menos un orden de magnitud, habilitando estudios estadísticos
+    de \textit{speckle} que actualmente son intratables.
+
+    \item \textbf{Justificación científica:} La simulación precisa de
+    \textit{speckle} impacta directamente en la imagenología biomédica
+    (tomografía de coherencia óptica), la metrología de precisión y la
+    criptografía óptica. Acelerar la simulación tiene consecuencias directas en
+    la capacidad de innovar en estas áreas de alto impacto.
+
+    \item \textbf{Justificación programática:} El proyecto se alinea
+    estratégicamente con la Línea de Generación y Aplicación del Conocimiento
+    (LGAC) en Ciencia de Datos e Inteligencia Artificial de la Maestría en
+    Ciencias de la Computación de la UJAT. Aplica una técnica de vanguardia en
+    \textit{Deep Learning} para resolver una EDP fundamental de la física,
+    demostrando la sinergia entre la IA y la ciencia computacional avanzada.
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Metodología}
+
+La metodología se basa en el marco de trabajo de las \textit{PINNs} propuesto
+por \textcite{raissi2019physics}, extendido con la arquitectura de activación
+sinusoidal SIREN \parencite{sitzmann2020siren}. El proyecto es un estudio
+computacional cuantitativo y experimental, desarrollado en cuatro fases
+alineadas con los objetivos específicos.
+
+\begin{description}
+    \item[\textbf{Fase 1 - NB01: Validación analítica 1D.}]
+    Se implementa el modelo PINN-SIREN ($5 \times 64$ neuronas) para resolver la
+    ecuación de Helmholtz 1D con solución analítica conocida $E(x) = \cos(kx)$.
+    La función de pérdida combina el error en las condiciones de frontera
+    Dirichlet y el residuo de Helmholtz evaluado en puntos de colocación uniformes.
+    Se emplea una estrategia de optimización bifásica: Adam (hasta 15{,}000 épocas)
+    seguido de L-BFGS (búsqueda de línea \textit{strong Wolfe}).
+
+    \item[\textbf{Fase 2 - NB02: Escala a 2D con campo complejo.}]
+    Se escala la arquitectura a $5 \times 128$ neuronas para acomodar el campo
+    complejo $(E_\text{real}, E_\text{imag})$. Se introduce el Muestreo Latino
+    Hipercúbico (LHS) con $N_c = 3{,}000$ puntos de colocación y $N_b = 300$
+    puntos de frontera por lado \parencite{mckay1979lhs}. Se calibra el peso de
+    la función de pérdida $\lambda_\text{fís} = 0.1$ mediante ablación.
+
+    \item[\textbf{Fase 3 - NB03: Simulación de \textit{speckle} óptico (trabajo futuro).}]
+    Se aplicará el modelo validado a la generación de \textit{speckle}, reemplazando
+    la condición de onda plana por una frontera con fase aleatoria
+    $\phi(x) \sim \mathcal{U}(0, 2\pi)$ en $y = 0$ y bordes libres en el
+    resto del dominio. La validación estadística seguirá el criterio de Goodman
+    \parencite{goodman2007speckle}: contraste $C = \sigma_I / \langle I \rangle$
+    y test de Kolmogorov-Smirnov contra la distribución exponencial teórica.
+
+    \item[\textbf{Fase 4 - NB04: Benchmark FEM (trabajo futuro).}]
+    Comparación cuantitativa del tiempo de inferencia PINN-SIREN contra una
+    implementación de referencia con FEniCSx, para calcular el factor de
+    aceleración $S = T_\text{FEM} / T_\text{PINN}$ y la huella de memoria pico.
+    Esta fase está programada como trabajo futuro inmediato.
+\end{description}

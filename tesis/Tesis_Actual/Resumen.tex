@@ -1,0 +1,30 @@
+\addcontentsline{toc}{chapter}{Resumen}
+
+\chapter*{Resumen}
+
+\vspace*{-8mm}
+
+Se presenta una implementación de Redes Neuronales Informadas por Física con
+activación sinusoidal (PINN-SIREN) para la simulación acelerada del patrón de
+speckle óptico, mediante la resolución de la ecuación de Helmholtz bidimensional
+con campo eléctrico complejo y condición de frontera de fase aleatoria.
+La arquitectura SIREN propuesta ($5 \times 128$ neuronas, $\omega_0 = 1.0$)
+alcanza errores $L^2$ de $0.006\%$ en el caso 1D y $0.171\%$ en el caso 2D
+respecto a soluciones analíticas, varios órdenes de magnitud por debajo del
+umbral de tesis ($5\%$).
+El patrón de speckle se genera imponiendo una fase aleatoria
+$\psi(x) \sim \mathcal{U}(0, 2\pi)$ en la superficie iluminada y resolviendo la
+ecuación de Helmholtz libremente en el interior del dominio.
+La validación estadística sigue el criterio de Goodman: contraste
+$C = \sigma_I / \langle I \rangle = 1.0253$ y distribución de intensidades
+exponencial negativa, confirmando speckle completamente desarrollado.
+Una estrategia de optimización bifásica Adam~+~L-BFGS y el muestreo por
+hipercubo latino (LHS) son clave para la convergencia.
+La reproducibilidad del método fue verificada con tres semillas independientes,
+obteniendo un error $L^2$ promedio de $0.155 \pm 0.020\%$.
+
+\bigskip
+
+\noindent\textbf{Palabras clave:} Redes Neuronales Informadas por Física,
+SIREN, ecuación de Helmholtz, speckle óptico, activación sinusoidal,
+muestreo por hipercubo latino.

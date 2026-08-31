@@ -1,0 +1,12 @@
+\babel@toc {spanish}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Hiperparámetros de entrenamiento consolidados.}}{17}{table.caption.9}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas de precisión - PINN-SIREN 1D ($k = 2\pi $).}}{20}{table.caption.11}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Métricas de precisión - PINN-SIREN 2D ($k = 2\pi $, $k_x = k_y = k/\sqrt {2}$).}}{22}{table.caption.15}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Reproducibilidad multi-semilla - NB02 ($\lambda _\text {fís} = 0.1$).}}{24}{table.caption.19}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Ablación del peso de física $\lambda _\text {fís}$ - NB02.}}{25}{table.caption.21}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Comparativa de error $L^2$ relativo - PINN-SIREN vs.\ estado del arte.}}{26}{table.caption.23}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Estado de los experimentos ejecutados.}}{26}{table.caption.25}%

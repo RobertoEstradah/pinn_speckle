@@ -1,0 +1,10 @@
+\babel@toc {spanish}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Validación PINN-SIREN para Helmholtz 1D. Panel izquierdo: comparación entre la predicción de la red y la solución analítica $E_\text {exacta}(x) = \cos (kx)$ en 1{,}000 puntos uniformes en $[0,1]$. Panel derecho: error puntual $|\hat {E}(x) - E_\text {exacta}(x)|$. Error $L^2 = 0.006\%$, $R^2 = 1.000000$. GPU: NVIDIA RTX 5050, SEED = 42.}}{23}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Métricas adicionales de entrenamiento NB01. De izquierda a derecha: curva de pérdida total durante las fases Adam y L-BFGS, distribución del error puntual y métricas de ajuste ($R^2$, Pearson). La transición Adam $\to $ L-BFGS a la época 15{,}000 es visible como una caída abrupta en la curva de pérdida.}}{23}{figure.caption.13}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Validación PINN-SIREN para Helmholtz 2D con campo complejo. Fila superior: partes real e imaginaria de la solución analítica $E_\text {exacta} = e^{i(k_x x + k_y y)}$. Fila inferior: predicción PINN-SIREN correspondiente. La diferencia visual es indistinguible; los errores puntuales son del orden de $10^{-3}$ (véase la Tabla~\ref {tab:resultados2d}). Malla de evaluación $100 \times 100$, SEED = 42.}}{25}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Métricas adicionales de entrenamiento NB02. Panel izquierdo: curva de pérdida total mostrando la transición bifásica Adam $\to $ L-BFGS. Paneles central y derecho: mapas de error puntual $|E_\text {real} - \hat {E}_\text {real}|$ y $|E_\text {imag} - \hat {E}_\text {imag}|$ en la malla $100 \times 100$. Los errores más altos se concentran en las esquinas del dominio.}}{26}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Simulación de \textit {speckle} óptico con PINN-SIREN (NB03).}}{30}{figure.caption.24}%

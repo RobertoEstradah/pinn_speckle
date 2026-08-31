@@ -1,0 +1,258 @@
+\chapter{Modelo e implementación}\label{cap3:modelo}
+
+\section{Formulación del problema}
+
+Se considera el dominio cuadrado adimensional $\Omega = [0,1]^2$, donde las
+coordenadas han sido normalizadas por la longitud de onda del láser
+($\lambda = 638\,\mathrm{nm}$, láser de diodo rojo). Bajo esta normalización,
+el número de onda $k = 2\pi/\lambda$ definido en el Capítulo~\ref{cap2:marcos}
+toma el valor adimensional $k = 2\pi$; salvo que se indique lo contrario, $k$
+se usa en su forma adimensional en el resto de este capítulo.
+
+Se plantean tres experimentos sucesivos de complejidad creciente:
+
+\subsection{Experimento 1 (NB01): Validación 1D}
+
+La ecuación de Helmholtz unidimensional en $x \in [0,1]$ con condiciones de
+Dirichlet:
+%
+\begin{equation}
+    \frac{d^2 E}{dx^2} + k^2 E = 0, \quad
+    E(x_j) = \cos(k x_j), \quad x_j \in \{0,\ 0.25,\ 0.5,\ 0.75,\ 1\},
+    \label{eq:helmholtz1d}
+\end{equation}
+%
+admite la solución analítica $E_\text{exacta}(x) = \cos(kx)$, utilizada para
+validar la arquitectura y la función de pérdida. Se imponen cinco puntos de
+frontera (en lugar de únicamente los dos extremos $x=0$ y $x=1$): la
+condición simétrica $E(0) = E(1) = 1$ colapsa la red hacia la solución
+constante trivial durante el entrenamiento, ya que ambos extremos son
+consistentes con $E \equiv 1$; añadir tres puntos intermedios conocidos de la
+solución analítica rompe esa simetría y estabiliza la convergencia.
+
+\subsection{Experimento 2 (NB02): Validación 2D con campo complejo}
+
+La ecuación de Helmholtz 2D en $\Omega = [0,1]^2$ con condición de onda plana
+diagonal en los cuatro bordes:
+%
+\begin{equation}
+    E_\text{exacta}(x,y) = e^{i(k_x x + k_y y)}, \quad
+    k_x = k_y = \frac{k}{\sqrt{2}},
+    \label{eq:solucion2d}
+\end{equation}
+%
+que satisface $k_x^2 + k_y^2 = k^2$. La condición de frontera se impone
+separando la solución en sus partes real e imaginaria:
+%
+\begin{equation}
+    E_\text{real}(x,y)\big|_{\partial\Omega} = \cos(k_x x + k_y y), \qquad
+    E_\text{imag}(x,y)\big|_{\partial\Omega} = \sin(k_x x + k_y y).
+\end{equation}
+
+\subsection{Experimento 3 (NB03): Simulación de speckle óptico}
+\label{cap3:nb03}
+
+La ecuación de Helmholtz 2D en $\Omega = [0,1]^2$ con condición de frontera
+rugosa en $y = 0$ y bordes libres en $x = 0$, $x = 1$ e $y = 1$:
+%
+\begin{equation}
+    E(x, 0) = e^{i\psi(x)}, \quad
+    \psi(x) \sim \mathcal{U}(0, 2\pi),
+    \label{eq:frontera_rugosa}
+\end{equation}
+%
+donde $\psi(x)$ se muestrea en $N_\psi = 256$ puntos equiespaciados. Esta
+condición modela una pantalla de fase aleatoria cuya desviación estándar cumple
+$\sigma_\psi > 2\pi$, condición suficiente para \textit{speckle} completamente
+desarrollado \parencite{goodman2007speckle}.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Arquitectura SIREN}
+
+Se emplea una arquitectura SIREN con los parámetros consolidados a partir de la
+validación 1D (NB01) y escalados para el caso 2D (NB02, NB03):
+
+\begin{itemize}
+    \item \textbf{Entrada:} coordenadas espaciales $(x, y) \in [0,1]^2$ (o
+    $(x) \in [0,1]$ para 1D).
+    \item \textbf{Capas ocultas:} $L = 5$ capas de dimensión $d$ neuronas cada
+    una ($d = 64$ en NB01, $d = 128$ en NB02/NB03).
+    \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$, con $\omega_0 = 1.0$.
+    \item \textbf{Salida:} capa lineal de dos neuronas $(E_\text{real}, E_\text{imag})$
+    para el caso 2D, o una neurona $E$ para el caso 1D.
+    \item \textbf{Parámetros totales:} $16{,}833$ (NB01) y $66{,}690$ (NB02/NB03).
+\end{itemize}
+
+La elección $\omega_0 = 1.0$, en lugar del valor $\omega_0 = 30$ recomendado
+por \textcite{sitzmann2020siren} para señales de imagen, está justificada por la
+naturaleza del problema: el dominio adimensional $[0,1]^2$ con $k = 2\pi$ no
+requiere capturar frecuencias ultra-altas, y valores mayores de $\omega_0$
+desestabilizan el entrenamiento con L-BFGS.
+
+La inicialización sigue el esquema de \textcite{sitzmann2020siren}:
+$\mathbf{W}_0 \sim \mathcal{U}(-1/n_\text{in}, 1/n_\text{in})$ para la primera
+capa y $\mathbf{W}_\ell \sim \mathcal{U}(-\sqrt{6/d}, \sqrt{6/d})$ para capas
+intermedias, garantizando que las distribuciones de activación sean
+aproximadamente uniformes en $[-1, 1]$.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Función de pérdida y calibración de pesos}
+
+La función de pérdida total para el caso 2D es:
+%
+\begin{equation}
+    \mathcal{L} = \mathcal{L}_\text{datos}
+    + \lambda_\text{fís}\!\left(
+    \mathcal{L}_{R_\text{real}} + \mathcal{L}_{R_\text{imag}}
+    \right),
+    \label{eq:loss_2d}
+\end{equation}
+%
+con peso de física $\lambda_\text{fís} = 0.1$. Este valor fue calibrado
+empíricamente mediante un experimento de ablación (véase la
+Sección~\ref{sec:ablacion}): valores superiores ($\lambda = 1.0$) sobrepesan la
+física e impiden la convergencia en 2D, dado que los dos residuos (real e
+imaginario) duplican efectivamente la contribución física; valores inferiores
+($\lambda = 0.01$) producen campos que violan moderadamente la ecuación de
+Helmholtz.
+
+Los residuos de Helmholtz se calculan mediante diferenciación automática de
+segundo orden \parencite{baydin2018autodiff}:
+%
+\begin{equation}
+    R_\text{real}(\mathbf{r}) = \nabla^2 E_\text{real}(\mathbf{r})
+    + k^2 E_\text{real}(\mathbf{r}), \qquad
+    R_\text{imag}(\mathbf{r}) = \nabla^2 E_\text{imag}(\mathbf{r})
+    + k^2 E_\text{imag}(\mathbf{r}),
+\end{equation}
+%
+donde el Laplaciano se obtiene con \texttt{torch.autograd.grad} activando la
+opción \texttt{create\_graph=True} para permitir diferenciación de segundo orden.
+Es crítico que $k^2$ se convierta a tipo \texttt{float} de Python antes de
+multiplicar por el tensor de la red, para evitar conflictos de tipo entre
+\texttt{numpy.float64} y \texttt{torch.float32}.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Estrategia de muestreo}
+
+\subsection{Puntos interiores (colocación)}
+
+Para el caso 2D, los $N_c = 3{,}000$ puntos de colocación interiores se generan
+mediante LHS \parencite{mckay1979lhs} usando \texttt{scipy.stats.qmc.LatinHypercube}
+con dimensión $n = 2$. LHS divide cada dimensión en $N_c$ estratos iguales de
+longitud $1/N_c$ y coloca exactamente un punto en cada estrato, garantizando
+cobertura uniforme del dominio sin los patrones redundantes de una malla
+cartesiana.
+
+\subsection{Puntos de frontera}
+
+En NB01 y NB02, los $N_b = 300$ puntos de frontera por borde se distribuyen
+uniformemente sobre cada uno de los cuatro lados del dominio $\partial\Omega$.
+Para cada lado, se evalúa la solución exacta y se construye el par
+$(\mathbf{r}^b_j,\, E(\mathbf{r}^b_j))$ utilizado en $\mathcal{L}_\text{datos}$.
+NB03 sigue un esquema distinto, descrito en la Sección~\ref{cap3:nb03}: solo
+el borde $y = 0$ recibe puntos de frontera
+($N_\psi = 256$, con la condición de fase aleatoria de la
+Ecuación~\eqref{eq:frontera_rugosa}), mientras que $x = 0$, $x = 1$ e $y = 1$
+permanecen libres, sin puntos de frontera ni condición Dirichlet.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Estrategia de optimización}
+
+El entrenamiento sigue la estrategia bifásica descrita en el
+Capítulo~\ref{cap2:marcos}, con los hiperparámetros consolidados en la
+Tabla~\ref{tab:hiperparametros}.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Hiperparámetros de entrenamiento consolidados.}
+\label{tab:hiperparametros}
+\begin{tabular}{lll}
+\toprule
+Hiperparámetro & Valor & Aplicación \\
+\midrule
+Tasa de aprendizaje Adam ($\eta$) & $10^{-3}$ & NB01, NB02, NB03 \\
+Épocas máximas Adam             & 15{,}000  & NB01, NB02, NB03 \\
+Paciencia (\textit{early stopping}) & 800 épocas & NB02, NB03 \\
+$\delta$ mejora mínima          & $10^{-7}$ & NB02, NB03 \\
+Iteraciones máximas L-BFGS      & 500 (NB01), 1{,}000 (NB02/03) & - \\
+Historial L-BFGS                & 50 (NB01), 100 (NB02/03) & - \\
+Semilla global (SEED)           & 42        & NB01, NB02, NB03 \\
+Peso de física $\lambda_\text{fís}$ & 0.1  & NB02, NB03 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Todos los experimentos se ejecutaron en GPU NVIDIA RTX 5050
+    (CUDA 12.6, PyTorch 2.4). La semilla garantiza reproducibilidad.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Métricas de validación}
+
+\subsection{Error $L^2$ relativo (NB01 y NB02)}
+
+El error $L^2$ relativo mide la discrepancia global entre la predicción de la
+red $\hat{E}$ y la solución exacta $E_\text{exacta}$, evaluado sobre una malla
+uniforme de $100 \times 100$ puntos:
+%
+\begin{equation}
+    \varepsilon_{L^2} = \frac{\|\hat{E} - E_\text{exacta}\|_2}
+    {\|E_\text{exacta}\|_2} \times 100\%.
+    \label{eq:l2}
+\end{equation}
+
+No existe en la literatura de PINNs un criterio estandarizado de tolerancia
+de error para este tipo de validación, por lo que se fijó
+$\varepsilon_{L^2} < 5\%$ como umbral ingenieril propio de la tesis. Este
+valor resulta, además, considerablemente menor que el orden de magnitud
+reportado en implementaciones comparables de PINNs para la ecuación de
+Helmholtz identificadas posteriormente (Tabla~\ref{tab:comparativa}).
+
+\subsection{Contraste y test KS (NB03)}
+
+Para la validación del \textit{speckle}:
+\begin{itemize}
+    \item \textbf{Contraste:} $C = \sigma_I / \langle I \rangle$, con umbral
+    $|C - 1| < 0.1$ conforme al criterio de \textcite{goodman2007speckle}.
+    \item \textbf{Test de Kolmogorov-Smirnov (KS):} Prueba de bondad de ajuste
+    contra la distribución exponencial teórica $p(I) = \langle I \rangle^{-1}
+    \exp(-I/\langle I \rangle)$. Criterio formal: $p > 0.05$.
+    \item \textbf{Fracción de colas:} Fracción de píxeles con $I > 2\langle I \rangle$,
+    comparada con el valor teórico $e^{-2} \approx 0.1353$.
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Implementación modular}
+
+El código fuente está organizado en módulos reutilizables en \texttt{src/}:
+
+\begin{description}
+    \item[\texttt{models.py}] Clase \texttt{PINN\_2D\_SIREN} que implementa
+    la arquitectura SIREN con la inicialización de \textcite{sitzmann2020siren}.
+    El método \texttt{forward(x)} aplica la activación sinusoidal capa por capa
+    y retorna el campo complejo como un tensor de dos columnas
+    $(E_\text{real}, E_\text{imag})$.
+
+    \item[\texttt{losses.py}] Función \texttt{pinn\_loss\_2d(model, xy\_int,
+    xy\_bc, E\_bc, k, lam)} que calcula la pérdida total~\eqref{eq:loss_2d}.
+    El cálculo del Laplaciano utiliza \texttt{torch.autograd.grad} con
+    \texttt{create\_graph=True} para habilitar la diferenciación de segundo orden.
+    El escalar $k$ se convierte explícitamente a \texttt{float(k)} antes de
+    multiplicar por el tensor de la red, evitando conflictos de dtype entre
+    \texttt{numpy.float64} y \texttt{torch.float32}.
+
+    \item[\texttt{training.py}] Loop de entrenamiento que integra las fases
+    Adam y L-BFGS con \textit{early stopping}.
+
+    \item[\texttt{utils.py}] Métricas ($L^2$, $R^2$, RMSE, MAE), funciones de
+    muestreo LHS y rutinas de visualización.
+\end{description}
+
+Los experimentos están reproducidos en los notebooks
+\texttt{01\_pinn\_helmholtz\_1d\_validation.ipynb},
+\texttt{02\_pinn\_helmholtz\_2d\_complex\_field.ipynb} y
+\texttt{03\_pinn\_optical\_speckle\_simulation.ipynb}.
+Los resultados numéricos están archivados en formato JSON en \texttt{results/}.

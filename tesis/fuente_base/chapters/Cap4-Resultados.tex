@@ -1,0 +1,329 @@
+\chapter{Experimentos y Resultados}\label{cap4:resultados}
+
+Este capítulo presenta los resultados de los dos experimentos ejecutados en GPU
+NVIDIA RTX~5050 (CUDA 12.6, PyTorch 2.4, SEED = 42). Los experimentos siguen
+una complejidad creciente: validación analítica 1D (NB01) y validación 2D con
+campo complejo (NB02).
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{NB01: Validación 1D - Helmholtz con solución analítica}
+\label{sec:resultados1d}
+
+\subsection{Configuración experimental}
+
+El primer experimento valida la arquitectura SIREN frente a la solución analítica
+exacta de la ecuación de Helmholtz 1D. Se empleó la arquitectura SIREN
+$5 \times 64$ (${\sim}8{,}400$ parámetros) con los hiperparámetros de la
+Tabla~\ref{tab:hiperparametros}. Los puntos de colocación son $N_c = 1{,}000$
+puntos uniformes en $[0,1]$ y las condiciones de frontera Dirichlet son
+$E(0) = 1$ y $E(1) = \cos(k)$.
+
+\subsection{Resultados de precisión}
+
+La Tabla~\ref{tab:resultados1d} presenta las métricas de precisión obtenidas
+tras el entrenamiento completo Adam (15{,}000 épocas) seguido de L-BFGS
+(202 iteraciones), con un tiempo total de 251 segundos.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Métricas de precisión - PINN-SIREN 1D ($k = 2\pi$).}
+\label{tab:resultados1d}
+\begin{tabular}{lc}
+\toprule
+Métrica & Valor \\
+\midrule
+Error $L^2$ relativo (\%)    & \textbf{0.006} \\
+MSE                          & $1.5 \times 10^{-9}$ \\
+RMSE                         & $3.9 \times 10^{-5}$ \\
+MAE                          & $3.50 \times 10^{-5}$ \\
+Error máximo                 & $5.77 \times 10^{-5}$ \\
+$R^2$                        & 1.000000 \\
+Correlación de Pearson       & 1.000000 \\
+\midrule
+Épocas Adam                  & 15{,}000 / 15{,}000 \\
+Iteraciones L-BFGS           & 202 / 500 \\
+Tiempo total (s)             & 251 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Evaluado en malla uniforme de 1{,}000 puntos en $[0,1]$.
+    Arquitectura SIREN: 5 capas $\times$ 64 neuronas, $\omega_0 = 1.0$.
+    Solución analítica: $E_\text{exacta}(x) = \cos(kx)$.
+    GPU: NVIDIA RTX 5050, SEED = 42.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Análisis y comparativa con el estado del arte}
+
+El error $L^2 = 0.006\%$ supera el umbral de la tesis ($< 5\%$) por casi tres
+órdenes de magnitud y representa un factor de mejora de $\times 415$ respecto al
+resultado de \textcite{schoder2024helmholtz}, que reporta un error del $2.49\%$
+para Helmholtz 1D con PINNs de activación \textit{tanh}. Esta mejora drástica
+es atribuible a la ventaja intrínseca de la activación sinusoidal SIREN para
+representar funciones oscilatorias: la red aprende la solución $\cos(kx)$ de
+forma casi exacta, con $R^2 = 1.000000$ y correlación de Pearson $= 1.000000$
+en toda la malla de evaluación.
+
+La Figura~\ref{fig:resultados1d} muestra la comparación entre la predicción de
+la red y la solución analítica, así como la distribución del error puntual.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{resultados_pinn_1d.png}
+    \caption{Validación PINN-SIREN para Helmholtz 1D.
+    Panel izquierdo: comparación entre la predicción de la red y la solución
+    analítica $E_\text{exacta}(x) = \cos(kx)$ en 1{,}000 puntos uniformes en
+    $[0,1]$. Panel derecho: error puntual $|\hat{E}(x) - E_\text{exacta}(x)|$.
+    Error $L^2 = 0.006\%$, $R^2 = 1.000000$. GPU: NVIDIA RTX 5050, SEED = 42.}
+    \label{fig:resultados1d}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{metricas_adicionales_1d.png}
+    \caption{Métricas adicionales de entrenamiento NB01. De izquierda a derecha:
+    curva de pérdida total durante las fases Adam y L-BFGS, distribución del
+    error puntual y métricas de ajuste ($R^2$, Pearson). La transición
+    Adam $\to$ L-BFGS a la época 15{,}000 es visible como una caída abrupta
+    en la curva de pérdida.}
+    \label{fig:metricas1d}
+\end{figure}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{NB02: Validación 2D - Helmholtz con campo complejo}
+\label{sec:resultados2d}
+
+\subsection{Configuración experimental}
+
+El segundo experimento escala el modelo al caso bidimensional con campo complejo.
+Se empleó la arquitectura SIREN $5 \times 128$ ($66{,}690$ parámetros), LHS
+con $N_c = 3{,}000$ puntos de colocación y $N_b = 300$ puntos de frontera por
+borde. El peso de física $\lambda_\text{fís} = 0.1$ fue seleccionado mediante
+el experimento de ablación descrito en la Sección~\ref{sec:ablacion}.
+
+\subsection{Resultados de precisión}
+
+La Tabla~\ref{tab:resultados2d} reporta las métricas detalladas para cada
+componente del campo complejo, evaluadas en una malla uniforme de
+$100 \times 100$ puntos.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Métricas de precisión - PINN-SIREN 2D ($k = 2\pi$, $k_x = k_y = k/\sqrt{2}$).}
+\label{tab:resultados2d}
+\begin{tabular}{lcc}
+\toprule
+Métrica & $E_\text{real}$ & $E_\text{imag}$ \\
+\midrule
+Error $L^2$ (\%)         & 0.214              & 0.127              \\
+MSE                      & $2.20 \times 10^{-6}$ & $8.43 \times 10^{-7}$ \\
+RMSE                     & $1.48 \times 10^{-3}$ & $9.18 \times 10^{-4}$ \\
+MAE                      & $1.27 \times 10^{-3}$ & $7.71 \times 10^{-4}$ \\
+Error máximo             & $3.05 \times 10^{-3}$ & $2.93 \times 10^{-3}$ \\
+$R^2$                    & 0.999995           & 0.999998           \\
+Correlación de Pearson   & 0.999998           & 0.999999           \\
+\midrule
+Error $L^2$ promedio (\%)& \multicolumn{2}{c}{\textbf{0.171}} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Evaluado en malla uniforme de $100 \times 100$ puntos.
+    Arquitectura: SIREN $5 \times 128$, $\omega_0 = 1.0$, 66{,}690 parámetros.
+    Puntos de colocación: LHS $N_c = 3{,}000$.
+    Frontera: onda plana $e^{i(k_x x + k_y y)}$ en 4 bordes, $N_b = 300$ pts/borde.
+    Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 iter.), tiempo total 299 s.
+    Varianza entre semillas (SEED $\in \{42, 123, 777\}$):
+    error $L^2$ promedio $= 0.155 \pm 0.020$\,\%.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Análisis de resultados}
+
+El error $L^2$ promedio de $0.171\%$ supera el umbral de la tesis ($< 5\%$) por
+más de un orden de magnitud y mejora en un factor de $\times 11.2$ el resultado
+de \textcite{schoder2024helmholtz} para Helmholtz 2D ($1.91\%$). La precisión
+se mantiene alta en ambas componentes del campo complejo, con $R^2 > 0.9999$
+para $E_\text{real}$ y $E_\text{imag}$.
+
+La ampliación de capacidad de $d = 64$ a $d = 128$ fue determinante: con
+$d = 64$ el error promedio era $0.436\%$; con $d = 128$ se redujo a $0.171\%$,
+una mejora de $2.5\times$. El Muestreo Latino Hipercúbico contribuyó a reducir
+el error en regiones de baja densidad de puntos respecto a mallas cartesianas
+equivalentes.
+
+La Figura~\ref{fig:resultados2d} muestra los mapas de calor de la solución
+exacta y la predicción PINN-SIREN para ambas componentes del campo.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{resultados_pinn_2d.png}
+    \caption{Validación PINN-SIREN para Helmholtz 2D con campo complejo.
+    Fila superior: partes real e imaginaria de la solución analítica
+    $E_\text{exacta} = e^{i(k_x x + k_y y)}$.
+    Fila inferior: predicción PINN-SIREN correspondiente.
+    La diferencia visual es indistinguible; los errores puntuales son del
+    orden de $10^{-3}$ (véase la Tabla~\ref{tab:resultados2d}).
+    Malla de evaluación $100 \times 100$, SEED = 42.}
+    \label{fig:resultados2d}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{metricas_adicionales_2d.png}
+    \caption{Métricas adicionales de entrenamiento NB02. Panel izquierdo:
+    curva de pérdida total mostrando la transición bifásica Adam $\to$ L-BFGS.
+    Paneles central y derecho: mapas de error puntual
+    $|E_\text{real} - \hat{E}_\text{real}|$ y
+    $|E_\text{imag} - \hat{E}_\text{imag}|$ en la malla $100 \times 100$.
+    Los errores más altos se concentran en las esquinas del dominio.}
+    \label{fig:metricas2d}
+\end{figure}
+
+\subsection{Reproducibilidad multi-semilla}
+
+Para evaluar la robustez estadística del método, el experimento NB02 se repitió
+con tres semillas diferentes: SEED $\in \{42, 123, 777\}$. Los resultados se
+presentan en la Tabla~\ref{tab:multiseed}.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Reproducibilidad multi-semilla - NB02 ($\lambda_\text{fís} = 0.1$).}
+\label{tab:multiseed}
+\begin{tabular}{lccc}
+\toprule
+SEED & Error $L^2$ prom. (\%) & Épocas Adam & Tiempo (s) \\
+\midrule
+42   & 0.171  & 8{,}737  & 299 \\
+123  & 0.1264 & 8{,}012  & 448 \\
+777  & 0.1675 & 13{,}560 & 346 \\
+\midrule
+Media $\pm$ Desv. est. & $0.155 \pm 0.020$ & — & — \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Misma arquitectura, hiperparámetros y protocolo de entrenamiento.
+    La varianza entre semillas es del 13\% relativo, confirmando la
+    estabilidad del método. GPU: NVIDIA RTX 5050.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+La varianza inter-semilla de $\pm 0.020\%$ (13\% relativo) confirma que el
+método es estadísticamente robusto: independientemente de la inicialización
+aleatoria, el modelo converge a soluciones de alta precisión.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Ablación del peso de física $\lambda_\text{fís}$}
+\label{sec:ablacion}
+
+Para calibrar el balance entre el término de datos y el término físico en la
+función de pérdida~\eqref{eq:loss_2d}, se realizó un experimento de ablación
+con $\lambda_\text{fís} \in \{0.01, 0.1, 1.0\}$, manteniendo fija la
+arquitectura SIREN $5 \times 128$ y SEED = 42. Los resultados se presentan en
+la Tabla~\ref{tab:ablacion_lambda}.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Ablación del peso de física $\lambda_\text{fís}$ - NB02.}
+\label{tab:ablacion_lambda}
+\begin{tabular}{lccc}
+\toprule
+$\lambda_\text{fís}$ & Error $L^2$ prom. (\%) & Converge & Observación \\
+\midrule
+0.01  & 0.163  & Sí & Física subponderada \\
+0.1   & 0.171  & Sí & \textbf{Configuración óptima} \\
+1.0   & $>5.0$ & No & Física sobreponderada \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Arquitectura SIREN $5 \times 128$, $\omega_0 = 1.0$, SEED = 42.
+    Mismo protocolo Adam + L-BFGS que NB02.
+    \textit{No converge} indica que Adam no alcanzó la condición de parada
+    antes de las 15{,}000 épocas con $\varepsilon_{L^2} < 5\%$. El caso
+    $\lambda = 1.0$ produce una explosión numérica en la función de pérdida
+    debido a que los dos residuos (real e imaginario) duplican la contribución
+    de la física, generando gradientes de gran magnitud en \texttt{float32}.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+El valor $\lambda_\text{fís} = 0.1$ equilibra adecuadamente el ajuste a los
+datos de frontera y el cumplimiento de la EDP: el modelo con $\lambda = 0.01$
+obtiene ligeramente mejor error (0.163\%) al sacrificar restricción física,
+mientras que $\lambda = 1.0$ produce gradientes explosivos. Se seleccionó
+$\lambda = 0.1$ como configuración óptima por su estabilidad y precisión.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Comparativa con el estado del arte}
+
+La Tabla~\ref{tab:comparativa} resume el rendimiento de la PINN-SIREN propuesta
+frente al estado del arte en la resolución de la ecuación de Helmholtz con PINNs.
+
+\begin{table}[H]
+\centering
+\begin{threeparttable}
+\caption{Comparativa de error $L^2$ relativo - PINN-SIREN vs.\ estado del arte.}
+\label{tab:comparativa}
+\begin{tabular}{lccc}
+\toprule
+Método & Dimensión & Error $L^2$ (\%) & Factor de mejora \\
+\midrule
+\textcite{schoder2024helmholtz} & 1D & 2.490 & -- \\
+\textcite{schoder2024helmholtz} & 2D & 1.910 & -- \\
+\textbf{PINN-SIREN (este trabajo)} & \textbf{1D} & \textbf{0.006} & $\times 415$ \\
+\textbf{PINN-SIREN (este trabajo)} & \textbf{2D} & \textbf{0.171} & $\times 11.2$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item El factor de mejora es la razón entre el error de Schoder et al.\ (2024)
+    y el error de la PINN-SIREN propuesta.
+    Ambos trabajos abordan la ecuación de Helmholtz escalar en dominios normalizados.
+    \textcite{schoder2024helmholtz} aborda el caso 3D con activación \textit{tanh};
+    este trabajo opera en 1D/2D adimensionales con arquitectura SIREN.
+    El factor de mejora refleja tanto la ventaja arquitectural de SIREN sobre
+    \textit{tanh}/ReLU como la diferencia de complejidad dimensional.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Resumen de experimentos completados}
+
+La Tabla~\ref{tab:resumen_experimentos} sintetiza el estado de los experimentos
+ejecutados en el marco de este primer avance.
+
+\begin{table}[H]
+\centering
+\begin{threeparttable}
+\caption{Estado de los experimentos ejecutados.}
+\label{tab:resumen_experimentos}
+\begin{tabular}{llcc}
+\toprule
+Experimento & Descripción & Estado & Métrica principal \\
+\midrule
+NB01 & Helmholtz 1D - validación analítica    & Completo  & $L^2 = 0.006\%$ \\
+NB02 & Helmholtz 2D - campo complejo          & Completo  & $L^2 = 0.171\%$ \\
+NB03 & Speckle óptico - frontera rugosa       & Pendiente & $|C - 1| < 0.1$ \\
+NB04 & Benchmark FEM - factor de aceleración  & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item NB01 y NB02 verifican la hipótesis de precisión ($L^2 < 5\%$).
+    NB03 y NB04 constituyen el trabajo futuro inmediato.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+
+Los dos experimentos completados verifican la primera hipótesis de la tesis:
+el error $L^2 < 5\%$ se supera con amplitud tanto en el caso 1D ($L^2 = 0.006\%$)
+como en el 2D ($L^2 = 0.171\%$). La validación estadística del
+\textit{speckle} y el \textit{benchmark} contra FEM se abordarán como
+trabajo futuro inmediato.
