@@ -43,13 +43,13 @@
 \contentsline {section}{\numberline {4.1}NB01: Validación 1D - Helmholtz con solución analítica}{19}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Configuración experimental}{19}{subsection.4.1.1}%
 \contentsline {subsection}{\numberline {4.1.2}Resultados de precisión}{19}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Análisis y comparativa con el estado del arte}{20}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.3}Análisis de resultados}{20}{subsection.4.1.3}%
 \contentsline {section}{\numberline {4.2}NB02: Validación 2D - Helmholtz con campo complejo}{20}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Configuración experimental}{20}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Resultados de precisión}{22}{subsection.4.2.2}%
 \contentsline {subsection}{\numberline {4.2.3}Análisis de resultados}{22}{subsection.4.2.3}%
 \contentsline {subsection}{\numberline {4.2.4}Reproducibilidad multi-semilla}{24}{subsection.4.2.4}%
 \contentsline {section}{\numberline {4.3}Ablación del peso de física $\lambda _\text {fís}$}{25}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Comparativa con el estado del arte}{25}{section.4.4}%
+\contentsline {section}{\numberline {4.4}Contexto en la literatura}{26}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Resumen de experimentos completados}{26}{section.4.5}%
-\contentsline {chapter}{Bibliografía}{27}{table.caption.25}%
+\contentsline {chapter}{Bibliografía}{28}{table.caption.25}%

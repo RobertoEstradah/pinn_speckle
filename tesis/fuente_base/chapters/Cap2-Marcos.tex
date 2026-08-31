@@ -175,16 +175,16 @@ reduciendo el tiempo de convergencia \parencite{cuomo2022scientific}.
 
 \subsection{Optimización híbrida Adam + L-BFGS}
 
-El entrenamiento sigue una estrategia bifásica \parencite{wang2021failure}:
+El entrenamiento sigue una estrategia bifásica \parencite{cuomo2022scientific}:
 
 \begin{enumerate}
-    \item \textbf{Fase 1 -- Adam:} Optimizador estocástico de primer orden
+    \item \textbf{Fase 1 (Adam):} Optimizador estocástico de primer orden
     \parencite{kingma2015adam} con tasa de aprendizaje $\eta = 10^{-3}$,
     paciencia de 800 épocas sin mejora mayor que $\delta = 10^{-7}$ y un
     máximo de 15{,}000 épocas. Adam realiza exploración global del espacio
     de parámetros y proporciona un punto de inicio próximo al mínimo global.
 
-    \item \textbf{Fase 2 -- L-BFGS:} Optimizador cuasi-Newton de segundo orden
+    \item \textbf{Fase 2 (L-BFGS):} Optimizador cuasi-Newton de segundo orden
     (\textit{Limited-memory Broyden-Fletcher-Goldfarb-Shanno})
     \parencite{nocedal2006numerical} con búsqueda de línea \textit{strong Wolfe},
     máximo 1{,}000 iteraciones y tamaño de historial 100. L-BFGS aprovecha la

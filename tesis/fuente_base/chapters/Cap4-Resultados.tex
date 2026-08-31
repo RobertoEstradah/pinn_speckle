@@ -22,7 +22,7 @@ $E(0) = 1$ y $E(1) = \cos(k)$.
 
 La Tabla~\ref{tab:resultados1d} presenta las métricas de precisión obtenidas
 tras el entrenamiento completo Adam (15{,}000 épocas) seguido de L-BFGS
-(202 iteraciones), con un tiempo total de 251 segundos.
+(202 iteraciones), con un tiempo total de 142 segundos.
 
 \begin{table}[htbp]
 \centering
@@ -43,7 +43,7 @@ Correlación de Pearson       & 1.000000 \\
 \midrule
 Épocas Adam                  & 15{,}000 / 15{,}000 \\
 Iteraciones L-BFGS           & 202 / 500 \\
-Tiempo total (s)             & 251 \\
+Tiempo total (s)             & 142 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
@@ -55,16 +55,13 @@ Tiempo total (s)             & 251 \\
 \end{threeparttable}
 \end{table}
 
-\subsection{Análisis y comparativa con el estado del arte}
+\subsection{Análisis de resultados}
 
 El error $L^2 = 0.006\%$ supera el umbral de la tesis ($< 5\%$) por casi tres
-órdenes de magnitud y representa un factor de mejora de $\times 415$ respecto al
-resultado de \textcite{schoder2024helmholtz}, que reporta un error del $2.49\%$
-para Helmholtz 1D con PINNs de activación \textit{tanh}. Esta mejora drástica
-es atribuible a la ventaja intrínseca de la activación sinusoidal SIREN para
-representar funciones oscilatorias: la red aprende la solución $\cos(kx)$ de
-forma casi exacta, con $R^2 = 1.000000$ y correlación de Pearson $= 1.000000$
-en toda la malla de evaluación.
+órdenes de magnitud. La red aprende la solución $\cos(kx)$ de forma casi
+exacta, con $R^2 = 1.000000$ y correlación de Pearson $= 1.000000$ en toda la
+malla de evaluación. La Sección~\ref{sec:comparativa} sitúa este resultado
+frente a la literatura.
 
 La Figura~\ref{fig:resultados1d} muestra la comparación entre la predicción de
 la red y la solución analítica, así como la distribución del error puntual.
@@ -134,7 +131,7 @@ Error $L^2$ promedio (\%)& \multicolumn{2}{c}{\textbf{0.171}} \\
     Arquitectura: SIREN $5 \times 128$, $\omega_0 = 1.0$, 66{,}690 parámetros.
     Puntos de colocación: LHS $N_c = 3{,}000$.
     Frontera: onda plana $e^{i(k_x x + k_y y)}$ en 4 bordes, $N_b = 300$ pts/borde.
-    Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 iter.), tiempo total 299 s.
+    Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 iter.), tiempo total 295 s.
     Varianza entre semillas (SEED $\in \{42, 123, 777\}$):
     error $L^2$ promedio $= 0.155 \pm 0.020$\,\%.
 \end{tablenotes}
@@ -144,10 +141,9 @@ Error $L^2$ promedio (\%)& \multicolumn{2}{c}{\textbf{0.171}} \\
 \subsection{Análisis de resultados}
 
 El error $L^2$ promedio de $0.171\%$ supera el umbral de la tesis ($< 5\%$) por
-más de un orden de magnitud y mejora en un factor de $\times 11.2$ el resultado
-de \textcite{schoder2024helmholtz} para Helmholtz 2D ($1.91\%$). La precisión
-se mantiene alta en ambas componentes del campo complejo, con $R^2 > 0.9999$
-para $E_\text{real}$ y $E_\text{imag}$.
+más de un orden de magnitud. La precisión se mantiene alta en ambas componentes
+del campo complejo, con $R^2 > 0.9999$ para $E_\text{real}$ y $E_\text{imag}$.
+La Sección~\ref{sec:comparativa} sitúa este resultado frente a la literatura.
 
 La ampliación de capacidad de $d = 64$ a $d = 128$ fue determinante: con
 $d = 64$ el error promedio era $0.436\%$; con $d = 128$ se redujo a $0.171\%$,
@@ -198,7 +194,7 @@ presentan en la Tabla~\ref{tab:multiseed}.
 \toprule
 SEED & Error $L^2$ prom. (\%) & Épocas Adam & Tiempo (s) \\
 \midrule
-42   & 0.171  & 8{,}737  & 299 \\
+42   & 0.171  & 8{,}737  & 295 \\
 123  & 0.1264 & 8{,}012  & 448 \\
 777  & 0.1675 & 13{,}560 & 346 \\
 \midrule
@@ -259,38 +255,62 @@ obtiene ligeramente mejor error (0.163\%) al sacrificar restricción física,
 mientras que $\lambda = 1.0$ produce gradientes explosivos. Se seleccionó
 $\lambda = 0.1$ como configuración óptima por su estabilidad y precisión.
 
-% ──────────────────────────────────────────────────────────────────────────────
-\section{Comparativa con el estado del arte}
+Esta fragilidad frente al peso relativo de los términos de pérdida no es un
+fenómeno aislado de esta implementación: \textcite{krishnapriyan2021characterizing}
+documentan sistemáticamente que las PINN con pesos fijos entre el término de
+datos/condición inicial y el término de residuo físico pueden fallar en
+converger a la solución correcta incluso cuando la función de pérdida global
+parece decrecer, atribuyendo el problema a un paisaje de optimización mal
+condicionado por la competencia entre ambos términos. \textcite{wang2021failure}
+describen un mecanismo relacionado: los gradientes del término físico pueden
+dominar en magnitud a los del término de datos durante el entrenamiento,
+generando un flujo de gradiente patológico que dificulta la convergencia. La
+inestabilidad observada con $\lambda = 1.0$ en este trabajo es consistente
+con ambas caracterizaciones: los dos residuos (real e imaginario) duplican el
+peso efectivo del término físico, agravando el mismo tipo de desbalance.
 
-La Tabla~\ref{tab:comparativa} resume el rendimiento de la PINN-SIREN propuesta
-frente al estado del arte en la resolución de la ecuación de Helmholtz con PINNs.
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Contexto en la literatura}
+\label{sec:comparativa}
+
+La Tabla~\ref{tab:comparativa} sitúa los resultados de precisión de la
+PINN-SIREN propuesta junto al antecedente más cercano en la literatura.
 
 \begin{table}[H]
 \centering
 \begin{threeparttable}
-\caption{Comparativa de error $L^2$ relativo - PINN-SIREN vs.\ estado del arte.}
+\caption{Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}
 \label{tab:comparativa}
 \begin{tabular}{lccc}
 \toprule
-Método & Dimensión & Error $L^2$ (\%) & Factor de mejora \\
+Método & Dimensión & Comparación & Error $L^2$ (\%) \\
 \midrule
-\textcite{schoder2024helmholtz} & 1D & 2.490 & -- \\
-\textcite{schoder2024helmholtz} & 2D & 1.910 & -- \\
-\textbf{PINN-SIREN (este trabajo)} & \textbf{1D} & \textbf{0.006} & $\times 415$ \\
-\textbf{PINN-SIREN (este trabajo)} & \textbf{2D} & \textbf{0.171} & $\times 11.2$ \\
+\textcite{schoder2024helmholtz} & 3D (acústica) & PINN vs.\ FEM (malla fina) & 2.49 \\
+\textcite{zhang2025fepirbn} & 2D (EM) & PINN vs.\ simulación numérica & 1.40--5.82 \\
+\textbf{PINN-SIREN (este trabajo)} & \textbf{1D (óptica)} & PINN vs.\ solución analítica & \textbf{0.006} \\
+\textbf{PINN-SIREN (este trabajo)} & \textbf{2D (óptica)} & PINN vs.\ solución analítica & \textbf{0.171} \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
-    \item El factor de mejora es la razón entre el error de Schoder et al.\ (2024)
-    y el error de la PINN-SIREN propuesta.
-    Ambos trabajos abordan la ecuación de Helmholtz escalar en dominios normalizados.
-    \textcite{schoder2024helmholtz} aborda el caso 3D con activación \textit{tanh};
-    este trabajo opera en 1D/2D adimensionales con arquitectura SIREN.
-    El factor de mejora refleja tanto la ventaja arquitectural de SIREN sobre
-    \textit{tanh}/ReLU como la diferencia de complejidad dimensional.
+    \item Los cuatro resultados no son directamente comparables entre sí:
+    difieren en dimensionalidad, dominio físico (acústico/electromagnético
+    vs.\ óptico) y tipo de solución de referencia (FEM/simulación numérica vs.\
+    analítica). Se presentan como contexto de la literatura, no como línea
+    base de comparación cuantitativa. Los resultados propios se validan
+    contra el umbral fijo de la tesis ($L^2 < 5\%$), independiente de
+    trabajos externos.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
+
+El antecedente más cercano en arquitectura a este trabajo es
+\textcite{panagiotakopoulos2026helmholtz}, quienes resuelven la misma ecuación
+de Helmholtz 2D con campo complejo, usando también una red SIREN y la misma
+estrategia de optimización bifásica Adam seguido de L-BFGS. Se diferencia de
+este trabajo en dos aspectos: (i) validan cualitativamente la física del
+campo resultante (propagación, refracción, dispersión) en lugar de reportar
+un error $L^2$ cuantitativo contra una solución analítica; y (ii) no calibran
+$\omega_0$ respecto al número de onda $k$.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Resumen de experimentos completados}

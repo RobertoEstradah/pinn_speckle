@@ -30,7 +30,7 @@ Correlación de Pearson & 1.000000 \\
 \midrule
 Épocas Adam            & 15{,}000 / 15{,}000 \\
 Iteraciones L-BFGS     & 202 / 500 \\
-Tiempo total           & 251 s \\
+Tiempo total           & 142 s \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
@@ -102,7 +102,7 @@ Error L2 promedio (\%) & \multicolumn{2}{c}{0.171} \\
       Arquitectura: SIREN $5 \times 128$, $\omega_0 = 1.0$, 66{,}690 parámetros.
       Puntos de colocación: LHS $N_c = 3{,}000$.
       Frontera: onda plana $e^{i(k_x x + k_y y)}$ en 4 bordes, $N_b = 300$ pts/borde.
-      Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 iter), tiempo total 299 s.
+      Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 iter), tiempo total 295 s.
       Varianza entre semillas (SEED $\in \{42, 123, 777\}$):
       error $L^2$ promedio $= 0.155 \pm 0.020$\,\%.
 \end{tablenotes}
@@ -158,13 +158,14 @@ propuesta junto al antecedente más cercano en la literatura.
 Método & Dimensión & Comparación & Error L2 (\%) \\
 \midrule
 \citet{Schoder2024_PINN_acoustics} & 3D (acústica) & PINN vs.\ FEM (malla fina) & 2.49 \\
+\citet{Zhang2025_FEPIRBN} & 2D (EM) & PINN vs.\ simulación numérica & 1.40--5.82 \\
 \textbf{PINN-SIREN (este trabajo)} & \textbf{1D (óptica)} & PINN vs.\ solución analítica & \textbf{0.006} \\
 \textbf{PINN-SIREN (este trabajo)} & \textbf{2D (óptica)} & PINN vs.\ solución analítica & \textbf{0.171} \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item Los tres resultados no son directamente comparables entre sí: difieren en
+\item Los cuatro resultados no son directamente comparables entre sí: difieren en
       dimensionalidad, dominio físico (acústico vs.\ óptico) y tipo de solución
       de referencia (FEM vs.\ analítica). Se presentan como contexto de la
       literatura, no como línea base de comparación cuantitativa. Los resultados
