@@ -80,6 +80,12 @@ el cumplimiento de la EDP: valores superiores ($\lambda = 1.0$) sobrepesan la f�
 e impiden la convergencia en 2D; valores inferiores producen campos que violan la
 ecuación de Helmholtz.
 La \cref{tab:ablacion_lambda} cuantifica el efecto sobre el error $L^2$ promedio.
+Esta fragilidad frente al peso relativo de los términos de pérdida no es un fenómeno
+aislado de esta implementación: Krishnapriyan et al.~\cite{Krishnapriyan2021_failureModes}
+documentan sistemáticamente que las PINN con pesos fijos entre el término de datos y el
+término de residuo físico pueden fallar en converger incluso cuando la pérdida global
+parece decrecer, atribuyendo el problema a un paisaje de optimización mal condicionado
+por la competencia entre ambos términos.
 
 \begin{table}[htbp]
 \centering
@@ -123,8 +129,8 @@ iteraciones y tamaño de historial 100.
 L-BFGS aprovecha la información de curvatura del paisaje de pérdida para realizar
 un ajuste fino de alta precisión desde el punto entregado por Adam.
 
-Esta combinación, descrita en Wang et al.~\cite{Wang2021_failurePINNs}, supera a Adam puro en
-precisión final y a L-BFGS puro en robustez ante mínimos locales.
+Esta combinación, práctica extendida en la literatura de PINNs~\cite{Cuomo2022_review},
+supera a Adam puro en precisión final y a L-BFGS puro en robustez ante mínimos locales.
 
 \subsection{Métrica de validación}
 \label{subsec:metricas}
@@ -137,7 +143,11 @@ precisión final y a L-BFGS puro en robustez ante mínimos locales.
 \end{equation}
 %
 evaluado sobre una malla uniforme de $100 \times 100$ puntos.
-El umbral de la tesis es $\varepsilon_{L2} < 5\%$.
+No existe en la literatura de PINNs un criterio estandarizado de tolerancia de error
+para este tipo de validación, por lo que se fijó $\varepsilon_{L2} < 5\%$ como umbral
+ingenieril propio de este trabajo. Este valor resulta, además, considerablemente menor
+que el orden de magnitud reportado en implementaciones comparables de PINN para la
+ecuación de Helmholtz (\cref{tab:comparativa}).
 
 \subsection{Implementación}
 \label{subsec:implementacion}

@@ -44,8 +44,12 @@ ecuaciones de onda.
 Un estudio reciente de Schoder y Kraxberger~\cite{Schoder2024_PINN_acoustics} validó la viabilidad de las PINNs
 para la ecuación de Helmholtz 3D, reportando un error $L^2$ de $2.5\%$ respecto a soluciones
 FEM de referencia.
-Sin embargo, hasta donde alcanza nuestro conocimiento, la aplicación sistemática de este
-paradigma a la simulación del speckle óptico de alta resolución no ha sido abordada.
+Este paradigma se ha aplicado recientemente en contextos ópticos y electromagnéticos con
+arquitectura SIREN \cite{Panagiotakopoulos2026_Helmholtz}. Sin embargo, hasta donde alcanza
+nuestro conocimiento, ningún trabajo combina la activación sinusoidal, una regla explícita de
+calibración de $\omega_0$ respecto al número de onda, y la generación de speckle óptico desde
+una condición de frontera de fase aleatoria validada estadísticamente conforme al criterio de
+Goodman.
 
 En este trabajo presentamos una implementación PINN-SIREN para la resolución de la ecuación
 de Helmholtz bidimensional con campo complejo, sentando las bases para la futura simulación
@@ -53,7 +57,7 @@ acelerada del speckle óptico.
 La contribución principal es la validación de la arquitectura SIREN $5\times128$ en dos
 escenarios de complejidad creciente: validación 1D con solución analítica exacta
 (Error $L^2 = 0.006\%$) y validación 2D con onda plana compleja (Error $L^2 = 0.171\%$),
-superando al estado del arte en factores de $\times 415$ y $\times 11.2$, respectivamente.
+ambos varios órdenes de magnitud por debajo del umbral de tesis ($5\%$).
 La generación de patrones de speckle con condición de frontera de fase aleatoria
 $\phi(x) \sim \mathcal{U}(0, 2\pi)$ constituye el siguiente paso planificado de esta investigación.
 

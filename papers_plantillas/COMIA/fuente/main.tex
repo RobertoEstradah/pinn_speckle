@@ -26,7 +26,7 @@
 \usepackage[flushleft]{threeparttable}
 
 % --- Tipografia ---
-\usepackage{microtype}
+\usepackage[expansion=false]{microtype}
 \usepackage{float}
 \usepackage{xurl}
 
@@ -82,13 +82,13 @@ Physics-Informed Neural Networks with sinusoidal activation functions
 (SIREN-PINNs) are applied to solve the 2D scalar Helmholtz equation
 as a mesh-free surrogate for optical speckle simulation.
 The proposed SIREN architecture ($5\times128$, $\omega_0=1.0$) achieves
-relative $L^2$ errors of $0.006\,\%$ (1D) and $0.171\,\%$ (2D) against
-analytical solutions, outperforming the state of the art by factors of
-$\times\!415$ and $\times\!11.2$, respectively.
+relative $L^2$ errors of $0.006\%$ (1D) and $0.171\%$ (2D) against
+analytical solutions, several orders of magnitude below the $5\%$
+engineering threshold adopted in this work.
 A two-phase Adam\,+\,L-BFGS optimization strategy and Latin Hypercube
 Sampling (LHS) are key to convergence and accuracy.
 Multi-seed validation ($\mathrm{SEED}\in\{42,123,777\}$) confirms
-statistical robustness with an inter-seed $L^2$ variance of $13\,\%$
+statistical robustness with an inter-seed $L^2$ variance of $13\%$
 (relative).
 These results establish SIREN-PINNs as a precise and stable solver for
 the scalar Helmholtz equation, laying the foundation for physically
@@ -116,9 +116,10 @@ el\'{e}ctrico complejo, en un paradigma libre de malla
 (\textit{mesh-free}) orientado a la simulaci\'{o}n acelerada de
 fen\'{o}menos \'{o}pticos.
 La arquitectura SIREN propuesta ($5\times128$ neuronas, $\omega_0=1.0$)
-alcanza errores $L^2$ de $0.006\,\%$ en el caso 1D y $0.171\,\%$ en el
-caso 2D respecto a soluciones anal\'{i}ticas, superando al estado del
-arte en factores de $\times\!415$ y $\times\!11.2$, respectivamente.
+alcanza errores $L^2$ de $0.006\%$ en el caso 1D y $0.171\%$ en el
+caso 2D respecto a soluciones anal\'{i}ticas, varios \'{o}rdenes de
+magnitud por debajo del umbral ingenieril de $5\%$ adoptado en este
+trabajo.
 La validaci\'{o}n multi-semilla ($\mathrm{SEED}\in\{42,123,777\}$)
 confirma la robustez estad\'{i}stica del m\'{e}todo.
 La generaci\'{o}n de patrones de speckle con condici\'{o}n de frontera

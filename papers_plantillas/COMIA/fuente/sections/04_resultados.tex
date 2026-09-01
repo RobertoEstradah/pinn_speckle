@@ -43,11 +43,9 @@ Tiempo total           & 251 s \\
 \end{threeparttable}
 \end{table}
 
-El error L2 de $0.006\%$ supera el umbral de la tesis ($< 5\%$) por casi tres órdenes de magnitud
-y mejora en un factor de $\times 415$ el resultado de Schoder y Kraxberger~\cite{Schoder2024_PINN_acoustics},
-que reporta un error del $2.49\%$ para Helmholtz 1D con PINNs convencionales.
+El error L2 de $0.006\%$ supera el umbral de la tesis ($< 5\%$) por casi tres órdenes de magnitud.
 El ajuste es prácticamente perfecto: $R^2 = 1.000000$ y correlación de Pearson $= 1.000000$
-en toda la malla de evaluación.
+en toda la malla de evaluación. La \cref{subsec:comparativa} sitúa este resultado frente a la literatura.
 
 \begin{figure}[htbp]
   \centering
@@ -112,10 +110,9 @@ Error L2 promedio (\%) & \multicolumn{2}{c}{0.171} \\
 \end{table}
 
 El error L2 promedio de $0.171\%$ supera el umbral de la tesis ($< 5\%$) por más de un
-orden de magnitud y mejora en $\times 11.2$ el resultado de
-Schoder y Kraxberger~\cite{Schoder2024_PINN_acoustics} para Helmholtz 3D ($1.91\%$).
-La precisión se mantiene alta en ambas componentes del campo complejo, con $R^2 > 0.9999$
-para $E_{\mathrm{real}}$ y $E_{\mathrm{imag}}$.
+orden de magnitud. La precisión se mantiene alta en ambas componentes del campo complejo,
+con $R^2 > 0.9999$ para $E_{\mathrm{real}}$ y $E_{\mathrm{imag}}$.
+La \cref{subsec:comparativa} sitúa este resultado frente a la literatura.
 
 El aumento de capacidad de $d = 64$ a $d = 128$ fue determinante: con $d = 64$ el error
 promedio era $0.436\%$; con $d = 128$ se redujo a $0.171\%$, una mejora de $2.5\times$.
@@ -146,37 +143,35 @@ puntos respecto a mallas cartesianas equivalentes.
   \label{fig:metricas2d}
 \end{figure}
 
-\subsection{Comparativa con métodos de referencia}
+\subsection{Contexto en la literatura}
 \label{subsec:comparativa}
 
-La \cref{tab:comparativa} resume el rendimiento de la PINN-SIREN propuesta
-frente al estado del arte.
+La \cref{tab:comparativa} sitúa los resultados de precisión de la PINN-SIREN
+propuesta junto al antecedente más cercano en la literatura.
 
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Comparativa de error L2 - PINN-SIREN vs estado del arte}
+\caption{Error L2 relativo: PINN-SIREN y antecedente de la literatura}
 \label{tab:comparativa}
 \begin{tabular}{lccc}
 \toprule
-Método & Dimensión & Error L2 (\%) & Factor de mejora \\
+Método & Dimensión & Comparación & Error L2 (\%) \\
 \midrule
-Schoder y Kraxberger~\cite{Schoder2024_PINN_acoustics} & 1D & 2.490 & -        \\
-Schoder y Kraxberger~\cite{Schoder2024_PINN_acoustics} & 2D & 1.910 & -        \\
-\textbf{PINN-SIREN (este trabajo)} & \textbf{1D} & \textbf{0.006} & $\times 415$ \\
-\textbf{PINN-SIREN (este trabajo)} & \textbf{2D} & \textbf{0.171} & $\times 11.2$   \\
+Schoder y Kraxberger~\cite{Schoder2024_PINN_acoustics} & 3D (acústica) & PINN vs.\ FEM (malla fina) & 2.49 \\
+Zhang et al.~\cite{Zhang2025_FEPIRBN} & 2D (EM) & PINN vs.\ simulación numérica & 1.40--5.82 \\
+\textbf{PINN-SIREN (este trabajo)} & \textbf{1D (óptica)} & PINN vs.\ solución analítica & \textbf{0.006} \\
+\textbf{PINN-SIREN (este trabajo)} & \textbf{2D (óptica)} & PINN vs.\ solución analítica & \textbf{0.171} \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item El factor de mejora es la razón entre el error de Schoder et al.\ (2024)
-      y el error de la PINN-SIREN propuesta.
-      Ambos trabajan con la ecuación de Helmholtz escalar en dominios normalizados.
-      Schoder y Kraxberger~\cite{Schoder2024_PINN_acoustics} aborda el caso 3D con dominio físico y PINNs
-      de activación \textit{tanh}; este trabajo opera en 1D/2D adimensionales con
-      arquitectura SIREN.
-      El factor de mejora refleja tanto la ventaja arquitectural de SIREN sobre
-      \textit{tanh}/ReLU como la diferencia de complejidad dimensional.
+\item Los cuatro resultados no son directamente comparables entre sí: difieren en
+      dimensionalidad, dominio físico (acústico/electromagnético vs.\ óptico) y tipo de
+      solución de referencia (FEM/simulación numérica vs.\ analítica). Se presentan como
+      contexto de la literatura, no como línea base de comparación cuantitativa. Los
+      resultados propios se validan contra el umbral fijo de este trabajo ($L^2 < 5\%$),
+      independiente de trabajos externos.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
