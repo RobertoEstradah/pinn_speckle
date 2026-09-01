@@ -1,0 +1,107 @@
+% References found by librarian search — project pinn-inhomogeneous
+% Scope: PINNs for the Helmholtz/wave equation in INHOMOGENEOUS media (variable
+% refractive index n(x,y) or wave speed v(x,y)), GRIN optics, SIREN in inhomogeneous
+% media, and PINN + inhomogeneous medium + speckle/turbid optics.
+%
+% EXCLUDED (already known/cited by the user, per task instructions — do NOT re-add):
+% Song, Alkhalifah & Bin Waheed (2022, GJI, "A versatile framework to solve the
+% Helmholtz equation using physics-informed neural networks"); Moseley, Markham &
+% Nissen-Meyer (2020, arXiv, "Solving the wave equation with physics-informed deep
+% learning"); Alkhalifah, Song, Waheed & Hao (2021, AI in Geosciences, "Wavefield
+% solutions from machine learned functions constrained by the Helmholtz equation").
+% All three verified present in tesis/Tesis_Actual/references.bib (keys
+% "moseley2020wave" line 219, and the Alkhalifah/Song/Waheed entry at line 238) —
+% confirmed by direct grep on 2026-09-01, not re-added here.
+%
+% CROSS-PROJECT DUPLICATES (already in quality_reports/literature/pinn-speckle/references.bib,
+% relevant to this project's inhomogeneous-medium framing but NOT re-added here to avoid
+% a duplicate BibTeX key across the two literature folders — see annotated_bibliography.md
+% "Cross-references" section for why each one matters to THIS project):
+% panagiotakopoulos2026helmholtz, huang2026pinn2dscattering, kazemzadeh2025digitaltwin
+%
+% UNVERIFIED / NOT ADDED — see annotated_bibliography.md "Flagged citation" section:
+% "Fang, Z., & Zhan, J. (2020). A physics-informed neural network framework for wave
+% scattering in inhomogeneous media. IEEE Antennas and Wireless Propagation Letters,
+% 19(9), 1640-1644." — this citation appears in propuesta_lente.md and in
+% master_supporting_docs/supporting_protocolo_md/Protocolo_tesis_maestria_Roberto_
+% Hernandez_Estrada.md (line 623), but could NOT be verified against any primary
+% source (IEEE Xplore, Semantic Scholar, Google Scholar, ResearchGate) after multiple
+% targeted searches on 2026-09-01. Fang & Zhan's real, verifiable 2020 IEEE Access
+% papers are "Deep Physical Informed Neural Networks for Metamaterial Design" (IEEE
+% Access 8, 24506-24513) and "A Physics-Informed Neural Network Framework for PDEs on
+% 3D Surfaces: Time Independent Problems" (IEEE Access 8, 26328-26335) — NEITHER
+% matches the title, venue, or page range claimed. Do not cite the AWPL version
+% without independent verification (e.g., direct IEEE Xplore DOI lookup).
+
+@misc{eskin2025euvlitho,
+  author = {Es'kin, Vasiliy A. and Ivanov, Egor V.},
+  title  = {Physics-informed neural networks and neural operators for a study of {EUV} electromagnetic wave diffraction from a lithography mask},
+  year   = {2025},
+  eprint = {2507.04153},
+  archivePrefix = {arXiv},
+  note   = {Submitted 5 July 2025. Introduces a hybrid Waveguide Neural Operator (WGNO); PINN baseline uses tanh MLP (3 layers x 128), not SIREN. 2D test relative L2 error 1.7e-4 to 5.5e-2; 2D lithography-mask relative L2 error 4.9e-2 to 8.9e-2 (WGNO: 9.5e-7 to 3.9e-6)}
+}
+
+@article{luo2025pinnbpm,
+  author  = {Luo, Xiao and Zhang, Min and Wang, Zhuo and Jiang, Xiaotian and Song, Yuchen and Wang, Danshi},
+  title   = {{PINN-BPM}: An Enhanced Physics-Informed Neural Network Framework of Solving {H}elmholtz Equation for Light Field Propagation in Optical Fiber},
+  journal = {Journal of Lightwave Technology},
+  volume  = {43},
+  number  = {23},
+  pages   = {10380--10401},
+  year    = {2025},
+  note    = {Submitted 5 December 2024, accepted 26 September 2025, published 30 September 2025. Solves the slowly-varying-field Helmholtz equation (SVHE) via beam propagation method (BPM, z-marching) with residual-based sampling, self-adaptive weights, and causal weights. Architecture, error metrics, and explicit n(x,y) treatment not independently confirmed beyond the abstract — full text is paywalled (Optica Publishing Group); flagged for direct verification before citing quantitative claims}
+}
+
+@misc{zhang2026pepinn,
+  author = {Zhang, Huiwen and Ye, Feng and Ma, Chu},
+  title  = {Physics-Informed Neural Networks with Architectural Physics Embedding for Large-Scale Wave Field Reconstruction},
+  year   = {2026},
+  eprint = {2603.02231},
+  archivePrefix = {arXiv},
+  note   = {PE-PINN: envelope-transformation layers (oscillatory kernel x learnable smooth envelope) with sine (SIREN-style) activation for derivative computation; material-aware domain decomposition across heterogeneous dielectric regions (relative permittivity kappa = 1 to 80). Reports MSE vs. COMSOL of 3.38e-3 (2D free space), 7.94e-3 (2D diffraction), 7.12e-3 (2D refraction); >10x faster convergence than vanilla PINN, orders-of-magnitude lower memory than FEM}
+}
+
+@article{saba2022diffractiontomography,
+  author  = {Saba, Amirhossein and Gigli, Carlo and Ayoub, Ahmed B. and Psaltis, Demetri},
+  title   = {Physics-informed neural networks for diffraction tomography},
+  journal = {Advanced Photonics},
+  volume  = {4},
+  number  = {6},
+  pages   = {066001},
+  year    = {2022},
+  doi     = {10.1117/1.AP.4.6.066001},
+  note    = {Published 22 November 2022. PINN as forward model for tomographic reconstruction of biological samples (spatially-varying permittivity); Helmholtz equation as physical loss, no labeled scattered-field data required for the forward solve. Architecture/activation and exact error metrics not independently confirmed in this pass — full-text PDF fetch failed (binary/encoded); flagged for direct verification if used quantitatively}
+}
+
+@article{kim2026hno,
+  author  = {Kim, Ju O and Lee, Deokwoo},
+  title   = {{FFT}-Free Neural Operators for {H}elmholtz Scattering via Adaptive Coefficient Modulation},
+  journal = {Applied Sciences},
+  volume  = {16},
+  number  = {12},
+  pages   = {5997},
+  year    = {2026},
+  doi     = {10.3390/app16125997},
+  note    = {Published 13 June 2026. Helmholtz Neural Operator (HNO): FFT-free branch-trunk operator (DeepONet family) with a hybrid three-layer SIREN (omega0=30) + 16 learnable-Fourier-frequency trunk (K=64 total basis outputs) and a rank-32 hypernetwork branch with bounded multiplicative gating; targets high-contrast inhomogeneous-medium Helmholtz scattering, addressing FNO "mode saturation" at high refractive-index contrast (reported 15:1 test case). Data-driven operator training (labeled simulation pairs), NOT a physics-residual PINN loss}
+}
+
+@article{chen2024nsno,
+  author  = {Chen, Fukai and Liu, Ziyang and Lin, Guochang and Chen, Junqing and Shi, Zuoqiang},
+  title   = {{NSNO}: {N}eumann Series Neural Operator for Solving {H}elmholtz Equations in Inhomogeneous Medium},
+  journal = {Journal of Systems Science and Complexity},
+  volume  = {37},
+  pages   = {413--440},
+  year    = {2024},
+  doi     = {10.1007/s11424-024-3294-x},
+  note    = {First posted arXiv:2401.13494 (25 January 2024). Neumann-series-structured neural operator with embedded U-Net for multiscale features; learns the solution operator for the Helmholtz equation with spatially-varying wave-speed/coefficient fields and source terms. Reports at least 60\% lower relative L2 error and 50\% lower compute cost than an FNO baseline at high wavenumber. Data-driven operator learning, not a physics-residual PINN}
+}
+
+@misc{murari2024gradedindex,
+  author = {Murari, K. and Sundar, S.},
+  title  = {Physics informed neural network for forward and inverse radiation heat transfer in graded-index medium},
+  year   = {2024},
+  eprint = {2412.14699},
+  archivePrefix = {arXiv},
+  note   = {Submitted 19 December 2024, revised 24 December 2024; arXiv preprint only, no journal publication found as of this search. PINN for the radiative transfer equation (RTE) in a graded-index (GRIN) participating medium -- forward and inverse radiation heat transfer, NOT the wave/Helmholtz equation. Reports numerical stability and reduced oscillatory error vs. traditional finite-element/meshfree methods under pronounced refractive-index gradients}
+}
