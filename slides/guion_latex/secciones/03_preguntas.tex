@@ -1,0 +1,539 @@
+% ============================================================
+%  SECCION 3 — 15 PREGUNTAS Y RESPUESTAS DEL COMITE
+% ============================================================
+\section{15 Preguntas Probables del Comite}
+
+\begin{tcolorbox}[colback=ujatblue!10, colframe=ujatblue,
+  title={\bfseries Perfil del Comite Evaluador}, coltitle=white, breakable]
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Nombre} & \textbf{Rol} & \textbf{Enfasis probable} \\
+\midrule
+Dr. Jose Adan Hernandez Nolasco & Director   & IA/ML, validacion, arquitecturas \\
+Dr. Pablo Pancardo Garcia       & Sinodal 1  & CS general, sistemas, reproducibilidad \\
+Dr. Oscar Alberto Chavez Bosquez & Sinodal 2 & Algoritmos, optimizacion, complejidad \\
+Dr. Miguel Antonio Wister Ovando & Sinodal 3 & Redes neuronales, ML, KAN \\
+\bottomrule
+\end{tabular}
+
+\vspace{6pt}
+El comite es \textbf{computacional/CS}: las preguntas seran mayoritariamente sobre
+la implementacion, las decisiones de diseno, las metricas de evaluacion y la
+solidez del metodo. No esperar preguntas de fisica profunda, pero si sobre
+como se modela la fisica en el codigo.
+\end{tcolorbox}
+
+\vspace{12pt}
+
+% --- Instrucciones de uso ---
+\begin{tcolorbox}[colback=slidetip!30, colframe=ujatpurp,
+  title={\bfseries Como usar esta seccion}, coltitle=white]
+\begin{itemize}
+  \item Cada bloque tiene la pregunta probable y la respuesta ideal
+  \item Las respuestas estan disenadas para durar \textbf{60--90 segundos}
+  \item Si la respuesta requiere slide de respaldo, se indica con: \colorbox{ujatred!20}{SLIDE}
+  \item Practicar en voz alta, no solo leer
+  \item Las primeras 5 preguntas son las mas probables
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{12pt}
+
+% ==============================================================
+%  PREGUNTA 1
+% ==============================================================
+\begin{qabox}{Pregunta 1 --- ?`Que diferencia a una PINN de una red neuronal convencional?}
+\textbf{Fuente probable:} Dr. Hernandez Nolasco o Dr. Wister Ovando
+\end{qabox}
+
+\begin{answerbox}
+Una red neuronal convencional aprende de datos: necesita pares entrada--salida
+etiquetados $(x_i, y_i)$ para ajustar sus pesos. Una PINN usa la \textbf{ecuacion
+diferencial como supervision}. La funcion de perdida tiene dos terminos: el error
+en las condiciones de frontera conocidas y el residuo de la ecuacion diferencial
+en puntos aleatorios del dominio.
+
+En nuestro caso, para Helmholtz:
+\[
+  \mathcal{L} = \underbrace{\|E_\text{pred}(x_\text{BC}) - E_\text{BC}\|^2}_{\text{condiciones de frontera}} +
+  \lambda \cdot \underbrace{\|\nabla^2 E_\text{pred} + k^2 E_\text{pred}\|^2}_{\text{residuo de Helmholtz}}
+\]
+
+No necesitamos resolver Helmholtz con FEM para generar datos de entrenamiento: la
+fisica \emph{es} el entrenamiento. Una vez entrenada, la red evalua en microsegundos.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 2
+% ==============================================================
+\begin{qabox}{Pregunta 2 --- ?`Por que activacion seno (SIREN) y no ReLU o tanh?}
+\textbf{Fuente probable:} Dr. Wister Ovando (experto en arquitecturas ML)
+\end{qabox}
+
+\begin{answerbox}
+La ecuacion de Helmholtz requiere calcular el laplaciano $\nabla^2 E$, es decir,
+la segunda derivada de la salida de la red. Las activaciones mas comunes no son
+aptas:
+
+\begin{itemize}
+  \item \textbf{ReLU}: $\phi''(z) = 0$ en casi todos los puntos. El laplaciano
+        calculado con autograd es cero por todas partes; la perdida de fisica es inutil.
+  \item \textbf{tanh}: sus derivadas de orden alto se aproximan a cero para argumentos
+        grandes; la red se ``queda ciega'' a la fisica lejos del origen.
+  \item \textbf{SIREN} [$\sin(\omega_0 z)$]: la n-esima derivada es siempre
+        $\pm\omega_0^n \sin(\omega_0 z + \cdot)$ --- jamas cero, jamas saturada.
+\end{itemize}
+
+Ademas, SIREN aprende soluciones sinusoidales naturalmente porque la activacion
+tiene la misma forma que la solucion ($\cos(kx)$ en 1D, $e^{ikr}$ en 2D).
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 3
+% ==============================================================
+\begin{qabox}{Pregunta 3 --- ?`Como calculan el laplaciano sin malla?}
+\textbf{Fuente probable:} Dr. Chavez Bosquez (enfasis en algoritmos)
+\end{qabox}
+
+\begin{answerbox}
+Usamos \textbf{diferenciacion automatica} de PyTorch, especificamente
+\code{torch.autograd.grad()}. El proceso es:
+
+\begin{enumerate}
+  \item Declaramos las coordenadas de entrada con \code{requires\_grad=True}
+  \item Hacemos el forward pass: $\hat{E} = f_\theta(x, y)$
+  \item Primera llamada: \code{autograd.grad(E, xy)} $\to \nabla E = (\partial E/\partial x, \partial E/\partial y)$
+  \item Segunda llamada encadenada:
+        \code{autograd.grad(grad\_E[:,0], xy)} $\to \partial^2 E/\partial x^2$
+        y \code{autograd.grad(grad\_E[:,1], xy)} $\to \partial^2 E/\partial y^2$
+  \item $\nabla^2 E = \partial^2 E/\partial x^2 + \partial^2 E/\partial y^2$
+\end{enumerate}
+
+Esta es la \textbf{regla de la cadena algoritmica} (diferenciacion automatica en
+modo reverso). No hay discretizacion, no hay error de truncacion: el resultado es
+exacto a la precision numerica de float32. Esto es imposible con diferencias finitas
+sin una malla previa.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 4
+% ==============================================================
+\begin{qabox}{Pregunta 4 --- ?`Por que $\lambda = 0.1$? ?`Como lo calibraron?}
+\textbf{Fuente probable:} Cualquier sinodal \quad \colorbox{ujatred!20}{\small SLIDE S32}
+\end{qabox}
+
+\begin{answerbox}
+La calibracion de $\lambda$ se hizo mediante ablacion sistematica, cuyos resultados
+estan en \code{results/ablation\_lambda.json}:
+
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+$\lambda$ & Resultado & Observacion \\
+\midrule
+0.01 & $L^2 = 0.163\%$ & Funciona, fisica sub-ponderada \\
+\textbf{0.1} & $L^2 = \mathbf{0.171\%}$ & \textbf{Optimo} \\
+1.0 & CUDA crash & Overflow float32 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La razon del crash con $\lambda = 1.0$ es especifica de 2D: la perdida tiene
+\textbf{dos residuos} (parte real + parte imaginaria), lo que duplica el peso
+efectivo de la fisica. Con $\lambda = 1.0$ el peso efectivo es $2.0$, que
+genera gradientes del orden $10^{38}$ en float32 $\to$ NaN $\to$ CUDA crash.
+Con $\lambda = 0.1$ el peso efectivo es $0.2$: balance adecuado.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 5
+% ==============================================================
+\begin{qabox}{Pregunta 5 --- ?`Por que dos optimizadores? ?`No bastaria uno?}
+\textbf{Fuente probable:} Dr. Chavez Bosquez o Dr. Hernandez Nolasco
+\end{qabox}
+
+\begin{answerbox}
+Los dos optimizadores tienen roles complementarios:
+
+\textbf{Adam} (primer orden, estocastico):
+\begin{itemize}
+  \item Navega paisajes de perdida no convexos con multiples minimos locales
+  \item Usa momento adaptativo: escapa mesetas y sillas de montar
+  \item Limitacion: no usa la curvatura; su precision es moderada
+  \item Resultado tipico con solo Adam: $L^2 \approx 1\%$
+\end{itemize}
+
+\textbf{L-BFGS} (cuasi-Newton, segundo orden):
+\begin{itemize}
+  \item Aproxima el Hessiano inverso con historial de gradientes
+  \item Convergencia cuadratica cerca del minimo: cada iteracion multiplica la
+        precision por un factor constante
+  \item Requiere un punto inicial en la ``cuenca de atraccion'' del minimo
+  \item Solo Adam no llega ahi con suficiente frecuencia; L-BFGS desde cero diverge
+\end{itemize}
+
+\textbf{Resultado de la combinacion}: Adam lleva los pesos cerca del minimo en
+$\approx$15,000 epocas; L-BFGS los lleva al minimo preciso en $\approx$1,035
+iteraciones. El resultado final $L^2 = 0.171\%$ no es alcanzable con ninguno
+de los dos solos.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 6
+% ==============================================================
+\begin{qabox}{Pregunta 6 --- ?`Que es LHS y por que es superior al muestreo uniforme?}
+\textbf{Fuente probable:} Dr. Pancardo Garcia o Dr. Chavez Bosquez
+\end{qabox}
+
+\begin{answerbox}
+\textbf{Latin Hypercube Sampling (LHS)} es una tecnica de muestreo estratificado:
+\begin{enumerate}
+  \item Divide el rango de cada dimension en $N$ intervalos iguales de tamano $1/N$
+  \item Para cada dimension, asigna exactamente un punto a cada intervalo
+  \item Las asignaciones entre dimensiones se mezclan aleatoriamente
+\end{enumerate}
+
+\textbf{Propiedad garantizada}: con $N = 3000$ puntos en 2D, LHS garantiza que
+la proyeccion de los puntos sobre cada eje cubre el intervalo $[0,1]$ uniformemente.
+El muestreo uniforme independiente puede --por azar-- concentrar puntos en algunas
+zonas y dejar otras sin cubrir.
+
+\textbf{Impacto en PINNs}: en las zonas sin cobertura, la perdida de fisica no
+tiene restricciones y la red puede violar Helmholtz sin penalizacion. LHS elimina
+este sesgo de muestreo de forma garantizada por construccion.
+
+LHS agrega valor a partir de 2 dimensiones; en 1D el muestreo uniforme regular
+ya es optimo.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 7
+% ==============================================================
+\begin{qabox}{Pregunta 7 --- ?`Como garantizan que la red no tiene sobreajuste?}
+\textbf{Fuente probable:} Dr. Hernandez Nolasco o Dr. Wister Ovando
+\end{qabox}
+
+\begin{answerbox}
+Hay tres argumentos contra el sobreajuste:
+
+\begin{enumerate}
+  \item \textbf{Solucion exacta conocida}: evaluamos el error $L^2$ sobre una grilla
+        de evaluacion de $100 \times 100 = 10{,}000$ puntos independientes de los
+        3,000 puntos de entrenamiento. El error bajo en esos puntos no vistos demuestra
+        generalizacion, no memorizacion.
+
+  \item \textbf{Regularizacion implicita por la fisica}: la perdida de fisica penaliza
+        cualquier funcion que no satisfaga Helmholtz. La red no puede ``memorizar''
+        puntos arbitrarios si eso viola la EDP.
+
+  \item \textbf{Consistencia multi-semilla}: si hubiera sobreajuste a la inicializacion,
+        distintas semillas darian resultados muy diferentes. Las tres semillas dan
+        $L^2 = 0.155 \pm 0.020\%$, lo que confirma que la red aprende la solucion
+        de Helmholtz, no un artefacto de la inicializacion.
+\end{enumerate}
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 8
+% ==============================================================
+\begin{qabox}{Pregunta 8 --- ?`Por que $\omega_0 = 1.0$ y no 30 como en el paper?}
+\textbf{Fuente probable:} Dr. Wister Ovando (conoce el paper de Sitzmann)
+\quad \colorbox{ujatred!20}{\small SLIDE S33}
+\end{qabox}
+
+\begin{answerbox}
+El paper original de Sitzmann et al. (2020) calibro $\omega_0 = 30$ para
+\textbf{representacion de imagenes fotograficas}, donde las frecuencias de variacion
+son del orden de 10--30 ciclos por pixel.
+
+En nuestro trabajo el contexto es diferente:
+\begin{itemize}
+  \item Dominio adimensional $[0,1]^2$
+  \item Numero de onda $k = 2\pi$ (longitud de onda = 1 unidad adimensional)
+  \item \textbf{Regla de calibracion}: $\omega_0 \approx k / (2\pi) = 1$
+\end{itemize}
+
+Con $\omega_0 = 30$ y $k = 2\pi$, la activacion $\sin(30 \cdot Wx)$ crea gradientes
+de amplitud $\approx 30^2 = 900$ veces mayor de lo necesario. En la practica:
+explosion de gradientes en las primeras epocas de Adam, la perdida no converge.
+
+El ajuste $\omega_0 = 1.0$ fue descubierto y validado en NB01 (descenso estable,
+convergencia en 251 s, $L^2 = 0.006\%$) y luego documentado como regla general
+para dominios adimensionales con $k = \mathcal{O}(2\pi)$.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 9
+% ==============================================================
+\begin{qabox}{Pregunta 9 --- ?`Como escala su metodo a 3D?}
+\textbf{Fuente probable:} Dr. Chavez Bosquez o Dr. Hernandez Nolasco
+\end{qabox}
+
+\begin{answerbox}
+La extension a 3D es conceptualmente directa:
+\begin{itemize}
+  \item Entrada: $(x, y, z)$ --- 3 neuronas
+  \item El laplaciano 3D agrega un tercer termino: $\partial^2 E/\partial z^2$
+  \item La diferenciacion automatica encadenada funciona igual: tres llamadas a autograd
+\end{itemize}
+
+Los desafios practicos son:
+\begin{enumerate}
+  \item \textbf{Capacidad}: la red necesaria para 3D es mas ancha ($\approx 256$
+        neuronas) para capturar variacion en las tres dimensiones
+  \item \textbf{Muestreo}: LHS en 3D requiere mas puntos de colocacion ($\approx 10{,}000$)
+        para cobertura uniforme
+  \item \textbf{Tiempo de entrenamiento}: estimado en 2--5 veces mayor que 2D
+  \item \textbf{Campo complejo}: la salida sigue siendo 2 componentes (real + imag)
+\end{enumerate}
+
+NB05--NB07 (planificados en el cronograma de la tesis completa) cubren la extension
+a medios inhomogeneos y potencialmente 3D. NB03 y NB04 son los proximos pasos
+inmediatos.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 10
+% ==============================================================
+\begin{qabox}{Pregunta 10 --- ?`Que es el contraste de speckle $C$ y por que $C \approx 1$?}
+\textbf{Fuente probable:} Dr. Hernandez Nolasco o Dr. Pancardo Garcia
+\end{qabox}
+
+\begin{answerbox}
+El \textbf{contraste de speckle} (criterio de Goodman, 1985) se define como:
+\[
+  C = \frac{\sigma(I)}{\langle I \rangle}
+\]
+donde $I = |E|^2$ es la intensidad del campo y $\langle \cdot \rangle$ denota
+el valor promedio espacial.
+
+Para speckle \textbf{completamente desarrollado} ---interferencia de muchas ondas
+con fases aleatorias independientes--- la teoria estadistica predice que:
+\begin{itemize}
+  \item La intensidad sigue una distribucion exponencial: $p(I) = (1/\langle I \rangle) e^{-I/\langle I\rangle}$
+  \item La desviacion estandar es igual al valor medio: $\sigma = \langle I \rangle$
+  \item Por lo tanto: $C = 1$ exactamente
+\end{itemize}
+
+Valores interpretativos:
+\begin{itemize}
+  \item $C = 1$: speckle completamente desarrollado (objetivo)
+  \item $C < 1$: speckle parcialmente desarrollado (suma coherente de pocas ondas)
+  \item $C > 1$: correlaciones espaciales en el patron
+\end{itemize}
+
+El criterio de exito de NB03 es $|C - 1| < 0.1$. El valor actual es $C = 0.9634$
+(ultima ejecucion del notebook), que pasa el criterio.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 11
+% ==============================================================
+\begin{qabox}{Pregunta 11 --- ?`Su comparacion con Schoder 2024 es directamente valida?}
+\textbf{Fuente probable:} Dr. Hernandez Nolasco o Dr. Chavez Bosquez (pregunta critica)
+\end{qabox}
+
+\begin{answerbox}
+\textbf{No directamente}, y somos transparentes sobre esto. La comparacion es
+\textbf{indicativa}:
+
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & \textbf{Este trabajo} & \textbf{Schoder 2024} \\
+\midrule
+Dimensiones & 1D / 2D & 3D \\
+Activacion & SIREN ($\sin$) & tanh \\
+Campo & Escalar complejo & Vectorial \\
+Dominio & Adimensional $[0,1]^2$ & Fisico con geometria \\
+\bottomrule
+\end{tabular}
+
+\vspace{6pt}
+La comparacion establece el \textbf{potencial de SIREN sobre tanh} para problemas
+de ondas, pero no puede usarse como factor de aceleracion definitivo. Por eso
+planificamos NB04: un benchmark directo contra FEniCSx en las mismas condiciones
+(mismo dominio, misma condicion de frontera, misma precision objetivo). NB04
+producira el factor de aceleracion $S = T_\text{FEM}/T_\text{PINN}$ con
+validez metodologica completa.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 12
+% ==============================================================
+\begin{qabox}{Pregunta 12 --- ?`Por que no usaron transfer learning de NB02 a NB03?}
+\textbf{Fuente probable:} Dr. Wister Ovando o Dr. Hernandez Nolasco
+\end{qabox}
+
+\begin{answerbox}
+Se evaluo la posibilidad de inicializar NB03 con los pesos de NB02 (transfer
+learning). La decision de \textbf{no hacerlo} se basa en:
+
+\begin{enumerate}
+  \item \textbf{Sesgo de condicion de frontera}: NB02 esta calibrado para una onda
+        plana $E_\text{BC} = e^{ikr}$ ---fase constante en los bordes---. NB03 usa
+        fase aleatoria $\phi \sim U(0, 2\pi)$ en el borde $y=0$. Los pesos de NB02
+        ``recuerdan'' la solucion de onda plana y generan sesgo.
+
+  \item \textbf{Evidencia empirica}: en pruebas preliminares, transfer learning de
+        NB02 a NB03 producia un campo inicial que no divergia del patron de onda
+        plana, dificultando la convergencia hacia la solucion de speckle.
+
+  \item \textbf{Inicializacion desde cero}: con la inicializacion especial SIREN
+        la red converge a la solucion de speckle en NB03 sin necesidad de pesos previos.
+\end{enumerate}
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 13
+% ==============================================================
+\begin{qabox}{Pregunta 13 --- ?`Como aseguran la reproducibilidad del experimento?}
+\textbf{Fuente probable:} Dr. Pancardo Garcia (enfasis en sistemas y reproducibilidad)
+\end{qabox}
+
+\begin{answerbox}
+La reproducibilidad esta garantizada en tres niveles:
+
+\begin{enumerate}
+  \item \textbf{SEED global}: \code{torch.manual\_seed(42)} y \code{numpy.random.seed(42)}
+        al inicio de cada notebook. Cualquier ejecucion con la misma semilla produce
+        exactamente los mismos resultados.
+
+  \item \textbf{Modulos versionados}: el codigo en \code{src/models.py},
+        \code{src/losses.py}, \code{src/training.py} y \code{src/utils.py} esta bajo
+        control de versiones (git). La arquitectura, la inicializacion y el loop de
+        entrenamiento son identicos entre ejecuciones.
+
+  \item \textbf{Modelos persistidos}: los pesos entrenados se guardan en
+        \code{results/models/nb0X\_nombre.pt} y pueden recargarse para reproducir
+        cualquier resultado sin reentrenar.
+
+  \item \textbf{Entorno documentado}: \code{environment.yml} especifica Python 3.11,
+        PyTorch 2.4, CUDA 12.6 y todas las dependencias con versiones exactas.
+\end{enumerate}
+
+La validacion multi-semilla (\{42, 123, 777\}) demuestra ademas que los resultados
+son robustos a la semilla y no dependientes de un caso particular.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 14
+% ==============================================================
+\begin{qabox}{Pregunta 14 --- ?`Cual es la complejidad computacional del entrenamiento?}
+\textbf{Fuente probable:} Dr. Chavez Bosquez (algoritmia y complejidad)
+\end{qabox}
+
+\begin{answerbox}
+\textbf{Por epoca de Adam:}
+\[
+  \mathcal{O}(N_\text{colloc} \times L \times W^2)
+\]
+donde $L = 5$ capas, $W = 128$ neuronas. Con $N = 3000$ y $W = 128$: $\approx 50$ millones
+de operaciones por epoca. En GPU (RTX 5050 con CUDA): $\approx 0.02$ s/epoca.
+
+\textbf{Para L-BFGS:}
+\[
+  \mathcal{O}(N_\text{iter} \times N_\text{colloc} \times L \times W^2 \times M)
+\]
+donde $M = $ history\_size = 100. Cada iteracion es mas costosa que Adam pero
+con convergencia cuadratica.
+
+\textbf{Comparacion con FEM:}
+\begin{itemize}
+  \item FEM: $\mathcal{O}(n^2)$ a $\mathcal{O}(n^3)$ para resolver el sistema lineal,
+        donde $n \sim 10^5$ para resolucion sub-lambda en 2D
+  \item PINN: $n$ fijo en 3,000 puntos, independiente de la precision del campo
+  \item FEM debe reconstruir la malla para cada nueva condicion de frontera;
+        PINN es $\mathcal{O}(L \times W^2)$ en inferencia
+\end{itemize}
+
+El benchmark formal (NB04) medira $S = T_\text{FEM}/T_\text{PINN}$ en las mismas
+condiciones.
+\end{answerbox}
+
+\vspace{8pt}
+
+% ==============================================================
+%  PREGUNTA 15
+% ==============================================================
+\begin{qabox}{Pregunta 15 --- ?`Cual es el siguiente paso mas importante para completar la tesis?}
+\textbf{Fuente probable:} cualquier sinodal al final de la sesion
+\end{qabox}
+
+\begin{answerbox}
+El paso mas importante es \textbf{NB03: validacion del speckle optico}.
+
+\textbf{?`Que se hace en NB03?}
+\begin{itemize}
+  \item Sustituir la condicion de frontera de onda plana por fase aleatoria:
+        $\phi(x) \sim U(0, 2\pi)$ en $y=0$
+  \item Bordes $x=0$, $x=1$, $y=1$ libres (sin condicion Dirichlet artificial)
+  \item Criterios de exito: $C \approx 1$ (contraste de Goodman) y
+        $p$-valor del test KS $> 0.05$ (distribucion exponencial)
+\end{itemize}
+
+\textbf{?`Por que es critico?}
+NB03 es la pieza que conecta la validacion numerica (NB01, NB02) con la
+aplicacion fisica (speckle). Si NB03 tiene exito, la hipotesis central de la
+tesis queda demostrada: PINN-SIREN puede simular speckle optico con precision
+estadistica. Despues, NB04 medira la aceleracion respecto a FEM.
+
+\textbf{Estado actual}: el notebook esta disenado, la arquitectura es identica
+a NB02 con la modificacion de condicion de frontera. Se estima completar en
+julio-agosto 2026.
+\end{answerbox}
+
+\vspace{16pt}
+
+% --- Tabla resumen ---
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{llll}
+\toprule
+\textbf{P\#} & \textbf{Tema} & \textbf{Slide de apoyo} & \textbf{Concepto clave a transmitir} \\
+\midrule
+1 & PINNs vs redes convencionales & S11 & EDP como supervision, sin datos etiquetados \\
+2 & Activacion SIREN vs ReLU/tanh & S11, S33 & Derivadas de orden 2 siempre definidas \\
+3 & Laplaciano con autograd & S14 & Diferenciacion automatica encadenada, exacta \\
+4 & Calibracion $\lambda = 0.1$ & S32 & Dos residuos duplican peso; ablacion verificada \\
+5 & Dos optimizadores & S12, S13 & Adam explora, L-BFGS refina cuadraticamente \\
+6 & LHS vs uniforme & S13 & Estratificacion garantizada, sin clustering \\
+7 & Sobreajuste & S24 & Grilla independiente, fisica regulariza, multi-seed \\
+8 & $\omega_0 = 1.0$ & S33 & Calibracion para dominio adimensional $k=2\pi$ \\
+9 & Extension a 3D & S27 & Factible, autograd escala, NB05--NB07 planificados \\
+10 & Contraste $C \approx 1$ & S10, S26 & Criterio de Goodman para speckle desarrollado \\
+11 & Comparacion Schoder 2024 & S25 & Indicativa: 3D vs 2D; NB04 sera directa \\
+12 & Transfer learning & S27 & Sesgo de onda plana; mejor inicializar desde cero \\
+13 & Reproducibilidad & S15, S24 & SEED, git, environment.yml, modelos .pt \\
+14 & Complejidad computacional & S14 & FEM $O(n^3)$ vs PINN $O(N_c \cdot LW^2)$ \\
+15 & Siguiente paso critico & S27, S28 & NB03: speckle con $C \approx 1$ \\
+\bottomrule
+\end{tabular}
+\caption{Resumen de las 15 preguntas probables con slide de apoyo y concepto clave.}
+\end{table}

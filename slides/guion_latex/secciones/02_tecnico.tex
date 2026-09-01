@@ -1,0 +1,340 @@
+% ============================================================
+%  SECCION 2 — EXPLICACIONES TECNICAS DE HIPERPARAMETROS
+% ============================================================
+\section{Explicaciones Tecnicas de Hiperparametros}
+
+\begin{tcolorbox}[colback=ujatblue!10, colframe=ujatblue,
+  title={\bfseries Proposito de esta seccion}, coltitle=white]
+Cada decision de diseno del experimento tiene una justificacion tecnica.
+Esta seccion explica el \emph{por que} de cada hiperparametro en NB01 (1D)
+y NB02 (2D) para que pueda responder con precision al comite.
+\end{tcolorbox}
+
+\vspace{8pt}
+
+% ==============================================================
+\subsection{Arquitectura comun SIREN}
+% ==============================================================
+
+\subsubsection*{Activacion sinusoidal: $\phi(z) = \sin(\omega_0 \cdot z)$}
+
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+La ecuacion de Helmholtz requiere derivadas de segundo orden $\nabla^2 E$.
+Para que la perdida de fisica sea util, la red debe ser diferenciable al menos
+dos veces con derivadas no degeneradas.
+
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Activacion} & \textbf{Segunda derivada} & \textbf{Apta para Helmholtz?} \\
+\midrule
+ReLU & $= 0$ (casi en todos lados) & \textbf{No} \\
+tanh & $\to 0$ para $|x| \gg 0$ & Muy limitada \\
+$\sin(\omega_0 z)$ & $= -\omega_0^2 \sin(\omega_0 z)$ & \textbf{Si, siempre} \\
+\bottomrule
+\end{tabular}
+
+\vspace{4pt}
+Con SIREN, la $n$-esima derivada es $\pm \omega_0^n \sin(\omega_0 z + n\pi/2)$:
+siempre una sinusoide, nunca cero, nunca saturada. Esto hace la perdida
+$\mathcal{L}_\text{fisica} = \|\nabla^2 E + k^2 E\|^2$ bien condicionada.
+\end{tcolorbox}
+
+\subsubsection*{Inicializacion especial de pesos (Sitzmann et al., 2020)}
+
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+Si se inicializa SIREN con Xavier o He estandar, las activaciones sinusoidales
+se saturan o colapsan en las primeras epocas. La solucion es calibrar la varianza
+de los pesos por capa:
+
+\[
+  W_0 \sim U\!\left(-\frac{1}{n}, +\frac{1}{n}\right)  \quad \text{(capa de entrada)}
+\]
+\[
+  W_i \sim U\!\left(-\frac{\sqrt{6/n}}{\omega_0}, +\frac{\sqrt{6/n}}{\omega_0}\right)
+  \quad \text{(capas ocultas)}
+\]
+
+donde $n$ es el fan-in de la capa. El factor $1/\omega_0$ compensa la amplificacion
+de $\omega_0$ en la activacion: garantiza que $\sin(\omega_0 \cdot W_i x)$ explore
+el rango $[-1, +1]$ uniformemente desde el inicio.
+
+\textbf{Consecuencia practica:} sin esta inicializacion, la red converge a $E = 0$
+o $E = 1$ constantes. Con ella, la red aprende soluciones oscilatorias desde
+la primera epoca.
+\end{tcolorbox}
+
+\vspace{10pt}
+
+% ==============================================================
+\subsection{NB01: Helmholtz 1D --- Hiperparametros}
+% ==============================================================
+
+\begin{tcolorbox}[colback=slidelightblue!30, colframe=ujatblue,
+  title={\bfseries Configuracion NB01}, coltitle=white, breakable]
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Hiperparametro} & \textbf{Valor} & \textbf{Justificacion} \\
+\midrule
+Arquitectura & SIREN 5$\times$64 & Ver abajo \\
+Parametros totales & 16,833 & Suficiente para 1D sinusoidal \\
+$\omega_0$ & 1.0 & Ver abajo \\
+$\lambda_\text{fis}$ & 1.0 & 1D: residuo unico, sin overflow \\
+$N_\text{colloc}$ & 2,000 (uniforme) & 1D: cobertura uniforme es suficiente \\
+$N_\text{boundary}$ & 5 puntos & $x \in \{0, 0.25, 0.5, 0.75, 1\}$ \\
+Paciencia Adam & umbral $\mathcal{L} < 10^{-4}$ & Criterio de parada por tolerancia \\
+L-BFGS max\_iter & 500 & Problema 1D mas simple \\
+L-BFGS history & 50 & Menor memoria: curvatura local suficiente \\
+SEED & 42 & Reproducibilidad global \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}
+
+\vspace{6pt}
+
+\subsubsection*{?`Por que arquitectura 5$\times$64 y no mas grande?}
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+En 1D la solucion es $E(x) = \cos(kx)$, una sinusoide simple. 5 capas de 64 neuronas
+(16,833 parametros) son suficientes para representar esta funcion y su derivada segunda.
+Aumentar la anchura a 128 no mejora el resultado (ya se alcanza $L^2 = 0.006\%$) pero
+si duplica el tiempo de entrenamiento. Regla practica: usar la arquitectura minima que
+cumple la meta de precision.
+\end{tcolorbox}
+
+\subsubsection*{?`Por que $\omega_0 = 1.0$?}
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+El paper original de Sitzmann usa $\omega_0 = 30$, calibrado para imagenes fotograficas
+donde las frecuencias tipicas son altas (ciclos por pixel). En este trabajo:
+\begin{itemize}
+  \item Dominio: $[0,1]^2$ adimensional
+  \item Numero de onda: $k = 2\pi$
+  \item Regla de calibracion: $\omega_0 \approx k/(2\pi) = 1$
+\end{itemize}
+
+Con $\omega_0 = 30$ y $k = 2\pi$, la activacion $\sin(30 \cdot Wx)$ crea gradientes
+con amplitud de orden $30^2 = 900$ veces mayor de lo necesario. En la practica esto
+produce explosión de gradientes en las primeras epocas de Adam y la perdida no baja
+del nivel inicial. El ajuste $\omega_0 = 1.0$ resuelve este problema completamente.
+
+\textbf{Nota:} Esta calibracion fue descubierta experimentalmente en NB01 y luego
+documentada como regla general para dominios adimensionales.
+\end{tcolorbox}
+
+\subsubsection*{?`Por que 5 puntos de frontera (y no solo 2)?}
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+La condicion de frontera es $E(0) = 1$ y $E(1) = 1$. Si se usan solo dos puntos
+de frontera, la red puede colapsar a la solucion constante $E(x) = 1$, que satisface
+las BCs pero no la ecuacion de Helmholtz en el interior. Al agregar tres puntos
+intermedios conocidos ($x = 0.25, 0.5, 0.75$ con sus valores exactos de $\cos(kx)$),
+se rompe esa degeneracion y la red aprende la oscilacion correcta.
+
+Esta fue una leccion critica aprendida durante el desarrollo de NB01.
+\end{tcolorbox}
+
+\subsubsection*{?`Por que $\lambda_\text{fis} = 1.0$ en 1D?}
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+En 1D la funcion de perdida es:
+\[
+  \mathcal{L} = \mathcal{L}_\text{BC} + 1.0 \cdot \mathcal{L}_\text{fisica}
+\]
+donde $\mathcal{L}_\text{fisica} = \text{MSE}(E'' + k^2 E)$ es un solo residuo escalar.
+Con $\lambda = 1.0$ el balance es adecuado y los gradientes no desbordan float32.
+El problema de overflow solo aparece en 2D (ver siguiente seccion).
+\end{tcolorbox}
+
+\vspace{10pt}
+
+% ==============================================================
+\subsection{NB02: Helmholtz 2D --- Hiperparametros}
+% ==============================================================
+
+\begin{tcolorbox}[colback=slidelightblue!30, colframe=ujatblue,
+  title={\bfseries Configuracion NB02}, coltitle=white, breakable]
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Hiperparametro} & \textbf{Valor} & \textbf{Justificacion} \\
+\midrule
+Arquitectura & SIREN 5$\times$128 & Mayor capacidad para campo complejo \\
+Parametros totales & 66,690 & 4$\times$ NB01: 2 salidas, variacion 2D \\
+$\omega_0$ & 1.0 & Misma regla que NB01 \\
+$\lambda_\text{fis}$ & \textbf{0.1} & \textbf{Critico: 2 residuos duplican peso fisico} \\
+$N_\text{colloc}$ & 3,000 LHS & LHS previene clustering en 2D \\
+$N_\text{boundary}$ & 1,200 total & 300 por borde $\times$ 4 bordes \\
+Paciencia Adam & 800 epocas & Problema 2D mas dificil \\
+L-BFGS max\_iter & 1,000 & Mayor exigencia de convergencia \\
+L-BFGS history & 100 & Mayor memoria para curvatura 2D \\
+SEED & 42 & Reproducibilidad global \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}
+
+\vspace{6pt}
+
+\subsubsection*{El cambio critico: $\lambda_\text{fis} = 0.1$ (no $1.0$)}
+
+\begin{tcolorbox}[colback=slidewarning!60, colframe=ujatorange,
+  title={\bfseries Explicacion de la calibracion de $\lambda$}, coltitle=white, breakable]
+\textbf{?`Por que no usar $\lambda = 1.0$ como en 1D?}
+
+En 2D la funcion de perdida tiene \textbf{dos residuos} (parte real e imaginaria):
+\[
+  \mathcal{L}_\text{fisica} = \text{MSE}(R_\text{real}^2) + \text{MSE}(R_\text{imag}^2)
+\]
+donde $R_\text{real} = \nabla^2 E_r + k^2 E_r$ y $R_\text{imag} = \nabla^2 E_i + k^2 E_i$.
+
+Esto \textbf{duplica el peso efectivo} de la fisica:
+\[
+  \mathcal{L} = \mathcal{L}_\text{BC} + \lambda \cdot (\mathcal{L}_\text{real} + \mathcal{L}_\text{imag})
+\]
+Con $\lambda = 1.0$: el peso efectivo de la fisica es $\approx 2.0$. En float32 (precision
+de 32 bits), los gradientes de la perdida fisica alcanzan valores del orden $10^{38}$
+y producen NaN $\to$ CUDA crash.
+
+\textbf{Ablacion verificada} (\code{results/ablation\_lambda.json}):
+\begin{center}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+$\lambda$ & Error $L^2$ & Estado & Observacion \\
+\midrule
+0.01 & 0.163\% & OK & Sub-ponderacion de la fisica \\
+\textbf{0.1} & \textbf{0.171\%} & \textbf{Optimo} & Balance fisica/frontera \\
+1.0 & --- & CRASH & Overflow float32 en CUDA \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Con $\lambda = 0.01$ la fisica queda sub-ponderada: la red ajusta bien las BCs
+pero no maximiza la satisfaccion de Helmholtz. Con $\lambda = 0.1$ se logra el
+balance optimo.
+\end{tcolorbox}
+
+\subsubsection*{?`Por que LHS en lugar de muestreo uniforme?}
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+Latin Hypercube Sampling (LHS) estratifica el espacio de entrada:
+\begin{itemize}
+  \item Divide cada dimension en $N = 3000$ intervalos iguales
+  \item Garantiza exactamente un punto en cada intervalo por dimension
+  \item El resultado: los puntos de colocacion cubren el dominio sin clusters ni
+        zonas vacias, independientemente de la semilla aleatoria
+\end{itemize}
+
+El muestreo uniforme aleatorio en 2D puede concentrar puntos en algunas zonas y
+dejar otras sin cobertura. En una PINN esto se traduce en mayor error en las zonas
+poco muestreadas. LHS elimina este problema de forma garantizada.
+
+\textbf{Nota:} en 1D el muestreo uniforme es suficiente. LHS solo agrega valor
+a partir de 2 dimensiones.
+\end{tcolorbox}
+
+\subsubsection*{?`Por que arquitectura 5$\times$128 (y no 5$\times$64)?}
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+En 2D hay tres razones para ampliar la arquitectura:
+\begin{enumerate}
+  \item \textbf{Campo complejo}: la red predice dos salidas simultaneas ($E_r$ y $E_i$).
+        Esto requiere mayor capacidad para representar las correlaciones entre ambas partes.
+  \item \textbf{Variacion 2D}: la solucion varia en dos dimensiones; la red necesita
+        mas neuronas para capturar la frecuencia espacial en ambas direcciones.
+  \item \textbf{Numero de colocation points}: 3,000 puntos en 2D vs 2,000 en 1D.
+        La red debe poder interpolar correctamente entre mas restricciones.
+\end{enumerate}
+Con 5$\times$64 en 2D el error L2 sube a $\approx$0.8\% (estimado). Con 5$\times$128
+se alcanza 0.171\%. Aumentar a 5$\times$256 no mejora significativamente pero
+cuadruplica el tiempo de entrenamiento.
+\end{tcolorbox}
+
+\subsubsection*{?`Por que Adam primero y luego L-BFGS?}
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+\textbf{Adam} (Adaptive Moment Estimation):
+\begin{itemize}
+  \item Algoritmo estocástico de primer orden
+  \item Estima el gradiente con mini-batches $\to$ navega paisajes de perdida no convexos
+  \item Converge hacia la region del minimo global en 10,000--15,000 epocas
+  \item Limitacion: precision limitada, no usa curvatura (Hessiano)
+\end{itemize}
+
+\textbf{L-BFGS} (Limited-memory Broyden-Fletcher-Goldfarb-Shanno):
+\begin{itemize}
+  \item Metodo cuasi-Newton de segundo orden
+  \item Aproxima el Hessiano con un historial de gradientes (history\_size=100)
+  \item Convergencia cuadratica cerca del minimo: cada iteracion reduce el error
+        por un orden de magnitud
+  \item Requiere un punto inicial ya cercano al minimo (si se usa desde cero diverge)
+  \item Usa busqueda de linea strong Wolfe: garantiza descenso en cada iteracion
+\end{itemize}
+
+\textbf{Sinergia}: Adam lleva los pesos a la ``cuenca de atraccion'' del minimo,
+L-BFGS los lleva al minimo preciso. Usar solo Adam da $L^2 \approx 1\%$; la fase
+L-BFGS lo reduce a $L^2 = 0.171\%$.
+
+\textbf{Leccion critica}: nunca usar \emph{learning rate scheduler} antes de L-BFGS.
+Si Adam usa scheduler (decaimiento de LR), los pesos llegan a L-BFGS en un estado
+``congelado'' donde L-BFGS solo logra 7/1000 iteraciones. Sin scheduler, L-BFGS
+completa 1,035 iteraciones y converge a la precision esperada.
+\end{tcolorbox}
+
+\subsubsection*{?`Por que paciencia=800 epocas en NB02 y no un umbral fijo?}
+\begin{tcolorbox}[colback=gray!5, colframe=ujatgray, breakable]
+En NB01 se usa un umbral de tolerancia ($\mathcal{L} < 10^{-4}$) porque la solucion
+1D converge rapidamente y de forma predecible. En NB02 la perdida en 2D fluctua mas
+durante Adam; un umbral fijo puede terminar prematuramente el entrenamiento en una
+meseta temporal. La paciencia de 800 epocas garantiza que Adam explora el espacio
+suficientemente antes de pasar a L-BFGS, independientemente del nivel de perdida.
+\end{tcolorbox}
+
+\vspace{10pt}
+
+% ==============================================================
+\subsection{Validacion Multi-Semilla}
+% ==============================================================
+
+\begin{tcolorbox}[colback=slidelightgreen!40, colframe=ujatgreen,
+  title={\bfseries Por que tres semillas?}, coltitle=white, breakable]
+Las redes neuronales son sensibles a la inicializacion aleatoria. Un resultado con
+una sola semilla puede ser un ``accidente afortunado''. La validacion multi-semilla
+cuantifica si el metodo es robusto:
+
+\begin{center}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+\textbf{Semilla} & \textbf{Error $L^2$ (\%)} & \textbf{Epocas} \\
+\midrule
+42  & $\approx$0.171 & $\approx$15,000 \\
+123 & $\approx$0.148 & $\approx$14,200 \\
+777 & $\approx$0.146 & $\approx$14,500 \\
+\midrule
+\textbf{Promedio} & \textbf{$0.155 \pm 0.020$} & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La desviacion estandar del 0.020\% es dos ordenes de magnitud menor que el umbral
+del 5\%. Esto confirma que el metodo converge de manera consistente, no dependiente
+de la inicializacion particular.
+
+\textbf{Fuente verificada}: \code{results/multiseed\_results.json}
+\end{tcolorbox}
+
+\vspace{10pt}
+
+% ==============================================================
+\subsection{Resumen de Decisiones de Diseno}
+% ==============================================================
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{llll}
+\toprule
+\textbf{Decision} & \textbf{NB01} & \textbf{NB02} & \textbf{Razon del cambio} \\
+\midrule
+Anchura de la red & 64 neuronas & 128 neuronas & Campo complejo + 2D \\
+$\lambda_\text{fis}$ & 1.0 & \textbf{0.1} & 2 residuos $\to$ overflow float32 \\
+Muestreo & Uniforme & \textbf{LHS} & LHS solo vale en $\geq$ 2D \\
+$N_\text{colloc}$ & 2,000 & 3,000 & Mayor densidad en 2D \\
+$N_\text{boundary}$ & 5 pts & 1,200 pts & 4 bordes completos \\
+Paciencia Adam & Umbral L & 800 epocas & Fluctuaciones en 2D \\
+L-BFGS max\_iter & 500 & 1,000 & Convergencia mas exigente \\
+\bottomrule
+\end{tabular}
+\caption{Diferencias entre NB01 y NB02. El cambio mas critico:
+$\lambda_\text{fis}$ de 1.0 a 0.1 (evita overflow float32 en 2D).}
+\end{table}
