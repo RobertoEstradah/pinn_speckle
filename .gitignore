@@ -9,6 +9,14 @@ dist/
 build/
 *.so
 
+# ── Node.js ───────────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Office (archivos de bloqueo temporal) ─────────────────────────────────────
+~$*.pptx
+~$*.docx
+~$*.xlsx
+
 # ── Entornos virtuales ────────────────────────────────────────────────────────
 .env
 .venv
