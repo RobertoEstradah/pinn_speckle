@@ -1,0 +1,67 @@
+% ============================================================
+% Sección 1: Introducción
+% ============================================================
+
+\section{Introducción}
+\label{sec:intro}
+
+El speckle óptico es el patrón granular de alta intensidad que emerge cuando luz coherente
+--como la de un láser-- se dispersa sobre una superficie rugosa.
+Este fenómeno está presente en aplicaciones de metrología óptica, tomografía de coherencia
+óptica, imagenología biomédica, criptografía óptica y comunicaciones de fibra
+\cite{Goodman2007_Speckle}.
+Su predicción precisa requiere resolver la ecuación de Helmholtz con condiciones de frontera
+estocásticas, un problema que los métodos numéricos clásicos abordan a un costo computacional
+prohibitivo.
+
+Los métodos basados en malla, como el Método de Elementos Finitos (FEM), son precisos pero
+imponen restricciones severas: la malla debe tener resolución espacial inferior a la longitud
+de onda del láser para capturar los detalles finos del speckle \cite{Jin2014_FEM}.
+Esto conduce a sistemas con millones de incógnitas por realización, y cada nuevo perfil de
+rugosidad superficial exige resolver el sistema completo desde cero.
+Para estudios estadísticos que requieren miles de realizaciones, el costo se vuelve intratable.
+
+Las Redes Neuronales Informadas por Física (\textit{Physics-Informed Neural Networks},
+PINNs), introducidas por Raissi et al.~\cite{Raissi2019_PINNs}, proponen un paradigma alternativo
+\textit{libre de malla} (\textit{mesh-free}): incorporar las leyes físicas directamente en la
+función de pérdida de la red, forzando simultáneamente el ajuste a las condiciones de frontera
+y el cumplimiento de la ecuación diferencial en el dominio.
+Una vez entrenado, el modelo evalúa el campo completo en una malla de
+$100 \times 100$ puntos en $\approx 1.3\,\mathrm{ms}$ (GPU NVIDIA RTX~5050),
+actuando como un sustituto computacionalmente eficiente del solver numérico.
+La eficacia de este paradigma ha sido demostrada en problemas de dispersión de ondas
+\cite{Fang2020_scattering}, nano-óptica e inversión de parámetros
+\cite{Chen2020_nanoptics}, y el marco de referencia de PINNs ha sido consolidado
+en revisiones de Karniadakis et al.~\cite{Karniadakis2021_review} y Cuomo et al.~\cite{Cuomo2022_review}.
+
+Un obstáculo crítico de las PINNs estándar para la ecuación de Helmholtz es la inestabilidad
+de las derivadas de segundo orden con activaciones tipo ReLU o tanh.
+Las \textit{Sinusoidal Representation Networks} (SIREN), propuestas por
+Sitzmann et al.~\cite{Sitzmann2020_SIREN}, resuelven este problema mediante activaciones
+$\phi(z) = \sin(\omega_0 z)$ con una inicialización que preserva la distribución de
+activaciones en toda la red, convirtiendo la arquitectura en la elección natural para
+ecuaciones de onda.
+Un estudio reciente de Schoder y Kraxberger~\cite{Schoder2024_PINN_acoustics} validó la viabilidad de las PINNs
+para la ecuación de Helmholtz 3D, reportando un error $L^2$ de $2.5\%$ respecto a soluciones
+FEM de referencia.
+Sin embargo, hasta donde alcanza nuestro conocimiento, la aplicación sistemática de este
+paradigma a la simulación del speckle óptico de alta resolución no ha sido abordada.
+
+En este trabajo presentamos una implementación PINN-SIREN para la resolución de la ecuación
+de Helmholtz bidimensional con campo complejo, sentando las bases para la futura simulación
+acelerada del speckle óptico.
+La contribución principal es la validación de la arquitectura SIREN $5\times128$ en dos
+escenarios de complejidad creciente: validación 1D con solución analítica exacta
+(Error $L^2 = 0.006\%$) y validación 2D con onda plana compleja (Error $L^2 = 0.171\%$),
+superando al estado del arte en factores de $\times 415$ y $\times 11.2$, respectivamente.
+La generación de patrones de speckle con condición de frontera de fase aleatoria
+$\phi(x) \sim \mathcal{U}(0, 2\pi)$ constituye el siguiente paso planificado de esta investigación.
+
+El artículo está organizado como sigue.
+La \cref{sec:teoria} presenta el marco teórico: la ecuación de Helmholtz, la formulación PINN,
+la arquitectura SIREN y la estadística del speckle.
+La \cref{sec:metodologia} describe la formulación del problema, el muestreo LHS y la
+estrategia de optimización Adam + L-BFGS.
+La \cref{sec:resultados} reporta los resultados de la validación 1D y 2D, y la comparativa
+con el estado del arte.
+La \cref{sec:conclusiones} sintetiza las contribuciones y señala direcciones futuras.

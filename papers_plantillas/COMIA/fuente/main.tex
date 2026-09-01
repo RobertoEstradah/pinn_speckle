@@ -1,0 +1,147 @@
+% ============================================================
+%  Simulacion acelerada de speckle optico — Version COMIA/LNCS
+%  Roberto Hernandez Estrada | UJAT — DACYTI | Jun 2026
+%
+%  Compilar en Overleaf: compilador pdfLaTeX.
+%  Bibliografia: BibTeX + splncs04.bst
+% ============================================================
+\documentclass[runningheads]{llncs}
+
+% --- Codificacion y babel ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+
+% --- Graficas ---
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+% --- Matematicas ---
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% --- Tablas ---
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[flushleft]{threeparttable}
+
+% --- Tipografia ---
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{xurl}
+
+% --- Hyperref (penultimo) ---
+\usepackage[hidelinks]{hyperref}
+
+% --- Cleveref (ultimo) ---
+\usepackage[nameinlink,spanish]{cleveref}
+\crefname{section}{secci\'{o}n}{secciones}
+\Crefname{section}{Secci\'{o}n}{Secciones}
+\crefname{table}{tabla}{tablas}
+\Crefname{table}{Tabla}{Tablas}
+\crefname{figure}{figura}{figuras}
+\Crefname{figure}{Figura}{Figuras}
+\crefname{equation}{ecuaci\'{o}n}{ecuaciones}
+\Crefname{equation}{Ecuaci\'{o}n}{Ecuaciones}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+\title{Simulaci\'{o}n acelerada de speckle \'{o}ptico mediante
+       Redes Neuronales Informadas por F\'{i}sica con activaci\'{o}n
+       sinusoidal%
+       \thanks{Este trabajo forma parte de la tesis de maestr\'{i}a
+               del primer autor, desarrollada en el programa de
+               Maestr\'{i}a en Ciencias de la Computaci\'{o}n de la
+               Universidad Ju\'{a}rez Aut\'{o}noma de Tabasco (UJAT),
+               bajo la direcci\'{o}n del
+               Dr.~Jos\'{e} Ad\'{a}n Hern\'{a}ndez Nolasco.}}
+
+\titlerunning{PINN-SIREN para simulaci\'{o}n de speckle \'{o}ptico}
+
+\author{Roberto Hern\'{a}ndez Estrada\inst{1}\orcidID{0009-0009-5965-4686} \and
+        Jos\'{e} Ad\'{a}n Hern\'{a}ndez Nolasco\inst{1}\orcidID{0000-0003-4671-0350}}
+
+\authorrunning{R. Hern\'{a}ndez Estrada y
+               J.\,A. Hern\'{a}ndez Nolasco}
+
+\institute{División Académica de Ciencias y
+           Tecnologías de la Información (DACYTI),\\
+           Universidad Juárez Autónoma de Tabasco (UJAT),\\
+           Villahermosa, Tabasco, México\\
+           \email{robertohernandezestrd@gmail.com,
+                  adan.hernandez@ujat.mx}}
+
+\maketitle
+
+\renewcommand{\abstractname}{Resumen}
+% ====== Abstract en ingles (requerido por LNCS) ======
+\begin{abstract}
+Physics-Informed Neural Networks with sinusoidal activation functions
+(SIREN-PINNs) are applied to solve the 2D scalar Helmholtz equation
+as a mesh-free surrogate for optical speckle simulation.
+The proposed SIREN architecture ($5\times128$, $\omega_0=1.0$) achieves
+relative $L^2$ errors of $0.006\,\%$ (1D) and $0.171\,\%$ (2D) against
+analytical solutions, outperforming the state of the art by factors of
+$\times\!415$ and $\times\!11.2$, respectively.
+A two-phase Adam\,+\,L-BFGS optimization strategy and Latin Hypercube
+Sampling (LHS) are key to convergence and accuracy.
+Multi-seed validation ($\mathrm{SEED}\in\{42,123,777\}$) confirms
+statistical robustness with an inter-seed $L^2$ variance of $13\,\%$
+(relative).
+These results establish SIREN-PINNs as a precise and stable solver for
+the scalar Helmholtz equation, laying the foundation for physically
+accurate optical speckle generation.
+Unlike standard ReLU and tanh activations, SIREN preserves second-order
+derivative stability throughout training, which is essential for
+Helmholtz-type wave equations.
+Mesh-free field evaluation at a $100\times100$ grid requires
+$\approx\!1.3\,\mathrm{ms}$ on a GPU NVIDIA RTX~5050, positioning
+the model as a viable real-time surrogate for classical numerical
+solvers such as FEM.
+
+\keywords{Physics-Informed Neural Networks \and SIREN \and
+          Helmholtz equation \and optical speckle \and
+          Latin Hypercube Sampling}
+\end{abstract}
+
+% ====== Resumen en espanol ======
+\section*{Resumen}
+\noindent
+Se presenta una implementaci\'{o}n de Redes Neuronales Informadas por
+F\'{i}sica con activaci\'{o}n sinusoidal (PINN-SIREN) para la
+resoluci\'{o}n de la ecuaci\'{o}n de Helmholtz bidimensional con campo
+el\'{e}ctrico complejo, en un paradigma libre de malla
+(\textit{mesh-free}) orientado a la simulaci\'{o}n acelerada de
+fen\'{o}menos \'{o}pticos.
+La arquitectura SIREN propuesta ($5\times128$ neuronas, $\omega_0=1.0$)
+alcanza errores $L^2$ de $0.006\,\%$ en el caso 1D y $0.171\,\%$ en el
+caso 2D respecto a soluciones anal\'{i}ticas, superando al estado del
+arte en factores de $\times\!415$ y $\times\!11.2$, respectivamente.
+La validaci\'{o}n multi-semilla ($\mathrm{SEED}\in\{42,123,777\}$)
+confirma la robustez estad\'{i}stica del m\'{e}todo.
+La generaci\'{o}n de patrones de speckle con condici\'{o}n de frontera
+de fase aleatoria $\phi(x)\sim\mathcal{U}(0,2\pi)$ constituye el
+siguiente paso planificado de esta investigaci\'{o}n.
+
+\noindent\textbf{Palabras clave:} Redes Neuronales Informadas por
+F\'{i}sica, SIREN, ecuaci\'{o}n de Helmholtz, speckle \'{o}ptico,
+activaci\'{o}n sinusoidal, muestreo por hip\'{e}rcubo latino.
+
+% ============================================================
+% Cuerpo del articulo
+% ============================================================
+\input{sections/01_introduccion}
+\input{sections/02_marco_teorico}
+\input{sections/03_metodologia}
+\input{sections/04_resultados}
+\input{sections/05_conclusiones}
+
+% ============================================================
+% Bibliografia
+% ============================================================
+\bibliographystyle{splncs04}
+\bibliography{references}
+
+\end{document}
