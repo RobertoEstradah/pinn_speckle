@@ -1,0 +1,50 @@
+\documentclass{RMTA}
+
+\addbibresource{references.bib}  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tituloESP{T\'itulo en espa\~nol}
+
+\titleENG{title in English}
+
+\runningtitle{short title, for headers}
+
+\author{
+First Author$^1$  \qquad
+Second Author$^{2}$
+}
+
+\affiliation{
+$^1$ Affiliaton 1st author.\\
+$^2$ Affiliation 2nd author (if different from 1st author).
+}
+
+\email{email of corresponding author}
+
+\palabrasc{Palabras clave}
+
+\keywords{Keywords.
+}
+
+\MSC{XXX}
+
+\abstract{
+Abstract in English
+}
+
+\resumen{
+Resumen en espa\~ol
+}
+
+\begin{document}
+
+\titlepage
+\abstractresumen
+
+%\input{body}
+
+For the references, must include a \verb|references.bib| file and use the command \verb|\cite| to include a reference: \cite{Bib01} 
+
+\printbibliography
+
+\end{document}

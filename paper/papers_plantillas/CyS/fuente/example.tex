@@ -1,0 +1,153 @@
+\documentclass{cys}
+
+\usepackage[utf8]{inputenc}
+
+%\usepackage[english]{babel}
+%\usepackage[spanish,mexico,es-tabla]{babel}
+\usepackage[russian,english]{babel}  % If you use other languages, use Babel package.
+
+
+\usepackage{graphicx}
+
+\usepackage{epstopdf} % Avoid using plain Latex, use PDFLATEX
+
+\addto\captionsenglish{%
+  \renewcommand{\figurename}{Fig.}%
+  \renewcommand{\abstractname}{Abstract.} 
+%  \renewcommand{\keywordsname}{Keywords: } 
+}
+
+\addto\captionsspanish{%
+  \renewcommand{\figurename}{Fig.}%
+  \renewcommand{\abstractname}{Resumen.} 
+%  \renewcommand{\keywordsname}{Palabras clave: } 
+}
+
+
+\title{Paper Title Here \\ Several Lines, Please Use Capital Letters (for First Letters) in English}
+
+\author{John Smith$^1$, Juan Perez$^2$, Ivan Petrov$^{2,*}$}
+
+\affil{ 
+$^1$ Insitute, Faculty, City, \authorcr   % Do not us full postal address!
+Country             
+\authorcr \authorcr
+$^2$ Insitute, Faculty, City, \authorcr
+Country             
+\authorcr  \authorcr
+author1@xxx.xx, author2@xxx.xx
+\authorcr  \authorcr
+}
+
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\tablename}{Table}
+
+\begin{abstract}
+This paper presents...
+\end{abstract}
+
+\begin{keywords} 
+Word1, word2, word3.
+\end{keywords} 
+
+%%%%%%%%%%%%%%%% THIS SECTION ONLY if your paper is in Spanish:
+
+\othertitle{Title in Spanish, only if your paper is in Spansih}
+
+\begin{abstract}
+Resumen en español ...
+\end{abstract}
+
+\begin{keywords} 
+Palabra1, palabrs2, palabra3.
+\end{keywords} 
+
+%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+\label{sec:introduction}
+Some text with reference~\cite{hulth:2003}.
+
+More text with other reference~\cite{rose:2010}.
+
+
+\section{Related Work}
+\label{sec:relatedWork}
+
+Other text.
+
+And more.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.1\textwidth]{foto.JPG}
+\caption{Snapshot of something}
+\label{jdm1}
+\end{figure}
+
+More text.
+
+\selectlanguage{russian}   %IF you use not English letters
+Тест.  
+\selectlanguage{english}
+
+\begin{table}[ht]
+\renewcommand{\arraystretch}{1.3}
+	\centering
+	\caption{Tables, no capital letters, no point at the end}
+	\begin{tabular}{lrrrr}
+	\hline
+		Classes & Articles \\
+	\hline
+		one \emph{and} two& 61 & 115,729 \\
+		three & 169 & 869,607 \\
+		four & 209 & 2,402,704 \\
+		five & 206 & 2,561,115 \\		
+	\hline
+	\end{tabular}
+	\label{table:Table1}
+\end{table}
+
+\subsection{Linguistic Features}
+\label{subsection:linguistic}
+
+Features. Special symbols: á, ñ.
+
+\subsubsection{Lexical Features}
+\label{subsection:lexicalFeatures}
+
+Other features:
+\begin{equation}
+H(X|Y) = - \sum_{y \in Y} P(y_i) \sum_{x \in X} p(x_i|y_i)\log p(x_i|y_i).
+\label{equation:conditionalEntropy1}
+\end{equation}
+
+
+Please use corresponding punctuation marks at the end of your equations.
+
+\section{Conclusion and Future Work}
+\label{sec:conclusionAndFutureWork}
+
+Conclusions here.
+
+\section*{Acknowledgments} 
+We would like to thank.. 
+This work is funded by...
+
+
+% OBLIGATORY: use BIBTEX formatting!
+{
+\bibliographystyle{cys}
+\bibliography{biblio}
+}
+
+{\vskip 12pt}
+\noindent
+\footnotesize {\textit{Article received on 06/12/2016; accepted on 16/01/2017.\\
+{*}Corresponding author is Ivan Petrov.}
+
+\end{document}

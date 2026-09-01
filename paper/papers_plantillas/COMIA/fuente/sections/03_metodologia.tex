@@ -1,0 +1,160 @@
+% ============================================================
+% Sección 3: Metodología
+% ============================================================
+
+\section{Metodología}
+\label{sec:metodologia}
+
+\subsection{Formulación del problema}
+\label{subsec:formulacion}
+
+Se considera el dominio cuadrado adimensional $\Omega = [0,1]^2$, donde las coordenadas
+han sido normalizadas por la longitud de onda del láser ($\lambda = 638\,\mathrm{nm}$).
+Bajo esta normalización, el número de onda adimensional es $\tilde{k} = 2\pi$.
+
+\paragraph{Validación 1D.}
+La ecuación de Helmholtz unidimensional en $x \in [0,1]$ con condición de Dirichlet:
+%
+\begin{equation}
+  \frac{d^2 E}{dx^2} + k^2 E = 0, \quad E(0) = 1, \quad E(1) = \cos(k),
+  \label{eq:helmholtz1d}
+\end{equation}
+%
+admite la solución analítica $E_{\mathrm{exacta}}(x) = \cos(kx)$, utilizada para
+validar la arquitectura SIREN.
+
+\paragraph{Validación 2D.}
+La ecuación de Helmholtz 2D en $\Omega = [0,1]^2$ con condición de onda plana en los
+cuatro bordes:
+%
+\begin{equation}
+  E_{\mathrm{exacta}}(x,y) = e^{i(k_x x + k_y y)}, \quad k_x = k_y = \frac{k}{\sqrt{2}},
+  \label{eq:solucion2d}
+\end{equation}
+%
+que satisface $k_x^2 + k_y^2 = k^2$.
+
+\subsection{Arquitectura SIREN}
+\label{subsec:arquitectura}
+
+Se emplea una arquitectura SIREN con parámetros consolidados a partir de la validación 1D:
+$L = 5$ capas ocultas, dimensión $d = 128$ (duplicada respecto a 1D para acomodar el
+campo complejo), frecuencia de entrada $\omega_0 = 1.0$ y salida lineal de dos
+neuronas $(E_{\mathrm{real}}, E_{\mathrm{imag}})$.
+El modelo tiene 66{,}690 parámetros entrenables.
+
+La elección $\omega_0 = 1.0$, en lugar del valor $\omega_0 = 30$ recomendado por
+Sitzmann et al.~\cite{Sitzmann2020_SIREN} para señales de imagen, está justificada por la naturaleza
+del problema: el dominio adimensional $[0,1]^2$ con $k = 2\pi$ no requiere capturar
+frecuencias altas, y valores mayores de $\omega_0$ destabilizan el entrenamiento con
+L-BFGS.
+
+\subsection{Muestreo por Hipercubo Latino}
+\label{subsec:lhs}
+
+En el caso 2D, los $N_c = 3{,}000$ puntos de colocación se generan mediante
+Muestreo por Hipercubo Latino (LHS) \cite{Mckay1979_LHS} en lugar de una malla
+uniforme.
+LHS divide cada dimensión en $N_c$ estratos iguales y coloca exactamente un punto
+por estrato, garantizando cobertura uniforme del dominio sin los patrones redundantes
+de una malla cartesiana.
+Adicionalmente, los $N_b = 300$ puntos de frontera por borde se distribuyen
+uniformemente sobre cada lado del dominio.
+
+\subsection{Función de pérdida y pesos}
+\label{subsec:loss}
+
+La función de pérdida total para el caso 2D es:
+%
+\begin{equation}
+  \mathcal{L} = \mathcal{L}_{\mathrm{datos}}
+              + \lambda_{\mathrm{fís}}\!\left(
+                  \mathcal{L}_{R_{\mathrm{real}}} + \mathcal{L}_{R_{\mathrm{imag}}}
+                \right),
+  \label{eq:loss_2d}
+\end{equation}
+%
+con peso de física $\lambda_{\mathrm{fís}} = 0.1$.
+Este valor, calibrado empíricamente, equilibra el ajuste a los datos de frontera y
+el cumplimiento de la EDP: valores superiores ($\lambda = 1.0$) sobrepesan la física
+e impiden la convergencia en 2D; valores inferiores producen campos que violan la
+ecuación de Helmholtz.
+La \cref{tab:ablacion_lambda} cuantifica el efecto sobre el error $L^2$ promedio.
+Esta fragilidad frente al peso relativo de los términos de pérdida no es un fenómeno
+aislado de esta implementación: Krishnapriyan et al.~\cite{Krishnapriyan2021_failureModes}
+documentan sistemáticamente que las PINN con pesos fijos entre el término de datos y el
+término de residuo físico pueden fallar en converger incluso cuando la pérdida global
+parece decrecer, atribuyendo el problema a un paisaje de optimización mal condicionado
+por la competencia entre ambos términos.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Ablación del peso de física $\lambda_{\mathrm{fís}}$ - NB02}
+\label{tab:ablacion_lambda}
+\begin{tabular}{lccc}
+\toprule
+$\lambda_{\mathrm{fís}}$ & Error $L^2$ prom.\ (\%) & Converge & Observación \\
+\midrule
+0.01  & 0.163 & Sí & Física subponderada \\
+0.1   & 0.171 & Sí & \textbf{Configuración óptima} \\
+1.0   & $>5.0$ & No & Física sobreponderada \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Arquitectura SIREN $5\times128$, $\omega_0 = 1.0$, SEED = 42.
+      Mismo protocolo Adam + L-BFGS que NB02.
+      ``No converge'' indica que el optimizador Adam no alcanzó la condición
+      de parada antes de las 15{,}000 épocas con $\varepsilon_{L^2} < 5\%$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Estrategia de optimización}
+\label{subsec:optimizacion}
+
+El entrenamiento sigue una estrategia bifásica:
+
+\paragraph{Fase 1 - Adam.}
+Optimizador Adam con tasa de aprendizaje $\eta = 10^{-3}$, hasta 15{,}000 épocas,
+con \textit{early stopping} por paciencia de 800 épocas sin mejora mayor que
+$\delta = 10^{-7}$.
+Adam realiza exploración global del espacio de parámetros y proporciona un punto
+de inicio próximo al mínimo global.
+
+\paragraph{Fase 2 - L-BFGS.}
+Optimizador L-BFGS con búsqueda de línea \textit{strong Wolfe}, máximo de 1{,}000
+iteraciones y tamaño de historial 100.
+L-BFGS aprovecha la información de curvatura del paisaje de pérdida para realizar
+un ajuste fino de alta precisión desde el punto entregado por Adam.
+
+Esta combinación, práctica extendida en la literatura de PINNs~\cite{Cuomo2022_review},
+supera a Adam puro en precisión final y a L-BFGS puro en robustez ante mínimos locales.
+
+\subsection{Métrica de validación}
+\label{subsec:metricas}
+
+\paragraph{Error L2 relativo} (NB01 y NB02):
+%
+\begin{equation}
+  \varepsilon_{L2} = \frac{\|\hat{E} - E_{\mathrm{exacta}}\|_2}{\|E_{\mathrm{exacta}}\|_2},
+  \label{eq:l2}
+\end{equation}
+%
+evaluado sobre una malla uniforme de $100 \times 100$ puntos.
+No existe en la literatura de PINNs un criterio estandarizado de tolerancia de error
+para este tipo de validación, por lo que se fijó $\varepsilon_{L2} < 5\%$ como umbral
+ingenieril propio de este trabajo. Este valor resulta, además, considerablemente menor
+que el orden de magnitud reportado en implementaciones comparables de PINN para la
+ecuación de Helmholtz (\cref{tab:comparativa}).
+
+\subsection{Implementación}
+\label{subsec:implementacion}
+
+Toda la implementación está en Python con PyTorch, ejecutada en GPU NVIDIA RTX 5050
+(8.5 GB VRAM).
+Los módulos \texttt{src/models.py}, \texttt{src/losses.py} y \texttt{src/utils.py}
+contienen las clases y funciones reutilizables; los notebooks reproducen los experimentos
+de forma autocontenida.
+La semilla global $\texttt{SEED} = 42$ garantiza reproducibilidad.

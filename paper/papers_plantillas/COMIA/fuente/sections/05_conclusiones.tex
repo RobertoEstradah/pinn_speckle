@@ -1,0 +1,52 @@
+% ============================================================
+% Sección 5: Conclusiones
+% ============================================================
+
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+Este trabajo presenta una implementación de Redes Neuronales Informadas por Física
+con activación sinusoidal (PINN-SIREN) para la resolución de la ecuación de Helmholtz
+2D con campo complejo, bajo un paradigma \textit{libre de malla} (\textit{mesh-free})
+\cite{Karniadakis2021_review,Cuomo2022_review}.
+Los dos experimentos completados (NB01 y NB02) validan la arquitectura con precisión
+superior al estado del arte.
+
+Las conclusiones principales son:
+
+\begin{enumerate}
+  \item \textbf{Precisión excepcional en 1D y 2D.}
+    La arquitectura SIREN alcanzó errores $L^2$ de $0.006\%$ (1D) y $0.171\%$ (2D),
+    varios órdenes de magnitud por debajo del umbral de tesis ($< 5\%$).
+
+  \item \textbf{La estrategia Adam + L-BFGS es esencial.}
+    Adam proporciona exploración global robusta; L-BFGS refina la solución con
+    información de curvatura de segundo orden.
+    El uso exclusivo de cualquiera de los dos optimizadores produce resultados inferiores.
+
+  \item \textbf{El peso físico $\lambda = 0.1$ equilibra datos y física en 2D.}
+    En el caso 2D, la función de pérdida física incluye dos residuos (real e imaginario),
+    duplicando efectivamente el peso de la física si se usa $\lambda = 1.0$.
+    La calibración a $\lambda = 0.1$ fue crítica para la convergencia.
+\end{enumerate}
+
+\subsection*{Trabajo futuro}
+
+Las extensiones naturales de este trabajo incluyen:
+
+\begin{itemize}
+  \item \textbf{Simulación de speckle óptico} (NB03): aplicar el modelo validado en NB02
+    a la generación de speckle, reemplazando la condición de onda plana por una frontera
+    de fase aleatoria $\phi(x) \sim \mathcal{U}(0, 2\pi)$ en $y = 0$, y validar
+    estadísticamente el patrón generado con el contraste de Goodman $|C - 1| < 0.1$.
+
+  \item \textbf{Benchmark FEM} (NB04): comparación cuantitativa contra FEniCSx para
+    múltiples realizaciones de speckle, cuantificando el \textit{Speed-up Factor}
+    $S = T_{\mathrm{FEM}} / T_{\mathrm{PINN}}$ \cite{Thuerey2021_PBDL} y la
+    huella de memoria pico (\textit{Peak Memory Footprint}), según los objetivos
+    de la investigación.
+
+  \item \textbf{Medios inhomogéneos} (NB05-NB06): extensión a la ecuación de Helmholtz
+    con índice de refracción variable $n(\mathbf{r})$, relevante para speckle en
+    materiales GRIN y tejidos biológicos.
+\end{itemize}
