@@ -11,7 +11,7 @@
 La Tabla~\ref{tab:resultados1d} muestra las métricas de precisión obtenidas para la
 ecuación de Helmholtz 1D con la arquitectura SIREN $5\times64$, $\omega_0 = 1.0$.
 
-\begin{table}[htbp]
+\begin{table}[t]
 \centering
 \renewcommand{\arraystretch}{1.2}
 \caption{métricas de precisión, PINN-SIREN 1D ($k = 2\pi$)}
@@ -49,7 +49,7 @@ en toda la malla de evaluación.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.95\linewidth]{resultados_pinn_1d.png}
+  \includegraphics[width=0.75\linewidth]{resultados_pinn_1d.png}
   \caption{Validación PINN-SIREN para Helmholtz 1D.
            (a)~Comparación entre la predicción de la red y la solución analítica
            $E_{\mathrm{exacta}}(x) = \cos(kx)$ en 1{,}000 puntos uniformes en $[0,1]$.
@@ -61,7 +61,7 @@ en toda la malla de evaluación.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\linewidth]{metricas_adicionales_1d.png}
+  \includegraphics[width=0.9\linewidth]{metricas_adicionales_1d.png}
   \caption{Métricas adicionales de entrenamiento NB01.
            De izquierda a derecha: curva de pérdida total (Adam + L-BFGS),
            distribución del error puntual y métricas de ajuste ($R^2$, Pearson).
@@ -77,7 +77,7 @@ La Tabla~\ref{tab:resultados2d} reporta las métricas para la validación 2D con
 arquitectura optimizada SIREN $5\times128$, $\omega_0 = 1.0$, y muestreo LHS de
 3{,}000 puntos.
 
-\begin{table}[htbp]
+\begin{table}[t]
 \centering
 \renewcommand{\arraystretch}{1.2}
 \caption{métricas de precisión, PINN-SIREN 2D ($k = 2\pi$, $k_x = k_y = k/\sqrt{2}$)}
@@ -118,7 +118,7 @@ puntos respecto a mallas cartesianas equivalentes.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.95\linewidth]{resultados_pinn_2d.png}
+  \includegraphics[width=0.75\linewidth]{resultados_pinn_2d.png}
   \caption{Validación PINN-SIREN para Helmholtz 2D con campo complejo.
            Fila superior: partes real e imaginaria de la solución analítica
            $E_{\mathrm{exacta}} = e^{i(k_x x + k_y y)}$.
@@ -131,7 +131,7 @@ puntos respecto a mallas cartesianas equivalentes.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\linewidth]{metricas_adicionales_2d.png}
+  \includegraphics[width=0.9\linewidth]{metricas_adicionales_2d.png}
   \caption{Métricas adicionales de entrenamiento NB02.
            Curva de pérdida (Adam + L-BFGS), mapa de error $|E_{\mathrm{real}} - \hat{E}_{\mathrm{real}}|$
            y $|E_{\mathrm{imag}} - \hat{E}_{\mathrm{imag}}|$ en la malla $100 \times 100$.
@@ -146,7 +146,7 @@ puntos respecto a mallas cartesianas equivalentes.
 La Tabla~\ref{tab:comparativa} sitúa los resultados de precisión de la PINN-SIREN
 propuesta junto al antecedente más cercano en la literatura.
 
-\begin{table}[htbp]
+\begin{table}[t]
 \centering
 \renewcommand{\arraystretch}{1.2}
 \caption{error L2 relativo, PINN-SIREN y antecedente de la literatura}
