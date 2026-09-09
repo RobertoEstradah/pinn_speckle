@@ -39,6 +39,9 @@ Tiempo total           & 142 s \\
       Arquitectura SIREN: 5 capas $\times$ 64 neuronas, $\omega_0 = 1.0$.
       Solución analítica: $E_{\mathrm{exacta}}(x) = \cos(kx)$.
       GPU: NVIDIA RTX 5050, SEED = 42.
+      El tiempo total varía sustancialmente entre corridas (142--504 s
+      observado) por carga del sistema y condiciones térmicas de la GPU,
+      no por el código; no debe leerse como una cifra de rendimiento precisa.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -102,7 +105,7 @@ Error L2 promedio (\%) & \multicolumn{2}{c}{0.171} \\
       Arquitectura: SIREN $5 \times 128$, $\omega_0 = 1.0$, 66{,}690 parámetros.
       Puntos de colocación: LHS $N_c = 3{,}000$.
       Frontera: onda plana $e^{i(k_x x + k_y y)}$ en 4 bordes, $N_b = 300$ pts/borde.
-      Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 iter), tiempo total 295 s.
+      Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 iter), tiempo total 299 s.
       Varianza entre semillas (SEED $\in \{42, 123, 777\}$):
       error $L^2$ promedio $= 0.155 \pm 0.020$\,\%.
 \end{tablenotes}
