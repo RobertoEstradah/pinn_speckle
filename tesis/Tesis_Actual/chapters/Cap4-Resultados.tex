@@ -53,6 +53,9 @@ Tiempo total (s)             & 142 \\
     Arquitectura SIREN: 5 capas $\times$ 64 neuronas, $\omega_0 = 1.0$.
     Solución analítica: $E_\text{exacta}(x) = \cos(kx)$.
     GPU: NVIDIA RTX 5050, SEED = 42.
+    El tiempo total varía sustancialmente entre corridas (142--504 s
+    observado) por carga del sistema y condiciones térmicas de la GPU, no
+    por el código; no debe leerse como una cifra de rendimiento precisa.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -362,7 +365,7 @@ de Sommerfeld en el borde $y = 1$:
 $\mathcal{L}_\text{rad} = |\partial E/\partial n - ikE|^2 = 0$.
 En un dominio físico abierto, esta condición absorbente elimina las reflexiones
 espurias en la frontera superior. Su incorporación forma parte del trabajo futuro
-(NB05). A pesar de esto, el criterio estadístico principal $|C - 1| < 0.1$ se
+(NB06). A pesar de esto, el criterio estadístico principal $|C - 1| < 0.1$ se
 cumple con margen amplio.
 
 La Figura~\ref{fig:speckle} muestra el patrón de intensidad generado y la
@@ -467,14 +470,17 @@ Experimento & Descripción & Estado & Métrica principal \\
 NB01 & Helmholtz 1D, validación analítica & Completo & $L^2 = 0.006\%$ \\
 NB02 & Helmholtz 2D, campo complejo       & Completo & $L^2 = 0.171\%$ \\
 NB03 & Speckle óptico, frontera rugosa    & Completo & $C = 1.025\;\checkmark$ \\
-NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
+NB05 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
     \item NB01-NB03 verifican la hipótesis de precisión ($L^2 < 5\%$) y la
-    hipótesis estadística ($|C - 1| < 0.1$). NB04 es necesario para
+    hipótesis estadística ($|C - 1| < 0.1$). NB05 es necesario para
     verificar la hipótesis de velocidad ($S > 1$) y se planifica como trabajo
-    futuro inmediato.
+    futuro inmediato. NB04 (no incluido en esta tabla) es un ejercicio
+    ilustrativo de generación estadística de speckle a distancias reales
+    (2-20cm, Goodman 2007), no un experimento que valide las hipótesis de
+    esta tesis.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -483,4 +489,4 @@ Los tres experimentos completados (NB01-NB03) verifican las dos primeras
 hipótesis de la tesis: (i) el error $L^2 < 5\%$ se supera con amplitud en todos
 los casos, y (ii) el contraste del \textit{speckle} cumple el criterio de
 Goodman. La hipótesis de velocidad ($S > 1$) requiere la implementación de la
-referencia FEM (NB04), programada como trabajo futuro inmediato.
+referencia FEM (NB05), programada como trabajo futuro inmediato.
