@@ -1,0 +1,168 @@
+% ============================================================
+% Section 3: Methodology
+% ============================================================
+
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Problem Formulation}
+\label{subsec:formulation}
+
+We consider the dimensionless square domain $\Omega = [0,1]^2$, where the
+coordinates have been normalized by the laser wavelength
+($\lambda = 638\,\mathrm{nm}$).
+Under this normalization, the dimensionless wavenumber is $\tilde{k} = 2\pi$.
+
+\paragraph{1D validation.}
+The one-dimensional Helmholtz equation on $x \in [0,1]$ with Dirichlet conditions:
+%
+\begin{equation}
+\label{eq:helmholtz1d}
+\begin{aligned}
+  &\frac{d^2 E}{dx^2} + k^2 E = 0, \\
+  &E(x_j) = \cos(k x_j), \\
+  &x_j \in \{0,\ 0.25,\ 0.5,\ 0.75,\ 1\}
+\end{aligned}
+\end{equation}
+%
+admits the analytical solution $E_{\mathrm{exact}}(x) = \cos(kx)$, used to validate
+the SIREN architecture. Five boundary points are imposed instead of only the two
+endpoints: the symmetric condition $E(0) = E(1) = 1$ collapses the network towards
+the trivial constant solution during training, since both endpoints are consistent
+with $E \equiv 1$; the three intermediate points break that symmetry and stabilize
+convergence.
+
+\paragraph{2D validation.}
+The 2D Helmholtz equation on $\Omega = [0,1]^2$ with a plane-wave condition on the
+four edges:
+%
+\begin{equation}
+  E_{\mathrm{exact}}(x,y) = e^{i(k_x x + k_y y)}, \quad k_x = k_y = \frac{k}{\sqrt{2}},
+  \label{eq:solution2d}
+\end{equation}
+%
+which satisfies $k_x^2 + k_y^2 = k^2$.
+
+\subsection{SIREN Architecture}
+\label{subsec:architecture}
+
+We employ a SIREN architecture with parameters consolidated from the 1D validation:
+$L = 5$ hidden layers, dimension $d = 128$ (doubled with respect to the 1D case in
+order to accommodate the complex field), input frequency $\omega_0 = 1.0$ and a
+linear output layer with two neurons
+$(E_{\mathrm{real}}, E_{\mathrm{imag}})$.
+The model has 66{,}690 trainable parameters.
+
+The choice $\omega_0 = 1.0$, instead of the value $\omega_0 = 30$ recommended by
+Sitzmann et al. \cite{Sitzmann2020_SIREN} for image signals, is justified by the
+nature of the problem: the dimensionless domain $[0,1]^2$ with $k = 2\pi$ does not
+require capturing high frequencies, and larger values of $\omega_0$ destabilize
+training with L-BFGS.
+
+\subsection{Latin Hypercube Sampling}
+\label{subsec:lhs}
+
+In the 2D case, the $N_c = 3{,}000$ collocation points are generated through Latin
+Hypercube Sampling (LHS) \cite{Mckay1979_LHS} instead of a uniform grid.
+LHS divides each dimension into $N_c$ equal strata and places exactly one point per
+stratum, guaranteeing uniform coverage of the domain without the redundant patterns
+of a Cartesian grid.
+Additionally, the $N_b = 300$ boundary points per edge are uniformly distributed
+along each side of the domain.
+
+\subsection{Loss Function and Weights}
+\label{subsec:loss}
+
+The total loss function for the 2D case is:
+%
+\begin{equation}
+  \mathcal{L} = \mathcal{L}_{\mathrm{data}}
+              + \lambda_{\mathrm{phys}}\!\left(
+                  \mathcal{L}_{R_{\mathrm{real}}} + \mathcal{L}_{R_{\mathrm{imag}}}
+                \right),
+  \label{eq:loss_2d}
+\end{equation}
+%
+with physics weight $\lambda_{\mathrm{phys}} = 0.1$.
+This empirically calibrated value balances the fit to the boundary data and the
+fulfillment of the PDE: larger values ($\lambda = 1.0$) overweight the physics and
+prevent convergence in 2D; smaller values produce fields that violate the Helmholtz
+equation.
+Table~\ref{tab:ablation_lambda} quantifies the effect on the average $L^2$ error.
+This fragility with respect to the relative weight of the loss terms is not an
+isolated phenomenon of this implementation: Krishnapriyan et al.
+\cite{Krishnapriyan2021_failureModes} systematically document that PINNs with fixed
+weights between the data term and the physical residual term may fail to converge
+even when the global loss appears to decrease, attributing the problem to an
+optimization landscape ill-conditioned by the competition between both terms.
+\begin{table}[t]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\caption{ablation of the physics weight $\lambda_{\mathrm{phys}}$, NB02}
+\label{tab:ablation_lambda}
+\begin{tabular}{@{}c c c l@{}}
+\hline
+$\lambda_{\mathrm{phys}}$ & Avg.\ $L^2$ error (\%) & Converges & Remark \\
+\hline
+0.01  & 0.163 & Yes & Physics underweighted \\
+0.1   & 0.171 & Yes & \textbf{Optimal config.} \\
+1.0   & $>5.0$ & No & Physics overweighted \\
+\hline
+\end{tabular}
+\end{table}
+\noindent\footnotesize SIREN $5\times128$ architecture, $\omega_0 = 1.0$, SEED = 42.
+Same Adam + L-BFGS protocol as NB02.
+``Does not converge'' indicates that the Adam optimizer did not reach the stopping
+condition before 15{,}000 epochs with $\varepsilon_{L^2} < 5\%$.
+\normalsize
+
+\subsection{Optimization Strategy}
+\label{subsec:optimization}
+
+Training follows a two-phase strategy:
+
+\paragraph{Phase 1 - Adam.}
+Adam optimizer with learning rate $\eta = 10^{-3}$, up to 15{,}000 epochs, with
+early stopping after a patience of 800 epochs without improvement greater than
+$\delta = 10^{-7}$.
+Adam performs a global exploration of the parameter space and provides a starting
+point close to the global minimum.
+
+\paragraph{Phase 2 - L-BFGS.}
+L-BFGS optimizer with \textit{strong Wolfe} line search, a maximum of 1{,}000
+iterations and history size 100.
+L-BFGS exploits the curvature information of the loss landscape to perform a
+high-precision refinement from the point delivered by Adam.
+
+This combination, a widespread practice in the PINN literature
+\cite{Cuomo2022_review}, outperforms pure Adam in final accuracy and pure L-BFGS in
+robustness against local minima.
+
+\subsection{Validation Metric}
+\label{subsec:metrics}
+
+\paragraph{Relative L2 error} (NB01 and NB02):
+%
+\begin{equation}
+  \varepsilon_{L2} = \frac{\|\hat{E} - E_{\mathrm{exact}}\|_2}{\|E_{\mathrm{exact}}\|_2},
+  \label{eq:l2}
+\end{equation}
+%
+evaluated on a uniform $100 \times 100$ grid.
+There is no standardized error tolerance criterion in the PINN literature for this
+type of validation, so $\varepsilon_{L2} < 5\%$ was adopted as an engineering
+threshold for this work. This value is, moreover, considerably lower than the order
+of magnitude reported in comparable PINN implementations for the Helmholtz equation
+(Table~\ref{tab:comparison}).
+
+\subsection{Implementation}
+\label{subsec:implementation}
+
+The complete implementation is written in Python with PyTorch and executed on an
+NVIDIA RTX 5050 GPU (8.5 GB VRAM).
+The modules \texttt{src/models.py}, \texttt{src/losses.py} and
+\texttt{src/utils.py} contain the reusable classes and functions; the notebooks
+reproduce the experiments in a self-contained manner.
+The global seed \texttt{SEED} = 42 guarantees reproducibility.

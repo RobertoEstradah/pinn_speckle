@@ -1,0 +1,151 @@
+% ============================================================
+% Section 2: Theoretical Framework
+% ============================================================
+
+\section{Theoretical Framework}
+\label{sec:theory}
+
+\subsection{Helmholtz Equation for the Optical Field}
+\label{subsec:helmholtz}
+
+The propagation of coherent light in a homogeneous and isotropic medium is governed
+by the scalar Helmholtz equation:
+%
+\begin{equation}
+  \nabla^2 E(\mathbf{r}) + k^2 E(\mathbf{r}) = 0,
+  \label{eq:helmholtz}
+\end{equation}
+%
+where $E(\mathbf{r}) \in \mathbb{C}$ is the complex amplitude of the electric field,
+$k = 2\pi/\lambda$ is the wavenumber and $\lambda$ the laser wavelength.
+In two spatial dimensions, with $\mathbf{r} = (x, y)$, the equation takes the form:
+%
+\begin{equation}
+  \frac{\partial^2 E}{\partial x^2} + \frac{\partial^2 E}{\partial y^2} + k^2 E = 0.
+  \label{eq:helmholtz2d}
+\end{equation}
+
+Since neural networks operate on real numbers, the complex field is decomposed into
+its real and imaginary parts: $E = E_{\mathrm{real}} + i\,E_{\mathrm{imag}}$.
+Both components satisfy Equation~\eqref{eq:helmholtz2d} independently:
+%
+\begin{equation}
+  \nabla^2 E_{\mathrm{real}} + k^2 E_{\mathrm{real}} = 0, \qquad
+  \nabla^2 E_{\mathrm{imag}} + k^2 E_{\mathrm{imag}} = 0.
+  \label{eq:helmholtz_split}
+\end{equation}
+%
+The speckle intensity, which is the physically observable quantity, is computed as:
+%
+\begin{equation}
+  I(x,y) = |E|^2 = E_{\mathrm{real}}^2 + E_{\mathrm{imag}}^2.
+  \label{eq:intensity}
+\end{equation}
+
+\subsection{Physics-Informed Neural Networks (PINNs)}
+\label{subsec:pinns}
+
+PINNs, introduced by Raissi et al. \cite{Raissi2019_PINNs} and extensively reviewed
+by Karniadakis et al. \cite{Karniadakis2021_review} and Cuomo et al.
+\cite{Cuomo2022_review}, approximate the solution of a PDE by means of a neural
+network $\mathcal{N}_\theta(\mathbf{r})$ whose parameters $\theta$ are optimized by
+minimizing a composite loss function:
+%
+\begin{equation}
+  \mathcal{L}(\theta) = \mathcal{L}_{\mathrm{data}}(\theta)
+                      + \lambda\,\mathcal{L}_{\mathrm{physics}}(\theta),
+  \label{eq:loss_total}
+\end{equation}
+%
+where $\mathcal{L}_{\mathrm{data}}$ penalizes the error on the boundary conditions
+and $\mathcal{L}_{\mathrm{physics}}$ penalizes the violation of the PDE inside the
+domain.
+For the 2D Helmholtz equation with a complex field:
+%
+\begin{align}
+  \mathcal{L}_{\mathrm{data}}(\theta) &=
+    \frac{1}{N_b}\sum_{j=1}^{N_b}
+    \left\|\mathcal{N}_\theta(\mathbf{r}_j^b) - E(\mathbf{r}_j^b)\right\|^2,
+  \label{eq:loss_data} \\
+  \mathcal{L}_{\mathrm{physics}}(\theta) &=
+    \frac{1}{N_c}\sum_{i=1}^{N_c}
+    \left[R_{\mathrm{real}}(\mathbf{r}_i^c)^2 + R_{\mathrm{imag}}(\mathbf{r}_i^c)^2\right],
+  \label{eq:loss_physics}
+\end{align}
+%
+where $R_{\mathrm{real}} = \nabla^2 E_{\mathrm{real}} + k^2 E_{\mathrm{real}}$ and
+$R_{\mathrm{imag}} = \nabla^2 E_{\mathrm{imag}} + k^2 E_{\mathrm{imag}}$ are the
+Helmholtz residuals, $\{\mathbf{r}_j^b\}_{j=1}^{N_b}$ are the boundary points and
+$\{\mathbf{r}_i^c\}_{i=1}^{N_c}$ are the interior collocation points.
+The derivatives $\nabla^2 E$ are obtained through automatic differentiation
+\cite{Baydin2018_autodiff}.
+
+\subsection{SIREN Networks}
+\label{subsec:siren}
+
+Standard activations (ReLU, tanh) produce unstable second-order derivatives and
+exhibit \textit{spectral bias}: they tend to learn low frequencies before high ones,
+which hinders the capture of the fine details of the speckle pattern.
+Sitzmann et al. \cite{Sitzmann2020_SIREN} propose SIREN networks (Sinusoidal
+Representation Networks), which use the activation $\phi(z) = \sin(\omega_0 z)$
+together with a specific initialization that preserves the distribution of
+activations across all layers.
+
+The SIREN architecture with $L$ hidden layers of dimension $d$ is defined as:
+%
+\begin{equation}
+\label{eq:siren}
+\begin{aligned}
+  \mathbf{h}_0 &= \mathbf{x}, \\
+  \mathbf{h}_\ell &= \sin\!\left(\omega_0\,(\mathbf{W}_\ell\,\mathbf{h}_{\ell-1} + \mathbf{b}_\ell)\right),
+  \quad \ell = 1, \ldots, L
+\end{aligned}
+\end{equation}
+%
+where $\omega_0$ is the frequency of the input layer and the matrices
+$\mathbf{W}_\ell$ are initialized according to
+$\mathcal{U}(-\sqrt{6/d},\,\sqrt{6/d})$ for the intermediate layers and
+$\mathcal{U}(-1/n_{\mathrm{in}},\,1/n_{\mathrm{in}})$ for the first layer
+\cite{Sitzmann2020_SIREN}.
+This initialization ensures that the activation distributions are approximately
+uniform in $[-1, 1]$, a necessary condition for the stability of derivatives of
+arbitrary order.
+
+\subsection{Statistics of Fully Developed Speckle}
+\label{subsec:speckle}
+
+When a rough surface with phase variation $\Delta\phi \gg 2\pi$ is illuminated by
+coherent light, the contributions of the different points of the surface interfere
+constructively and destructively in a random manner.
+By the central limit theorem, the resulting complex field
+$E = E_{\mathrm{real}} + i\,E_{\mathrm{imag}}$ follows a circular complex Gaussian
+distribution \cite{Goodman2007_Speckle}:
+%
+\begin{equation}
+  E_{\mathrm{real}},\; E_{\mathrm{imag}} \sim \mathcal{N}(0, \sigma_E^2),
+  \quad \text{independent.}
+  \label{eq:gaussian_field}
+\end{equation}
+
+The intensity $I = |E|^2$ then follows a negative exponential distribution:
+%
+\begin{equation}
+  p(I) = \frac{1}{\langle I \rangle}\exp\!\left(-\frac{I}{\langle I \rangle}\right),
+  \quad I \geq 0,
+  \label{eq:pdf_intensity}
+\end{equation}
+%
+with expected value $\langle I \rangle = 2\sigma_E^2$ and standard deviation
+$\sigma_I = \langle I \rangle$.
+The \textit{speckle contrast} is:
+%
+\begin{equation}
+  C = \frac{\sigma_I}{\langle I \rangle} = 1,
+  \label{eq:contrast}
+\end{equation}
+%
+which equals exactly 1 for fully developed speckle and decreases when the field
+loses coherence or when the surface roughness is insufficient.
+This statistical criterion will be the main validation metric for speckle
+generation in future work, complemented by the Kolmogorov-Smirnov (KS) test against
+the theoretical exponential distribution.

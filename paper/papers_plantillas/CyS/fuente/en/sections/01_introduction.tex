@@ -1,0 +1,77 @@
+% ============================================================
+% Section 1: Introduction
+% ============================================================
+
+\section{Introduction}
+\label{sec:intro}
+
+Optical speckle is the high-contrast granular pattern that emerges when coherent
+light, such as that of a laser, is scattered by a rough surface.
+This phenomenon appears in optical metrology, optical coherence tomography,
+biomedical imaging, optical cryptography and fiber communications
+\cite{Goodman2007_Speckle}.
+Its accurate prediction requires solving the Helmholtz equation with stochastic
+boundary conditions, a problem that classical numerical methods address at a
+prohibitive computational cost.
+
+Mesh-based methods, such as the Finite Element Method (FEM), are accurate but
+impose severe constraints: the mesh must have a spatial resolution finer than the
+laser wavelength in order to capture the fine details of the speckle pattern
+\cite{Jin2014_FEM}.
+This leads to systems with millions of unknowns per realization, and every new
+surface roughness profile requires solving the complete system from scratch.
+For statistical studies requiring thousands of realizations, the cost becomes
+intractable.
+
+Physics-Informed Neural Networks (PINNs), introduced by Raissi et al.
+\cite{Raissi2019_PINNs}, propose an alternative \textit{mesh-free} paradigm:
+embedding the physical laws directly into the loss function of the network, so
+that the fit to the boundary conditions and the fulfillment of the differential
+equation over the domain are enforced simultaneously.
+Once trained, the model evaluates the complete field on a $100 \times 100$ grid in
+$\approx 1.3\,\mathrm{ms}$ (NVIDIA RTX~5050 GPU), acting as a computationally
+efficient surrogate of the numerical solver.
+The effectiveness of this paradigm has been demonstrated in wave scattering
+problems \cite{Fang2020_scattering}, nano-optics and parameter inversion
+\cite{Chen2020_nanoptics}, and the PINN framework has been consolidated in the
+reviews by Karniadakis et al. \cite{Karniadakis2021_review} and Cuomo et al.
+\cite{Cuomo2022_review}.
+
+A critical obstacle of standard PINNs for the Helmholtz equation is the
+instability of second-order derivatives under ReLU or tanh activations.
+Sinusoidal Representation Networks (SIREN), proposed by Sitzmann et al.
+\cite{Sitzmann2020_SIREN}, address this problem through activations
+$\phi(z) = \sin(\omega_0 z)$ together with an initialization scheme that preserves
+the distribution of activations throughout the network, making the architecture a
+natural choice for wave equations.
+A recent study by Schoder and Kraxberger \cite{Schoder2024_PINN_acoustics}
+validated the feasibility of PINNs for the 3D Helmholtz equation, reporting an
+$L^2$ error of $2.5\%$ with respect to reference FEM solutions.
+This paradigm has recently been applied to optical and electromagnetic settings
+with a SIREN architecture \cite{Panagiotakopoulos2026_Helmholtz}.
+However, to the best of our knowledge, no previous work combines sinusoidal
+activation, an explicit calibration rule for $\omega_0$ with respect to the
+wavenumber, and the generation of optical speckle from a random-phase boundary
+condition statistically validated against Goodman's criterion.
+
+In this work we present a PINN-SIREN implementation for solving the
+two-dimensional Helmholtz equation with a complex field, laying the groundwork for
+the future accelerated simulation of optical speckle.
+The main contribution is the validation of the SIREN $5\times128$ architecture in
+two scenarios of increasing complexity: 1D validation against an exact analytical
+solution ($L^2$ error $= 0.006\%$) and 2D validation with a complex plane wave
+($L^2$ error $= 0.171\%$), both several orders of magnitude below the $5\%$
+threshold adopted in this work.
+The generation of speckle patterns with a random-phase boundary condition
+$\phi(x) \sim \mathcal{U}(0, 2\pi)$ constitutes the next planned stage of this
+research.
+
+The article is organized as follows.
+Section~\ref{sec:theory} presents the theoretical framework: the Helmholtz
+equation, the PINN formulation, the SIREN architecture and speckle statistics.
+Section~\ref{sec:methodology} describes the problem formulation, LHS sampling and
+the Adam + L-BFGS optimization strategy.
+Section~\ref{sec:results} reports the results of the 1D and 2D validation, together
+with the comparison against the state of the art.
+Section~\ref{sec:conclusions} summarizes the contributions and outlines future
+directions.

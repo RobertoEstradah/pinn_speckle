@@ -1,0 +1,73 @@
+\documentclass{cys}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+\usepackage{amssymb, amsmath, amsfonts, mathtools}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{booktabs}
+\usepackage{url}
+
+\graphicspath{{figures/}}
+
+\addto\captionsenglish{%
+  \renewcommand{\figurename}{Fig.}%
+}
+
+\title{Accelerated Optical Speckle Simulation via Physics-Informed Neural
+       Networks with Sinusoidal Activation}
+
+\author{Roberto Hernández Estrada$^1$, José Adán Hernández Nolasco$^{1,*}$}
+
+\affil{
+$^1$ Universidad Juárez Autónoma de Tabasco, División Académica de Ciencias Básicas,
+Cunduacán, \authorcr
+Mexico \authorcr \authorcr
+robertohernandezestrd@gmail.com, jose.hernandez@ujat.mx \authorcr \authorcr
+}
+
+\begin{document}
+
+\maketitle
+\renewcommand{\tablename}{Table}
+
+\begin{abstract}
+Physics-Informed Neural Networks with sinusoidal activation functions (SIREN-PINNs)
+are applied to solve the 2D Helmholtz equation with a complex field as a mesh-free
+surrogate for optical speckle simulation.
+The proposed SIREN architecture ($5 \times 128$, $\omega_0 = 1.0$) achieves relative
+$L^2$ errors of $0.006\%$ (1D) and $0.171\%$ (2D) against analytical solutions,
+several orders of magnitude below the $5\%$ engineering threshold adopted in this
+work.
+A two-phase Adam + L-BFGS optimization strategy and Latin Hypercube Sampling (LHS)
+are key to convergence and accuracy.
+Multi-seed validation (SEED $\in \{42, 123, 777\}$) confirms statistical robustness
+with $L^2$ variance of $13\%$ relative.
+These results establish SIREN-PINNs as a precise and stable solver for the Helmholtz
+equation, laying the foundation for physically accurate speckle pattern generation.
+\end{abstract}
+
+\begin{keywords}
+Physics-Informed Neural Networks, SIREN, Helmholtz equation, optical speckle,
+sinusoidal activation, Latin Hypercube Sampling.
+\end{keywords}
+
+\input{sections/01_introduction}
+\input{sections/02_theoretical_framework}
+\input{sections/03_methodology}
+\input{sections/04_results}
+\input{sections/05_conclusions}
+
+{
+\bibliographystyle{cys}
+\bibliography{references}
+}
+
+{\vskip 12pt}
+\noindent
+\footnotesize {\textit{Article received on DD/MM/YYYY; accepted on DD/MM/YYYY.\\
+{*}Corresponding author is José Adán Hernández Nolasco.}}
+
+\end{document}

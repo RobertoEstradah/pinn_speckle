@@ -79,10 +79,12 @@ arquitectura optimizada SIREN $5\times128$, $\omega_0 = 1.0$, y muestreo LHS de
 
 \begin{table}[t]
 \centering
+\footnotesize
 \renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
 \caption{métricas de precisión, PINN-SIREN 2D ($k = 2\pi$, $k_x = k_y = k/\sqrt{2}$)}
 \label{tab:resultados2d}
-\begin{tabular}{lcc}
+\begin{tabular}{@{}lcc@{}}
 \hline
 Métrica & $E_{\mathrm{real}}$ & $E_{\mathrm{imag}}$ \\
 \hline
@@ -146,7 +148,7 @@ puntos respecto a mallas cartesianas equivalentes.
 La Tabla~\ref{tab:comparativa} sitúa los resultados de precisión de la PINN-SIREN
 propuesta junto al antecedente más cercano en la literatura.
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \renewcommand{\arraystretch}{1.2}
 \caption{error L2 relativo, PINN-SIREN y antecedente de la literatura}
@@ -161,11 +163,14 @@ Zhang et al. \cite{Zhang2025_FEPIRBN} & 2D (EM) & PINN vs.\ simulación numéric
 \textbf{PINN-SIREN (este trabajo)} & \textbf{2D (óptica)} & PINN vs.\ solución analítica & \textbf{0.171} \\
 \hline
 \end{tabular}
-\end{table}
-\noindent\footnotesize Los cuatro resultados no son directamente comparables entre sí: difieren en
+
+\vspace{4pt}
+\begin{minipage}{\textwidth}
+\footnotesize Los cuatro resultados no son directamente comparables entre sí: difieren en
 dimensionalidad, dominio físico (acústico vs.\ óptico) y tipo de solución
 de referencia (FEM vs.\ analítica). Se presentan como contexto de la
 literatura, no como línea base de comparación cuantitativa. Los resultados
 propios se validan contra el umbral fijo de la tesis ($L^2 < 5\%$),
 independiente de trabajos externos.
-\normalsize
+\end{minipage}
+\end{table*}

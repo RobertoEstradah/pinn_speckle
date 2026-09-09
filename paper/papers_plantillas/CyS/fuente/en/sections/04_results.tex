@@ -1,0 +1,181 @@
+% ============================================================
+% Section 4: Results
+% ============================================================
+
+\section{Results}
+\label{sec:results}
+
+\subsection{1D Validation - Helmholtz with Analytical Solution}
+\label{subsec:results1d}
+
+Table~\ref{tab:results1d} shows the accuracy metrics obtained for the 1D Helmholtz
+equation with the SIREN $5\times64$ architecture, $\omega_0 = 1.0$.
+
+\begin{table}[t]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\caption{accuracy metrics, PINN-SIREN 1D ($k = 2\pi$)}
+\label{tab:results1d}
+\begin{tabular}{lc}
+\hline
+Metric & Value \\
+\hline
+L2 error (\%)          & 0.006 \\
+MSE                    & $1.5 \times 10^{-9}$ \\
+RMSE                   & $3.9 \times 10^{-5}$ \\
+MAE                    & $3.50 \times 10^{-5}$ \\
+Maximum error          & $5.77 \times 10^{-5}$ \\
+$R^2$                  & 1.000000 \\
+Pearson correlation    & 1.000000 \\
+\hline
+Adam epochs            & 15{,}000 / 15{,}000 \\
+L-BFGS iterations      & 202 / 500 \\
+Total time             & 142 s \\
+\hline
+\end{tabular}
+\end{table}
+\noindent\footnotesize Evaluated on a uniform grid of 1{,}000 points in $[0,1]$.
+SIREN architecture: 5 layers $\times$ 64 neurons, $\omega_0 = 1.0$.
+Analytical solution: $E_{\mathrm{exact}}(x) = \cos(kx)$.
+GPU: NVIDIA RTX 5050, SEED = 42.
+The total time varies substantially between runs (142--504 s observed) due to system
+load and GPU thermal conditions rather than to the code; it should not be read as a
+precise performance figure.
+\normalsize
+
+The L2 error of $0.006\%$ exceeds the threshold adopted in this work ($< 5\%$) by
+almost three orders of magnitude.
+The fit is practically perfect: $R^2 = 1.000000$ and Pearson correlation
+$= 1.000000$ over the entire evaluation grid.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\linewidth]{resultados_pinn_1d.png}
+  \caption{PINN-SIREN validation for 1D Helmholtz.
+           (a)~Comparison between the network prediction and the analytical solution
+           $E_{\mathrm{exact}}(x) = \cos(kx)$ at 1{,}000 uniform points in $[0,1]$.
+           (b)~Pointwise error $|\hat{E}(x) - E_{\mathrm{exact}}(x)|$.
+           $L^2$ error $= 0.006\%$, $R^2 = 1.000000$.
+           GPU: NVIDIA RTX 5050, SEED = 42.}
+  \label{fig:results1d}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{metricas_adicionales_1d.png}
+  \caption{Additional training metrics for NB01.
+           From left to right: total loss curve (Adam + L-BFGS), distribution of the
+           pointwise error, and goodness-of-fit metrics ($R^2$, Pearson).
+           The Adam to L-BFGS transition at epoch 15{,}000 is visible as a
+           discontinuity along the iteration axis.}
+  \label{fig:metrics1d}
+\end{figure}
+
+\subsection{2D Validation - Helmholtz with Complex Field}
+\label{subsec:results2d}
+
+Table~\ref{tab:results2d} reports the metrics for the 2D validation with the
+optimized SIREN $5\times128$ architecture, $\omega_0 = 1.0$, and LHS sampling with
+3{,}000 points.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\caption{accuracy metrics, PINN-SIREN 2D ($k = 2\pi$, $k_x = k_y = k/\sqrt{2}$)}
+\label{tab:results2d}
+\begin{tabular}{@{}lcc@{}}
+\hline
+Metric & $E_{\mathrm{real}}$ & $E_{\mathrm{imag}}$ \\
+\hline
+L2 error (\%)          & 0.214 & 0.127 \\
+MSE                    & $2.20 \times 10^{-6}$ & $8.43 \times 10^{-7}$ \\
+RMSE                   & $1.48 \times 10^{-3}$ & $9.18 \times 10^{-4}$ \\
+MAE                    & $1.27 \times 10^{-3}$ & $7.71 \times 10^{-4}$ \\
+Maximum error          & $3.05 \times 10^{-3}$ & $2.93 \times 10^{-3}$ \\
+$R^2$                  & 0.999995 & 0.999998 \\
+Pearson correlation    & 0.999998 & 0.999999 \\
+\hline
+Average L2 error (\%) & \multicolumn{2}{c}{0.171} \\
+\hline
+\end{tabular}
+\end{table}
+\noindent\footnotesize Evaluated on a uniform $100 \times 100$ grid.
+Architecture: SIREN $5 \times 128$, $\omega_0 = 1.0$, 66{,}690 parameters.
+Collocation points: LHS $N_c = 3{,}000$.
+Boundary: plane wave $e^{i(k_x x + k_y y)}$ on 4 edges, $N_b = 300$ pts/edge.
+Training: Adam (8{,}737 epochs) + L-BFGS (1{,}035 iter), total time 299 s.
+Variance across seeds (SEED $\in \{42, 123, 777\}$):
+average $L^2$ error $= 0.155 \pm 0.020$\,\%.
+\normalsize
+
+The average L2 error of $0.171\%$ exceeds the threshold adopted in this work
+($< 5\%$) by more than one order of magnitude. Accuracy remains high in both
+components of the complex field, with $R^2 > 0.9999$ for $E_{\mathrm{real}}$ and
+$E_{\mathrm{imag}}$.
+
+Increasing the capacity from $d = 64$ to $d = 128$ was decisive: with $d = 64$ the
+average error was $0.436\%$; with $d = 128$ it dropped to $0.171\%$, an improvement
+of $2.5\times$.
+LHS sampling contributed to reducing the error in regions of low point density with
+respect to equivalent Cartesian grids.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\linewidth]{resultados_pinn_2d.png}
+  \caption{PINN-SIREN validation for 2D Helmholtz with a complex field.
+           Top row: real and imaginary parts of the analytical solution
+           $E_{\mathrm{exact}} = e^{i(k_x x + k_y y)}$.
+           Bottom row: corresponding PINN-SIREN prediction.
+           The visual difference is indistinguishable; pointwise errors are of the
+           order of $10^{-3}$ (see Table~\ref{tab:results2d}).
+           Evaluation grid $100 \times 100$, SEED = 42.}
+  \label{fig:results2d}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{metricas_adicionales_2d.png}
+  \caption{Additional training metrics for NB02.
+           Loss curve (Adam + L-BFGS), error map
+           $|E_{\mathrm{real}} - \hat{E}_{\mathrm{real}}|$ and
+           $|E_{\mathrm{imag}} - \hat{E}_{\mathrm{imag}}|$ on the $100 \times 100$
+           grid.
+           The largest errors concentrate at the corners of the domain, a region
+           typically difficult for plane-wave conditions.}
+  \label{fig:metrics2d}
+\end{figure}
+
+\subsection{Context in the Literature}
+\label{subsec:comparison}
+
+Table~\ref{tab:comparison} places the accuracy results of the proposed PINN-SIREN
+alongside the closest antecedents in the literature.
+
+\begin{table*}[t]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\caption{relative L2 error, PINN-SIREN and antecedents in the literature}
+\label{tab:comparison}
+\begin{tabular}{lccc}
+\hline
+Method & Dimension & Comparison & L2 error (\%) \\
+\hline
+Schoder and Kraxberger \cite{Schoder2024_PINN_acoustics} & 3D (acoustics) & PINN vs.\ FEM (fine mesh) & 2.49 \\
+Zhang et al. \cite{Zhang2025_FEPIRBN} & 2D (EM) & PINN vs.\ numerical simulation & 1.40--5.82 \\
+\textbf{PINN-SIREN (this work)} & \textbf{1D (optics)} & PINN vs.\ analytical solution & \textbf{0.006} \\
+\textbf{PINN-SIREN (this work)} & \textbf{2D (optics)} & PINN vs.\ analytical solution & \textbf{0.171} \\
+\hline
+\end{tabular}
+
+\vspace{4pt}
+\begin{minipage}{\textwidth}
+\footnotesize The four results are not directly comparable to each other:
+they differ in dimensionality, physical domain (acoustic vs.\ optical) and type of
+reference solution (FEM vs.\ analytical). They are presented as context from the
+literature, not as a quantitative baseline for comparison. Our own results are
+validated against the fixed threshold adopted in this work ($L^2 < 5\%$),
+independently of external works.
+\end{minipage}
+\end{table*}

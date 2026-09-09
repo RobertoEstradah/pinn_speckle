@@ -1,0 +1,63 @@
+% ============================================================
+% Section 5: Conclusions and Future Research
+% ============================================================
+
+\section{Conclusions and Future Research}
+\label{sec:conclusions}
+
+This work presents an implementation of Physics-Informed Neural Networks with
+sinusoidal activation (PINN-SIREN) for solving the 2D Helmholtz equation with a
+complex field, under a \textit{mesh-free} paradigm
+\cite{Karniadakis2021_review, Cuomo2022_review}.
+The two completed experiments (NB01 and NB02) validate the architecture with high
+accuracy.
+
+The main conclusions are:
+
+\begin{enumerate}
+  \item \textbf{Exceptional accuracy in 1D and 2D.}
+    The SIREN architecture reached $L^2$ errors of $0.006\%$ (1D) and $0.171\%$ (2D),
+    both several orders of magnitude below the threshold adopted in this work
+    ($< 5\%$).
+
+  \item \textbf{The Adam + L-BFGS strategy is essential.}
+    Adam provides robust global exploration; L-BFGS refines the solution using
+    second-order curvature information.
+    Using either optimizer alone produces inferior results.
+
+  \item \textbf{The physics weight $\lambda = 0.1$ balances data and physics in 2D.}
+    In the 2D case, the physical loss function includes two residuals (real and
+    imaginary), effectively doubling the weight of the physics if $\lambda = 1.0$ is
+    used.
+    Calibrating to $\lambda = 0.1$ was critical for convergence.
+\end{enumerate}
+
+The natural extensions of this work include:
+
+\begin{itemize}
+  \item \textbf{Optical speckle simulation} (NB03): applying the model validated in
+    NB02 to speckle generation, replacing the plane-wave condition with a
+    random-phase boundary $\phi(x) \sim \mathcal{U}(0, 2\pi)$ at $y = 0$, and
+    statistically validating the generated pattern with Goodman's contrast
+    criterion $|C - 1| < 0.1$.
+
+  \item \textbf{FEM benchmark} (NB05): quantitative comparison against FEniCSx for
+    multiple speckle realizations, quantifying the \textit{Speed-up Factor}
+    $S = T_{\mathrm{FEM}} / T_{\mathrm{PINN}}$ \cite{Thuerey2021_PBDL} and the peak
+    memory footprint, in line with the objectives of this research.
+
+  \item \textbf{Inhomogeneous media} (future work, notebook numbering not yet
+    confirmed): extension to the Helmholtz equation with a variable refractive index
+    $n(\mathbf{r})$, relevant for speckle in GRIN materials and biological tissues.
+    Postponed as agreed with the thesis advisor.
+\end{itemize}
+
+\section*{Acknowledgments}
+
+Null
+
+\section*{Usage of Generative AI}
+
+% NOTE FOR THE AUTHOR: adjust this statement so that it accurately reflects the
+% actual use of generative AI before submitting the manuscript.
+NUll
