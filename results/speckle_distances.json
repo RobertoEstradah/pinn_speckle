@@ -1,0 +1,82 @@
+{
+  "lambda_m": 6.38e-07,
+  "D_m": 0.002,
+  "window_m": 0.002,
+  "n_grid": 1024,
+  "seed": 42,
+  "distances_cm": [
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20
+  ],
+  "metodo": "estadistico (ruido blanco gaussiano filtrado), NO propagacion de onda exacta",
+  "resultados": [
+    {
+      "z_cm": 2,
+      "grain_size_um": 6.38,
+      "pixels_per_grain": 3.27,
+      "contrast_C": 0.9965
+    },
+    {
+      "z_cm": 4,
+      "grain_size_um": 12.76,
+      "pixels_per_grain": 6.53,
+      "contrast_C": 0.9888
+    },
+    {
+      "z_cm": 6,
+      "grain_size_um": 19.14,
+      "pixels_per_grain": 9.8,
+      "contrast_C": 0.9715
+    },
+    {
+      "z_cm": 8,
+      "grain_size_um": 25.52,
+      "pixels_per_grain": 13.07,
+      "contrast_C": 0.9759
+    },
+    {
+      "z_cm": 10,
+      "grain_size_um": 31.9,
+      "pixels_per_grain": 16.33,
+      "contrast_C": 0.9902
+    },
+    {
+      "z_cm": 12,
+      "grain_size_um": 38.28,
+      "pixels_per_grain": 19.6,
+      "contrast_C": 1.0006
+    },
+    {
+      "z_cm": 14,
+      "grain_size_um": 44.66,
+      "pixels_per_grain": 22.87,
+      "contrast_C": 1.0077
+    },
+    {
+      "z_cm": 16,
+      "grain_size_um": 51.04,
+      "pixels_per_grain": 26.13,
+      "contrast_C": 1.0146
+    },
+    {
+      "z_cm": 18,
+      "grain_size_um": 57.42,
+      "pixels_per_grain": 29.4,
+      "contrast_C": 1.0214
+    },
+    {
+      "z_cm": 20,
+      "grain_size_um": 63.8,
+      "pixels_per_grain": 32.67,
+      "contrast_C": 1.0265
+    }
+  ]
+}
