@@ -1,0 +1,108 @@
+{
+  "nb03_tal_como_esta": {
+    "k": 6.283185307179586,
+    "dominio_en_lambdas": 1.0,
+    "n_phi": 256,
+    "long_correlacion_rugosidad_en_lambdas": 0.00392156862745098,
+    "kx_nyquist": 794.8474850508238,
+    "modos_propagantes": 3,
+    "modos_totales": 256,
+    "fraccion_energia_propagante": 0.004656193295307047,
+    "max_abs_E": 1.0000000000000007,
+    "I_media_interior": 0.005681976993430962,
+    "contraste_interior": 1.3679648391292043,
+    "contraste_malla_completa": 6.350989849514524,
+    "nota": "Solo 3 de 256 modos propagan; el 99.5 % de la energia de la frontera es evanescente y decae antes de entrar al dominio. El campo interior es la superposicion de 3 ondas planas, que produce interferencia suave, no speckle."
+  },
+  "barrido_tamano_dominio": [
+    {
+      "dominio_en_lambdas": 1,
+      "k": 6.283185307179586,
+      "modos_propagantes": 3,
+      "fraccion_energia_propagante": 0.004656193295307047,
+      "contraste": 1.3679648391292043,
+      "I_media": 0.005681976993430962
+    },
+    {
+      "dominio_en_lambdas": 2,
+      "k": 12.566370614359172,
+      "modos_propagantes": 5,
+      "fraccion_energia_propagante": 0.013747263917321303,
+      "contraste": 0.9462649048115517,
+      "I_media": 0.014434294960306812
+    },
+    {
+      "dominio_en_lambdas": 5,
+      "k": 31.41592653589793,
+      "modos_propagantes": 11,
+      "fraccion_energia_propagante": 0.02623541782793424,
+      "contraste": 0.9691639788052643,
+      "I_media": 0.026950682987424437
+    },
+    {
+      "dominio_en_lambdas": 10,
+      "k": 62.83185307179586,
+      "modos_propagantes": 21,
+      "fraccion_energia_propagante": 0.05034140529831641,
+      "contraste": 0.9853157576442213,
+      "I_media": 0.051013285742543865
+    },
+    {
+      "dominio_en_lambdas": 20,
+      "k": 125.66370614359172,
+      "modos_propagantes": 41,
+      "fraccion_energia_propagante": 0.14064923345814856,
+      "contraste": 0.9664188912856998,
+      "I_media": 0.14106481136191412
+    },
+    {
+      "dominio_en_lambdas": 50,
+      "k": 314.1592653589793,
+      "modos_propagantes": 101,
+      "fraccion_energia_propagante": 0.4153436218998392,
+      "contraste": 0.9794505682263577,
+      "I_media": 0.42132481867323374
+    },
+    {
+      "dominio_en_lambdas": 100,
+      "k": 628.3185307179587,
+      "modos_propagantes": 201,
+      "fraccion_energia_propagante": 0.8261766612527313,
+      "contraste": 0.9965930119176676,
+      "I_media": 0.8337705392913547
+    }
+  ],
+  "barrido_correlacion_rugosidad": [
+    {
+      "long_correlacion": "independiente",
+      "fraccion_energia_propagante": 0.14064923345814856,
+      "contraste": 0.9664188912856998
+    },
+    {
+      "long_correlacion": 0.00390625,
+      "fraccion_energia_propagante": 0.30027057234081694,
+      "contraste": 0.9568333740887095
+    },
+    {
+      "long_correlacion": 0.015625,
+      "fraccion_energia_propagante": 0.7874067252218537,
+      "contraste": 0.9823742257346783
+    },
+    {
+      "long_correlacion": 0.05,
+      "fraccion_energia_propagante": 0.9994824314111548,
+      "contraste": 0.8669855322678834
+    },
+    {
+      "long_correlacion": 0.1,
+      "fraccion_energia_propagante": 0.9999999974789543,
+      "contraste": 0.7983144758994337
+    },
+    {
+      "long_correlacion": 0.2,
+      "fraccion_energia_propagante": 1.0,
+      "contraste": 0.5204550579899436
+    }
+  ],
+  "conclusion": "El campo bajo de NB03 no es un fallo de optimizacion sino la solucion correcta de un problema mal escalado. Con k = 2*pi el dominio mide una longitud de onda y solo caben 3 modos transversales propagantes, muy por debajo de lo que el teorema del limite central exige para speckle completamente desarrollado. Se necesita un dominio de al menos 20 lambda (k >= 125.7) para que la solucion exacta alcance C ~ 1."
+}
