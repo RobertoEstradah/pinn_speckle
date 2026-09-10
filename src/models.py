@@ -8,7 +8,7 @@ Director : Dr. José Adán Hernández Nolasco — UJAT
 Clases:
     Sine          — activación sinusoidal SIREN
     PINN_1D_SIREN — red para Helmholtz 1D  (NB01)
-    PINN_2D_SIREN — red para Helmholtz 2D  (NB02)
+    PINN_2D_SIREN — red para Helmholtz 2D  (NB02, NB03)
 
 Uso:
     from src.models import PINN_1D_SIREN, PINN_2D_SIREN
@@ -77,7 +77,7 @@ class PINN_2D_SIREN(nn.Module):
     SIREN para resolver Helmholtz 2D: nabla^2 E + k^2 E = 0
     Entrada : (x, y) — coordenadas espaciales 2D
     Salida  : (E_real, E_imag) — partes real e imaginaria del campo complejo
-    Usado en NB02.
+    Usado en NB02, NB03.
     """
 
     def __init__(self, hidden_dim=128, num_layers=5, omega_0=1.0):

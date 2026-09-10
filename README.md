@@ -209,20 +209,22 @@ jupyter notebook notebooks/01_pinn_helmholtz_1d_validation.ipynb
 Entrada (x,y) → [sin(ω₀·Wx+b)] → [128] → [sin(ω₀·Wx+b)] → [128] → ... → (E_real, E_imag)
 ```
 
-| Componente | NB01 (1D) | NB02 (2D) |
-|---|---|---|
-| Tipo | SIREN | SIREN |
-| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
-| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas |
-| Parámetros | 16,833 | 66,690 |
-| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
-| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) |
-| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω |
-| Optimizador | Adam + L-BFGS | Adam + L-BFGS |
-| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas |
+| Componente | NB01 (1D) | NB02 (2D) | NB03 (Speckle) |
+|---|---|---|---|
+| Tipo | SIREN | SIREN | SIREN |
+| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
+| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas | 5 × 128 neuronas |
+| Parámetros | 16,833 | 66,690 | 66,690 |
+| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
+| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) | Latin Hypercube Sampling (LHS) |
+| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω | Fase aleatoria U(0,2π) en y=0 |
+| Optimizador | Adam + L-BFGS | Adam + L-BFGS | Adam + L-BFGS |
+| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas | Paciencia 800 épocas |
 
-**NB03 (speckle a distancias reales)** no usa PINN: genera el campo estadísticamente
-(ruido gaussiano filtrado) según la teoría de Goodman — ver sección de resultados.
+**NB03 está en progreso** — ver `CLAUDE.md` para el estado técnico actual. Existe además
+una validación estadística de respaldo, fuera de la numeración del proyecto, en
+`notebooks/validacion_estadistica/` (no usa PINN, genera el campo con ruido gaussiano
+filtrado según Goodman) que confirma que el speckle buscado es alcanzable.
 
 ---
 
@@ -230,8 +232,7 @@ Entrada (x,y) → [sin(ω₀·Wx+b)] → [128] → [sin(ω₀·Wx+b)] → [128] 
 
 - [x] Notebook 01: Helmholtz 1D GPU (L2 = 0.006%, R² = 1.000000)
 - [x] Notebook 02: Helmholtz 2D GPU (L2_avg = 0.171%, tiempo = 209.9 s)
-- [x] Notebook 03: Speckle óptico a 10 distancias reales, generación estadística
-      (contraste C∈[0.97,1.03] y test KS confirmados, cumplido)
+- [ ] Notebook 03: Simulación de speckle óptico por PINN — en progreso
 - [ ] Notebook 04: Benchmark PINN vs FEniCSx (Speed-up Factor S = T_FEM / T_PINN)
 
 ---

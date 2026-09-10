@@ -1,10 +1,10 @@
 """
 build_nb03_speckle_distancias.py
-Construye notebooks/03_speckle_distancias_estadistico.ipynb a partir de la
+Construye notebooks/validacion_estadistica/03_speckle_distancias_estadistico.ipynb a partir de la
 logica ya verificada en scripts/experiments/run_speckle_distances.py.
 Genera el .ipynb con celdas markdown+codigo (sin ejecutar) via nbformat;
 la ejecucion real se hace despues con:
-    jupyter nbconvert --to notebook --execute --inplace notebooks/03_speckle_distancias_estadistico.ipynb
+    jupyter nbconvert --to notebook --execute --inplace notebooks/validacion_estadistica/03_speckle_distancias_estadistico.ipynb
 """
 import nbformat as nbf
 
@@ -226,7 +226,7 @@ nb['metadata'] = {
 }
 
 import os
-out_path = os.path.join(os.path.dirname(__file__), '..', '..', 'notebooks', '03_speckle_distancias_estadistico.ipynb')
+out_path = os.path.join(os.path.dirname(__file__), '..', '..', 'notebooks', 'validacion_estadistica', '03_speckle_distancias_estadistico.ipynb')
 with open(out_path, 'w', encoding='utf-8') as f:
     nbf.write(nb, f)
 print('Notebook creado:', out_path)
