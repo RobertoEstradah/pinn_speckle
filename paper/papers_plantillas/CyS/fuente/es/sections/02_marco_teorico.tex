@@ -91,10 +91,12 @@ las capas.
 La arquitectura SIREN con $L$ capas ocultas de dimensión $d$ se define como:
 %
 \begin{equation}
-  \mathbf{h}_0 = \mathbf{x}, \qquad
-  \mathbf{h}_\ell = \sin\!\left(\omega_0\,(\mathbf{W}_\ell\,\mathbf{h}_{\ell-1} + \mathbf{b}_\ell)\right),
-  \quad \ell = 1, \ldots, L,
-  \label{eq:siren}
+\label{eq:siren}
+\begin{aligned}
+  \mathbf{h}_0 &= \mathbf{x}, \\
+  \mathbf{h}_\ell &= \sin\!\left(\omega_0\,(\mathbf{W}_\ell\,\mathbf{h}_{\ell-1} + \mathbf{b}_\ell)\right),
+  \quad \ell = 1, \ldots, L
+\end{aligned}
 \end{equation}
 %
 donde $\omega_0$ es la frecuencia de la capa de entrada y las matrices $\mathbf{W}_\ell$
