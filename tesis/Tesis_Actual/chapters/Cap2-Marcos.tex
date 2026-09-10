@@ -215,7 +215,12 @@ para resolver una amplia gama de problemas físicos sin necesidad de mallado.
 El análisis teórico de por qué las PINNs pueden fallar en el entrenamiento fue
 abordado por \textcite{wang2022ntk} mediante la teoría del núcleo tangente
 neuronal (NTK), estableciendo las condiciones bajo las cuales el entrenamiento
-converge.
+converge. Desde una perspectiva más empírica, \textcite{krishnapriyan2021characterizing}
+caracterizan sistemáticamente los modos de falla de las PINN con pesos fijos
+entre los términos de datos y de física, mostrando que el entrenamiento puede
+estancarse en soluciones incorrectas incluso cuando la pérdida global parece
+decrecer — un fenómeno que se retoma en el Capítulo~\ref{cap4:resultados} al
+analizar la ablación del peso de física $\lambda_\text{fís}$.
 
 En el campo de las ecuaciones de onda, \textcite{moseley2020wave} aplicaron
 PINNs para resolver la ecuación de onda acústica 2D en modelos de velocidad
@@ -242,11 +247,39 @@ comparación directa para la presente investigación: su experimento es en 3D
 (no 1D/2D), su dominio físico es acústico (no óptico), y su métrica de
 referencia es una malla FEM (no una solución analítica exacta).
 
+En una línea similar de validación cuantitativa, \textcite{zhang2025fepirbn}
+proponen las redes de base radial mejoradas por características (FE-PIRBN)
+para resolver problemas de dispersión electromagnética de alta frecuencia,
+reportando errores $L^2$ entre $1.40\%$ y $5.82\%$ frente a simulaciones
+numéricas de referencia. Al igual que con \textcite{schoder2024helmholtz},
+esta comparación se retoma en la Tabla~\ref{tab:comparativa} del
+Capítulo~\ref{cap4:resultados} como contexto de la literatura, no como línea
+base directa, dado que difieren en dimensionalidad, dominio físico y tipo de
+solución de referencia.
+
+El antecedente más cercano en arquitectura a esta investigación es el de
+\textcite{panagiotakopoulos2026helmholtz}, quienes resuelven la misma
+ecuación de Helmholtz 2D con campo complejo empleando también una red SIREN
+y la estrategia de optimización bifásica Adam seguida de L-BFGS. Se
+diferencia de este trabajo en tres aspectos: no calibran $\omega_0$ respecto
+al número de onda $k$; validan la física del campo resultante de forma
+cualitativa (propagación, refracción, dispersión) en lugar de reportar un
+error $L^2$ cuantitativo contra una solución analítica; y su condición de
+frontera es una fuente puntual gaussiana con condición de radiación de
+Sommerfeld, distinta de la frontera de fase aleatoria que da lugar al patrón
+de \textit{speckle} en esta investigación.
+
 La brecha en el conocimiento identificada es la siguiente: ningún trabajo
-previo ha aplicado sistemáticamente la arquitectura SIREN \parencite{sitzmann2020siren}
-(con su ventaja intrínseca para representar funciones de alta frecuencia)
-a la simulación del \textit{speckle} óptico como fenómeno estadístico complejo.
-Esta investigación cierra dicha brecha.
+previo, incluyendo el antecedente arquitectónico más cercano
+\parencite{panagiotakopoulos2026helmholtz}, ha aplicado sistemáticamente la
+arquitectura SIREN \parencite{sitzmann2020siren} (con su ventaja intrínseca
+para representar funciones de alta frecuencia) a la simulación del
+\textit{speckle} óptico como fenómeno estadístico complejo, validado
+mediante los criterios de contraste y bondad de ajuste de
+\textcite{goodman2007speckle}. Esta investigación se propone cerrar dicha
+brecha; los Capítulos~\ref{cap3:modelo} y \ref{cap4:resultados} documentan
+el avance metodológico logrado en la validación 1D/2D del enfoque y el
+estado en progreso de su aplicación al \textit{speckle} óptico.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Marco tecnológico}
