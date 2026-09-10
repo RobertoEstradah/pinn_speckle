@@ -1,0 +1,18 @@
+{
+  "k": 125.66370614359172,
+  "omega_0": 20.0,
+  "N_phi": 256,
+  "N_colloc": 60000,
+  "pts_per_wavelength": 12.2,
+  "corr_length_lambdas": 2.0,
+  "n_cells": 10.0,
+  "adam_epochs": 3391,
+  "time_total_s": 946.1,
+  "L_datos_final": 7.563186521508669e-09,
+  "L_fisica_norm_final": 1.3702805517823435e-05,
+  "amp_mean": 0.0115,
+  "amp_std": 0.0998,
+  "amp_min": 0.0,
+  "amp_max": 1.1097,
+  "amp_mean_y1": 0.0007
+}

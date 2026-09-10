@@ -112,6 +112,55 @@ del error y las métricas de ajuste adicionales.
     \label{fig:metricas1d}
 \end{figure}
 
+\subsection{Barrido de $\omega_0$: evidencia cuantitativa del sesgo espectral}
+\label{sec:omega0_sweep}
+
+La regla de calibración $\omega_0 \approx k/(2\pi)$ (Tabla~\ref{tab:hiperparametros})
+se documentó originalmente a partir de un único caso puntual: $\omega_0 = 30$
+(el valor recomendado por \textcite{sitzmann2020siren} para señales de imagen)
+desestabiliza el entrenamiento con $k \approx 2\pi$. Para verificar esta regla
+más allá de un solo punto, se entrenó el mismo problema de NB01 con
+$\omega_0 \in \{1.0,\ 5.0,\ 15.0,\ 30.0\}$ durante 3{,}000 épocas Adam
+idénticas (sin L-BFGS), manteniendo $k = 2\pi$ fijo.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Barrido de $\omega_0$ sobre el problema de NB01 (3{,}000 épocas Adam).}
+\label{tab:omega0_sweep}
+\begin{tabular}{lcc}
+\toprule
+$\omega_0$ & Pérdida total final & Observación \\
+\midrule
+1.0  & \textbf{0.2656} & Calibrado ($\omega_0 = k/2\pi$) \\
+5.0  & 0.5355 & Descalibrado \\
+15.0 & 0.4375 & Descalibrado \\
+30.0 & 0.6030 & Descalibrado (valor de \textcite{sitzmann2020siren} para imágenes) \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Corridas nuevas y cortas, independientes del entrenamiento final de
+    NB01 (15{,}000 épocas + L-BFGS, Tabla~\ref{tab:resultados1d}); no
+    modifican ni reemplazan esos resultados. Mismo $N_c = 2{,}000$,
+    $\lambda_\text{fís} = 1.0$ y puntos de frontera que NB01.
+    Ninguna corrida diverge (pérdida infinita o NaN) dentro de las 3{,}000
+    épocas: la desestabilización numérica documentada para $\omega_0 = 30$ en
+    el entrenamiento completo de 15{,}000 épocas no se reproduce como
+    divergencia literal en este barrido corto, pero sí se observa la
+    tendencia esperada de peor convergencia a mayor descalibración.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+El valor calibrado $\omega_0 = 1.0$ converge a una pérdida
+consistentemente menor que los tres valores descalibrados en la misma
+cantidad de épocas. Este resultado es consistente con el sesgo espectral
+descrito por \textcite{rahaman2019spectral}: la activación sinusoidal de
+SIREN impone un espectro de frecuencias nativo determinado por $\omega_0$, y
+cuando este no coincide con la frecuencia $k$ de la solución objetivo, la red
+debe aprender a compensar ese desajuste espectral antes de ajustar la
+solución misma, retrasando o degradando la convergencia.
+
 % ──────────────────────────────────────────────────────────────────────────────
 \section{NB02: Validación 2D, Helmholtz con campo complejo}
 \label{sec:resultados2d}
@@ -315,6 +364,56 @@ generando un flujo de gradiente patológico que dificulta la convergencia. La
 inestabilidad observada con $\lambda = 1.0$ en este trabajo es consistente
 con ambas caracterizaciones: los dos residuos (real e imaginario) duplican el
 peso efectivo del término físico, agravando el mismo tipo de desbalance.
+
+\subsection{Explicación cuantitativa: análisis del núcleo tangente neuronal (NTK)}
+\label{sec:ntk_analisis}
+
+La teoría del núcleo tangente neuronal (\textit{Neural Tangent Kernel}, NTK)
+de \textcite{wang2022ntk} permite cuantificar directamente el desbalance
+descrito arriba: cada término de la función de pérdida induce su propio
+kernel NTK, y la magnitud relativa de sus autovalores predice qué término
+domina el gradiente durante el entrenamiento. Sobre el modelo final de NB02
+ya entrenado ($\lambda_\text{fís} = 0.1$), se calculó el NTK empírico del
+término de datos (frontera, 80 puntos) y del término de física (residuo de
+Helmholtz, 80 puntos de colocación LHS).
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Espectro NTK: término de datos vs. término de física (NB02).}
+\label{tab:ntk}
+\begin{tabular}{lcc}
+\toprule
+ & Traza NTK & Autovalor máximo \\
+\midrule
+Datos (frontera)            & $1.45 \times 10^{4}$ & $5.29 \times 10^{3}$ \\
+Física (residuo Helmholtz)  & $1.24 \times 10^{7}$ & $8.49 \times 10^{6}$ \\
+\midrule
+Razón física / datos        & \textbf{858$\times$} & \textbf{1{,}605$\times$} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Calculado sobre los pesos finales guardados de NB02
+    (\texttt{results/models/nb02\_helmholtz2d\_gpu.pt}), sin reentrenar ni
+    modificar los resultados de la Tabla~\ref{tab:resultados2d}. NTK
+    aproximado con 80 puntos por término (Jacobiano de $E_\text{real}$ para
+    datos, del residuo real de Helmholtz para física, respecto a los
+    $66{,}690$ parámetros del modelo).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+El espectro NTK del término de física es entre 858 y 1{,}605 veces mayor que
+el del término de datos, lo que explica cuantitativamente por qué
+$\lambda_\text{fís} = 1.0$ (peso igual entre ambos términos) resulta en que
+el gradiente de la física domine por completo el paso de optimización,
+consistente con la inestabilidad numérica reportada arriba. Esta razón no
+debe interpretarse como que $\lambda_\text{fís} = 0.1$ sea el valor que
+compensa exactamente el desbalance (una compensación literal sugeriría un
+factor de reescalamiento considerablemente menor); el análisis NTK aquí
+presentado explica la \textit{dirección y el orden de magnitud} del
+desbalance identificado empíricamente en la ablación, no deriva
+analíticamente el valor óptimo de $\lambda_\text{fís}$.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Contexto en la literatura}

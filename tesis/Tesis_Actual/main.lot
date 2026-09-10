@@ -5,8 +5,10 @@
 \contentsline {table}{\numberline {3.1}{\ignorespaces Hiperparámetros de entrenamiento consolidados.}}{18}{table.caption.9}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces Métricas de precisión: PINN-SIREN 1D ($k = 2\pi $).}}{21}{table.caption.11}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Métricas de precisión: PINN-SIREN 2D ($k = 2\pi $, $k_x = k_y = k/\sqrt {2}$).}}{23}{table.caption.15}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Reproducibilidad multi-semilla: NB02 ($\lambda _\text {fís} = 0.1$).}}{24}{table.caption.19}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Ablación del peso de física $\lambda _\text {fís}$: NB02.}}{27}{table.caption.21}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{28}{table.caption.23}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Estado de los experimentos planificados.}}{29}{table.caption.25}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Barrido de $\omega _0$ sobre el problema de NB01 (3{,}000 épocas Adam).}}{23}{table.caption.15}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Métricas de precisión: PINN-SIREN 2D ($k = 2\pi $, $k_x = k_y = k/\sqrt {2}$).}}{25}{table.caption.17}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Reproducibilidad multi-semilla: NB02 ($\lambda _\text {fís} = 0.1$).}}{26}{table.caption.21}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Ablación del peso de física $\lambda _\text {fís}$: NB02.}}{28}{table.caption.23}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Espectro NTK: término de datos vs. término de física (NB02).}}{29}{table.caption.25}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{30}{table.caption.27}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Estado de los experimentos planificados.}}{30}{table.caption.29}%
