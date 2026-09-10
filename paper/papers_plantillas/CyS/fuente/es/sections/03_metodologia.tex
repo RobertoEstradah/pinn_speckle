@@ -16,9 +16,12 @@ Bajo esta normalización, el número de onda adimensional es $\tilde{k} = 2\pi$.
 La ecuación de Helmholtz unidimensional en $x \in [0,1]$ con condición de Dirichlet:
 %
 \begin{equation}
-  \frac{d^2 E}{dx^2} + k^2 E = 0, \quad
-  E(x_j) = \cos(k x_j), \quad x_j \in \{0,\ 0.25,\ 0.5,\ 0.75,\ 1\},
-  \label{eq:helmholtz1d}
+\label{eq:helmholtz1d}
+\begin{aligned}
+  &\frac{d^2 E}{dx^2} + k^2 E = 0, \\
+  &E(x_j) = \cos(k x_j), \\
+  &x_j \in \{0,\ 0.25,\ 0.5,\ 0.75,\ 1\}
+\end{aligned}
 \end{equation}
 %
 admite la solución analítica $E_{\mathrm{exacta}}(x) = \cos(kx)$, utilizada para
@@ -104,15 +107,18 @@ por la competencia entre ambos términos.
 $\lambda_{\mathrm{fís}}$ & Error $L^2$ prom.\ (\%) & Converge & Observación \\
 \hline
 0.01  & 0.163 & Sí & Física subponderada \\
-0.1   & 0.171 & Sí & \textbf{Config.\ óptima} \\
-1.0   & $>5.0$ & No & Física sobreponderada \\
+0.1   & 0.171 & Sí & \textbf{Config.\ seleccionada} \\
+1.0   & \textemdash & No (\textit{crash}) & Física sobreponderada \\
 \hline
 \end{tabular}
 \end{table}
 \noindent\footnotesize Arquitectura SIREN $5\times128$, $\omega_0 = 1.0$, SEED = 42.
 Mismo protocolo Adam + L-BFGS que NB02.
-``No converge'' indica que el optimizador Adam no alcanzó la condición
-de parada antes de las 15{,}000 épocas con $\varepsilon_{L^2} < 5\%$.
+El caso $\lambda = 1.0$ no produjo un valor de $L^2$: la corrida se
+interrumpió por una excepción de CUDA antes de completar el entrenamiento,
+ya que los dos residuos (real e imaginario) duplican la contribución de la
+física y generan gradientes de gran magnitud en \texttt{float32}. Es una
+falla numérica, no un caso de no convergencia por agotar épocas.
 \normalsize
 
 \subsection{Estrategia de optimización}

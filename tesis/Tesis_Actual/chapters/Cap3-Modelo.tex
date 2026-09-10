@@ -146,11 +146,14 @@ cartesiana.
 
 \subsection{Puntos de frontera}
 
-En NB01 y NB02, los $N_b = 300$ puntos de frontera por borde se distribuyen
-uniformemente sobre cada uno de los cuatro lados del dominio $\partial\Omega$.
-Para cada lado, se evalúa la solución exacta y se construye el par
-$(\mathbf{r}^b_j,\, E(\mathbf{r}^b_j))$ utilizado en $\mathcal{L}_\text{datos}$.
-NB03 sigue un esquema distinto, descrito en la Sección~\ref{cap3:nb03}: solo
+En NB01, la condición de Dirichlet se impone en los cinco puntos conocidos
+descritos en la Sección~\ref{cap3:modelo} ($x = 0,\ 0.25,\ 0.5,\ 0.75,\ 1$).
+En NB02, los $N_b = 300$ puntos de frontera por borde se distribuyen
+uniformemente sobre cada uno de los cuatro lados del dominio $\partial\Omega$
+(1{,}200 puntos en total). Para cada lado, se evalúa la solución exacta y se
+construye el par $(\mathbf{r}^b_j,\, E(\mathbf{r}^b_j))$ utilizado en
+$\mathcal{L}_\text{datos}$. NB03 sigue un esquema distinto, descrito en la
+Sección~\ref{cap3:nb03}: solo
 el borde $y = 0$ recibe puntos de frontera
 ($N_\psi = 256$, con la condición de fase aleatoria de la
 Ecuación~\eqref{eq:frontera_rugosa}), mientras que $x = 0$, $x = 1$ e $y = 1$
@@ -179,12 +182,14 @@ $\delta$ mejora mínima          & $10^{-7}$ & NB02, NB03 \\
 Iteraciones máximas L-BFGS      & 500 (NB01), 1{,}000 (NB02/03) & - \\
 Historial L-BFGS                & 50 (NB01), 100 (NB02/03) & - \\
 Semilla global (SEED)           & 42        & NB01, NB02, NB03 \\
-Peso de física $\lambda_\text{fís}$ & 0.1  & NB02, NB03 \\
+Peso de física $\lambda_\text{fís}$ & 1.0 (NB01), 0.1 (NB02/03) & - \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
-    \item Todos los experimentos se ejecutaron en GPU NVIDIA RTX 5050
-    (CUDA 12.6, PyTorch 2.4). La semilla garantiza reproducibilidad.
+    \item Todos los experimentos se ejecutaron en GPU NVIDIA RTX 5050.
+    La semilla garantiza reproducibilidad. NB01 usa $\lambda_\text{fís} = 1.0$
+    porque un único residuo no duplica el peso de la física, a diferencia del
+    caso 2D (real + imaginario); ver Sección~\ref{sec:ablacion}.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -195,8 +200,9 @@ Peso de física $\lambda_\text{fís}$ & 0.1  & NB02, NB03 \\
 \subsection{Error $L^2$ relativo (NB01 y NB02)}
 
 El error $L^2$ relativo mide la discrepancia global entre la predicción de la
-red $\hat{E}$ y la solución exacta $E_\text{exacta}$, evaluado sobre una malla
-uniforme de $100 \times 100$ puntos:
+red $\hat{E}$ y la solución exacta $E_\text{exacta}$, evaluada sobre una malla
+uniforme de $1{,}000$ puntos en $[0,1]$ para NB01 (1D) y $100 \times 100$
+puntos en $[0,1]^2$ para NB02 (2D):
 %
 \begin{equation}
     \varepsilon_{L^2} = \frac{\|\hat{E} - E_\text{exacta}\|_2}
