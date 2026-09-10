@@ -178,19 +178,15 @@ jupyter notebook notebooks/01_pinn_helmholtz_1d_validation.ipynb
 | R² E_imag | 0.999998 | - |
 | Épocas Adam | 8,737 / 15,000 | - |
 | Iteraciones L-BFGS | 1,035 / 1,000 | - |
-| Tiempo total | **299 s** | - |
+| Tiempo total | **209.9 s** | - |
 
-### Notebook 03: Simulación de speckle óptico
+### Notebook 03: Simulación de speckle óptico por PINN — pausado
 
-| Métrica | Resultado | Referencia teórica |
-|---|---|---|
-| Contraste C = σ_I / ⟨I⟩ | **1.0253** | 1.0 (speckle totalmente desarrollado, cumplido) |
-| Test K-S (vs. exp. negativa) | p = 0.0000 | p > 0.05 (ver nota) |
-| Épocas Adam | 7,976 / 15,000 | - |
-| Iteraciones L-BFGS | 8 / 500 | - |
-| Tiempo total | ~227 s | - |
-
-> **Nota KS:** Con N = 10,000 puntos de evaluación, el test de Kolmogorov-Smirnov tiene potencia estadística suficiente para rechazar H₀ ante desviaciones menores al 1%. El resultado p = 0.0000 no indica fallo del modelo: es consecuencia de la alta potencia del test. El contraste C = 1.0253 (|C−1| < 0.03) confirma que la distribución de intensidades es consistente con speckle totalmente desarrollado.
+Pausado el 2026-09-10 para consolidar primero la validación 1D/2D (NB01,
+NB02) sin discrepancias cruzadas. El diagnóstico completo (por qué el
+residuo interior no converge junto con la frontera de fase aleatoria, y qué
+se intentó) se archivó en `archive/nb03_speckle_pausado/` para retomarse
+más adelante — ver `hallazgos_y_diagnostico.md` en esa carpeta.
 
 ### Láser simulado
 
@@ -209,22 +205,23 @@ jupyter notebook notebooks/01_pinn_helmholtz_1d_validation.ipynb
 Entrada (x,y) → [sin(ω₀·Wx+b)] → [128] → [sin(ω₀·Wx+b)] → [128] → ... → (E_real, E_imag)
 ```
 
-| Componente | NB01 (1D) | NB02 (2D) | NB03 (Speckle) |
-|---|---|---|---|
-| Tipo | SIREN | SIREN | SIREN |
-| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
-| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas | 5 × 128 neuronas |
-| Parámetros | 16,833 | 66,690 | 66,690 |
-| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
-| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) | Latin Hypercube Sampling (LHS) |
-| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω | Fase aleatoria U(0,2π) en y=0 |
-| Optimizador | Adam + L-BFGS | Adam + L-BFGS | Adam + L-BFGS |
-| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas | Paciencia 800 épocas |
+| Componente | NB01 (1D) | NB02 (2D) |
+|---|---|---|
+| Tipo | SIREN | SIREN |
+| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
+| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas |
+| Parámetros | 16,833 | 66,690 |
+| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
+| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) |
+| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω |
+| Optimizador | Adam + L-BFGS | Adam + L-BFGS |
+| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas |
 
-**NB03 está en progreso** — ver `CLAUDE.md` para el estado técnico actual. Existe además
-una validación estadística de respaldo, fuera de la numeración del proyecto, en
-`notebooks/validacion_estadistica/` (no usa PINN, genera el campo con ruido gaussiano
-filtrado según Goodman) que confirma que el speckle buscado es alcanzable.
+**NB03 (speckle óptico por PINN) está pausado** — ver `archive/nb03_speckle_pausado/`
+para el diagnóstico técnico acumulado. Existe además una validación estadística de
+respaldo, fuera de la numeración del proyecto, en `notebooks/validacion_estadistica/`
+(no usa PINN, genera el campo con ruido gaussiano filtrado según Goodman) que confirma
+que el speckle buscado es alcanzable.
 
 ---
 
@@ -232,7 +229,7 @@ filtrado según Goodman) que confirma que el speckle buscado es alcanzable.
 
 - [x] Notebook 01: Helmholtz 1D GPU (L2 = 0.006%, R² = 1.000000)
 - [x] Notebook 02: Helmholtz 2D GPU (L2_avg = 0.171%, tiempo = 209.9 s)
-- [ ] Notebook 03: Simulación de speckle óptico por PINN — en progreso
+- [ ] Notebook 03: Simulación de speckle óptico por PINN — pausado (ver `archive/nb03_speckle_pausado/`)
 - [ ] Notebook 04: Benchmark PINN vs FEniCSx (Speed-up Factor S = T_FEM / T_PINN)
 
 ---

@@ -1,9 +1,12 @@
 \chapter{Experimentos y Resultados}\label{cap4:resultados}
 
-Este capítulo presenta los resultados de los tres experimentos ejecutados en GPU
-NVIDIA RTX~5050 (CUDA 12.8, PyTorch 2.11, SEED = 42). Los experimentos siguen
-una complejidad creciente: validación analítica 1D (NB01), validación 2D con
-campo complejo (NB02) y simulación de \textit{speckle} óptico (NB03).
+Este capítulo presenta los resultados de los experimentos de validación
+ejecutados en GPU NVIDIA RTX~5050 (CUDA 12.8, PyTorch 2.11, SEED = 42):
+validación analítica 1D (NB01) y validación 2D con campo complejo (NB02). El
+tercer experimento planeado (NB03, simulación de \textit{speckle} óptico
+mediante PINN) se encuentra pausado; el diagnóstico y los hallazgos
+acumulados hasta la fecha se documentan en
+\texttt{archive/nb03\_speckle\_pausado/} para retomarlo posteriormente.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{NB01: Validación 1D, Helmholtz con solución analítica}
@@ -314,37 +317,6 @@ con ambas caracterizaciones: los dos residuos (real e imaginario) duplican el
 peso efectivo del término físico, agravando el mismo tipo de desbalance.
 
 % ──────────────────────────────────────────────────────────────────────────────
-\section{NB03: Simulación de speckle óptico}
-\label{sec:resultados_speckle}
-
-\subsection{Configuración experimental}
-
-El tercer experimento aplica el modelo validado en NB02 a la generación de
-\textit{speckle} óptico. La única modificación respecto a NB02 es la condición
-de frontera en $y = 0$: en lugar de imponer una onda plana conocida, se impone
-la fase aleatoria $\psi(x) \sim \mathcal{U}(0, 2\pi)$ muestreada en
-$N_\psi = 256$ puntos equiespaciados. Los bordes $x = 0$, $x = 1$ e $y = 1$
-permanecen libres (sin condición Dirichlet artificial). La arquitectura, los
-hiperparámetros y la estrategia de optimización son idénticos a NB02.
-
-\subsection{Resultados}
-
-\textit{[Sección en progreso.]} La corrida más reciente reproduce
-$|E| \approx 1$ en la frontera $y = 0$ (ajuste correcto de la condición
-impuesta), pero el residuo de Helmholtz en el interior del dominio no converge
-con los mismos hiperparámetros de NB02: al equilibrar el peso $\lambda_\text{fís}$
-para lograr el ajuste de frontera, el campo interior deja de satisfacer la
-ecuación de forma consistente, y las estadísticas resultantes ($C$, test KS)
-no son representativas de \textit{speckle} completamente desarrollado. Se
-está evaluando una estrategia de muestreo de colocación concentrada cerca de
-$y = 0$, informada por la literatura de PINNs en problemas de alta frecuencia
-\parencite{krishnapriyan2021characterizing} y por el antecedente más cercano
-en arquitectura \parencite{panagiotakopoulos2026helmholtz}. La tabla de
-resultados y las figuras correspondientes se incorporan una vez obtenida una
-corrida que satisfaga simultáneamente la condición de frontera y el residuo
-de Helmholtz.
-
-% ──────────────────────────────────────────────────────────────────────────────
 \section{Contexto en la literatura}
 
 La Tabla~\ref{tab:comparativa} sitúa los resultados de precisión de la
@@ -407,26 +379,26 @@ Experimento & Descripción & Estado & Métrica principal \\
 \midrule
 NB01 & Helmholtz 1D, validación analítica & Completo & $L^2 = 0.006\%$ \\
 NB02 & Helmholtz 2D, campo complejo       & Completo & $L^2 = 0.171\%$ \\
-NB03 & Speckle óptico, frontera rugosa    & En progreso & $|C-1|<0.1$, KS pendientes \\
+NB03 & Speckle óptico, frontera rugosa    & Pausado & \textemdash \\
 NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
     \item NB01 y NB02 verifican la hipótesis de precisión ($L^2 < 5\%$). NB03
-    resuelve Helmholtz por PINN con frontera de fase aleatoria; el ajuste de
-    frontera converge pero el residuo interior de la EDP aún no lo hace de
-    forma consistente con los mismos hiperparámetros de NB02 (véase
-    Sección~\ref{sec:resultados_speckle}). NB04 es necesario para verificar
-    la hipótesis de velocidad ($S > 1$) y se planifica como trabajo futuro
-    inmediato.
+    (speckle óptico por PINN con frontera de fase aleatoria) se pausó tras
+    diagnosticar que el ajuste de frontera y el residuo interior de la EDP no
+    convergen simultáneamente con los hiperparámetros heredados de NB02; el
+    diagnóstico completo se documenta en \texttt{archive/nb03\_speckle\_pausado/}
+    para retomarse posteriormente. NB04 es necesario para verificar la
+    hipótesis de velocidad ($S > 1$) y se planifica como trabajo futuro.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
 Los dos primeros experimentos completados (NB01, NB02) verifican la hipótesis
 de precisión: el error $L^2 < 5\%$ se supera con amplitud en ambos casos. El
-tercero (NB03) resuelve Helmholtz por PINN con frontera de fase aleatoria; la
-validación estadística contra el criterio de Goodman está en progreso (véase
-Sección~\ref{sec:resultados_speckle}). La hipótesis de velocidad ($S > 1$)
-requiere la implementación de la referencia FEM (NB04), programada como
-trabajo futuro inmediato.
+tercero (NB03, speckle óptico por PINN) está pausado mientras se consolida el
+trabajo de validación 1D/2D; el diagnóstico acumulado se conserva para
+retomarlo (véase \texttt{archive/nb03\_speckle\_pausado/}). La hipótesis de
+velocidad ($S > 1$) requiere la implementación de la referencia FEM (NB04),
+programada como trabajo futuro inmediato.

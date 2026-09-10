@@ -49,38 +49,21 @@ separando la solución en sus partes real e imaginaria:
     E_\text{imag}(x,y)\big|_{\partial\Omega} = \sin(k_x x + k_y y).
 \end{equation}
 
-\subsection{Experimento 3 (NB03): Simulación de speckle óptico}
-\label{cap3:nb03}
-
-La ecuación de Helmholtz 2D en $\Omega = [0,1]^2$ con condición de frontera
-rugosa en $y = 0$ y bordes libres en $x = 0$, $x = 1$ e $y = 1$:
-%
-\begin{equation}
-    E(x, 0) = e^{i\psi(x)}, \quad
-    \psi(x) \sim \mathcal{U}(0, 2\pi),
-    \label{eq:frontera_rugosa}
-\end{equation}
-%
-donde $\psi(x)$ se muestrea en $N_\psi = 256$ puntos equiespaciados. Esta
-condición modela una pantalla de fase aleatoria cuyo rango de variación abarca
-$\Delta\psi \gg 2\pi$, condición suficiente para \textit{speckle} completamente
-desarrollado \parencite{goodman2007speckle}.
-
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Arquitectura SIREN}
 
 Se emplea una arquitectura SIREN con los parámetros consolidados a partir de la
-validación 1D (NB01) y escalados para el caso 2D (NB02, NB03):
+validación 1D (NB01) y escalados para el caso 2D (NB02):
 
 \begin{itemize}
     \item \textbf{Entrada:} coordenadas espaciales $(x, y) \in [0,1]^2$ (o
     $(x) \in [0,1]$ para 1D).
     \item \textbf{Capas ocultas:} $L = 5$ capas de dimensión $d$ neuronas cada
-    una ($d = 64$ en NB01, $d = 128$ en NB02/NB03).
+    una ($d = 64$ en NB01, $d = 128$ en NB02).
     \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$, con $\omega_0 = 1.0$.
     \item \textbf{Salida:} capa lineal de dos neuronas $(E_\text{real}, E_\text{imag})$
     para el caso 2D, o una neurona $E$ para el caso 1D.
-    \item \textbf{Parámetros totales:} $16{,}833$ (NB01) y $66{,}690$ (NB02/NB03).
+    \item \textbf{Parámetros totales:} $16{,}833$ (NB01) y $66{,}690$ (NB02).
 \end{itemize}
 
 La elección $\omega_0 = 1.0$, en lugar del valor $\omega_0 = 30$ recomendado
@@ -152,12 +135,7 @@ En NB02, los $N_b = 300$ puntos de frontera por borde se distribuyen
 uniformemente sobre cada uno de los cuatro lados del dominio $\partial\Omega$
 (1{,}200 puntos en total). Para cada lado, se evalúa la solución exacta y se
 construye el par $(\mathbf{r}^b_j,\, E(\mathbf{r}^b_j))$ utilizado en
-$\mathcal{L}_\text{datos}$. NB03 sigue un esquema distinto, descrito en la
-Sección~\ref{cap3:nb03}: solo
-el borde $y = 0$ recibe puntos de frontera
-($N_\psi = 256$, con la condición de fase aleatoria de la
-Ecuación~\eqref{eq:frontera_rugosa}), mientras que $x = 0$, $x = 1$ e $y = 1$
-permanecen libres, sin puntos de frontera ni condición Dirichlet.
+$\mathcal{L}_\text{datos}$.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Estrategia de optimización}
@@ -175,14 +153,14 @@ Tabla~\ref{tab:hiperparametros}.
 \toprule
 Hiperparámetro & Valor & Aplicación \\
 \midrule
-Tasa de aprendizaje Adam ($\eta$) & $10^{-3}$ & NB01, NB02, NB03 \\
-Épocas máximas Adam             & 15{,}000  & NB01, NB02, NB03 \\
-Paciencia (\textit{early stopping}) & 800 épocas & NB02, NB03 \\
-$\delta$ mejora mínima          & $10^{-7}$ & NB02, NB03 \\
-Iteraciones máximas L-BFGS      & 500 (NB01), 1{,}000 (NB02/03) & - \\
-Historial L-BFGS                & 50 (NB01), 100 (NB02/03) & - \\
-Semilla global (SEED)           & 42        & NB01, NB02, NB03 \\
-Peso de física $\lambda_\text{fís}$ & 1.0 (NB01), 0.1 (NB02/03) & - \\
+Tasa de aprendizaje Adam ($\eta$) & $10^{-3}$ & NB01, NB02 \\
+Épocas máximas Adam             & 15{,}000  & NB01, NB02 \\
+Paciencia (\textit{early stopping}) & 800 épocas & NB02 \\
+$\delta$ mejora mínima          & $10^{-7}$ & NB02 \\
+Iteraciones máximas L-BFGS      & 500 (NB01), 1{,}000 (NB02) & - \\
+Historial L-BFGS                & 50 (NB01), 100 (NB02) & - \\
+Semilla global (SEED)           & 42        & NB01, NB02 \\
+Peso de física $\lambda_\text{fís}$ & 1.0 (NB01), 0.1 (NB02) & - \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
@@ -216,19 +194,6 @@ $\varepsilon_{L^2} < 5\%$ como umbral ingenieril propio de la tesis. Este
 valor resulta, además, considerablemente menor que el orden de magnitud
 reportado en implementaciones comparables de PINNs para la ecuación de
 Helmholtz identificadas posteriormente (Tabla~\ref{tab:comparativa}).
-
-\subsection{Contraste y test KS (NB03)}
-
-Para la validación del \textit{speckle}:
-\begin{itemize}
-    \item \textbf{Contraste:} $C = \sigma_I / \langle I \rangle$, con umbral
-    $|C - 1| < 0.1$ conforme al criterio de \textcite{goodman2007speckle}.
-    \item \textbf{Test de Kolmogorov-Smirnov (KS):} Prueba de bondad de ajuste
-    contra la distribución exponencial teórica $p(I) = \langle I \rangle^{-1}
-    \exp(-I/\langle I \rangle)$. Criterio formal: $p > 0.05$.
-    \item \textbf{Fracción de colas:} Fracción de píxeles con $I > 2\langle I \rangle$,
-    comparada con el valor teórico $e^{-2} \approx 0.1353$.
-\end{itemize}
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Implementación modular}

@@ -30,31 +30,26 @@
 \contentsline {section}{\numberline {3.1}Formulación del problema}{15}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}Experimento 1 (NB01): Validación 1D}{15}{subsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.1.2}Experimento 2 (NB02): Validación 2D con campo complejo}{16}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}Experimento 3 (NB03): Simulación de speckle óptico}{16}{subsection.3.1.3}%
 \contentsline {section}{\numberline {3.2}Arquitectura SIREN}{16}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{17}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{18}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{18}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{17}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{17}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Puntos de frontera}{18}{subsection.3.4.2}%
 \contentsline {section}{\numberline {3.5}Estrategia de optimización}{18}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Métricas de validación}{19}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Error $L^2$ relativo (NB01 y NB02)}{19}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}Contraste y test KS (NB03)}{19}{subsection.3.6.2}%
-\contentsline {section}{\numberline {3.7}Implementación modular}{20}{section.3.7}%
-\contentsline {chapter}{\numberline {4}Experimentos y Resultados}{21}{chapter.4}%
-\contentsline {section}{\numberline {4.1}NB01: Validación 1D, Helmholtz con solución analítica}{21}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Configuración experimental}{21}{subsection.4.1.1}%
+\contentsline {section}{\numberline {3.6}Métricas de validación}{18}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Error $L^2$ relativo (NB01 y NB02)}{18}{subsection.3.6.1}%
+\contentsline {section}{\numberline {3.7}Implementación modular}{19}{section.3.7}%
+\contentsline {chapter}{\numberline {4}Experimentos y Resultados}{20}{chapter.4}%
+\contentsline {section}{\numberline {4.1}NB01: Validación 1D, Helmholtz con solución analítica}{20}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Configuración experimental}{20}{subsection.4.1.1}%
 \contentsline {subsection}{\numberline {4.1.2}Resultados de precisión}{21}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Análisis y comparativa con el estado del arte}{23}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}NB02: Validación 2D, Helmholtz con campo complejo}{24}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Configuración experimental}{24}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Resultados de precisión}{24}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.1.3}Análisis y comparativa con el estado del arte}{21}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}NB02: Validación 2D, Helmholtz con campo complejo}{22}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Configuración experimental}{22}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Resultados de precisión}{23}{subsection.4.2.2}%
 \contentsline {subsection}{\numberline {4.2.3}Análisis de resultados}{24}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Reproducibilidad multi-semilla}{25}{subsection.4.2.4}%
-\contentsline {section}{\numberline {4.3}Ablación del peso de física $\lambda _\text {fís}$}{28}{section.4.3}%
-\contentsline {section}{\numberline {4.4}NB03: Simulación de speckle óptico}{29}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Configuración experimental}{29}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Resultados}{29}{subsection.4.4.2}%
-\contentsline {section}{\numberline {4.5}Contexto en la literatura}{29}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{30}{section.4.6}%
-\contentsline {chapter}{Bibliografía}{32}{table.caption.25}%
+\contentsline {subsection}{\numberline {4.2.4}Reproducibilidad multi-semilla}{24}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Ablación del peso de física $\lambda _\text {fís}$}{27}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Contexto en la literatura}{28}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Resumen de experimentos completados}{28}{section.4.5}%
+\contentsline {chapter}{Bibliografía}{30}{table.caption.25}%
