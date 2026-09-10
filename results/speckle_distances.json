@@ -17,66 +17,107 @@
     20
   ],
   "metodo": "estadistico (ruido blanco gaussiano filtrado), NO propagacion de onda exacta",
+  "validacion": "contraste C y test KS (sobre muestra decorrelacionada al tamano de grano)",
   "resultados": [
     {
       "z_cm": 2,
       "grain_size_um": 6.38,
       "pixels_per_grain": 3.27,
-      "contrast_C": 0.9965
+      "contrast_C": 0.9965,
+      "ks_n_effective": 116964,
+      "ks_statistic": 0.0025,
+      "ks_pvalue": 0.4457394177118934,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 4,
       "grain_size_um": 12.76,
       "pixels_per_grain": 6.53,
-      "contrast_C": 0.9888
+      "contrast_C": 0.9888,
+      "ks_n_effective": 21609,
+      "ks_statistic": 0.0054,
+      "ks_pvalue": 0.5643781704322715,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 6,
       "grain_size_um": 19.14,
       "pixels_per_grain": 9.8,
-      "contrast_C": 0.9715
+      "contrast_C": 0.9715,
+      "ks_n_effective": 10609,
+      "ks_statistic": 0.0103,
+      "ks_pvalue": 0.20550219831355665,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 8,
       "grain_size_um": 25.52,
       "pixels_per_grain": 13.07,
-      "contrast_C": 0.9759
+      "contrast_C": 0.9759,
+      "ks_n_effective": 6241,
+      "ks_statistic": 0.0099,
+      "ks_pvalue": 0.5758410483303551,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 10,
       "grain_size_um": 31.9,
       "pixels_per_grain": 16.33,
-      "contrast_C": 0.9902
+      "contrast_C": 0.9902,
+      "ks_n_effective": 4096,
+      "ks_statistic": 0.0075,
+      "ks_pvalue": 0.9740516539983756,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 12,
       "grain_size_um": 38.28,
       "pixels_per_grain": 19.6,
-      "contrast_C": 1.0006
+      "contrast_C": 1.0006,
+      "ks_n_effective": 2704,
+      "ks_statistic": 0.0139,
+      "ks_pvalue": 0.6654730550315896,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 14,
       "grain_size_um": 44.66,
       "pixels_per_grain": 22.87,
-      "contrast_C": 1.0077
+      "contrast_C": 1.0077,
+      "ks_n_effective": 2025,
+      "ks_statistic": 0.0109,
+      "ks_pvalue": 0.9687767886834111,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 16,
       "grain_size_um": 51.04,
       "pixels_per_grain": 26.13,
-      "contrast_C": 1.0146
+      "contrast_C": 1.0146,
+      "ks_n_effective": 1600,
+      "ks_statistic": 0.0114,
+      "ks_pvalue": 0.9845502888886273,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 18,
       "grain_size_um": 57.42,
       "pixels_per_grain": 29.4,
-      "contrast_C": 1.0214
+      "contrast_C": 1.0214,
+      "ks_n_effective": 1296,
+      "ks_statistic": 0.0175,
+      "ks_pvalue": 0.8168079066950921,
+      "ks_pasa_005": true
     },
     {
       "z_cm": 20,
       "grain_size_um": 63.8,
       "pixels_per_grain": 32.67,
-      "contrast_C": 1.0265
+      "contrast_C": 1.0265,
+      "ks_n_effective": 1024,
+      "ks_statistic": 0.0254,
+      "ks_pvalue": 0.5137071697776323,
+      "ks_pasa_005": true
     }
   ]
 }

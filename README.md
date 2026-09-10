@@ -4,7 +4,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.4-ee4c2c?logo=pytorch)](https://pytorch.org/)
 [![CUDA](https://img.shields.io/badge/CUDA-12.6-76b900?logo=nvidia)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-NB04%20pendiente-yellow)]()
+[![Status](https://img.shields.io/badge/Status-NB04%20(FEM%20benchmark)%20pendiente-yellow)]()
 
 > **Tesis de Maestría**, Universidad Juárez Autónoma de Tabasco
 > Maestría en Ciencias de la Computación
@@ -107,7 +107,7 @@ La carpeta `tesis/` contiene las distintas ediciones del documento de tesis:
 | Carpeta | Contenido | Estado |
 |---|---|---|
 | `Tesis_Actual/` | Copia de trabajo activa y principal (creada el 27/08/2026 como `Tesis_act2`, sucesora de `Tesis_actualizada/` borrada ese día; renombrada a `Tesis_Actual` el mismo día) | Aquí se aplican todos los cambios nuevos a la tesis |
-| `fuente_base/` | Edición sin la sección de speckle (NB03) | Sin modificar |
+| `fuente_base/` | Edición sin la sección de speckle | Sin modificar |
 | `compilado/` | PDF y ZIP finales generados, en subcarpetas `base/` y `Actual/` | Se regenera al compilar, no se edita directamente |
 
 `fuente_conNB03/` (el respaldo con la sección completa de speckle) se eliminó el 28/08/2026 — ya existe un respaldo real en el historial de git (commit `1fd2a13`), así que dejó de ser necesaria una copia en disco aparte.
@@ -209,25 +209,29 @@ jupyter notebook notebooks/01_pinn_helmholtz_1d_validation.ipynb
 Entrada (x,y) → [sin(ω₀·Wx+b)] → [128] → [sin(ω₀·Wx+b)] → [128] → ... → (E_real, E_imag)
 ```
 
-| Componente | NB01 (1D) | NB02 (2D) | NB03 (Speckle) |
-|---|---|---|---|
-| Tipo | SIREN | SIREN | SIREN |
-| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
-| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas | 5 × 128 neuronas |
-| Parámetros | ~8,400 | ~66,690 | ~66,690 |
-| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
-| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) | Latin Hypercube Sampling (LHS) |
-| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω | Fase aleatoria U(0,2π) en y=0 |
-| Optimizador | Adam + L-BFGS | Adam + L-BFGS | Adam + L-BFGS |
-| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas | Paciencia 800 épocas |
+| Componente | NB01 (1D) | NB02 (2D) |
+|---|---|---|
+| Tipo | SIREN | SIREN |
+| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
+| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas |
+| Parámetros | 16,833 | 66,690 |
+| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
+| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) |
+| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω |
+| Optimizador | Adam + L-BFGS | Adam + L-BFGS |
+| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas |
+
+**NB03 (speckle a distancias reales)** no usa PINN: genera el campo estadísticamente
+(ruido gaussiano filtrado) según la teoría de Goodman — ver sección de resultados.
 
 ---
 
 ## Progreso del proyecto
 
 - [x] Notebook 01: Helmholtz 1D GPU (L2 = 0.006%, R² = 1.000000)
-- [x] Notebook 02: Helmholtz 2D GPU (L2_avg = 0.171%, tiempo = 299 s)
-- [x] Notebook 03: Simulación de speckle óptico (C = 1.0253, cumplido)
+- [x] Notebook 02: Helmholtz 2D GPU (L2_avg = 0.171%, tiempo = 209.9 s)
+- [x] Notebook 03: Speckle óptico a 10 distancias reales, generación estadística
+      (contraste C∈[0.97,1.03] y test KS confirmados, cumplido)
 - [ ] Notebook 04: Benchmark PINN vs FEniCSx (Speed-up Factor S = T_FEM / T_PINN)
 
 ---

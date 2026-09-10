@@ -35,13 +35,16 @@ The main conclusions are:
 The natural extensions of this work include:
 
 \begin{itemize}
-  \item \textbf{Optical speckle simulation} (NB03): applying the model validated in
+  \item \textbf{Optical speckle simulation via PINN}: applying the model validated in
     NB02 to speckle generation, replacing the plane-wave condition with a
-    random-phase boundary $\phi(x) \sim \mathcal{U}(0, 2\pi)$ at $y = 0$, and
-    statistically validating the generated pattern with Goodman's contrast
-    criterion $|C - 1| < 0.1$.
+    random-phase boundary $\phi(x) \sim \mathcal{U}(0, 2\pi)$ at $y = 0$. A first
+    attempt revealed a domain-scale limitation (at $k=2\pi$ only a minimal fraction
+    of the boundary modes propagate), pending resolution with a domain size larger
+    relative to $\lambda$. The thesis validates speckle independently through direct
+    statistical generation, satisfying Goodman's contrast criterion $|C - 1| < 0.1$
+    and the Kolmogorov-Smirnov test, at 10 real physical distances (2--20 cm).
 
-  \item \textbf{FEM benchmark} (NB05): quantitative comparison against FEniCSx for
+  \item \textbf{FEM benchmark} (NB04): quantitative comparison against FEniCSx for
     multiple speckle realizations, quantifying the \textit{Speed-up Factor}
     $S = T_{\mathrm{FEM}} / T_{\mathrm{PINN}}$ \cite{Thuerey2021_PBDL} and the peak
     memory footprint, in line with the objectives of this research.

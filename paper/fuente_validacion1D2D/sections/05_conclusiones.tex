@@ -35,12 +35,17 @@ Las conclusiones principales son:
 Las extensiones naturales de este trabajo incluyen:
 
 \begin{itemize}
-  \item \textbf{Simulación de speckle óptico} (NB03): aplicar el modelo validado en NB02
-    a la generación de speckle, reemplazando la condición de onda plana por una frontera
-    de fase aleatoria $\phi(x) \sim \mathcal{U}(0, 2\pi)$ en $y = 0$, y validar
-    estadísticamente el patrón generado con el contraste de Goodman $|C - 1| < 0.1$.
+  \item \textbf{Simulación de speckle óptico mediante PINN}: aplicar el modelo validado
+    en NB02 a la generación de speckle, reemplazando la condición de onda plana por una
+    frontera de fase aleatoria $\phi(x) \sim \mathcal{U}(0, 2\pi)$ en $y = 0$. Un primer
+    intento mostró una limitación dependiente de la escala del dominio (a $k=2\pi$ solo
+    una fracción mínima de los modos de la frontera logra propagar), pendiente de
+    resolver con un dominio de mayor tamaño relativo a $\lambda$. La tesis valida el
+    speckle de forma independiente mediante generación estadística directa, conforme al
+    contraste de Goodman $|C - 1| < 0.1$ y el test de Kolmogorov-Smirnov, en 10
+    distancias físicas reales (2--20 cm).
 
-  \item \textbf{Benchmark FEM} (NB05): comparación cuantitativa contra FEniCSx para
+  \item \textbf{Benchmark FEM} (NB04): comparación cuantitativa contra FEniCSx para
     múltiples realizaciones de speckle, cuantificando el \textit{Speed-up Factor}
     $S = T_{\mathrm{FEM}} / T_{\mathrm{PINN}}$ \citep{Thuerey2021_PBDL} y la
     huella de memoria pico (\textit{Peak Memory Footprint}), según los objetivos

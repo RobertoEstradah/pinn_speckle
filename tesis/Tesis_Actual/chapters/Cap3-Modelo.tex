@@ -49,11 +49,13 @@ separando la solución en sus partes real e imaginaria:
     E_\text{imag}(x,y)\big|_{\partial\Omega} = \sin(k_x x + k_y y).
 \end{equation}
 
-\subsection{Experimento 3 (NB03): Simulación de speckle óptico}
+\subsection{Enfoque explorado y descartado: speckle mediante PINN}
 \label{cap3:nb03}
 
-La ecuación de Helmholtz 2D en $\Omega = [0,1]^2$ con condición de frontera
-rugosa en $y = 0$ y bordes libres en $x = 0$, $x = 1$ e $y = 1$:
+Se exploró extender el modelo validado en el Experimento 2 a la simulación de
+\textit{speckle} óptico resolviendo directamente la ecuación de Helmholtz 2D,
+con una condición de frontera rugosa en $y = 0$ y bordes libres en $x = 0$,
+$x = 1$ e $y = 1$:
 %
 \begin{equation}
     E(x, 0) = e^{i\psi(x)}, \quad
@@ -61,26 +63,74 @@ rugosa en $y = 0$ y bordes libres en $x = 0$, $x = 1$ e $y = 1$:
     \label{eq:frontera_rugosa}
 \end{equation}
 %
-donde $\psi(x)$ se muestrea en $N_\psi = 256$ puntos equiespaciados. Esta
-condición modela una pantalla de fase aleatoria cuya desviación estándar cumple
-$\sigma_\psi > 2\pi$, condición suficiente para \textit{speckle} completamente
-desarrollado \parencite{goodman2007speckle}.
+con $\psi(x)$ muestreado en $N_\psi = 256$ puntos equiespaciados, arquitectura
+SIREN $5 \times 128$ idéntica a NB02 (inicializada desde cero, sin reutilizar
+los pesos de NB02: están calibrados para una onda plana de amplitud constante,
+lo que entra en conflicto con un campo que debe variar libremente desde la
+frontera rugosa) y el mismo protocolo Adam + L-BFGS de la
+Tabla~\ref{tab:hiperparametros}.
+
+Este enfoque no logró desarrollar \textit{speckle} estadísticamente válido a la
+escala de dominio heredada de los experimentos anteriores. Con
+$k = 2\pi$ el dominio $[0,1]^2$ equivale a una única longitud de onda por
+lado; descomponiendo la frontera rugosa en modos de Fourier, solo los modos
+con $|k_x| \leq k$ se propagan hacia el interior del dominio y el resto es
+evanescente. De los $N_\psi = 256$ modos de la frontera, únicamente 3
+logran propagar (0.47\,\% de la energía impuesta), por lo que el campo
+resultante es la superposición de unas pocas ondas planas y no desarrolla
+\textit{speckle} real: el test de Kolmogorov-Smirnov contra la distribución
+exponencial teórica se rechaza incluso para la solución exacta del problema
+de frontera (sin red neuronal de por medio), y solo se satisface de forma
+consistente a partir de un dominio de $\sim$30 longitudes de onda
+($k \gtrsim 30 \times 2\pi$), régimen en el que el entrenamiento de la PINN
+no convergió dentro del tiempo disponible para esta tesis. El diagnóstico
+completo, reproducible, está en
+\texttt{scripts/experiments/diagnose\_nb03\_speckle\_regime.py}. La validación
+de \textit{speckle} de esta tesis se resuelve en su lugar mediante generación
+estadística directa, descrita en la Sección~\ref{cap3:nb03-actual}.
+
+\subsection{NB03: Generación estadística de speckle a distancias reales}
+\label{cap3:nb03-actual}
+
+El patrón de \textit{speckle} se genera a $10$ distancias físicas reales
+$z \in \{2, 4, \ldots, 20\}\,\mathrm{cm}$, acordadas con el director de tesis,
+mediante ruido blanco gaussiano complejo filtrado en frecuencia -- sin resolver
+ninguna ecuación diferencial. Sea $g(x,y) = a(x,y) + i\,b(x,y)$ con
+$a, b \sim \mathcal{N}(0,1)$ i.i.d.; el campo se obtiene filtrando $g$ con un
+núcleo gaussiano en el dominio de Fourier cuyo ancho $\sigma_f$ fija el tamaño
+de grano deseado:
+%
+\begin{equation}
+    u(x,y) = \mathcal{F}^{-1}\!\left[\hat{g}(f_x, f_y)\,
+    e^{-(f_x^2+f_y^2)/2\sigma_f^2}\right], \qquad
+    \sigma_f = \frac{1}{2\pi\,\text{grano}}, \qquad
+    \text{grano} \approx \frac{\lambda z}{D},
+    \label{eq:speckle_estadistico}
+\end{equation}
+%
+donde $D$ es el ancho de la apertura iluminada y $\text{grano} \approx \lambda z/D$
+es el tamaño de grano teórico de Goodman \parencite{goodman2007speckle}. El
+filtrado lineal de ruido gaussiano complejo produce, por construcción, un campo
+gaussiano circular: $I = |u|^2$ sigue la distribución exponencial negativa y el
+contraste $C = \sigma_I/\langle I\rangle = 1$ exactamente, en el límite de
+muchos granos independientes dentro de la ventana simulada.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Arquitectura SIREN}
 
 Se emplea una arquitectura SIREN con los parámetros consolidados a partir de la
-validación 1D (NB01) y escalados para el caso 2D (NB02, NB03):
+validación 1D (NB01) y escalados para el caso 2D (NB02, y el enfoque de
+speckle mediante PINN descartado en la Sección~\ref{cap3:nb03}):
 
 \begin{itemize}
     \item \textbf{Entrada:} coordenadas espaciales $(x, y) \in [0,1]^2$ (o
     $(x) \in [0,1]$ para 1D).
     \item \textbf{Capas ocultas:} $L = 5$ capas de dimensión $d$ neuronas cada
-    una ($d = 64$ en NB01, $d = 128$ en NB02/NB03).
+    una ($d = 64$ en NB01, $d = 128$ en NB02).
     \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$, con $\omega_0 = 1.0$.
     \item \textbf{Salida:} capa lineal de dos neuronas $(E_\text{real}, E_\text{imag})$
     para el caso 2D, o una neurona $E$ para el caso 1D.
-    \item \textbf{Parámetros totales:} $16{,}833$ (NB01) y $66{,}690$ (NB02/NB03).
+    \item \textbf{Parámetros totales:} $16{,}833$ (NB01) y $66{,}690$ (NB02).
 \end{itemize}
 
 La elección $\omega_0 = 1.0$, en lugar del valor $\omega_0 = 30$ recomendado
@@ -152,8 +202,8 @@ En NB02, los $N_b = 300$ puntos de frontera por borde se distribuyen
 uniformemente sobre cada uno de los cuatro lados del dominio $\partial\Omega$
 (1{,}200 puntos en total). Para cada lado, se evalúa la solución exacta y se
 construye el par $(\mathbf{r}^b_j,\, E(\mathbf{r}^b_j))$ utilizado en
-$\mathcal{L}_\text{datos}$. NB03 sigue un esquema distinto, descrito en la
-Sección~\ref{cap3:nb03}: solo
+$\mathcal{L}_\text{datos}$. El enfoque de speckle mediante PINN descartado
+(Sección~\ref{cap3:nb03}) sigue un esquema distinto: solo
 el borde $y = 0$ recibe puntos de frontera
 ($N_\psi = 256$, con la condición de fase aleatoria de la
 Ecuación~\eqref{eq:frontera_rugosa}), mientras que $x = 0$, $x = 1$ e $y = 1$
@@ -175,21 +225,25 @@ Tabla~\ref{tab:hiperparametros}.
 \toprule
 Hiperparámetro & Valor & Aplicación \\
 \midrule
-Tasa de aprendizaje Adam ($\eta$) & $10^{-3}$ & NB01, NB02, NB03 \\
-Épocas máximas Adam             & 15{,}000  & NB01, NB02, NB03 \\
-Paciencia (\textit{early stopping}) & 800 épocas & NB02, NB03 \\
-$\delta$ mejora mínima          & $10^{-7}$ & NB02, NB03 \\
-Iteraciones máximas L-BFGS      & 500 (NB01), 1{,}000 (NB02/03) & - \\
-Historial L-BFGS                & 50 (NB01), 100 (NB02/03) & - \\
+Tasa de aprendizaje Adam ($\eta$) & $10^{-3}$ & NB01, NB02 \\
+Épocas máximas Adam             & 15{,}000  & NB01, NB02 \\
+Paciencia (\textit{early stopping}) & 800 épocas & NB02 \\
+$\delta$ mejora mínima          & $10^{-7}$ & NB02 \\
+Iteraciones máximas L-BFGS      & 500 (NB01), 1{,}000 (NB02) & - \\
+Historial L-BFGS                & 50 (NB01), 100 (NB02) & - \\
 Semilla global (SEED)           & 42        & NB01, NB02, NB03 \\
-Peso de física $\lambda_\text{fís}$ & 1.0 (NB01), 0.1 (NB02/03) & - \\
+Peso de física $\lambda_\text{fís}$ & 1.0 (NB01), 0.1 (NB02) & - \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
     \item Todos los experimentos se ejecutaron en GPU NVIDIA RTX 5050.
     La semilla garantiza reproducibilidad. NB01 usa $\lambda_\text{fís} = 1.0$
     porque un único residuo no duplica el peso de la física, a diferencia del
-    caso 2D (real + imaginario); ver Sección~\ref{sec:ablacion}.
+    caso 2D (real + imaginario); ver Sección~\ref{sec:ablacion}. NB03 (actual)
+    no entrena ninguna red -- genera el campo estadísticamente
+    (Sección~\ref{cap3:nb03-actual}) y solo comparte la semilla global. El
+    enfoque de speckle mediante PINN descartado (Sección~\ref{cap3:nb03}) usó
+    el mismo protocolo que NB02.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -219,15 +273,18 @@ Helmholtz identificadas posteriormente (Tabla~\ref{tab:comparativa}).
 
 \subsection{Contraste y test KS (NB03)}
 
-Para la validación del \textit{speckle}:
+Para la validación del \textit{speckle} generado en NB03 (Sección~\ref{cap3:nb03-actual}):
 \begin{itemize}
     \item \textbf{Contraste:} $C = \sigma_I / \langle I \rangle$, con umbral
     $|C - 1| < 0.1$ conforme al criterio de \textcite{goodman2007speckle}.
     \item \textbf{Test de Kolmogorov-Smirnov (KS):} Prueba de bondad de ajuste
     contra la distribución exponencial teórica $p(I) = \langle I \rangle^{-1}
-    \exp(-I/\langle I \rangle)$. Criterio formal: $p > 0.05$.
-    \item \textbf{Fracción de colas:} Fracción de píxeles con $I > 2\langle I \rangle$,
-    comparada con el valor teórico $e^{-2} \approx 0.1353$.
+    \exp(-I/\langle I \rangle)$. Criterio formal: $p > 0.05$. Los píxeles
+    dentro de un mismo grano de \textit{speckle} están correlacionados, por lo
+    que se evalúa sobre una muestra submuestreada a un paso igual al tamaño de
+    grano en píxeles, aproximando así el número efectivo de observaciones
+    independientes en lugar de tratar cada píxel de la malla completa como una
+    muestra independiente.
 \end{itemize}
 
 % ──────────────────────────────────────────────────────────────────────────────

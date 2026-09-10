@@ -2,12 +2,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Hiperparámetros de entrenamiento consolidados.}}{19}{table.caption.9}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Hiperparámetros de entrenamiento consolidados.}}{20}{table.caption.9}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas de precisión: PINN-SIREN 1D ($k = 2\pi $).}}{22}{table.caption.11}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas de precisión: PINN-SIREN 1D ($k = 2\pi $).}}{23}{table.caption.11}%
 \contentsline {table}{\numberline {4.2}{\ignorespaces Métricas de precisión: PINN-SIREN 2D ($k = 2\pi $, $k_x = k_y = k/\sqrt {2}$).}}{25}{table.caption.15}%
 \contentsline {table}{\numberline {4.3}{\ignorespaces Reproducibilidad multi-semilla: NB02 ($\lambda _\text {fís} = 0.1$).}}{26}{table.caption.19}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Ablación del peso de física $\lambda _\text {fís}$: NB02.}}{28}{table.caption.21}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Validación estadística del \textit {speckle}: PINN-SIREN NB03.}}{29}{table.caption.23}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{31}{table.caption.26}%
-\contentsline {table}{\numberline {4.7}{\ignorespaces Estado de los experimentos planificados.}}{32}{table.caption.28}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Ablación del peso de física $\lambda _\text {fís}$: NB02.}}{29}{table.caption.21}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Validación estadística del \textit {speckle} generado (NB03), 10 distancias.}}{31}{table.caption.23}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{32}{table.caption.26}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Estado de los experimentos planificados.}}{33}{table.caption.28}%

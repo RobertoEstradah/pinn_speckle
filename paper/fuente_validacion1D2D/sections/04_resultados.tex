@@ -29,8 +29,8 @@ $R^2$                  & 1.000000 \\
 Correlación de Pearson & 1.000000 \\
 \midrule
 Épocas Adam            & 15{,}000 / 15{,}000 \\
-Iteraciones L-BFGS     & 202 / 500 \\
-Tiempo total           & 142 s \\
+Evaluaciones L-BFGS    & 202 / 500 \\
+Tiempo total           & 131.1 s \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
@@ -38,15 +38,19 @@ Tiempo total           & 142 s \\
 \item Evaluado en malla uniforme de 1{,}000 puntos en $[0,1]$.
       Arquitectura SIREN: 5 capas $\times$ 64 neuronas, $\omega_0 = 1.0$.
       Solución analítica: $E_{\mathrm{exacta}}(x) = \cos(kx)$.
-      GPU: NVIDIA RTX 5050, SEED = 42.
-      El tiempo total varía sustancialmente entre corridas (142--504 s
-      observado) por carga del sistema y condiciones térmicas de la GPU,
-      no por el código; no debe leerse como una cifra de rendimiento precisa.
+      GPU: NVIDIA RTX 5050, SEED = 42, laptop conectada a corriente y sin
+      procesos concurrentes. ``Evaluaciones L-BFGS'' cuenta las llamadas a
+      la función de pérdida durante la búsqueda de línea \textit{strong
+      Wolfe}, no iteraciones del optimizador. En una corrida previa sin
+      estas condiciones el tiempo total fue 504.2 s: el mismo hardware, en
+      régimen térmico degradado, reprodujo idénticamente todas las
+      métricas de precisión a 60.4 ms/época frente a 8.75 ms/época en
+      condiciones controladas.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-El error L2 de $0.006\%$ supera el umbral de la tesis ($< 5\%$) por casi tres órdenes de magnitud.
+El error L2 de $0.006\%$ se mantiene por debajo del umbral de la tesis ($< 5\%$) por casi tres órdenes de magnitud.
 El ajuste es prácticamente perfecto: $R^2 = 1.000000$ y correlación de Pearson $= 1.000000$
 en toda la malla de evaluación.
 
@@ -54,9 +58,11 @@ en toda la malla de evaluación.
   \centering
   \includegraphics[width=0.9\linewidth]{resultados_pinn_1d.png}
   \caption{Validación PINN-SIREN para Helmholtz 1D.
-           (a)~Comparación entre la predicción de la red y la solución analítica
-           $E_{\mathrm{exacta}}(x) = \cos(kx)$ en 1{,}000 puntos uniformes en $[0,1]$.
-           (b)~Error puntual $|\hat{E}(x) - E_{\mathrm{exacta}}(x)|$.
+           Panel A: comparación entre la predicción de la red y la solución
+           analítica $E_{\mathrm{exacta}}(x) = \cos(kx)$ en 1{,}000 puntos
+           uniformes en $[0,1]$. Panel B: error puntual
+           $|\hat{E}(x) - E_{\mathrm{exacta}}(x)|$. Panel C: curva de
+           pérdida total durante las fases Adam y L-BFGS.
            Error $L^2 = 0.006\%$, $R^2 = 1.000000$.
            GPU: NVIDIA RTX 5050, SEED = 42.}
   \label{fig:resultados1d}
@@ -65,11 +71,11 @@ en toda la malla de evaluación.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\linewidth]{metricas_adicionales_1d.png}
-  \caption{Métricas adicionales de entrenamiento NB01.
-           De izquierda a derecha: curva de pérdida total (Adam + L-BFGS),
-           distribución del error puntual y métricas de ajuste ($R^2$, Pearson).
-           La transición Adam $\to$ L-BFGS a la época 15{,}000 es visible como
-           discontinuidad en el eje de iteraciones.}
+  \caption{Métricas adicionales de entrenamiento NB01. Panel A:
+           distribución del error absoluto $|\hat{E}(x) - E_{\mathrm{exacta}}(x)|$.
+           Panel B: error relativo puntual (\%). Panel C: dispersión de la
+           predicción PINN contra la solución exacta, con la línea $y = x$
+           como referencia de ajuste perfecto.}
   \label{fig:metricas1d}
 \end{figure}
 
@@ -105,30 +111,40 @@ Error L2 promedio (\%) & \multicolumn{2}{c}{0.171} \\
       Arquitectura: SIREN $5 \times 128$, $\omega_0 = 1.0$, 66{,}690 parámetros.
       Puntos de colocación: LHS $N_c = 3{,}000$.
       Frontera: onda plana $e^{i(k_x x + k_y y)}$ en 4 bordes, $N_b = 300$ pts/borde.
-      Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 iter), tiempo total 299 s.
-      Varianza entre semillas (SEED $\in \{42, 123, 777\}$):
-      error $L^2$ promedio $= 0.155 \pm 0.020$\,\%.
+      Entrenamiento: Adam (8{,}737 épocas) + L-BFGS (1{,}035 evaluaciones de
+      la función objetivo), tiempo total 209.9 s (GPU laptop conectada a
+      corriente, sin procesos concurrentes).
+      Dispersión entre semillas (SEED $\in \{42, 123, 777\}$),
+      medidas en la misma sesión:
+      error $L^2$ promedio $= 0.192 \pm 0.089$\,\% (media $\pm$ desv.\ est.).
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-El error L2 promedio de $0.171\%$ supera el umbral de la tesis ($< 5\%$) por más de un
-orden de magnitud. La precisión se mantiene alta en ambas componentes del campo complejo,
-con $R^2 > 0.9999$ para $E_{\mathrm{real}}$ y $E_{\mathrm{imag}}$.
+El error L2 promedio de $0.171\%$ se mantiene por debajo del umbral de la tesis ($< 5\%$)
+por más de un orden de magnitud. La precisión se mantiene alta en ambas componentes del
+campo complejo, con $R^2 > 0.9999$ para $E_{\mathrm{real}}$ y $E_{\mathrm{imag}}$.
 
-El aumento de capacidad de $d = 64$ a $d = 128$ fue determinante: con $d = 64$ el error
-promedio era $0.436\%$; con $d = 128$ se redujo a $0.171\%$, una mejora de $2.5\times$.
-El muestreo LHS contribuyó a la reducción del error en regiones de baja densidad de
-puntos respecto a mallas cartesianas equivalentes.
+En un experimento preliminar con $d = 64$ (mismo $N_c$, $N_b$ y protocolo de
+optimización) el error promedio fue $0.436\%$, frente a $0.171\%$ con $d = 128$.
+Esta comparación involucra además una diferencia en el número de evaluaciones
+de L-BFGS entre ambas corridas, por lo que la mejora no puede atribuirse de
+forma aislada al aumento de capacidad de la red; se reporta como evidencia
+cualitativa, no como una ablación controlada. No se dispone de un
+experimento que aísle la contribución del muestreo LHS frente a una malla
+cartesiana equivalente.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.9\linewidth]{resultados_pinn_2d.png}
   \caption{Validación PINN-SIREN para Helmholtz 2D con campo complejo.
-           Fila superior: partes real e imaginaria de la solución analítica
-           $E_{\mathrm{exacta}} = e^{i(k_x x + k_y y)}$.
-           Fila inferior: predicción PINN-SIREN correspondiente.
-           La diferencia visual es indistinguible; los errores puntuales son del orden
+           Fila superior (A1-A3): solución analítica, predicción PINN-SIREN
+           y error absoluto para $E_{\mathrm{real}}$. Fila central (B1-B3):
+           lo mismo para $E_{\mathrm{imag}}$. Fila inferior: intensidad
+           predicha $I = |E|^2$ (C1), puntos de colocación LHS (C2) y
+           curvas de pérdida durante Adam y L-BFGS (C3).
+           La diferencia visual entre solución exacta y predicción es
+           indistinguible; los errores puntuales son del orden
            de $10^{-3}$ (ver \cref{tab:resultados2d}).
            Malla de evaluación $100 \times 100$, SEED = 42.}
   \label{fig:resultados2d}
@@ -137,11 +153,16 @@ puntos respecto a mallas cartesianas equivalentes.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\linewidth]{metricas_adicionales_2d.png}
-  \caption{Métricas adicionales de entrenamiento NB02.
-           Curva de pérdida (Adam + L-BFGS), mapa de error $|E_{\mathrm{real}} - \hat{E}_{\mathrm{real}}|$
-           y $|E_{\mathrm{imag}} - \hat{E}_{\mathrm{imag}}|$ en la malla $100 \times 100$.
-           Los errores más altos se concentran en las esquinas del dominio,
-           región típicamente difícil para condiciones de onda plana.}
+  \caption{Métricas adicionales de entrenamiento NB02. Paneles A-B:
+           distribución del error absoluto $|E_{\mathrm{real}} - \hat{E}_{\mathrm{real}}|$
+           y $|E_{\mathrm{imag}} - \hat{E}_{\mathrm{imag}}|$. Paneles C, F:
+           dispersión de la predicción PINN contra la solución exacta para
+           cada componente. Paneles D-E: error relativo puntual (\%) en la
+           malla $100 \times 100$; los valores más altos se concentran en
+           bandas antidiagonales ($x+y\approx$ const.) donde la solución
+           exacta cruza por cero, no en las esquinas del dominio. La curva
+           de pérdida de entrenamiento se muestra en el Panel C3 de la
+           \cref{fig:resultados2d}.}
   \label{fig:metricas2d}
 \end{figure}
 

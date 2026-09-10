@@ -84,7 +84,14 @@ def load_model(model, name, notebook_dir=None, device=None):
     """
     Carga pesos de un modelo guardado previamente.
 
-    Uso al inicio de NB03 para reusar el modelo de NB02:
+    Nota: no se recomienda para transferir pesos entre problemas con condicion
+    de frontera distinta (p. ej. onda plana -> frontera estocastica): los
+    pesos quedan calibrados para la fisica del problema original y pueden
+    sesgar el entrenamiento del problema nuevo. Util para recargar el mismo
+    modelo en una sesion posterior o para evaluacion posterior al
+    entrenamiento.
+
+    Uso:
         from src.models import PINN_2D_SIREN
         from src.utils  import load_model
 

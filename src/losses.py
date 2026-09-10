@@ -9,7 +9,7 @@ Funciones:
     helmholtz_residual_1d — residuo EDP Helmholtz 1D
     pinn_loss_1d          — perdida total PINN para NB01
     helmholtz_residual_2d — laplaciano 2D + residuo EDP
-    pinn_loss_2d          — perdida total PINN para NB02, NB03, NB04
+    pinn_loss_2d          — perdida total PINN para NB02 (y futuras extensiones PINN 2D)
 
 Uso:
     from src.losses import pinn_loss_1d, pinn_loss_2d

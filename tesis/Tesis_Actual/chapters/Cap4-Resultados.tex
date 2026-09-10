@@ -1,9 +1,11 @@
 \chapter{Experimentos y Resultados}\label{cap4:resultados}
 
-Este capítulo presenta los resultados de los tres experimentos ejecutados en GPU
-NVIDIA RTX~5050 (CUDA 12.8, PyTorch 2.11, SEED = 42). Los experimentos siguen
-una complejidad creciente: validación analítica 1D (NB01), validación 2D con
-campo complejo (NB02) y simulación de \textit{speckle} óptico (NB03).
+Este capítulo presenta los resultados de los tres experimentos de la tesis,
+en complejidad creciente: validación analítica 1D (NB01) y validación 2D con
+campo complejo (NB02), ambos entrenados por PINN en GPU NVIDIA RTX~5050 (CUDA
+12.8, PyTorch 2.11, SEED = 42); y simulación de \textit{speckle} óptico
+(NB03), por generación estadística directa (CPU, NumPy/SciPy, sin
+entrenamiento de red).
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{NB01: Validación 1D, Helmholtz con solución analítica}
@@ -319,44 +321,55 @@ peso efectivo del término físico, agravando el mismo tipo de desbalance.
 
 \subsection{Configuración experimental}
 
-El tercer experimento aplica el modelo validado en NB02 a la generación de
-\textit{speckle} óptico. La única modificación respecto a NB02 es la condición
-de frontera en $y = 0$: en lugar de imponer una onda plana conocida, se impone
-la fase aleatoria $\psi(x) \sim \mathcal{U}(0, 2\pi)$ muestreada en
-$N_\psi = 256$ puntos equiespaciados. Los bordes $x = 0$, $x = 1$ e $y = 1$
-permanecen libres (sin condición Dirichlet artificial). La arquitectura, los
-hiperparámetros y la estrategia de optimización son idénticos a NB02.
+El tercer experimento genera el patrón de \textit{speckle} óptico a 10
+distancias físicas reales $z \in \{2, 4, \ldots, 20\}\,\mathrm{cm}$ mediante
+generación estadística directa (Ecuación~\eqref{eq:speckle_estadistico}):
+ruido blanco gaussiano complejo filtrado en frecuencia, con el ancho del
+filtro fijado por el tamaño de grano teórico de Goodman
+$\text{grano} \approx \lambda z/D$ ($\lambda = 638\,\mathrm{nm}$,
+$D = 2\,\mathrm{mm}$). No se resuelve ninguna ecuación diferencial ni se
+entrena ninguna red neuronal en este experimento -- ver la
+Sección~\ref{cap3:nb03} para el enfoque alternativo explorado (PINN con
+frontera de fase aleatoria) y la limitación de escala que motivó este cambio
+de método.
 
 \subsection{Resultados estadísticos}
 
 La Tabla~\ref{tab:resultados_speckle} reporta la validación estadística del
-patrón de \textit{speckle} generado, evaluado en una malla de
-$100 \times 100$ puntos ($N = 10{,}000$ valores de intensidad).
+patrón de \textit{speckle} generado en cada una de las 10 distancias, sobre
+una malla de $1{,}024 \times 1{,}024$ puntos.
 
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Validación estadística del \textit{speckle}: PINN-SIREN NB03.}
+\caption{Validación estadística del \textit{speckle} generado (NB03), 10 distancias.}
 \label{tab:resultados_speckle}
-\begin{tabular}{lcc}
+\begin{tabular}{lcccc}
 \toprule
-Métrica & Valor PINN & Valor teórico \\
+$z$ (cm) & Grano ($\mu$m) & Contraste $C$ & KS $N_\text{ef}$ & KS $p$-valor \\
 \midrule
-Contraste $C = \sigma_I / \langle I \rangle$ & \textbf{1.0253} & $= 1$ \\
-$|C - 1|$                                    & 0.0253          & $< 0.1$ \\
-KS $p$-valor                                 & $< 0.0001$      & $> 0.05$ \\
-Fracción $I > 2\langle I \rangle$            & 0.1207          & $e^{-2} \approx 0.1353$ \\
-\midrule
-Épocas Adam                                  & 7{,}976 / 15{,}000 & - \\
-Iteraciones L-BFGS                           & 8 / 1{,}000        & - \\
-Tiempo total (s)                             & 195                & - \\
+2  & 6.38  & 0.9965 & 116{,}964 & 0.446 \\
+4  & 12.76 & 0.9888 & 21{,}609  & 0.564 \\
+6  & 19.14 & 0.9715 & 10{,}609  & 0.206 \\
+8  & 25.52 & 0.9759 & 6{,}241   & 0.576 \\
+10 & 31.90 & 0.9902 & 4{,}096   & 0.974 \\
+12 & 38.28 & 1.0006 & 2{,}704   & 0.665 \\
+14 & 44.66 & 1.0077 & 2{,}025   & 0.969 \\
+16 & 51.04 & 1.0146 & 1{,}600   & 0.985 \\
+18 & 57.42 & 1.0214 & 1{,}296   & 0.817 \\
+20 & 63.80 & 1.0265 & 1{,}024   & 0.514 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
-    \item Evaluado en malla $100 \times 100$ puntos ($N = 10{,}000$).
-    Condición de frontera: $\psi(x) \sim \mathcal{U}(0, 2\pi)$,
-    $N_\psi = 256$ pts. Bordes $x=0$, $x=1$, $y=1$: libres.
-    Arquitectura y optimizador idénticos a NB02. GPU: NVIDIA RTX 5050, SEED = 42.
+    \item Malla $1{,}024 \times 1{,}024$ puntos, SEED = 42. El test KS se
+    evalúa sobre una muestra submuestreada a un paso igual al tamaño de grano
+    en píxeles ($N_\text{ef}$), no sobre el $1.05\times10^6$ de píxeles
+    crudos: los píxeles dentro de un mismo grano están correlacionados y no
+    son observaciones independientes. Con los píxeles crudos el test rechaza
+    la hipótesis nula en las 10 distancias ($p < 0.01$ en todas) pese a que
+    la desviación máxima de la CDF empírica es de apenas 0.2--1.1\,\%: efecto
+    esperado de la potencia del test a $N\sim10^6$, no evidencia de que el
+    campo no sea gaussiano circular.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -365,78 +378,36 @@ Tiempo total (s)                             & 195                & - \\
 
 \subsubsection{Contraste del speckle}
 
-El contraste $C = 1.0253$ cumple holgadamente el umbral $|C - 1| < 0.1$, con
-una desviación de solo $|C - 1| = 0.025$. Este resultado confirma que el modelo
-PINN-SIREN genera un patrón estadísticamente consistente con \textit{speckle}
-completamente desarrollado según el criterio de \textcite{goodman2007speckle}.
-
-\subsubsection{Distribución de intensidades}
-
-La fracción de píxeles con $I > 2\langle I \rangle$ es $0.1207$, frente al
-valor teórico $e^{-2} \approx 0.1353$ (diferencia relativa del $10.8\%$). Esta
-diferencia es consistente con la variabilidad muestral esperada de un
-estadístico de cola evaluado sobre una única realización finita del campo:
-los $N = 10{,}000$ píxeles no son muestras independientes, ya que están
-espacialmente correlacionados por la longitud de coherencia del patrón de
-\textit{speckle}, de modo que el número efectivo de muestras independientes
-es menor a $N$. Esta diferencia puntual en la cola de la distribución no
-contradice el ajuste global observado entre la función de distribución
-acumulada empírica y la exponencial teórica
-(Figura~\ref{fig:speckle_estadistica}).
+El contraste se mantiene en $C \in [0.972,\ 1.027]$ en las 10 distancias,
+dentro del umbral $|C - 1| < 0.1$ con amplio margen en todos los casos. El
+grano crece linealmente con $z$, de $6.38\,\mu$m a $2\,\mathrm{cm}$ hasta
+$63.80\,\mu$m a $20\,\mathrm{cm}$, consistente con la relación teórica
+$\text{grano} \approx \lambda z/D$ (Figura~\ref{fig:speckle}).
 
 \subsubsection{Test de Kolmogorov-Smirnov}
 
-El test KS rechaza formalmente la hipótesis nula ($p < 0.0001$, estadístico
-KS $= 0.0487$). Esta discrepancia no implica un fallo del modelo físico, sino
-que es consecuencia de la elevada potencia estadística del test con
-$N = 10{,}000$ puntos: con tal tamaño de muestra, desviaciones menores al 1\%
-resultan estadísticamente significativas \parencite{goodman2007speckle}.
+El test KS, evaluado sobre la muestra decorrelacionada al tamaño de grano,
+\textbf{no rechaza} la hipótesis de distribución exponencial en ninguna de
+las 10 distancias ($p \in [0.21,\ 0.97]$, Tabla~\ref{tab:resultados_speckle}).
+Esto confirma, de forma estadísticamente rigurosa y no solo mediante el
+contraste (que es invariante de escala y por sí solo no descarta un campo con
+estadística distinta), que el patrón generado es \textit{speckle}
+completamente desarrollado según el criterio de \textcite{goodman2007speckle}
+en las 10 distancias evaluadas.
 
-Una fuente adicional de discrepancia es la ausencia de la condición de radiación
-de Sommerfeld en el borde $y = 1$:
-$\mathcal{L}_\text{rad} = |\partial E/\partial n - ikE|^2 = 0$.
-En un dominio físico abierto, esta condición absorbente elimina las reflexiones
-espurias en la frontera superior. Su incorporación forma parte del trabajo futuro
-(NB06). A pesar de esto, el criterio estadístico principal $|C - 1| < 0.1$ se
-cumple con margen amplio.
-
-La Figura~\ref{fig:speckle} muestra el patrón de intensidad generado y la
-comparación de la distribución de intensidades con la exponencial teórica.
+La Figura~\ref{fig:speckle} muestra el patrón de intensidad generado a tres
+de las diez distancias, ilustrando el crecimiento del grano con $z$.
 
 \begin{figure}[htbp]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resultados_speckle_nb03.png}
-        \caption{Patrón de intensidad $I(x,y) = |E|^2$ generado con condición
-        de frontera rugosa $\psi(x) \sim \mathcal{U}(0, 2\pi)$ en $y = 0$.
-        El patrón granular es característico del \textit{speckle} completamente
-        desarrollado.}
-        \label{fig:speckle_patron}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{estadistica_speckle_nb03.png}
-        \caption{Distribución de intensidades normalizada $p(I/\langle I\rangle)$
-        (histograma) comparada con la exponencial negativa teórica
-        $e^{-I/\langle I\rangle}$ (curva continua). Panel derecho: función de
-        distribución acumulada (CDF). Contraste $C = 1.025$.}
-        \label{fig:speckle_estadistica}
-    \end{subfigure}
-    \caption{Simulación de \textit{speckle} óptico con PINN-SIREN (NB03).}
+    \includegraphics[width=\textwidth]{speckle_distancias_resumen.png}
+    \caption{Patrones de \textit{speckle} generados estadísticamente (NB03) a
+    $z = 2$, $10$ y $20\,\mathrm{cm}$. El tamaño de grano crece con la
+    distancia, consistente con $\text{grano} \approx \lambda z/D$. Contraste
+    $C$ y $p$-valor KS (muestra decorrelacionada) indicados por panel; ver
+    Tabla~\ref{tab:resultados_speckle} para las 10 distancias completas.}
     \label{fig:speckle}
 \end{figure}
-
-\subsubsection{Generalidad de la arquitectura}
-
-Un resultado notable de este experimento es que la misma arquitectura SIREN
-$5 \times 128$ que resuelve Helmholtz con onda plana (NB02) resuelve
-igualmente la ecuación con frontera rugosa aleatoria (NB03), sin ninguna
-modificación en la arquitectura ni en la función de pérdida. Solo cambia el
-dato impuesto en $y = 0$. Esto demuestra la generalidad del método: la PINN-SIREN
-aprende la física de Helmholtz de forma intrínseca y puede evaluar el campo
-para cualquier condición de frontera sin reentrenamiento de la arquitectura.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Contexto en la literatura}
@@ -501,24 +472,28 @@ Experimento & Descripción & Estado & Métrica principal \\
 \midrule
 NB01 & Helmholtz 1D, validación analítica & Completo & $L^2 = 0.006\%$ \\
 NB02 & Helmholtz 2D, campo complejo       & Completo & $L^2 = 0.171\%$ \\
-NB03 & Speckle óptico, frontera rugosa    & Completo & $C = 1.025\;\checkmark$ \\
-NB05 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
+NB03 & Speckle óptico, 10 distancias reales & Completo & $C\in[0.97,1.03]$, KS $\checkmark$ \\
+NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
-    \item NB01-NB03 verifican la hipótesis de precisión ($L^2 < 5\%$) y la
-    hipótesis estadística ($|C - 1| < 0.1$). NB05 es necesario para
-    verificar la hipótesis de velocidad ($S > 1$) y se planifica como trabajo
-    futuro inmediato. NB04 (no incluido en esta tabla) es un ejercicio
-    ilustrativo de generación estadística de speckle a distancias reales
-    (2-20cm, Goodman 2007), no un experimento que valide las hipótesis de
-    esta tesis.
+    \item NB01 y NB02 verifican la hipótesis de precisión ($L^2 < 5\%$). NB03
+    verifica la hipótesis estadística ($|C - 1| < 0.1$ y test KS) mediante
+    generación estadística directa, no resolviendo Helmholtz por PINN -- ver
+    Sección~\ref{cap3:nb03} para el enfoque por PINN explorado y descartado
+    por una limitación de escala de dominio. NB04 es necesario para verificar
+    la hipótesis de velocidad ($S > 1$) y se planifica como trabajo futuro
+    inmediato.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-Los tres experimentos completados (NB01-NB03) verifican las dos primeras
-hipótesis de la tesis: (i) el error $L^2 < 5\%$ se supera con amplitud en todos
-los casos, y (ii) el contraste del \textit{speckle} cumple el criterio de
-Goodman. La hipótesis de velocidad ($S > 1$) requiere la implementación de la
-referencia FEM (NB05), programada como trabajo futuro inmediato.
+Los dos primeros experimentos completados (NB01, NB02) verifican la hipótesis
+de precisión: el error $L^2 < 5\%$ se supera con amplitud en ambos casos. El
+tercero (NB03) verifica la hipótesis estadística: el contraste y la
+distribución de intensidades del \textit{speckle} generado cumplen el
+criterio de Goodman en las 10 distancias evaluadas, mediante generación
+estadística directa en lugar del enfoque por PINN originalmente planteado
+(Sección~\ref{cap3:nb03}). La hipótesis de velocidad ($S > 1$) requiere la
+implementación de la referencia FEM (NB04), programada como trabajo futuro
+inmediato.

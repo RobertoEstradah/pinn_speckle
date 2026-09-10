@@ -99,4 +99,4 @@ Si el lente se coloca **después** (enfocando el speckle ya generado): actúa co
 
 ## Próximo paso sugerido (no iniciado)
 
-Prueba de concepto mínima: Opción A con un caso simple (lente + onda plana, sin speckle todavía) para verificar que la fase cuadrática del lente no rompe el entrenamiento de SIREN, antes de combinarlo con la frontera de fase aleatoria de NB03.
+Prueba de concepto mínima: Opción A con un caso simple (lente + onda plana, sin speckle todavía) para verificar que la fase cuadrática del lente no rompe el entrenamiento de SIREN, antes de combinarlo con una frontera de fase aleatoria (ver la limitación de escala de dominio documentada en `scripts/experiments/diagnose_nb03_speckle_regime.py` antes de reintentar este enfoque).

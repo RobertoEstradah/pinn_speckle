@@ -7,12 +7,12 @@ Director : Dr. Jose Adan Hernandez Nolasco — UJAT
 
 Nota: training.py es una referencia documentada del loop de entrenamiento.
 Los notebooks NB01 y NB02 tienen el loop inline por legibilidad pedagogica.
-Este archivo puede usarse en NB03+ para simplificar el codigo.
+Este archivo queda disponible para simplificar el codigo de futuras extensiones PINN.
 
 Funcion principal:
     train_adam_lbfgs — entrena con Adam (early stopping) + L-BFGS
 
-Uso (opcional, desde NB03+):
+Uso (opcional):
     from src.training import train_adam_lbfgs
 """
 

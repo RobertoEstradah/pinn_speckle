@@ -191,12 +191,18 @@ eléctrico complejo.
     empleando Muestreo Latino Hipercúbico (LHS) para los puntos de colocación y
     validando contra la solución de onda plana $E = e^{i(k_x x + k_y y)}$.
 
-    \item Aplicar el modelo validado a la simulación de \textit{speckle} óptico
-    (NB03) mediante una condición de frontera de fase aleatoria, y validar
-    estadísticamente el patrón generado conforme al criterio de Goodman.
+    \item Generar y validar estadísticamente el patrón de \textit{speckle} óptico
+    a distancias físicas reales (NB03), conforme al criterio de Goodman: contraste
+    $C = \sigma_I/\langle I\rangle$ y ajuste a la distribución exponencial negativa
+    (test de Kolmogorov-Smirnov). Se exploró adicionalmente la generación de
+    \textit{speckle} resolviendo Helmholtz por PINN con una condición de frontera
+    de fase aleatoria; a la escala de dominio validada en NB01/NB02 ($k=2\pi$, una
+    longitud de onda) este enfoque no logra desarrollar \textit{speckle}
+    estadísticamente válido, por lo que la validación de esta tesis se apoya en la
+    generación estadística directa (véase el Capítulo~\ref{cap3:modelo}).
 
     \item Comparar cuantitativamente el rendimiento computacional del modelo
-    PINN-SIREN contra una implementación FEM de referencia (NB05), cuantificando
+    PINN-SIREN contra una implementación FEM de referencia (NB04), cuantificando
     el factor de aceleración $S = T_\text{FEM} / T_\text{PINN}$.
 \end{enumerate}
 
@@ -252,14 +258,20 @@ alineadas con los objetivos específicos.
     la función de pérdida $\lambda_\text{fís} = 0.1$ mediante ablación.
 
     \item[\textbf{Fase 3 - NB03: Simulación de \textit{speckle} óptico.}]
-    Se aplica el modelo validado a la generación de \textit{speckle}, reemplazando
-    la condición de onda plana por una frontera con fase aleatoria
-    $\psi(x) \sim \mathcal{U}(0, 2\pi)$ en $y = 0$ y bordes libres en el
-    resto del dominio. La validación estadística sigue el criterio de Goodman
-    \parencite{goodman2007speckle}: contraste $C = \sigma_I / \langle I \rangle$
-    y test de Kolmogorov-Smirnov contra la distribución exponencial teórica.
+    Se genera el patrón de \textit{speckle} a 10 distancias físicas reales
+    (2--20 cm) mediante generación estadística directa: ruido blanco gaussiano
+    complejo filtrado en frecuencia, con el ancho del filtro fijado por el tamaño
+    de grano teórico de Goodman $\text{grano} \approx \lambda z/D$. La validación
+    estadística sigue el criterio de Goodman \parencite{goodman2007speckle}:
+    contraste $C = \sigma_I / \langle I \rangle$ y test de Kolmogorov-Smirnov
+    contra la distribución exponencial teórica, evaluado sobre una muestra
+    decorrelacionada al tamaño de grano para evitar violar el supuesto de
+    independencia del test. Se exploró un enfoque alternativo resolviendo
+    Helmholtz por PINN con frontera de fase aleatoria; a la escala de dominio
+    heredada de NB02 este enfoque no desarrolla \textit{speckle}
+    estadísticamente válido (Sección~\ref{cap3:nb03}).
 
-    \item[\textbf{Fase 4 - NB05: Benchmark FEM (trabajo futuro).}]
+    \item[\textbf{Fase 4 - NB04: Benchmark FEM (trabajo futuro).}]
     Comparación cuantitativa del tiempo de inferencia PINN-SIREN contra una
     implementación de referencia con FEniCSx, para calcular el factor de
     aceleración $S = T_\text{FEM} / T_\text{PINN}$ y la huella de memoria pico.
