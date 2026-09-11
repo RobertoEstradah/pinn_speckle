@@ -1,0 +1,10 @@
+{
+  "num_layers": 4,
+  "hidden_dim": 128,
+  "n_params": 50178,
+  "epoch_final": 10997,
+  "time_total_s": 283.7,
+  "l2_real_pct": 0.2908,
+  "l2_imag_pct": 0.1649,
+  "l2_avg_pct": 0.2279
+}
