@@ -80,11 +80,12 @@ y disminuye cuando el campo pierde coherencia o la rugosidad es insuficiente
 
 \subsection{Redes Neuronales Informadas por Física (PINNs)}
 
-El enfoque de resolver EDPs con redes neuronales fue pionero por
-\textcite{lagaris1998ann}, quienes demostraron que redes feedforward podían
-aproximar soluciones de ecuaciones diferenciales ordinarias y parciales
-mediante una función de prueba que satisface las condiciones de frontera
-exactamente. Este trabajo establece el precedente directo de las PINNs modernas.
+El uso de redes neuronales para aproximar soluciones de EDPs tiene un
+antecedente temprano en \textcite{lagaris1998ann}, quienes demostraron que redes
+feedforward podían aproximar soluciones de ecuaciones diferenciales ordinarias
+y parciales mediante una función de prueba que satisface las condiciones de
+frontera exactamente. Las PINNs modernas fueron formuladas posteriormente por
+\textcite{raissi2019physics}.
 La capacidad de aproximación universal de las redes feedforward fue formalizada
 por \textcite{hornik1989universal}.
 
@@ -125,11 +126,12 @@ $\nabla^2 E$ se obtienen mediante diferenciación automática
 \subsection{Redes SIREN y sesgo espectral}
 
 Las activaciones estándar (ReLU, tanh) presentan un sesgo espectral
-\parencite{rahaman2019spectral}: aprenden frecuencias bajas antes que las altas.
-Para la ecuación de Helmholtz con $k = 2\pi$, esto produce derivadas de
-segundo orden inestables y convergencia lenta. Adicionalmente, ReLU tiene
-segunda derivada nula, lo que impide computar el Laplaciano mediante
-diferenciación automática.
+\parencite{rahaman2019spectral}: tienden a aprender frecuencias bajas antes que
+las altas. En una PINN para Helmholtz, esta tendencia puede dificultar el ajuste
+de soluciones oscilatorias y hacer más exigente la optimización de derivadas de
+segundo orden. En particular, la segunda derivada clásica de ReLU es nula casi
+en todas partes, por lo que no es una elección adecuada para representar
+directamente un Laplaciano no trivial mediante diferenciación automática.
 
 \textcite{sitzmann2020siren} proponen las redes SIREN
 (\textit{Sinusoidal Representation Networks}), que utilizan la activación
@@ -143,13 +145,13 @@ $\phi(z) = \sin(\omega_0 z)$ con una inicialización específica:
 \end{equation}
 %
 donde las matrices $\mathbf{W}_\ell$ se inicializan según
-$\mathcal{U}(-\sqrt{6/d},\, \sqrt{6/d})$ para capas intermedias y
-$\mathcal{U}(-1/n_\text{in},\, 1/n_\text{in})$ para la primera capa. Esta
-inicialización garantiza que las distribuciones de activación sean
-aproximadamente uniformes en $[-1,1]$, condición necesaria para la estabilidad
-de derivadas de orden arbitrario. La derivada de cualquier orden de SIREN es
-también una red SIREN, lo que la convierte en la elección natural para resolver
-EDPs con operadores diferenciales de orden superior.
+$\mathcal{U}(-\sqrt{6/d}/\omega_0,\, \sqrt{6/d}/\omega_0)$ para capas
+intermedias y $\mathcal{U}(-1/n_\text{in},\, 1/n_\text{in})$ para la primera
+capa. Esta inicialización busca mantener controlada la escala de las
+activaciones y de sus derivadas; no implica que las activaciones tengan una
+distribución uniforme ni constituye por sí sola una garantía de estabilidad.
+La suavidad de la función seno permite calcular derivadas de orden superior con
+diferenciación automática, que es la propiedad relevante para este trabajo.
 
 Una alternativa relacionada para mitigar el sesgo espectral es el mapeo de
 características de Fourier (\textit{Fourier feature mapping}) propuesto por
@@ -164,24 +166,27 @@ de derivadas de orden superior mediante diferenciación automática.
 \subsection{Diferenciación automática}
 
 La diferenciación automática (\textit{autodiff}) permite calcular derivadas de
-cualquier orden con precisión de máquina mediante la aplicación sucesiva de la
-regla de la cadena sobre el grafo de operaciones del programa
-\parencite{baydin2018autodiff}. En el contexto de las PINNs, \textit{autodiff}
-actúa como el motor que permite evaluar el Laplaciano $\nabla^2$ directamente
-sobre las salidas de la red neuronal respecto a sus coordenadas de entrada, sin
-los errores de truncamiento de las diferencias finitas.
+cualquier orden mediante la aplicación sucesiva de la regla de la cadena sobre
+el grafo de operaciones del programa \parencite{baydin2018autodiff}. En el
+contexto de las PINNs, \textit{autodiff} actúa como el motor que permite evaluar
+el Laplaciano $\nabla^2$ directamente sobre las salidas de la red neuronal
+respecto a sus coordenadas de entrada, sin introducir el error de truncamiento
+propio de las diferencias finitas; los resultados siguen sujetos a los errores
+de redondeo y precisión del cálculo numérico.
 
 \subsection{Muestreo Latino Hipercúbico (LHS)}
 
 El Muestreo Latino Hipercúbico \parencite{mckay1979lhs} es una estrategia de
-muestreo estratificado diseñada para generar una distribución de puntos de
-colocación que cubra de manera cuasi-óptima el dominio computacional $\Omega$.
+muestreo estratificado para distribuir puntos de colocación en el dominio
+computacional $\Omega$. Su ventaja aquí es proporcionar una cobertura
+estratificada reproducible con un número fijo de puntos; no garantiza por sí
+misma una cobertura óptima ni una convergencia más rápida de la PINN.
 A diferencia del muestreo aleatorio simple, el LHS divide cada dimensión en
 $N_c$ estratos iguales y coloca exactamente un punto por estrato, garantizando
-cobertura uniforme sin los patrones redundantes de una malla cartesiana. Esto
-permite a la red capturar la física de la ecuación de Helmholtz con una densidad
-de puntos significativamente menor, optimizando el uso de memoria GPU y
-reduciendo el tiempo de convergencia \parencite{cuomo2022scientific}.
+cobertura estratificada sin imponer una malla cartesiana. En este proyecto se
+evalúa con $N_c=3{,}000$ puntos; cualquier ventaja adicional en memoria o tiempo
+de convergencia es dependiente de la implementación y no se ha aislado frente a
+una malla cartesiana equivalente.
 
 \subsection{Optimización híbrida Adam + L-BFGS}
 
@@ -192,8 +197,10 @@ práctica extendida en la literatura de PINNs \parencite{cuomo2022scientific}:
     \item \textbf{Fase 1 (Adam):} Optimizador estocástico de primer orden
     \parencite{kingma2015adam} con tasa de aprendizaje $\eta = 10^{-3}$,
     paciencia de 800 épocas sin mejora mayor que $\delta = 10^{-7}$ y un
-    máximo de 15{,}000 épocas. Adam realiza exploración global del espacio
-    de parámetros y proporciona un punto de inicio próximo al mínimo global.
+    máximo de 15{,}000 épocas. En este trabajo, Adam actualiza los parámetros
+    durante la fase inicial y proporciona el punto de partida para L-BFGS; no
+    se interpreta como una búsqueda global ni como una garantía de proximidad al
+    mínimo global.
 
     \item \textbf{Fase 2 (L-BFGS):} Optimizador cuasi-Newton de segundo orden
     (\textit{Limited-memory Broyden-Fletcher-Goldfarb-Shanno})
@@ -203,8 +210,10 @@ práctica extendida en la literatura de PINNs \parencite{cuomo2022scientific}:
     desde el punto entregado por Adam.
 \end{enumerate}
 
-Esta combinación supera a Adam puro en precisión final y a L-BFGS puro en
-robustez ante mínimos locales.
+Esta combinación se adopta como protocolo de entrenamiento: Adam realiza la
+fase inicial y L-BFGS el ajuste final. En este proyecto no se realizó una
+ablación controlada frente a Adam puro o L-BFGS puro, por lo que no se afirma
+experimentalmente que la combinación sea superior en todos los criterios.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Literatura relacionada}
@@ -214,13 +223,15 @@ El uso de redes neuronales para resolver EDPs fue revitalizado por
 para resolver una amplia gama de problemas físicos sin necesidad de mallado.
 El análisis teórico de por qué las PINNs pueden fallar en el entrenamiento fue
 abordado por \textcite{wang2022ntk} mediante la teoría del núcleo tangente
-neuronal (NTK), estableciendo las condiciones bajo las cuales el entrenamiento
-converge. Desde una perspectiva más empírica, \textcite{krishnapriyan2021characterizing}
-caracterizan sistemáticamente los modos de falla de las PINN con pesos fijos
-entre los términos de datos y de física, mostrando que el entrenamiento puede
-estancarse en soluciones incorrectas incluso cuando la pérdida global parece
-decrecer — un fenómeno que se retoma en el Capítulo~\ref{cap4:resultados} al
-analizar la ablación del peso de física $\lambda_\text{fís}$.
+neuronal (NTK), relacionando la dinámica de entrenamiento con el desbalance
+entre los términos de la función de pérdida y las características espectrales
+del problema. Desde una perspectiva más empírica,
+\textcite{krishnapriyan2021characterizing} caracterizan sistemáticamente los
+modos de falla de las PINN con pesos fijos entre los términos de datos y de
+física, mostrando que el entrenamiento puede estancarse en soluciones
+incorrectas incluso cuando la pérdida global parece decrecer — un fenómeno que
+se retoma en el Capítulo~\ref{cap4:resultados} al analizar la ablación del peso
+de física $\lambda_\text{fís}$.
 
 En el campo de las ecuaciones de onda, \textcite{moseley2020wave} aplicaron
 PINNs para resolver la ecuación de onda acústica 2D en modelos de velocidad

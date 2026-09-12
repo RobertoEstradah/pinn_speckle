@@ -1,8 +1,8 @@
 # Simulación acelerada de speckle óptico mediante PINNs
 
-[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.4-ee4c2c?logo=pytorch)](https://pytorch.org/)
-[![CUDA](https://img.shields.io/badge/CUDA-12.6-76b900?logo=nvidia)](https://developer.nvidia.com/cuda-toolkit)
+[![Python](https://img.shields.io/badge/Python-3.14-blue?logo=python)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.11-ee4c2c?logo=pytorch)](https://pytorch.org/)
+[![CUDA](https://img.shields.io/badge/CUDA-12.8-76b900?logo=nvidia)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-NB04%20(FEM%20benchmark)%20pendiente-yellow)]()
 
@@ -15,7 +15,7 @@
 
 ## Descripción
 
-Este repositorio contiene la implementación de **Redes Neuronales Físicamente Informadas (PINNs)** para la simulación acelerada de patrones de speckle óptico. El proyecto propone que las PINNs pueden resolver la ecuación de Helmholtz con un error L2 relativo menor al 5%, superando la velocidad de los métodos tradicionales de Elementos Finitos (FEM).
+Este repositorio contiene la implementación de **Redes Neuronales Físicamente Informadas (PINNs)** para la validación de la ecuación de Helmholtz y su futura aplicación a patrones de speckle óptico. El proyecto evalúa si las PINNs pueden resolver la ecuación con un error L2 relativo menor al 5%; la hipótesis de superar la velocidad de los métodos de Elementos Finitos (FEM) permanece pendiente del benchmark NB04.
 
 ### Problema que resuelve
 
@@ -72,9 +72,9 @@ Tesis_Maestria/
 │   └── utils.py                                        # Métricas, LHS, viz
 │
 ├── notebooks/                                          # Notebooks Jupyter
-│   ├── 01_pinn_helmholtz_1d_validation.ipynb           # L2=0.006%, factor x415 vs SOTA
-│   ├── 02_pinn_helmholtz_2d_complex_field.ipynb        # L2=0.171%, factor x11.2 vs SOTA
-│   ├── 03_pinn_optical_speckle_simulation.ipynb        # C=1.025, criterio de Goodman cumplido
+│   ├── 01_pinn_helmholtz_1d_validation.ipynb           # L2=0.006%, validación analítica
+│   ├── 02_pinn_helmholtz_2d_complex_field.ipynb        # L2=0.171%, validación analítica
+│   ├── 03_pinn_optical_speckle_simulation.ipynb        # Speckle, validación en progreso
 │   ├── 04_pinn_fem_benchmark.ipynb                     # PINN vs FEniCSx (pendiente)
 │   └── v1_exploracion_cpu/                             # Línea base histórica
 │
@@ -136,6 +136,9 @@ conda env create -f environment.yml
 conda activate pinn_speckle
 ```
 
+El entorno anterior corresponde al runtime usado para los resultados registrados:
+Python 3.14, PyTorch 2.11.0+cu128 y CUDA 12.8.
+
 ### 3. Verificar GPU
 
 ```bash
@@ -164,8 +167,8 @@ jupyter notebook notebooks/01_pinn_helmholtz_1d_validation.ipynb
 | Correlación Pearson | 1.000000 | - |
 | Épocas Adam | 15,000 / 15,000 | - |
 | Iteraciones L-BFGS | 202 / 500 | - |
-| Tiempo total | ~251 s | - |
-| Referencia Schoder & Kraxberger (2024) | 2.490% | Superado (factor x415) |
+| Tiempo total | **131.1 s** | - |
+| Referencia Schoder & Kraxberger (2024) | 2.490% | Contexto; no comparación directa |
 
 ### Notebook 02: Helmholtz 2D con campo complejo y LHS
 
@@ -174,19 +177,27 @@ jupyter notebook notebooks/01_pinn_helmholtz_1d_validation.ipynb
 | Error L2 promedio | **0.171%** | < 5% (cumplido) |
 | Error L2 E_real | 0.214% | - |
 | Error L2 E_imag | 0.127% | - |
-| R² E_real | 0.999994 | - |
+| R² E_real | 0.999995 | - |
 | R² E_imag | 0.999998 | - |
 | Épocas Adam | 8,737 / 15,000 | - |
 | Iteraciones L-BFGS | 1,035 / 1,000 | - |
 | Tiempo total | **209.9 s** | - |
+| Definición L2 promedio | Media aritmética de las componentes real e imaginaria | - |
 
-### Notebook 03: Simulación de speckle óptico por PINN — pausado
+### Notebook 03: Simulación de speckle óptico (en progreso)
 
-Pausado el 2026-09-10 para consolidar primero la validación 1D/2D (NB01,
-NB02) sin discrepancias cruzadas. El diagnóstico completo (por qué el
-residuo interior no converge junto con la frontera de fase aleatoria, y qué
-se intentó) se archivó en `archive/nb03_speckle_pausado/` para retomarse
-más adelante — ver `hallazgos_y_diagnostico.md` en esa carpeta.
+NB03 todavía no debe presentarse como una validación estadística final. El
+diagnóstico físico actual indica que el dominio de una longitud de onda solo
+permite 3 de 256 modos transversales propagantes; el 99.5% de la energía de
+frontera es evanescente. La solución interior resultante no representa todavía
+speckle completamente desarrollado.
+
+| Diagnóstico actual | Resultado | Interpretación |
+|---|---|---|
+| Modos propagantes | 3/256 | Insuficientes para el régimen buscado |
+| Fracción de energía propagante | 0.00466 | 99.5% es evanescente |
+| Contraste interior | 1.368 | No concluyente en este dominio |
+| Estado | En progreso | Requiere rediseño de escala/dominio |
 
 ### Láser simulado
 
@@ -205,23 +216,22 @@ más adelante — ver `hallazgos_y_diagnostico.md` en esa carpeta.
 Entrada (x,y) → [sin(ω₀·Wx+b)] → [128] → [sin(ω₀·Wx+b)] → [128] → ... → (E_real, E_imag)
 ```
 
-| Componente | NB01 (1D) | NB02 (2D) |
-|---|---|---|
-| Tipo | SIREN | SIREN |
-| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
-| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas |
-| Parámetros | 16,833 | 66,690 |
-| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
-| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) |
-| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω |
-| Optimizador | Adam + L-BFGS | Adam + L-BFGS |
-| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas |
+| Componente | NB01 (1D) | NB02 (2D) | NB03 (Speckle) |
+|---|---|---|---|
+| Tipo | SIREN | SIREN | SIREN |
+| Activación | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 | sin(ω₀·x), ω₀=1.0 |
+| Capas ocultas | 5 × 64 neuronas | 5 × 128 neuronas | 5 × 128 neuronas |
+| Parámetros | 16,833 | 66,690 | 66,690 |
+| Inicialización | Sitzmann et al. (2020) | Sitzmann et al. (2020) | Sitzmann et al. (2020) |
+| Muestreo interior | Linspace uniforme | Latin Hypercube Sampling (LHS) | Latin Hypercube Sampling (LHS) |
+| Condición de frontera | Dirichlet en x=0, x=1 | Dirichlet en ∂Ω | Fase aleatoria U(0,2π) en y=0 |
+| Optimizador | Adam + L-BFGS | Adam + L-BFGS | Adam + L-BFGS |
+| Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas | Paciencia 800 épocas |
 
-**NB03 (speckle óptico por PINN) está pausado** — ver `archive/nb03_speckle_pausado/`
-para el diagnóstico técnico acumulado. Existe además una validación estadística de
-respaldo, fuera de la numeración del proyecto, en `notebooks/validacion_estadistica/`
-(no usa PINN, genera el campo con ruido gaussiano filtrado según Goodman) que confirma
-que el speckle buscado es alcanzable.
+**NB03 está en progreso** — ver `CLAUDE.md` para el estado técnico actual. Existe además
+una validación estadística de respaldo, fuera de la numeración del proyecto, en
+`notebooks/validacion_estadistica/` (no usa PINN, genera el campo con ruido gaussiano
+filtrado según Goodman) que confirma que el speckle buscado es alcanzable.
 
 ---
 
@@ -229,7 +239,7 @@ que el speckle buscado es alcanzable.
 
 - [x] Notebook 01: Helmholtz 1D GPU (L2 = 0.006%, R² = 1.000000)
 - [x] Notebook 02: Helmholtz 2D GPU (L2_avg = 0.171%, tiempo = 209.9 s)
-- [ ] Notebook 03: Simulación de speckle óptico por PINN — pausado (ver `archive/nb03_speckle_pausado/`)
+- [ ] Notebook 03: Simulación de speckle óptico por PINN — en progreso
 - [ ] Notebook 04: Benchmark PINN vs FEniCSx (Speed-up Factor S = T_FEM / T_PINN)
 
 ---

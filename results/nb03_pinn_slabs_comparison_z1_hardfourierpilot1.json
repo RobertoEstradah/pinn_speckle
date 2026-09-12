@@ -1,0 +1,90 @@
+{
+  "experiment": "NB03-C PINN-SIREN por bloques contra referencia angular",
+  "seed": 42,
+  "device": "cpu",
+  "domain": {
+    "x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_lambda": [
+      0.0,
+      1.0
+    ],
+    "k_normalized": 6.283185307179586,
+    "boundary_x": "periodic value and derivative",
+    "boundary_z": "input field and outgoing dz derivative transferred by slabs"
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 1.0,
+    "coordinate_normalization": "local [-1,1] per slab",
+    "input_encoding": "fourier",
+    "fourier_modes": 20,
+    "hard_boundary": true,
+    "hard_boundary_ansatz": "u0(x) + (z-z0) uz0(x) + (z-z0)^2 N_theta(x,z)",
+    "field_training_scale_rms": 0.6402463329544956
+  },
+  "training": {
+    "n_slabs": 1,
+    "slab_width_lambda": 1.0,
+    "n_colloc_per_slab": 1500,
+    "n_periodic_per_slab": 128,
+    "n_epochs_max_per_slab": 800,
+    "lambda_dz": 1.0,
+    "lambda_periodic": 1.0,
+    "lambda_phys": 1.0,
+    "boundary_pretrain_epochs": 0,
+    "physics_ramp_epochs": 0,
+    "adaptive_residual": false,
+    "adaptive_interval": 100,
+    "adaptive_pool_factor": 4,
+    "adaptive_top_fraction": 0.3,
+    "grad_clip_norm": 1.0,
+    "total_seconds": 359.21527457237244
+  },
+  "slabs": [
+    {
+      "slab": 0,
+      "z_lambda": [
+        0.0,
+        1.0
+      ],
+      "epochs_adam": 800,
+      "lbfgs_calls": 33,
+      "best_adam_loss": 0.0018500557634979486,
+      "seconds": 356.6237304210663,
+      "final_terms": {
+        "total": 0.0012284498661756516,
+        "value": 3.883941237202426e-13,
+        "dz": 1.4484572395667694e-13,
+        "periodic": 3.201403031560801e-11,
+        "physics": 0.0012284498661756516
+      },
+      "final_loss": 0.0012284498661756516
+    }
+  ],
+  "metrics": {
+    "target_complex_relative_l2": 0.23573887291599963,
+    "target_real_relative_l2": 0.24945909119918716,
+    "target_imag_relative_l2": 0.22003343579822982,
+    "target_phase_aligned_relative_l2": 0.23454084268777092,
+    "target_complex_coherence": 0.9724009760233804,
+    "target_global_phase_shift_rad": 0.0241154933103628,
+    "target_intensity_relative_l2": 0.24650098884001528,
+    "target_intensity_pearson_correlation": 0.930494346725278,
+    "interface_input_rmse": 5.475913701639197e-17,
+    "reference_target_statistics": {
+      "mean_intensity": 0.41051390282347383,
+      "std_intensity": 0.37206566064217056,
+      "contrast": 0.9063411935214372
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.4075140953063965,
+      "std_intensity": 0.35441717505455017,
+      "contrast": 0.869705319404602
+    }
+  },
+  "status": "diagnostic; no interior reference labels used; target metrics corrected after mapping reference row indices to physical z/lambda"
+}

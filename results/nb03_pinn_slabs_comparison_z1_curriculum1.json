@@ -1,0 +1,77 @@
+{
+  "experiment": "NB03-C PINN-SIREN por bloques contra referencia angular",
+  "seed": 42,
+  "device": "cpu",
+  "domain": {
+    "x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_lambda": [
+      0.0,
+      1.0
+    ],
+    "k_normalized": 6.283185307179586,
+    "boundary_x": "periodic value and derivative",
+    "boundary_z": "input field and outgoing dz derivative transferred by slabs"
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 30.0,
+    "coordinate_normalization": "local [-1,1] per slab",
+    "input_encoding": "raw",
+    "fourier_modes": 0,
+    "hard_boundary": false,
+    "field_training_scale_rms": 0.6402463329544956
+  },
+  "training": {
+    "n_slabs": 1,
+    "slab_width_lambda": 1.0,
+    "n_colloc_per_slab": 1500,
+    "n_periodic_per_slab": 256,
+    "n_epochs_max_per_slab": 600,
+    "lambda_dz": 1.0,
+    "lambda_periodic": 1.0,
+    "lambda_phys": 1.0,
+    "total_seconds": 53.68192458152771
+  },
+  "slabs": [
+    {
+      "slab": 0,
+      "z_lambda": [
+        0.0,
+        1.0
+      ],
+      "epochs_adam": 251,
+      "lbfgs_calls": 34,
+      "best_adam_loss": 2231664.5,
+      "seconds": 26.818490743637085,
+      "final_terms": {
+        "total": 263807.71875,
+        "value": 0.477722704410553,
+        "dz": 0.7672936320304871,
+        "periodic": 0.02889968827366829,
+        "physics": 263806.4375
+      },
+      "final_loss": 263807.71875
+    }
+  ],
+  "metrics": {
+    "target_complex_relative_l2": 0.9758834136973545,
+    "target_real_relative_l2": 0.962437562060302,
+    "target_imag_relative_l2": 0.9901376455234767,
+    "interface_input_rmse": 5.475913701639197e-17,
+    "reference_target_statistics": {
+      "mean_intensity": 0.41051390282347383,
+      "std_intensity": 0.37206566064217056,
+      "contrast": 0.9063411935214372
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.015262652188539505,
+      "std_intensity": 0.0017467535799369216,
+      "contrast": 0.11444626748561859
+    }
+  },
+  "status": "diagnostic; no interior reference labels used"
+}

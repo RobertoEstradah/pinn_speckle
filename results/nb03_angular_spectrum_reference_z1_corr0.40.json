@@ -1,0 +1,67 @@
+{
+  "experiment": "NB03-A angular-spectrum physical reference",
+  "seed": 42,
+  "lambda_laser_m": 6.38e-07,
+  "coordinates": {
+    "unit": "lambda_laser",
+    "x_interval_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_interval_lambda": [
+      0.0,
+      1.0
+    ],
+    "width_lambda": 20.0,
+    "distance_lambda": 1.0,
+    "dx_lambda": 0.01953125,
+    "boundary_x": "periodic",
+    "propagation_axis": "z"
+  },
+  "physics": {
+    "k_normalized": 6.283185307179586,
+    "k_real_m_inverse": 9848252.832569884,
+    "screen": "U(x,0)=exp(i phi(x)), phi correlacionada y gaussiana",
+    "phase_model": {
+      "distribution": "zero-mean Gaussian process before exp(i phi)",
+      "standard_deviation_rad": 2.0,
+      "correlation_length_lambda": 0.4,
+      "periodic": true
+    },
+    "method": "angular spectrum with propagating and evanescent modes",
+    "propagating_modes": 41,
+    "total_spectral_modes": 1024,
+    "propagating_energy_fraction": 0.9249571792556692
+  },
+  "sampling": {
+    "n_x": 1024,
+    "n_z": 11,
+    "n_realizations": 64,
+    "target_z_lambda": 1.0
+  },
+  "target_statistics_single_realization": {
+    "n_samples": 1024,
+    "mean_intensity": 0.9251322628578986,
+    "std_intensity": 0.8277754439729648,
+    "contrast": 0.8947644322940579,
+    "ks_statistic": 0.045645642323870694,
+    "ks_pvalue": 0.027135918858028008,
+    "fraction_intensity_gt_2mean": 0.1328125,
+    "expected_fraction_gt_2mean": 0.1353352832366127
+  },
+  "target_statistics_ensemble": {
+    "n_samples": 65536,
+    "mean_intensity": 0.9110556036146911,
+    "std_intensity": 0.790998239842376,
+    "contrast": 0.8682216943774045,
+    "ks_statistic": 0.043226652997580106,
+    "ks_pvalue": 6.85879424837039e-107,
+    "fraction_intensity_gt_2mean": 0.1311798095703125,
+    "expected_fraction_gt_2mean": 0.1353352832366127
+  },
+  "acceptance_guidance": {
+    "contrast_target": "near 1; report observed value rather than a universal pass/fail rule",
+    "ks_warning": "KS is reported descriptively; spatial samples are correlated, so it is not the sole acceptance criterion",
+    "next_step": "use this field and boundary convention as the reference for the NB03 PINN"
+  }
+}

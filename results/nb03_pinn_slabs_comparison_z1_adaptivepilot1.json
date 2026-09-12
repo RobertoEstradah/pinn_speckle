@@ -1,0 +1,82 @@
+{
+  "experiment": "NB03-C PINN-SIREN por bloques contra referencia angular",
+  "seed": 42,
+  "device": "cpu",
+  "domain": {
+    "x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_lambda": [
+      0.0,
+      1.0
+    ],
+    "k_normalized": 6.283185307179586,
+    "boundary_x": "periodic value and derivative",
+    "boundary_z": "input field and outgoing dz derivative transferred by slabs"
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 30.0,
+    "coordinate_normalization": "local [-1,1] per slab",
+    "input_encoding": "raw",
+    "fourier_modes": 0,
+    "hard_boundary": false,
+    "field_training_scale_rms": 0.6402463329544956
+  },
+  "training": {
+    "n_slabs": 1,
+    "slab_width_lambda": 1.0,
+    "n_colloc_per_slab": 1000,
+    "n_periodic_per_slab": 128,
+    "n_epochs_max_per_slab": 600,
+    "lambda_dz": 1.0,
+    "lambda_periodic": 1.0,
+    "lambda_phys": 1.0,
+    "boundary_pretrain_epochs": 0,
+    "physics_ramp_epochs": 300,
+    "adaptive_residual": true,
+    "adaptive_interval": 100,
+    "adaptive_pool_factor": 4,
+    "total_seconds": 50.02338981628418
+  },
+  "slabs": [
+    {
+      "slab": 0,
+      "z_lambda": [
+        0.0,
+        1.0
+      ],
+      "epochs_adam": 600,
+      "lbfgs_calls": 38,
+      "best_adam_loss": 1266379697160192.0,
+      "seconds": 47.585039138793945,
+      "final_terms": {
+        "total": NaN,
+        "value": NaN,
+        "dz": NaN,
+        "periodic": NaN,
+        "physics": NaN
+      },
+      "final_loss": NaN
+    }
+  ],
+  "metrics": {
+    "target_complex_relative_l2": NaN,
+    "target_real_relative_l2": NaN,
+    "target_imag_relative_l2": NaN,
+    "interface_input_rmse": 5.475913701639197e-17,
+    "reference_target_statistics": {
+      "mean_intensity": 0.41051390282347383,
+      "std_intensity": 0.37206566064217056,
+      "contrast": 0.9063411935214372
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": NaN,
+      "std_intensity": NaN,
+      "contrast": NaN
+    }
+  },
+  "status": "diagnostic; no interior reference labels used"
+}

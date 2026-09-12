@@ -1,0 +1,145 @@
+{
+  "experiment": "NB03-C PINN-SIREN por bloques contra referencia angular",
+  "seed": 42,
+  "device": "cpu",
+  "domain": {
+    "x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_lambda": [
+      0.0,
+      20.0
+    ],
+    "k_normalized": 6.283185307179586,
+    "boundary_x": "periodic value and derivative",
+    "boundary_z": "input field and outgoing dz derivative transferred by slabs"
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 60.0,
+    "coordinate_normalization": "local [-1,1] per slab",
+    "field_training_scale_rms": 0.9876396785517916
+  },
+  "training": {
+    "n_slabs": 5,
+    "slab_width_lambda": 4.0,
+    "n_colloc_per_slab": 1500,
+    "n_periodic_per_slab": 256,
+    "n_epochs_max_per_slab": 600,
+    "lambda_dz": 1.0,
+    "lambda_periodic": 1.0,
+    "lambda_phys": 1.0,
+    "total_seconds": 161.24536752700806
+  },
+  "slabs": [
+    {
+      "slab": 0,
+      "z_lambda": [
+        0.0,
+        4.0
+      ],
+      "epochs_adam": 251,
+      "lbfgs_calls": 31,
+      "best_adam_loss": 0.9661908149719238,
+      "seconds": 29.470526456832886,
+      "final_terms": {
+        "total": 2.4963226097680384e+17,
+        "value": 0.4972814917564392,
+        "dz": 1416849.0,
+        "periodic": 84421.4296875,
+        "physics": 2.4963226097680384e+17
+      }
+    },
+    {
+      "slab": 1,
+      "z_lambda": [
+        4.0,
+        8.0
+      ],
+      "epochs_adam": 358,
+      "lbfgs_calls": 35,
+      "best_adam_loss": 0.42126354575157166,
+      "seconds": 39.43388867378235,
+      "final_terms": {
+        "total": 6.478634754978611e+16,
+        "value": 0.07111070305109024,
+        "dz": 359553.3125,
+        "periodic": 35922.7109375,
+        "physics": 6.478634754978611e+16
+      }
+    },
+    {
+      "slab": 2,
+      "z_lambda": [
+        8.0,
+        12.0
+      ],
+      "epochs_adam": 253,
+      "lbfgs_calls": 31,
+      "best_adam_loss": 0.06561297923326492,
+      "seconds": 31.14583921432495,
+      "final_terms": {
+        "total": 1.0589740771689103e+18,
+        "value": 0.0014424837427213788,
+        "dz": 2687692.25,
+        "periodic": 283616.8125,
+        "physics": 1.0589740771689103e+18
+      }
+    },
+    {
+      "slab": 3,
+      "z_lambda": [
+        12.0,
+        16.0
+      ],
+      "epochs_adam": 251,
+      "lbfgs_calls": 31,
+      "best_adam_loss": 0.05799216404557228,
+      "seconds": 27.488646984100342,
+      "final_terms": {
+        "total": 1.406289665576665e+18,
+        "value": 0.0008623587782494724,
+        "dz": 3841305.0,
+        "periodic": 324077.1875,
+        "physics": 1.406289665576665e+18
+      }
+    },
+    {
+      "slab": 4,
+      "z_lambda": [
+        16.0,
+        20.0
+      ],
+      "epochs_adam": 251,
+      "lbfgs_calls": 31,
+      "best_adam_loss": 0.03884122148156166,
+      "seconds": 32.07536315917969,
+      "final_terms": {
+        "total": 1.2620913870635008e+16,
+        "value": 0.004236724227666855,
+        "dz": 229967.96875,
+        "periodic": 21858.861328125,
+        "physics": 1.2620913870635008e+16
+      }
+    }
+  ],
+  "metrics": {
+    "target_complex_relative_l2": 1.0134290542829405,
+    "target_real_relative_l2": 1.0346308828592974,
+    "target_imag_relative_l2": 0.9546766279660336,
+    "interface_input_rmse": 1.226522681015491e-16,
+    "reference_target_statistics": {
+      "mean_intensity": 0.9754321346498862,
+      "std_intensity": 1.2897507476430385,
+      "contrast": 1.322235245105977
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.031285613775253296,
+      "std_intensity": 0.02593359164893627,
+      "contrast": 0.8289302587509155
+    }
+  },
+  "status": "diagnostic; no interior reference labels used"
+}

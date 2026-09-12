@@ -1,0 +1,148 @@
+{
+  "experiment": "NB03 modal PINN-SIREN five-screen validation at z=1 lambda",
+  "network_seed_fixed": 42,
+  "screen_seeds": [
+    42,
+    123,
+    321,
+    777,
+    2026
+  ],
+  "protocol": {
+    "initial_epochs": 5000,
+    "finetune_epochs": 3000,
+    "initial_learning_rate": 0.0002,
+    "finetune_learning_rate": 5e-05,
+    "n_z_per_epoch": 256,
+    "n_propagating_modes": 41,
+    "interior_labels": false
+  },
+  "criteria": {
+    "legacy": "L2 < 0.05 and abs(C_pinn-1) < 0.1",
+    "reference_fidelity": "L2 < 0.05 and abs(C_pinn-C_reference) < 0.05",
+    "statistical_note": "C near 1 is assessed on an ensemble; an individual finite screen is assessed by agreement with its reference contrast"
+  },
+  "per_screen": [
+    {
+      "screen_seed": 42,
+      "complex_l2_at_z1": 0.04118450855771583,
+      "complex_coherence_at_z1": 0.9991936384500502,
+      "intensity_correlation_at_z1": 0.998341730554252,
+      "contrast_reference": 0.9063411935214372,
+      "contrast_pinn": 0.9019328137437037,
+      "absolute_contrast_error": 0.004408379777733451,
+      "residual_normalized_rmse": 0.03865973651409149,
+      "l2_over_z_mean": 0.029957224991357535,
+      "l2_over_z_maximum": 0.04792563650019503,
+      "training_seconds_initial": 164.41702461242676,
+      "training_seconds_finetune": 103.97439050674438,
+      "legacy_absolute_contrast_pass": true,
+      "reference_fidelity_pass": true
+    },
+    {
+      "screen_seed": 123,
+      "complex_l2_at_z1": 0.029055845956307707,
+      "complex_coherence_at_z1": 0.9996434299821457,
+      "intensity_correlation_at_z1": 0.9993422924458031,
+      "contrast_reference": 0.8827017967922942,
+      "contrast_pinn": 0.8840944767918644,
+      "absolute_contrast_error": 0.0013926799995701566,
+      "residual_normalized_rmse": 0.03699542582035065,
+      "l2_over_z_mean": 0.03236186703443843,
+      "l2_over_z_maximum": 0.05270025436127951,
+      "training_seconds_initial": 177.26020002365112,
+      "training_seconds_finetune": 105.53548121452332,
+      "legacy_absolute_contrast_pass": false,
+      "reference_fidelity_pass": true
+    },
+    {
+      "screen_seed": 321,
+      "complex_l2_at_z1": 0.038925114793628944,
+      "complex_coherence_at_z1": 0.9992963875712487,
+      "intensity_correlation_at_z1": 0.9984684644466348,
+      "contrast_reference": 0.9200243447161064,
+      "contrast_pinn": 0.9210902125859988,
+      "absolute_contrast_error": 0.0010658678698923785,
+      "residual_normalized_rmse": 0.03628471866250038,
+      "l2_over_z_mean": 0.03010763822407557,
+      "l2_over_z_maximum": 0.04825391042058132,
+      "training_seconds_initial": 173.36312794685364,
+      "training_seconds_finetune": 102.3327522277832,
+      "legacy_absolute_contrast_pass": true,
+      "reference_fidelity_pass": true
+    },
+    {
+      "screen_seed": 777,
+      "complex_l2_at_z1": 0.032518233675246366,
+      "complex_coherence_at_z1": 0.9995110828358561,
+      "intensity_correlation_at_z1": 0.9996153455376007,
+      "contrast_reference": 1.2246460835380946,
+      "contrast_pinn": 1.239050015716757,
+      "absolute_contrast_error": 0.014403932178662426,
+      "residual_normalized_rmse": 0.035740926861763,
+      "l2_over_z_mean": 0.02606731619565148,
+      "l2_over_z_maximum": 0.04082300769462106,
+      "training_seconds_initial": 170.55981540679932,
+      "training_seconds_finetune": 101.96809935569763,
+      "legacy_absolute_contrast_pass": false,
+      "reference_fidelity_pass": true
+    },
+    {
+      "screen_seed": 2026,
+      "complex_l2_at_z1": 0.035406648311938606,
+      "complex_coherence_at_z1": 0.9994561222871051,
+      "intensity_correlation_at_z1": 0.99832470814727,
+      "contrast_reference": 0.7812031536682129,
+      "contrast_pinn": 0.7822101313906036,
+      "absolute_contrast_error": 0.0010069777223906673,
+      "residual_normalized_rmse": 0.03632669523358345,
+      "l2_over_z_mean": 0.030648637409766942,
+      "l2_over_z_maximum": 0.049821396973038126,
+      "training_seconds_initial": 170.9334533214569,
+      "training_seconds_finetune": 102.79331159591675,
+      "legacy_absolute_contrast_pass": false,
+      "reference_fidelity_pass": true
+    }
+  ],
+  "aggregate": {
+    "complex_l2_at_z1": {
+      "mean": 0.03541807025896749,
+      "std_population": 0.004345992470584517,
+      "minimum": 0.029055845956307707,
+      "maximum": 0.04118450855771583
+    },
+    "complex_coherence_at_z1": {
+      "mean": 0.9994201322252811,
+      "std_population": 0.00015877112832929837,
+      "minimum": 0.9991936384500502,
+      "maximum": 0.9996434299821457
+    },
+    "absolute_contrast_error": {
+      "mean": 0.004455567509649816,
+      "std_population": 0.005132958237462362,
+      "minimum": 0.0010069777223906673,
+      "maximum": 0.014403932178662426
+    },
+    "residual_normalized_rmse": {
+      "mean": 0.03680150061845779,
+      "std_population": 0.0010107391418807629,
+      "minimum": 0.035740926861763,
+      "maximum": 0.03865973651409149
+    },
+    "l2_over_z_mean_per_screen": {
+      "mean": 0.02982853677105799,
+      "std_population": 0.0020655055447493568,
+      "minimum": 0.02606731619565148,
+      "maximum": 0.03236186703443843
+    },
+    "l2_over_z_maximum_per_screen": {
+      "mean": 0.047904841189943,
+      "std_population": 0.003922851538911809,
+      "minimum": 0.04082300769462106,
+      "maximum": 0.05270025436127951
+    },
+    "legacy_pass_count": 2,
+    "reference_fidelity_pass_count": 5,
+    "total_screens": 5
+  }
+}

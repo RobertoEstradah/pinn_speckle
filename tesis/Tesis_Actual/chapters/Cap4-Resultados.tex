@@ -1,12 +1,10 @@
 \chapter{Experimentos y Resultados}\label{cap4:resultados}
 
-Este capítulo presenta los resultados de los experimentos de validación
-ejecutados en GPU NVIDIA RTX~5050 (CUDA 12.8, PyTorch 2.11, SEED = 42):
-validación analítica 1D (NB01) y validación 2D con campo complejo (NB02). El
-tercer experimento planeado (NB03, simulación de \textit{speckle} óptico
-mediante PINN) se encuentra pausado; el diagnóstico y los hallazgos
-acumulados hasta la fecha se documentan en
-\texttt{archive/nb03\_speckle\_pausado/} para retomarlo posteriormente.
+Este capítulo presenta los resultados de dos experimentos completos y el
+diagnóstico preliminar de un tercero, ejecutados en GPU NVIDIA RTX~5050
+(CUDA 12.8, PyTorch 2.11, SEED = 42). Los experimentos siguen una complejidad
+creciente: validación analítica 1D (NB01), validación 2D con campo complejo
+(NB02) y simulación de \textit{speckle} óptico aún en progreso (NB03).
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{NB01: Validación 1D, Helmholtz con solución analítica}
@@ -18,10 +16,11 @@ El primer experimento valida la arquitectura SIREN frente a la solución analít
 exacta de la ecuación de Helmholtz 1D. Se empleó la arquitectura SIREN
 $5 \times 64$ ($16{,}833$ parámetros) con los hiperparámetros de la
 Tabla~\ref{tab:hiperparametros}. Los puntos de colocación son $N_c = 2{,}000$
-puntos uniformes en $[0,1]$ y las condiciones de frontera Dirichlet se imponen
-en cinco puntos conocidos de la solución analítica ($x = 0,\ 0.25,\ 0.5,\ 0.75,\ 1$),
-en lugar de únicamente los extremos, para evitar el colapso hacia la solución
-constante que produce la condición simétrica $E(0) = E(1) = 1$.
+puntos uniformes en $[0,1]$. Las condiciones de frontera Dirichlet físicas se
+imponen en los extremos $x=0$ y $x=1$; adicionalmente, se incorporan tres
+puntos interiores de supervisión de la solución analítica
+($x=0.25,\ 0.5,\ 0.75$). Estos cinco puntos conocidos evitan el colapso hacia
+la solución constante que produce la condición simétrica $E(0)=E(1)=1$.
 
 \subsection{Resultados de precisión}
 
@@ -188,7 +187,7 @@ $100 \times 100$ puntos.
 \toprule
 Métrica & $E_\text{real}$ & $E_\text{imag}$ \\
 \midrule
-Error $L^2$ (\%)         & 0.214              & 0.127              \\
+Error $L^2$ componente (\%) & 0.214              & 0.127              \\
 MSE                      & $2.20 \times 10^{-6}$ & $8.43 \times 10^{-7}$ \\
 RMSE                     & $1.48 \times 10^{-3}$ & $9.18 \times 10^{-4}$ \\
 MAE                      & $1.27 \times 10^{-3}$ & $7.71 \times 10^{-4}$ \\
@@ -196,7 +195,7 @@ Error máximo             & $3.05 \times 10^{-3}$ & $2.93 \times 10^{-3}$ \\
 $R^2$                    & 0.999995           & 0.999998           \\
 Correlación de Pearson   & 0.999998           & 0.999999           \\
 \midrule
-Error $L^2$ promedio (\%)& \multicolumn{2}{c}{\textbf{0.171}} \\
+Promedio aritmético de errores $L^2$ (\%)& \multicolumn{2}{c}{\textbf{0.171}} \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
@@ -208,7 +207,8 @@ Error $L^2$ promedio (\%)& \multicolumn{2}{c}{\textbf{0.171}} \\
     función objetivo), tiempo total 209.9 s (GPU RTX 5050 laptop, conectada
     a corriente, sin procesos concurrentes).
     Dispersión entre semillas (SEED $\in \{42, 123, 777\}$):
-    error $L^2$ promedio $= 0.192 \pm 0.089$\,\% (media $\pm$ desv.\ est.).
+    error $L^2$ promedio $= 0.192 \pm 0.089$\,\% (media $\pm$ desviación
+    estándar poblacional, $\mathrm{ddof}=0$).
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -241,8 +241,8 @@ exacta y la predicción PINN-SIREN para ambas componentes del campo.
     absoluto para $E_\text{real}$. Fila central (B1-B3): lo mismo para
     $E_\text{imag}$. Fila inferior: intensidad predicha $I = |E|^2$ (C1),
     puntos de colocación LHS (C2) y curvas de pérdida durante Adam y L-BFGS
-    (C3). La diferencia visual entre solución exacta y predicción es
-    indistinguible; los errores puntuales son del orden de $10^{-3}$
+    (C3). La diferencia visual entre solución exacta y predicción es muy
+    pequeña a esta escala; los errores puntuales son del orden de $10^{-3}$
     (véase la Tabla~\ref{tab:resultados2d}). Malla de evaluación
     $100 \times 100$, SEED = 42.}
     \label{fig:resultados2d}
@@ -323,7 +323,7 @@ la Tabla~\ref{tab:ablacion_lambda}.
 \label{tab:ablacion_lambda}
 \begin{tabular}{lccc}
 \toprule
-$\lambda_\text{fís}$ & Error $L^2$ prom. (\%) & Converge & Observación \\
+$\lambda_\text{fís}$ & Error $L^2$ prom. (\%) & Convergencia & Observación \\
 \midrule
 0.01  & 0.163  & Sí & Física subponderada \\
 0.1   & 0.171  & Sí & \textbf{Configuración seleccionada} \\
@@ -335,21 +335,22 @@ $\lambda_\text{fís}$ & Error $L^2$ prom. (\%) & Converge & Observación \\
     Mismo protocolo Adam + L-BFGS que NB02.
     El caso $\lambda = 1.0$ no produjo un valor de $L^2$: la corrida se
     interrumpió por una excepción de CUDA antes de completar el
-    entrenamiento, debido a que los dos residuos (real e imaginario)
-    duplican la contribución de la física y generan gradientes de gran
-    magnitud en \texttt{float32}. No es un caso de no convergencia por
-    agotar épocas, sino una falla numérica (\texttt{results/ablation\_lambda.json}).
+    entrenamiento. El registro de la corrida asocia el fallo con el crecimiento
+    del gradiente en \texttt{float32}; como no se guardó una medición independiente
+    de su magnitud, se reporta como diagnóstico de la falla y no como una
+    relación causal demostrada. No es un caso de no convergencia por agotar
+    épocas, sino una interrupción numérica (\texttt{results/ablation\_lambda.json}).
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-El valor $\lambda_\text{fís} = 0.1$ se seleccionó por su estabilidad numérica,
-no por precisión: el modelo con $\lambda = 0.01$ obtiene un error ligeramente
-menor (0.163\% frente a 0.171\%) al sacrificar restricción física, mientras
-que $\lambda = 1.0$ produce gradientes explosivos que interrumpen el
-entrenamiento. Entre las dos configuraciones que sí convergen, $\lambda = 0.1$
-se prefiere porque impone una restricción física más fuerte sin un costo de
-precisión relevante frente al umbral de la tesis.
+El valor $\lambda_\text{fís} = 0.1$ se seleccionó por la estabilidad numérica
+observada, no por precisión: el modelo con $\lambda = 0.01$ obtiene un error
+ligeramente menor (0.163\% frente a 0.171\%) al asignar menor peso a la
+restricción física, mientras que $\lambda = 1.0$ se interrumpió antes de
+completar el entrenamiento. Entre las dos configuraciones que sí convergen,
+$\lambda = 0.1$ se prefiere porque impone una restricción física más fuerte sin
+un costo de precisión relevante frente al umbral de la tesis.
 
 Esta fragilidad frente al peso relativo de los términos de pérdida no es un
 fenómeno aislado de esta implementación: \textcite{krishnapriyan2021characterizing}
@@ -363,7 +364,9 @@ dominar en magnitud a los del término de datos durante el entrenamiento,
 generando un flujo de gradiente patológico que dificulta la convergencia. La
 inestabilidad observada con $\lambda = 1.0$ en este trabajo es consistente
 con ambas caracterizaciones: los dos residuos (real e imaginario) duplican el
-peso efectivo del término físico, agravando el mismo tipo de desbalance.
+    contribución del término físico, un posible factor del mismo tipo de
+    desbalance; esta interpretación no se aisló experimentalmente en la
+    corrida de ablación.
 
 \subsection{Explicación cuantitativa: análisis del núcleo tangente neuronal (NTK)}
 \label{sec:ntk_analisis}
@@ -416,6 +419,56 @@ desbalance identificado empíricamente en la ablación, no deriva
 analíticamente el valor óptimo de $\lambda_\text{fís}$.
 
 % ──────────────────────────────────────────────────────────────────────────────
+\section{NB03: Simulación de speckle óptico}
+\label{sec:resultados_speckle}
+
+\subsection{Configuración experimental}
+
+NB03 se reformuló como un problema de propagación 2D en
+$\Omega_{03}=[-10,10]\times[0,20]$ expresado en $(x/\lambda,z/\lambda)$,
+manteniendo la ecuación de Helmholtz y el campo complejo. La condición de
+entrada se obtiene de una pantalla de fase periódica espacialmente
+correlacionada, con longitud de correlación $\ell_\phi=0.5\lambda$ y desviación
+estándar de $2$ rad. Se conservan únicamente sus modos propagantes mediante la
+proyección angular $|k_x|\leq k$.
+
+La referencia independiente se calcula mediante el método de espectro angular.
+En la entrada se impone el campo radiativo y su derivada longitudinal saliente;
+en la dirección transversal se imponen periodicidad de valor y derivada. La
+PINN no utiliza valores del campo de referencia en los puntos interiores. Para
+reducir la dificultad de optimización, el dominio longitudinal se divide en
+bloques de $4\lambda$ y cada red local transfiere el campo y la derivada a la
+interfaz siguiente.
+
+\subsection{Resultados}
+
+\textit{[Sección en progreso.]} La referencia angular de NB03-A ya genera el
+campo físico de control. La corrida PINN más reciente reproduce
+$|E| \approx 1$ en la frontera $z = 0$ (ajuste correcto de la condición
+impuesta), pero el residuo de Helmholtz en el interior del dominio no converge
+con los mismos hiperparámetros de NB02: al equilibrar el peso $\lambda_\text{fís}$
+para lograr el ajuste de frontera, el campo interior deja de satisfacer la
+ecuación de forma consistente, y las estadísticas resultantes ($C$, test KS)
+no son representativas de \textit{speckle} completamente desarrollado. Se
+está evaluando una estrategia de muestreo de colocación concentrada cerca de
+$z = 0$, informada por la literatura de PINNs en problemas de alta frecuencia
+\parencite{krishnapriyan2021characterizing} y por el antecedente más cercano
+en arquitectura \parencite{panagiotakopoulos2026helmholtz}. Este resultado
+corresponde al prototipo histórico en el dominio corto y no se incorpora como
+resultado final. La referencia angular de NB03-A se obtuvo en un dominio de
+$20\lambda$ de ancho por $20\lambda$ de propagación; la pantalla correlacionada
+conservó aproximadamente $97.5\%$ de su energía en modos propagantes. Para el
+conjunto de 64 realizaciones en $z=20\lambda$ se obtuvo $C=0.9732$, mientras
+que una sola realización produjo $C=1.3222$. Por ello, la aceptación
+estadística se basará en un conjunto de realizaciones y no en una única sección
+espacial correlacionada.
+
+La versión por bloques se encuentra en evaluación; sus salidas se considerarán
+resultados de tesis únicamente cuando satisfagan simultáneamente el error
+complejo contra la referencia, el residuo de Helmholtz y las métricas
+estadísticas de \textit{speckle}.
+
+% ──────────────────────────────────────────────────────────────────────────────
 \section{Contexto en la literatura}
 
 La Tabla~\ref{tab:comparativa} sitúa los resultados de precisión de la
@@ -457,17 +510,17 @@ campo resultante (propagación, refracción, dispersión) en lugar de reportar
 un error $L^2$ cuantitativo contra una solución analítica; (ii) no calibran
 $\omega_0$ respecto al número de onda $k$; y (iii) su condición de frontera es
 una fuente puntual gaussiana con condición de radiación de Sommerfeld, en
-lugar de la fase aleatoria en $y=0$ que da lugar al patrón de \textit{speckle}
+lugar de la fase aleatoria en $z=0$ que da lugar al patrón de \textit{speckle}
 en este trabajo. No aborda, por tanto, la generación de \textit{speckle} ni su
 validación estadística contra los criterios de \textcite{goodman2007speckle}.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Resumen de experimentos completados}
 
-La Tabla~\ref{tab:resumen_experimentos} sintetiza el estado de los cuatro
-experimentos planificados en los objetivos específicos.
+La Tabla~\ref{tab:resumen_experimentos} sintetiza el estado de los experimentos
+planificados en los objetivos específicos.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \begin{threeparttable}
 \caption{Estado de los experimentos planificados.}
@@ -478,26 +531,24 @@ Experimento & Descripción & Estado & Métrica principal \\
 \midrule
 NB01 & Helmholtz 1D, validación analítica & Completo & $L^2 = 0.006\%$ \\
 NB02 & Helmholtz 2D, campo complejo       & Completo & $L^2 = 0.171\%$ \\
-NB03 & Speckle óptico, frontera rugosa    & Pausado & \textemdash \\
+NB03-A & Speckle óptico, referencia angular & Completo & $C=0.9732$ (64 realizaciones) \\
+NB03-B/C & PINN global / por bloques        & En progreso & $L^2$, residuo y estadísticas pendientes \\
 NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
-    \item NB01 y NB02 verifican la hipótesis de precisión ($L^2 < 5\%$). NB03
-    (speckle óptico por PINN con frontera de fase aleatoria) se pausó tras
-    diagnosticar que el ajuste de frontera y el residuo interior de la EDP no
-    convergen simultáneamente con los hiperparámetros heredados de NB02; el
-    diagnóstico completo se documenta en \texttt{archive/nb03\_speckle\_pausado/}
-    para retomarse posteriormente. NB04 es necesario para verificar la
-    hipótesis de velocidad ($S > 1$) y se planifica como trabajo futuro.
+    \item Los estados se refieren al cierre de esta versión de la tesis;
+    la referencia física de NB03 está completada, pero la validación de la PINN
+    y NB04 permanecen abiertos para trabajo posterior.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
 Los dos primeros experimentos completados (NB01, NB02) verifican la hipótesis
-de precisión: el error $L^2 < 5\%$ se supera con amplitud en ambos casos. El
-tercero (NB03, speckle óptico por PINN) está pausado mientras se consolida el
-trabajo de validación 1D/2D; el diagnóstico acumulado se conserva para
-retomarlo (véase \texttt{archive/nb03\_speckle\_pausado/}). La hipótesis de
-velocidad ($S > 1$) requiere la implementación de la referencia FEM (NB04),
-programada como trabajo futuro inmediato.
+de precisión: ambos cumplen el umbral $L^2 < 5\%$ con amplitud. El
+tercero (NB03-A) establece una referencia física reproducible por espectro
+angular; la validación de NB03 mediante PINN por bloques y su comparación contra
+esa referencia están en progreso (véase Sección~\ref{sec:resultados_speckle}).
+La hipótesis de velocidad ($S > 1$)
+requiere la implementación de la referencia FEM (NB04), programada como
+trabajo futuro inmediato.

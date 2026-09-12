@@ -6,13 +6,12 @@ channels:
   - defaults
 
 dependencies:
-  - python=3.11
+  - python=3.14
   - pip
 
-  # ── PyTorch con CUDA 12.6 ─────────────────────────────────────────────────
-  - pytorch=2.4
-  - torchvision=0.19
-  - pytorch-cuda=12.6
+  # ── PyTorch con CUDA 12.8: runtime de los resultados registrados ───────────
+  - pytorch=2.11
+  - pytorch-cuda=12.8
 
   # ── Ciencia y matemáticas ─────────────────────────────────────────────────
   - numpy>=1.26

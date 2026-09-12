@@ -14,10 +14,10 @@ Tradicionalmente, la simulación de estos fenómenos ondulatorios se aborda
 mediante métodos numéricos robustos como el Método de Elementos Finitos
 (\textit{FEM}) o métodos estocásticos como el de Monte Carlo. Sin embargo,
 estos métodos presentan un cuello de botella computacional significativo:
-requieren una discretización extremadamente fina del dominio espacial para
-resolver las oscilaciones rápidas del campo de luz, lo que resulta en un
-consumo masivo de memoria y tiempos de cómputo que pueden extenderse por horas
-o días cuando se necesitan miles de realizaciones estadísticas
+requieren una discretización suficientemente fina del dominio espacial para
+resolver las oscilaciones del campo de luz. Esto puede aumentar el consumo de
+memoria y el tiempo de cómputo, especialmente cuando se necesitan muchas
+realizaciones estadísticas
 \parencite{jin2014finite, goodman2007speckle}.
 
 En paralelo, el campo de la inteligencia artificial ha experimentado un
@@ -32,11 +32,12 @@ Diferencial Parcial (EDP) que gobierna el fenómeno físico de interés.
 No obstante, las activaciones estándar de las redes neuronales (tanh, ReLU)
 presentan un sesgo espectral \parencite{rahaman2019spectral}: tienden a aprender
 frecuencias bajas antes que las altas. Para la ecuación de Helmholtz con número
-de onda $k = 2\pi$, este sesgo produce derivadas de segundo orden inestables y
-una convergencia lenta. Las \textit{Sinusoidal Representation Networks (SIREN)},
-propuestas por \textcite{sitzmann2020siren}, resuelven este problema mediante la
-función de activación $\phi(z) = \sin(\omega_0 z)$, convirtiendo la arquitectura
-en la elección natural para resolver ecuaciones de onda.
+de onda $k = 2\pi$, este sesgo puede dificultar el ajuste de soluciones
+oscilatorias y hacer más exigente el cálculo de derivadas de segundo orden.
+Las \textit{Sinusoidal Representation Networks (SIREN)}, propuestas por
+\textcite{sitzmann2020siren}, utilizan la activación $\phi(z) = \sin(\omega_0 z)$;
+por ello se seleccionan en este trabajo como una arquitectura adecuada para
+evaluar ecuaciones de onda, sin asumir que sean universalmente superiores.
 
 Este proyecto se sitúa en la intersección de la óptica computacional y la
 inteligencia artificial, aplicando el paradigma PINN-SIREN para superar las
@@ -60,10 +61,10 @@ numéricos actuales:
     \item \textbf{Métodos Basados en Malla (FEM):} Para capturar con precisión
     los detalles finos de un patrón de \textit{speckle}, la malla debe tener
     una resolución espacial menor que la longitud de onda de la luz
-    \parencite{jin2014finite}. Esto conduce a sistemas de ecuaciones con millones
-    de incógnitas por realización, requiriendo alta memoria RAM y tiempos de
-    ejecución que frenan la investigación. Cada nuevo perfil de rugosidad
-    superficial exige resolver el sistema completo desde cero.
+    \parencite{jin2014finite}. En dominios grandes o con alta resolución esto
+    puede conducir a sistemas con un número muy elevado de incógnitas, además de
+    requerir memoria y tiempo de ejecución considerables. Cada nuevo perfil de
+    rugosidad superficial puede exigir repetir la resolución del problema.
 
     \item \textbf{Métodos Estocásticos (Monte Carlo):} Requieren simular un
     número masivo de fotones individuales para construir un patrón estadísticamente
@@ -74,19 +75,20 @@ numéricos actuales:
 Aunque la aplicación de las \textit{PINNs} para resolver la ecuación de
 Helmholtz ha sido validada en simulaciones de ondas acústicas
 \parencite{schoder2024helmholtz} y, de forma más reciente, en contextos
-ópticos y electromagnéticos con arquitectura SIREN
-\parencite{panagiotakopoulos2026helmholtz}, hasta donde alcanza el
-conocimiento actual ningún trabajo combina la activación sinusoidal, una
-regla explícita de calibración de $\omega_0$ respecto al número de onda, y
+bidimensionales de Helmholtz con arquitectura SIREN
+\parencite{panagiotakopoulos2026helmholtz}, en la revisión realizada no se
+identificó un trabajo que combine simultáneamente la activación sinusoidal,
+una regla explícita de calibración de $\omega_0$ respecto al número de onda y
 la generación de \textit{speckle} óptico desde una condición de frontera de
-fase aleatoria validada estadísticamente conforme al criterio de Goodman.
-Esta combinación es la que aborda sistemáticamente el presente trabajo.
+fase aleatoria validada estadísticamente conforme al criterio de Goodman. Esta
+combinación es la que aborda el presente trabajo y deberá contrastarse con una
+revisión sistemática más amplia si se formula como afirmación de novedad.
 
-Este trabajo propone tres elementos que, en conjunto, no se encuentran en la
-literatura relacionada. Primero, una regla de calibración
+Este trabajo propone tres elementos que, en conjunto, no se encontraron en la
+literatura revisada. Primero, una regla de calibración
 $\omega_0 \approx k/(2\pi)$ que vincula el hiperparámetro de frecuencia de
-SIREN al número de onda físico, ausente tanto en la propuesta original de
-SIREN \parencite{sitzmann2020siren} como en
+SIREN al número de onda físico, no identificada en la propuesta original de
+SIREN \parencite{sitzmann2020siren} ni en
 \textcite{panagiotakopoulos2026helmholtz}, el trabajo más cercano
 arquitectónicamente encontrado en la revisión de literatura (misma red
 SIREN, mismo campo complejo, misma estrategia de optimización Adam seguida
@@ -94,9 +96,16 @@ de L-BFGS). Segundo, la generación de \textit{speckle} óptico mediante la
 resolución directa de la ecuación de Helmholtz desde una condición de
 frontera de fase aleatoria, en lugar de ajustar un modelo a patrones de
 \textit{speckle} ya medidos. Tercero, la validación estadística del patrón
-generado conforme al criterio de Goodman, no empleada en ningún trabajo
-previo de PINN aplicado a la ecuación de Helmholtz identificado en esta
-revisión.
+generado conforme al criterio de Goodman, no identificada en los trabajos de
+PINN aplicados a la ecuación de Helmholtz incluidos en esta revisión.
+
+La contribución se plantea como un marco de validación reproducible: la PINN se
+compara contra una referencia independiente de propagación por espectro angular,
+se evalúa con realizaciones de fase no utilizadas durante el ajuste y se
+reportan simultáneamente métricas de campo complejo y estadísticas de
+\textit{speckle}. La afirmación de novedad queda limitada a esta combinación y
+deberá sostenerse únicamente con los resultados que superen los criterios
+cuantitativos definidos en el Capítulo~\ref{cap3:modelo}.
 
 \subsection{Delimitación de la investigación}
 
@@ -107,19 +116,21 @@ revisión.
     resolver la ecuación de Helmholtz en dominios 2D.
 
     \item Se validará cuantitativamente la precisión del modelo contra soluciones
-    analíticas conocidas mediante el error relativo $L^2$.
+    analíticas conocidas mediante el error relativo $L^2$ en NB01 y NB02, y contra
+    una referencia numérica independiente en NB03.
 
-    \item El modelo será capaz de simular la generación de patrones de
-    \textit{speckle} óptico en 2D, mediante la imposición de una condición de
-    frontera con fase aleatoria $\psi(x) \sim \mathcal{U}(0, 2\pi)$.
+    \item Se implementará una extensión del modelo para simular la generación
+    de patrones de \textit{speckle} óptico en 2D, mediante una pantalla de fase
+    aleatoria espacialmente correlacionada y limitada al régimen propagante.
 
-    \item Se realizará una evaluación estadística del patrón generado conforme
-    al criterio de Goodman para \textit{speckle} completamente desarrollado
-    \parencite{goodman2007speckle}.
+    \item Se evaluará estadísticamente el patrón generado conforme al criterio
+    de Goodman para \textit{speckle} completamente desarrollado
+    \parencite{goodman2007speckle}, una vez que NB03 alcance una solución física
+    consistente.
 
     \item Se realizará una evaluación comparativa (\textit{benchmark}) del tiempo
-    de inferencia contra el método FEM para demostrar la viabilidad computacional
-    del enfoque propuesto.
+    de inferencia contra una referencia numérica de propagación y, cuando el
+    problema se formule con fronteras absorbentes, contra una implementación FEM.
 \end{itemize}
 
 \subsubsection*{Limitaciones}
@@ -145,8 +156,8 @@ Las preguntas que guían esta investigación son:
 \begin{enumerate}
     \item ¿Puede un modelo PINN con activación sinusoidal (SIREN) aproximar
     con precisión la solución de la ecuación de Helmholtz 2D para la simulación
-    de patrones de \textit{speckle} óptico, logrando un error $L^2 < 5\%$
-    respecto a soluciones de referencia?
+    de patrones de \textit{speckle} óptico, logrando un error complejo relativo
+    $L^2 < 5\%$ respecto a una referencia numérica independiente?
 
     \item ¿Cuál es la ganancia en eficiencia computacional (tiempo de inferencia
     y uso de memoria) del enfoque PINN-SIREN respecto al FEM para simular el
@@ -160,7 +171,8 @@ Las preguntas que guían esta investigación son:
 \textbf{Hipótesis:} El desarrollo de un modelo PINN-SIREN para la resolución de
 la ecuación de Helmholtz 2D con campo complejo permitirá:
 (i) simular la generación de \textit{speckle} óptico con un error relativo
-$L^2 < 5\%$ respecto a la solución analítica de referencia;
+    $L^2 < 5\%$ respecto a la referencia correspondiente al experimento:
+    analítica en NB01/NB02 y numérica independiente en NB03;
 (ii) obtener un factor de aceleración $S = T_\text{FEM} / T_\text{PINN} > 1$ en
 la fase de inferencia; y
 (iii) preservar las propiedades estadísticas del fenómeno con un contraste de
@@ -192,8 +204,9 @@ eléctrico complejo.
     validando contra la solución de onda plana $E = e^{i(k_x x + k_y y)}$.
 
     \item Aplicar el modelo validado a la simulación de \textit{speckle} óptico
-    (NB03) mediante una condición de frontera de fase aleatoria, y validar
-    estadísticamente el patrón generado conforme al criterio de Goodman.
+    (NB03) mediante una pantalla de fase aleatoria correlacionada, condiciones
+    laterales periódicas y una condición de propagación saliente, y validar el
+    campo contra el espectro angular y el patrón conforme al criterio de Goodman.
 
     \item Comparar cuantitativamente el rendimiento computacional del modelo
     PINN-SIREN contra una implementación FEM de referencia (NB04), cuantificando
@@ -207,10 +220,10 @@ Esta investigación se justifica en tres ejes principales:
 
 \begin{itemize}
     \item \textbf{Justificación computacional:} El principal obstáculo en la
-    simulación óptica avanzada es el costo prohibitivo de los métodos de malla.
-    El enfoque \textit{mesh-free} propuesto busca reducir los tiempos de
-    simulación en al menos un orden de magnitud, habilitando estudios estadísticos
-    de \textit{speckle} que actualmente son intratables.
+    simulación óptica avanzada es el costo computacional de los métodos de
+    malla. El enfoque \textit{mesh-free} propuesto evalúa si es posible reducir
+    los tiempos de simulación y facilitar estudios estadísticos de \textit{speckle}
+    que resultan costosos con los métodos de referencia.
 
     \item \textbf{Justificación científica:} La simulación precisa de
     \textit{speckle} impacta directamente en la imagenología biomédica
@@ -252,12 +265,19 @@ alineadas con los objetivos específicos.
     la función de pérdida $\lambda_\text{fís} = 0.1$ mediante ablación.
 
     \item[\textbf{Fase 3 - NB03: Simulación de \textit{speckle} óptico.}]
-    Se aplica el modelo validado a la generación de \textit{speckle}, reemplazando
-    la condición de onda plana por una frontera con fase aleatoria
-    $\psi(x) \sim \mathcal{U}(0, 2\pi)$ en $y = 0$ y bordes libres en el
-    resto del dominio. La validación estadística sigue el criterio de Goodman
-    \parencite{goodman2007speckle}: contraste $C = \sigma_I / \langle I \rangle$
-    y test de Kolmogorov-Smirnov contra la distribución exponencial teórica.
+    Se aplica el modelo validado a la generación de \textit{speckle} en el dominio
+    de propagación $x/\lambda\in[-10,10]$ y $z/\lambda\in[0,20]$. La pantalla
+    de fase tiene correlación espacial finita para evitar una condición dominada
+    por modos evanescentes. En la dirección transversal se impone periodicidad y
+    en la dirección longitudinal se selecciona la propagación saliente mediante
+    el campo y la derivada en la interfaz de entrada. Para mejorar la estabilidad,
+    el dominio se entrena por bloques cortos en $z$, transfiriendo el campo y su
+    derivada entre interfaces. La PINN se compara contra la referencia de
+    espectro angular sin usar valores interiores de esa referencia durante el
+    ajuste. La validación estadística sigue el criterio de Goodman
+    \parencite{goodman2007speckle}: contraste $C = \sigma_I / \langle I \rangle$,
+    distribución de intensidad y, como diagnóstico complementario, el test de
+    Kolmogorov-Smirnov.
 
     \item[\textbf{Fase 4 - NB04: Benchmark FEM (trabajo futuro).}]
     Comparación cuantitativa del tiempo de inferencia PINN-SIREN contra una

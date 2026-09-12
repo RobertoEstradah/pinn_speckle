@@ -12,46 +12,50 @@
 \contentsline {section}{\numberline {1.4}Objetivo general}{5}{section.1.4}%
 \contentsline {section}{\numberline {1.5}Objetivos específicos}{5}{section.1.5}%
 \contentsline {section}{\numberline {1.6}Justificación}{6}{section.1.6}%
-\contentsline {section}{\numberline {1.7}Metodología}{6}{section.1.7}%
-\contentsline {chapter}{\numberline {2}Marco Teórico}{8}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Conceptos y teorías fundamentales}{8}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Ecuación de onda de Helmholtz}{8}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Speckle óptico completamente desarrollado}{9}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Redes Neuronales Informadas por Física (PINNs)}{9}{subsection.2.1.3}%
-\contentsline {subsection}{\numberline {2.1.4}Redes SIREN y sesgo espectral}{10}{subsection.2.1.4}%
-\contentsline {subsection}{\numberline {2.1.5}Diferenciación automática}{11}{subsection.2.1.5}%
-\contentsline {subsection}{\numberline {2.1.6}Muestreo Latino Hipercúbico (LHS)}{11}{subsection.2.1.6}%
-\contentsline {subsection}{\numberline {2.1.7}Optimización híbrida Adam + L-BFGS}{12}{subsection.2.1.7}%
-\contentsline {section}{\numberline {2.2}Literatura relacionada}{12}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Marco tecnológico}{14}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Infraestructura de hardware}{14}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Ecosistema de software}{14}{subsection.2.3.2}%
-\contentsline {chapter}{\numberline {3}Modelo e implementación}{15}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Formulación del problema}{15}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Experimento 1 (NB01): Validación 1D}{15}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Experimento 2 (NB02): Validación 2D con campo complejo}{16}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Arquitectura SIREN}{16}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{17}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{17}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{17}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Puntos de frontera}{18}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Estrategia de optimización}{18}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Métricas de validación}{18}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Error $L^2$ relativo (NB01 y NB02)}{18}{subsection.3.6.1}%
-\contentsline {section}{\numberline {3.7}Implementación modular}{19}{section.3.7}%
-\contentsline {chapter}{\numberline {4}Experimentos y Resultados}{20}{chapter.4}%
-\contentsline {section}{\numberline {4.1}NB01: Validación 1D, Helmholtz con solución analítica}{20}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Configuración experimental}{20}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Resultados de precisión}{21}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Análisis y comparativa con el estado del arte}{21}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}Barrido de $\omega _0$: evidencia cuantitativa del sesgo espectral}{22}{subsection.4.1.4}%
-\contentsline {section}{\numberline {4.2}NB02: Validación 2D, Helmholtz con campo complejo}{24}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Configuración experimental}{24}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Resultados de precisión}{24}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Análisis de resultados}{24}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Reproducibilidad multi-semilla}{25}{subsection.4.2.4}%
-\contentsline {section}{\numberline {4.3}Ablación del peso de física $\lambda _\text {fís}$}{28}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Explicación cuantitativa: análisis del núcleo tangente neuronal (NTK)}{29}{subsection.4.3.1}%
-\contentsline {section}{\numberline {4.4}Contexto en la literatura}{29}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Resumen de experimentos completados}{30}{section.4.5}%
-\contentsline {chapter}{Bibliografía}{32}{table.caption.29}%
+\contentsline {section}{\numberline {1.7}Metodología}{7}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Marco Teórico}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Conceptos y teorías fundamentales}{9}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Ecuación de onda de Helmholtz}{9}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Speckle óptico completamente desarrollado}{10}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Redes Neuronales Informadas por Física (PINNs)}{10}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Redes SIREN y sesgo espectral}{11}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}Diferenciación automática}{12}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}Muestreo Latino Hipercúbico (LHS)}{12}{subsection.2.1.6}%
+\contentsline {subsection}{\numberline {2.1.7}Optimización híbrida Adam + L-BFGS}{13}{subsection.2.1.7}%
+\contentsline {section}{\numberline {2.2}Literatura relacionada}{13}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Marco tecnológico}{15}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Infraestructura de hardware}{15}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Ecosistema de software}{16}{subsection.2.3.2}%
+\contentsline {chapter}{\numberline {3}Modelo e implementación}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Formulación del problema}{17}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Experimento 1 (NB01): Validación 1D}{17}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Experimento 2 (NB02): Validación 2D con campo complejo}{18}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Experimento 3 (NB03): Simulación de speckle óptico}{18}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}Arquitectura SIREN}{19}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{20}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{21}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{21}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Puntos de frontera}{21}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Estrategia de optimización}{21}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Métricas de validación}{21}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Error $L^2$ relativo (NB01 y NB02)}{21}{subsection.3.6.1}%
+\contentsline {section}{\numberline {3.7}Implementación modular}{22}{section.3.7}%
+\contentsline {chapter}{\numberline {4}Experimentos y Resultados}{24}{chapter.4}%
+\contentsline {section}{\numberline {4.1}NB01: Validación 1D, Helmholtz con solución analítica}{24}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Configuración experimental}{24}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Resultados de precisión}{24}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Análisis y comparativa con el estado del arte}{25}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Barrido de $\omega _0$: evidencia cuantitativa del sesgo espectral}{26}{subsection.4.1.4}%
+\contentsline {section}{\numberline {4.2}NB02: Validación 2D, Helmholtz con campo complejo}{28}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Configuración experimental}{28}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Resultados de precisión}{28}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Análisis de resultados}{29}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Reproducibilidad multi-semilla}{29}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Ablación del peso de física $\lambda _\text {fís}$}{32}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Explicación cuantitativa: análisis del núcleo tangente neuronal (NTK)}{33}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.4}NB03: Simulación de speckle óptico}{34}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Configuración experimental}{34}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Resultados}{34}{subsection.4.4.2}%
+\contentsline {section}{\numberline {4.5}Contexto en la literatura}{35}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{35}{section.4.6}%
+\contentsline {chapter}{Bibliografía}{37}{table.caption.29}%

@@ -1,0 +1,59 @@
+{
+  "experiment": "NB03-B PINN against angular-spectrum reference",
+  "seed": 42,
+  "device": "cpu",
+  "domain": {
+    "x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_lambda": [
+      0.0,
+      20.0
+    ],
+    "k_normalized": 6.283185307179586,
+    "boundary_x": "periodic value and derivative",
+    "boundary_z0": "radiative field and outgoing dz derivative"
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 1.0,
+    "parameters": 66690,
+    "field_training_scale_rms": 0.18430007626461295
+  },
+  "training": {
+    "n_colloc": 1000,
+    "n_periodic": 64,
+    "n_epochs_max": 500,
+    "adam_epochs": 234,
+    "lbfgs_calls": 52,
+    "lambda_phys": 0.1,
+    "lambda_neumann": 0.2,
+    "lambda_periodic": 1.0,
+    "lambda_anchor": 1.0,
+    "use_reference_anchors": true,
+    "n_anchors": 3264,
+    "curriculum_epochs": 500,
+    "best_adam_loss": 0.6825379133224487,
+    "adam_seconds": 26.891733407974243,
+    "lbfgs_seconds": 6.403776407241821
+  },
+  "metrics": {
+    "target_complex_relative_l2": 1.0005531774631444,
+    "target_real_relative_l2": 0.9961344698029487,
+    "target_imag_relative_l2": 1.0042519288335698,
+    "input_boundary_rmse": 0.12360450939336687,
+    "reference_target_statistics": {
+      "mean_intensity": 0.03396651811114215,
+      "std_intensity": 0.0341270535562768,
+      "contrast": 1.004726285002465
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 8.023287227842957e-05,
+      "std_intensity": 7.509584975196049e-05,
+      "contrast": 0.935973584651947
+    }
+  },
+  "status": "reference comparison completed; inspect metrics before thesis integration"
+}

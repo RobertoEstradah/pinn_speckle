@@ -1,0 +1,84 @@
+{
+  "experiment": "NB03-C PINN-SIREN por bloques contra referencia angular",
+  "seed": 42,
+  "device": "cpu",
+  "domain": {
+    "x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_lambda": [
+      0.0,
+      1.0
+    ],
+    "k_normalized": 6.283185307179586,
+    "boundary_x": "periodic value and derivative",
+    "boundary_z": "input field and outgoing dz derivative transferred by slabs"
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 30.0,
+    "coordinate_normalization": "local [-1,1] per slab",
+    "input_encoding": "raw",
+    "fourier_modes": 0,
+    "hard_boundary": false,
+    "field_training_scale_rms": 0.6402463329544956
+  },
+  "training": {
+    "n_slabs": 1,
+    "slab_width_lambda": 1.0,
+    "n_colloc_per_slab": 1000,
+    "n_periodic_per_slab": 128,
+    "n_epochs_max_per_slab": 600,
+    "lambda_dz": 1.0,
+    "lambda_periodic": 1.0,
+    "lambda_phys": 1.0,
+    "boundary_pretrain_epochs": 0,
+    "physics_ramp_epochs": 300,
+    "adaptive_residual": true,
+    "adaptive_interval": 200,
+    "adaptive_pool_factor": 4,
+    "adaptive_top_fraction": 0.3,
+    "grad_clip_norm": 1.0,
+    "total_seconds": 49.211819648742676
+  },
+  "slabs": [
+    {
+      "slab": 0,
+      "z_lambda": [
+        0.0,
+        1.0
+      ],
+      "epochs_adam": 600,
+      "lbfgs_calls": 17,
+      "best_adam_loss": 0.011037781834602356,
+      "seconds": 47.95035243034363,
+      "final_terms": {
+        "total": 4.622775077819824,
+        "value": 0.0024026399478316307,
+        "dz": 0.0018618250032886863,
+        "periodic": 7.696048123762012e-05,
+        "physics": 4.618433475494385
+      },
+      "final_loss": 4.622775077819824
+    }
+  ],
+  "metrics": {
+    "target_complex_relative_l2": 1.0081120581668972,
+    "target_real_relative_l2": 0.9011150111764543,
+    "target_imag_relative_l2": 1.1117320203576122,
+    "interface_input_rmse": 5.475913701639197e-17,
+    "reference_target_statistics": {
+      "mean_intensity": 0.41051390282347383,
+      "std_intensity": 0.37206566064217056,
+      "contrast": 0.9063411935214372
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.1924712359905243,
+      "std_intensity": 0.1407872885465622,
+      "contrast": 0.731471836566925
+    }
+  },
+  "status": "diagnostic; no interior reference labels used"
+}

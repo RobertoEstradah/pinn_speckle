@@ -5,19 +5,21 @@
 \vspace*{-8mm}
 
 Physics-Informed Neural Networks with sinusoidal activation functions
-(SIREN-PINNs) are applied to solve the Helmholtz equation, toward the goal of
-simulating optical speckle patterns via a complex electric field and a
-random-phase boundary condition. The proposed SIREN architecture
-($5 \times 128$, $\omega_0 = 1.0$) achieves relative $L^2$ errors of
-$0.006\%$ (1D) and $0.171\%$ (2D) against analytical solutions, several
-orders of magnitude below the $5\%$ thesis threshold.
+(SIREN-PINNs) are evaluated for solving the Helmholtz equation in one and two
+dimensions as a foundation for optical speckle simulation. The proposed SIREN
+architecture ($5 \times 128$, $\omega_0 = 1.0$)
+achieves relative $L^2$ errors of $0.006\%$ (1D) and $0.171\%$ (2D) against
+analytical solutions, several orders of magnitude below the $5\%$ thesis
+threshold.
+The speckle extension uses a spatially correlated random-phase screen and an
+independent angular-spectrum propagation reference. The reference ensemble of
+64 realizations gives a contrast of $C=0.9732$ at $z=20\lambda$; validation of
+the PINN against this reference remains in progress.
 A two-phase Adam~+~L-BFGS optimization strategy and Latin Hypercube Sampling
-(LHS) are key to convergence.
-Reproducibility was verified with three independent random seeds for the 2D
-case, yielding a mean $L^2$ error of $0.192 \pm 0.089\%$.
-The speckle-generation stage (random-phase boundary, statistical validation
-against Goodman's criteria) is in progress and not yet part of the validated
-results reported here.
+(LHS) are used in the training protocol.
+Reproducibility was verified with three independent random seeds, yielding a
+component-wise mean $L^2$ error of $0.192 \pm 0.089\%$ (population standard
+deviation).
 
 \bigskip
 

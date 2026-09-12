@@ -2,12 +2,20 @@
 
 \section{Formulación del problema}
 
-Se considera el dominio cuadrado adimensional $\Omega = [0,1]^2$, donde las
-coordenadas han sido normalizadas por la longitud de onda del láser
-($\lambda = 638\,\mathrm{nm}$, láser de diodo rojo). Bajo esta normalización,
-el número de onda $k = 2\pi/\lambda$ definido en el Capítulo~\ref{cap2:marcos}
-toma el valor adimensional $k = 2\pi$; salvo que se indique lo contrario, $k$
-se usa en su forma adimensional en el resto de este capítulo.
+Se consideran dominios adimensionales cuyas coordenadas están normalizadas por
+la longitud de onda del láser ($\lambda = 638\,\mathrm{nm}$, láser de diodo
+rojo). Bajo esta normalización, el número de onda
+$k = 2\pi/\lambda$ definido en el Capítulo~\ref{cap2:marcos} toma el valor
+adimensional $k = 2\pi$; salvo que se indique lo contrario, $k$ se usa en su
+forma adimensional en el resto de este capítulo.
+
+Para NB01 y NB02 se conserva el dominio adimensional $[0,1]$ y $[0,1]^2$,
+respectivamente, porque esos experimentos validan la arquitectura contra
+soluciones analíticas. NB03 requiere un dominio de propagación más amplio para
+representar varios periodos ópticos y separar la pantalla de fase de la región
+de observación. Por ello se define de forma independiente
+$\Omega_{03}=[-10,10]\times[0,20]$ en coordenadas $(x/\lambda,z/\lambda)$,
+manteniendo $k=2\pi$.
 
 Se plantean tres experimentos sucesivos de complejidad creciente:
 
@@ -23,8 +31,9 @@ Dirichlet:
 \end{equation}
 %
 admite la solución analítica $E_\text{exacta}(x) = \cos(kx)$, utilizada para
-validar la arquitectura y la función de pérdida. Se imponen cinco puntos de
-frontera (en lugar de únicamente los dos extremos $x=0$ y $x=1$): la
+validar la arquitectura y la función de pérdida. Se usan cinco puntos
+conocidos en la pérdida de datos: los dos extremos $x=0$ y $x=1$ y tres puntos
+interiores de supervisión. La
 condición simétrica $E(0) = E(1) = 1$ colapsa la red hacia la solución
 constante trivial durante el entrenamiento, ya que ambos extremos son
 consistentes con $E \equiv 1$; añadir tres puntos intermedios conocidos de la
@@ -49,6 +58,42 @@ separando la solución en sus partes real e imaginaria:
     E_\text{imag}(x,y)\big|_{\partial\Omega} = \sin(k_x x + k_y y).
 \end{equation}
 
+\subsection{Experimento 3 (NB03): Simulación de speckle óptico}
+\label{cap3:nb03}
+
+La ecuación de Helmholtz 2D en $\Omega_{03}$ con una pantalla de fase
+aleatoria en la entrada $z=0$. La fase no se genera de forma independiente en
+cada punto: se obtiene como un proceso gaussiano periódico con longitud de
+correlación $\ell_\phi=0.5\lambda$ y desviación estándar $2$ rad. Esta
+correlación evita que la condición de entrada quede dominada por componentes
+evanescentes no observables en la región de propagación:
+%
+\begin{equation}
+    E(x, 0) = \mathcal{P}_{|k_x|\leq k}
+    \left\{e^{i\psi(x)}\right\}, \quad
+    \psi(x)=\mathcal{G}_{\ell_\phi}[\xi(x)],
+    \quad \xi(x)\sim\mathcal{N}(0,1),
+    \label{eq:frontera_rugosa}
+\end{equation}
+%
+donde $\mathcal{P}_{|k_x|\leq k}$ conserva los modos propagantes del espectro
+angular. La derivada de entrada se fija mediante la condición saliente:
+%
+\begin{equation}
+    \partial_z E(x,0)=
+    \mathcal{F}^{-1}\!\left[
+    i\sqrt{k^2-k_x^2}\,
+    \widehat{E}(k_x,0)\right].
+    \label{eq:derivada_saliente}
+\end{equation}
+%
+En $x$ se imponen periodicidad de valor y de derivada. El dominio longitudinal
+se divide en bloques cortos; cada bloque recibe el campo y la derivada de la
+interfaz anterior, satisface Helmholtz en su interior y transfiere esas dos
+cantidades al bloque siguiente. Esta formulación conserva la ecuación de
+Helmholtz, pero evita tratar las fronteras restantes como bordes libres sin
+condición física.
+
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Arquitectura SIREN}
 
@@ -56,27 +101,31 @@ Se emplea una arquitectura SIREN con los parámetros consolidados a partir de la
 validación 1D (NB01) y escalados para el caso 2D (NB02):
 
 \begin{itemize}
-    \item \textbf{Entrada:} coordenadas espaciales $(x, y) \in [0,1]^2$ (o
-    $(x) \in [0,1]$ para 1D).
+    \item \textbf{Entrada:} coordenadas espaciales; $(x,y)\in[0,1]^2$ en NB02
+    y $(x,z)\in\Omega_{03}$ en NB03.
     \item \textbf{Capas ocultas:} $L = 5$ capas de dimensión $d$ neuronas cada
-    una ($d = 64$ en NB01, $d = 128$ en NB02).
-    \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$, con $\omega_0 = 1.0$.
+    una ($d = 64$ en NB01, $d = 128$ en NB02/NB03).
+    \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$. NB01/NB02 usan
+    $\omega_0=1.0$; NB03 normaliza localmente las coordenadas de cada bloque y
+    calibra $\omega_0$ como parte del experimento de alta frecuencia.
     \item \textbf{Salida:} capa lineal de dos neuronas $(E_\text{real}, E_\text{imag})$
     para el caso 2D, o una neurona $E$ para el caso 1D.
     \item \textbf{Parámetros totales:} $16{,}833$ (NB01) y $66{,}690$ (NB02).
 \end{itemize}
 
-La elección $\omega_0 = 1.0$, en lugar del valor $\omega_0 = 30$ recomendado
-por \textcite{sitzmann2020siren} para señales de imagen, está justificada por la
-naturaleza del problema: el dominio adimensional $[0,1]^2$ con $k = 2\pi$ no
-requiere capturar frecuencias ultra-altas, y valores mayores de $\omega_0$
-desestabilizan el entrenamiento con L-BFGS.
+La elección $\omega_0 = 1.0$ en NB01/NB02 se conserva porque esos casos ya
+fueron validados en $[0,1]^2$. En NB03 el ancho físico del dominio es veinte
+longitudes de onda y la red se entrena por bloques; por ello las coordenadas de
+cada bloque se transforman a $[-1,1]^2$ y $\omega_0$ se trata como un
+hiperparámetro calibrable. La selección definitiva se hará con error contra la
+referencia de espectro angular, no únicamente con la pérdida de entrenamiento.
 
 La inicialización sigue el esquema de \textcite{sitzmann2020siren}:
 $\mathbf{W}_0 \sim \mathcal{U}(-1/n_\text{in}, 1/n_\text{in})$ para la primera
-capa y $\mathbf{W}_\ell \sim \mathcal{U}(-\sqrt{6/d}, \sqrt{6/d})$ para capas
-intermedias, garantizando que las distribuciones de activación sean
-aproximadamente uniformes en $[-1, 1]$.
+capa y $\mathbf{W}_\ell \sim \mathcal{U}(-\sqrt{6/d}/\omega_0,
+\sqrt{6/d}/\omega_0)$ para capas intermedias. El objetivo es controlar la
+escala de las activaciones y sus derivadas; no se supone que las activaciones
+sean uniformes en $[-1,1]$.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Función de pérdida y calibración de pesos}
@@ -93,11 +142,10 @@ La función de pérdida total para el caso 2D es:
 %
 con peso de física $\lambda_\text{fís} = 0.1$. Este valor fue calibrado
 empíricamente mediante un experimento de ablación (véase la
-Sección~\ref{sec:ablacion}): valores superiores ($\lambda = 1.0$) sobrepesan la
-física e impiden la convergencia en 2D, dado que los dos residuos (real e
-imaginario) duplican efectivamente la contribución física; valores inferiores
-($\lambda = 0.01$) producen campos que violan moderadamente la ecuación de
-Helmholtz.
+Sección~\ref{sec:ablacion}). En esta implementación, la pérdida física suma
+los residuos real e imaginario; con $\lambda = 1.0$ la corrida no completó el
+entrenamiento, mientras que $\lambda = 0.01$ produjo un error ligeramente
+menor pero corresponde a una restricción física de menor peso.
 
 Los residuos de Helmholtz se calculan mediante diferenciación automática de
 segundo orden \parencite{baydin2018autodiff}:
@@ -115,17 +163,36 @@ Es crítico que $k^2$ se convierta a tipo \texttt{float} de Python antes de
 multiplicar por el tensor de la red, para evitar conflictos de tipo entre
 \texttt{numpy.float64} y \texttt{torch.float32}.
 
+Para NB03 se agrega la pérdida de la derivada longitudinal en la interfaz de
+entrada, la periodicidad lateral y la transferencia entre bloques:
+%
+\begin{equation}
+    \mathcal{L}_{03} =
+    \mathcal{L}_{E,0}
+    + \lambda_z\mathcal{L}_{\partial_z E,0}
+    + \lambda_p\mathcal{L}_{\mathrm{per}}
+    + \lambda_f\frac{\mathcal{L}_{R_\mathrm{real}}
+    +\mathcal{L}_{R_\mathrm{imag}}}{k^4}.
+    \label{eq:loss_nb03}
+\end{equation}
+%
+La división por $k^4$ normaliza la escala del residuo de segundo orden. La
+condición de derivada saliente no se usa como etiqueta interior: en el primer
+bloque se calcula desde la pantalla radiativa y, en los bloques posteriores, se
+transfiere desde la salida del bloque anterior. Así, la referencia angular se
+reserva para evaluación independiente.
+
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Estrategia de muestreo}
 
 \subsection{Puntos interiores (colocación)}
 
-Para el caso 2D, los $N_c = 3{,}000$ puntos de colocación interiores se generan
-mediante LHS \parencite{mckay1979lhs} usando \texttt{scipy.stats.qmc.LatinHypercube}
-con dimensión $n = 2$. LHS divide cada dimensión en $N_c$ estratos iguales de
-longitud $1/N_c$ y coloca exactamente un punto en cada estrato, garantizando
-cobertura uniforme del dominio sin los patrones redundantes de una malla
-cartesiana.
+Para NB02, los $N_c = 3{,}000$ puntos de colocación interiores se generan
+mediante LHS \parencite{mckay1979lhs} usando
+\texttt{scipy.stats.qmc.LatinHypercube} con dimensión $n = 2$. En NB03 los
+puntos se muestrean dentro de cada bloque longitudinal, conservando cobertura
+en $x$ y $z$ sin exigir una malla cartesiana global. La evaluación final se
+realiza sobre la misma malla de la referencia angular.
 
 \subsection{Puntos de frontera}
 
@@ -135,7 +202,11 @@ En NB02, los $N_b = 300$ puntos de frontera por borde se distribuyen
 uniformemente sobre cada uno de los cuatro lados del dominio $\partial\Omega$
 (1{,}200 puntos en total). Para cada lado, se evalúa la solución exacta y se
 construye el par $(\mathbf{r}^b_j,\, E(\mathbf{r}^b_j))$ utilizado en
-$\mathcal{L}_\text{datos}$.
+$\mathcal{L}_\text{datos}$. NB03 sigue el esquema por bloques descrito en la
+Sección~\ref{cap3:nb03}: la interfaz inferior recibe el campo y la derivada
+saliente; las interfaces laterales imponen periodicidad de valor y derivada, y
+las interfaces internas reciben únicamente la transferencia producida por la
+PINN anterior. No se dejan bordes libres sin condición física.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Estrategia de optimización}
@@ -165,7 +236,8 @@ Peso de física $\lambda_\text{fís}$ & 1.0 (NB01), 0.1 (NB02) & - \\
 \end{tabular}
 \begin{tablenotes}\small
     \item Todos los experimentos se ejecutaron en GPU NVIDIA RTX 5050.
-    La semilla garantiza reproducibilidad. NB01 usa $\lambda_\text{fís} = 1.0$
+    La semilla favorece la reproducibilidad bajo las mismas condiciones de
+    ejecución. NB01 usa $\lambda_\text{fís} = 1.0$
     porque un único residuo no duplica el peso de la física, a diferencia del
     caso 2D (real + imaginario); ver Sección~\ref{sec:ablacion}.
 \end{tablenotes}
@@ -178,9 +250,9 @@ Peso de física $\lambda_\text{fís}$ & 1.0 (NB01), 0.1 (NB02) & - \\
 \subsection{Error $L^2$ relativo (NB01 y NB02)}
 
 El error $L^2$ relativo mide la discrepancia global entre la predicción de la
-red $\hat{E}$ y la solución exacta $E_\text{exacta}$, evaluada sobre una malla
-uniforme de $1{,}000$ puntos en $[0,1]$ para NB01 (1D) y $100 \times 100$
-puntos en $[0,1]^2$ para NB02 (2D):
+red $\hat{E}$ y la solución exacta $E_\text{exacta}$. Se evalúa sobre una malla
+uniforme de $1{,}000$ puntos en $[0,1]$ para NB01 y de $100 \times 100$ puntos
+en $[0,1]^2$ para NB02. Para NB01, que tiene salida escalar, se utiliza
 %
 \begin{equation}
     \varepsilon_{L^2} = \frac{\|\hat{E} - E_\text{exacta}\|_2}
@@ -188,8 +260,27 @@ puntos en $[0,1]^2$ para NB02 (2D):
     \label{eq:l2}
 \end{equation}
 
-No existe en la literatura de PINNs un criterio estandarizado de tolerancia
-de error para este tipo de validación, por lo que se fijó
+En NB02, el código calcula esta cantidad por separado para las componentes real
+e imaginaria y reporta su promedio aritmético:
+%
+\begin{equation}
+\begin{aligned}
+    \varepsilon_{L^2}^{(c)} & =
+    \frac{\|\hat{E}_c - E_{c,\text{exacta}}\|_2}
+    {\|E_{c,\text{exacta}}\|_2} \times 100\%,
+    \quad c \in \{\mathrm{real},\mathrm{imag}\},\\
+    \bar{\varepsilon}_{L^2} & =
+    \frac{\varepsilon_{L^2}^{(\mathrm{real})}+
+    \varepsilon_{L^2}^{(\mathrm{imag})}}{2}.
+\end{aligned}
+\label{eq:l2_componentes}
+\end{equation}
+%
+Por tanto, $0.171\%$ es un promedio componente a componente y no la norma
+relativa de un vector complejo concatenado.
+
+Para esta validación no se adopta un criterio universal de tolerancia de error;
+se fijó
 $\varepsilon_{L^2} < 5\%$ como umbral ingenieril propio de la tesis. Este
 valor resulta, además, considerablemente menor que el orden de magnitud
 reportado en implementaciones comparables de PINNs para la ecuación de

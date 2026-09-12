@@ -1,0 +1,64 @@
+{
+  "experiment": "NB03-E modal PINN-SIREN for full 2D Helmholtz",
+  "seed": 42,
+  "reference_seed": 777,
+  "device": "cpu",
+  "representation": {
+    "equation": "a_m''(z) + (k^2-kx_m^2) a_m(z) = 0",
+    "field": "sum_m a_m(z) exp(i kx_m x)",
+    "n_complex_modes": 41,
+    "hard_cauchy": "a0 + z*a0_prime + z^2*N_theta(z)",
+    "interior_labels": false,
+    "mode_conditioning": "output scaled by k^2 times boundary modal amplitude; residual normalized by the same modal scale",
+    "modal_amplitude_floor": 3.3038059671738434e-05
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_hidden_layers": 4,
+    "first_omega": 30.0,
+    "hidden_omega": 1.0,
+    "real_outputs": 82
+  },
+  "training": {
+    "epochs": 5000,
+    "n_z_per_epoch": 256,
+    "learning_rate": 0.0002,
+    "gradient_clip": 1.0,
+    "seconds": 170.55981540679932,
+    "best_training_loss": 0.0007650817860849202,
+    "resume_model": null
+  },
+  "independent_modal_residual": {
+    "n_z": 1001,
+    "normalized_mse": 0.002723452402278781,
+    "normalized_rmse": 0.05218670889735222,
+    "normalized_max_abs": 0.657778799533844
+  },
+  "metrics": {
+    "target_complex_relative_l2": 0.041307421671151354,
+    "target_real_relative_l2": 0.04173354587491291,
+    "target_imag_relative_l2": 0.04094749929124038,
+    "target_phase_aligned_relative_l2": 0.0372467259762488,
+    "target_complex_coherence": 0.9993635474267433,
+    "target_global_phase_shift_rad": 0.017968341028059828,
+    "target_intensity_relative_l2": 0.029071313019181533,
+    "target_intensity_pearson_correlation": 0.9995277791853117,
+    "reference_target_statistics": {
+      "mean_intensity": 0.34852941214909755,
+      "std_intensity": 0.4268251795862267,
+      "contrast": 1.2246460835380946
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.3406614572562524,
+      "std_intensity": 0.42185843511286775,
+      "contrast": 1.238350937938768
+    },
+    "hard_boundary_field_rmse": 1.303361679394569e-08
+  },
+  "acceptance": {
+    "complex_l2_below_5_percent": true,
+    "contrast_distance_from_one_below_0_1": false,
+    "accepted": false
+  },
+  "status": "diagnostic spectral PINN; angular spectrum used only for evaluation"
+}

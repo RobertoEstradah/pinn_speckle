@@ -1,0 +1,131 @@
+{
+  "experiment": "NB03-D hard-Cauchy SIREN/Fourier frequency curriculum",
+  "seed": 42,
+  "device": "cpu",
+  "domain": {
+    "x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_lambda": [
+      0.0,
+      1.0
+    ],
+    "final_wave_number": 6.283185307179586
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 1.0,
+    "fourier_modes_max": 20,
+    "hard_boundary_ansatz": "u0+(z-z0)uz0+(z-z0)^2*N_theta"
+  },
+  "training": {
+    "mode_stages": [
+      5,
+      10,
+      15,
+      20
+    ],
+    "k_scales": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "epochs_per_stage": 200,
+    "n_collocation_per_epoch": 1500,
+    "resample_interval": 25,
+    "learning_rate": 0.0005,
+    "gradient_clip_norm": 1.0,
+    "lbfgs_calls": 32,
+    "total_seconds": 156.02883410453796
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "active_modes": 5,
+      "k_scale": 0.25,
+      "wave_number": 1.5707963267948966,
+      "propagating_mode_count": 11,
+      "epochs": 200,
+      "best_loss": 0.004736627917736769,
+      "final_loss_on_last_batch": 0.004722201265394688,
+      "final_physics_loss_on_last_batch": 0.004722201265394688,
+      "seconds": 35.68922209739685
+    },
+    {
+      "stage": 2,
+      "active_modes": 10,
+      "k_scale": 0.5,
+      "wave_number": 3.141592653589793,
+      "propagating_mode_count": 21,
+      "epochs": 200,
+      "best_loss": 0.006336469203233719,
+      "final_loss_on_last_batch": 0.006321785971522331,
+      "final_physics_loss_on_last_batch": 0.006321785971522331,
+      "seconds": 35.33715271949768
+    },
+    {
+      "stage": 3,
+      "active_modes": 15,
+      "k_scale": 0.75,
+      "wave_number": 4.71238898038469,
+      "propagating_mode_count": 31,
+      "epochs": 200,
+      "best_loss": 0.00816182978451252,
+      "final_loss_on_last_batch": 0.009526846930384636,
+      "final_physics_loss_on_last_batch": 0.009526846930384636,
+      "seconds": 39.07646989822388
+    },
+    {
+      "stage": 4,
+      "active_modes": 20,
+      "k_scale": 1.0,
+      "wave_number": 6.283185307179586,
+      "propagating_mode_count": 41,
+      "epochs": 200,
+      "best_loss": 0.02432200126349926,
+      "final_loss_on_last_batch": 0.02428790181875229,
+      "final_physics_loss_on_last_batch": 0.02428790181875229,
+      "seconds": 37.829426765441895
+    }
+  ],
+  "independent_residual": {
+    "grid_shape": [
+      41,
+      256
+    ],
+    "normalized_mse": 0.02260084936349857,
+    "normalized_rmse": 0.15033578869816253,
+    "normalized_max_abs": 0.8818916082382202
+  },
+  "metrics": {
+    "target_complex_relative_l2": 0.4739006532845479,
+    "target_real_relative_l2": 0.4140514515082606,
+    "target_imag_relative_l2": 0.5307779222661838,
+    "target_phase_aligned_relative_l2": 0.4407345334366241,
+    "target_complex_coherence": 0.8983904505614912,
+    "target_global_phase_shift_rad": 0.19828662812075648,
+    "target_intensity_relative_l2": 0.5180811410721518,
+    "target_intensity_pearson_correlation": 0.6979833506299695,
+    "reference_target_statistics": {
+      "mean_intensity": 0.41051390282347383,
+      "std_intensity": 0.37206566064217056,
+      "contrast": 0.9063411935214372
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.30475854873657227,
+      "std_intensity": 0.2743189334869385,
+      "contrast": 0.900118887424469
+    },
+    "hard_boundary_value_rmse": 9.039420660883479e-07,
+    "hard_boundary_dz_rmse": 3.2338332403014647e-06
+  },
+  "acceptance": {
+    "complex_l2_below_5_percent": false,
+    "contrast_distance_from_one_below_0_1": true,
+    "accepted": false
+  },
+  "status": "diagnostic; no interior angular-spectrum labels used"
+}

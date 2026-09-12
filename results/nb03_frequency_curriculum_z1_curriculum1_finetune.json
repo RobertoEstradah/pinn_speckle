@@ -1,0 +1,96 @@
+{
+  "experiment": "NB03-D hard-Cauchy SIREN/Fourier frequency curriculum",
+  "seed": 42,
+  "device": "cpu",
+  "domain": {
+    "x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "z_lambda": [
+      0.0,
+      1.0
+    ],
+    "final_wave_number": 6.283185307179586
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 1.0,
+    "fourier_modes_max": 20,
+    "hard_boundary_ansatz": "u0+(z-z0)uz0+(z-z0)^2*N_theta"
+  },
+  "training": {
+    "mode_stages": [
+      5,
+      10,
+      15,
+      20
+    ],
+    "k_scales": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "epochs_per_stage": 600,
+    "n_collocation_per_epoch": 1500,
+    "resample_interval": 25,
+    "learning_rate": 0.0002,
+    "gradient_clip_norm": 1.0,
+    "lbfgs_calls": 42,
+    "total_seconds": 120.46232438087463,
+    "resumed_from": "C:\\roberto\\Tesis_Maestria - codex\\results\\models\\nb03_frequency_curriculum_z1_curriculum1.pt"
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "active_modes": 20,
+      "k_scale": 1.0,
+      "wave_number": 6.283185307179586,
+      "propagating_mode_count": 41,
+      "epochs": 600,
+      "best_loss": 0.004181172698736191,
+      "final_loss_on_last_batch": 0.004175648558884859,
+      "final_physics_loss_on_last_batch": 0.004175648558884859,
+      "seconds": 109.92756962776184
+    }
+  ],
+  "independent_residual": {
+    "grid_shape": [
+      41,
+      256
+    ],
+    "normalized_mse": 0.00598969489972039,
+    "normalized_rmse": 0.07739311920138889,
+    "normalized_max_abs": 0.6403132677078247
+  },
+  "metrics": {
+    "target_complex_relative_l2": 0.27649234607958184,
+    "target_real_relative_l2": 0.2937465970787924,
+    "target_imag_relative_l2": 0.2566483504665545,
+    "target_phase_aligned_relative_l2": 0.27393392099550934,
+    "target_complex_coherence": 0.9617877087205692,
+    "target_global_phase_shift_rad": 0.038844818872639686,
+    "target_intensity_relative_l2": 0.3417711460511683,
+    "target_intensity_pearson_correlation": 0.8632477259729144,
+    "reference_target_statistics": {
+      "mean_intensity": 0.41051390282347383,
+      "std_intensity": 0.37206566064217056,
+      "contrast": 0.9063411935214372
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.3866250514984131,
+      "std_intensity": 0.31790462136268616,
+      "contrast": 0.8222556114196777
+    },
+    "hard_boundary_value_rmse": 9.039420660883479e-07,
+    "hard_boundary_dz_rmse": 3.2338332403014647e-06
+  },
+  "acceptance": {
+    "complex_l2_below_5_percent": false,
+    "contrast_distance_from_one_below_0_1": false,
+    "accepted": false
+  },
+  "status": "diagnostic; no interior angular-spectrum labels used"
+}

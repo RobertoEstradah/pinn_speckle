@@ -1,0 +1,64 @@
+{
+  "experiment": "NB03-E modal PINN-SIREN for full 2D Helmholtz",
+  "seed": 42,
+  "reference_seed": 321,
+  "device": "cpu",
+  "representation": {
+    "equation": "a_m''(z) + (k^2-kx_m^2) a_m(z) = 0",
+    "field": "sum_m a_m(z) exp(i kx_m x)",
+    "n_complex_modes": 41,
+    "hard_cauchy": "a0 + z*a0_prime + z^2*N_theta(z)",
+    "interior_labels": false,
+    "mode_conditioning": "output scaled by k^2 times boundary modal amplitude; residual normalized by the same modal scale",
+    "modal_amplitude_floor": 3.120200771347531e-05
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_hidden_layers": 4,
+    "first_omega": 30.0,
+    "hidden_omega": 1.0,
+    "real_outputs": 82
+  },
+  "training": {
+    "epochs": 3000,
+    "n_z_per_epoch": 256,
+    "learning_rate": 5e-05,
+    "gradient_clip": 1.0,
+    "seconds": 102.3327522277832,
+    "best_training_loss": 0.0003302931727375835,
+    "resume_model": "results/models/nb03_modal_pinn_siren_z1_screen321_scaled1.pt"
+  },
+  "independent_modal_residual": {
+    "n_z": 1001,
+    "normalized_mse": 0.0013165809214115143,
+    "normalized_rmse": 0.03628471866250038,
+    "normalized_max_abs": 0.612777829170227
+  },
+  "metrics": {
+    "target_complex_relative_l2": 0.038925114793628944,
+    "target_real_relative_l2": 0.024285571150486462,
+    "target_imag_relative_l2": 0.05271482052809826,
+    "target_phase_aligned_relative_l2": 0.037567672291450034,
+    "target_complex_coherence": 0.9992963875712487,
+    "target_global_phase_shift_rad": 0.010208104350679198,
+    "target_intensity_relative_l2": 0.03774599998277174,
+    "target_intensity_pearson_correlation": 0.9984684644466348,
+    "reference_target_statistics": {
+      "mean_intensity": 0.39204079633344974,
+      "std_intensity": 0.3606870767486626,
+      "contrast": 0.9200243447161064
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.38981058076233305,
+      "std_intensity": 0.359050710702649,
+      "contrast": 0.9210902125859988
+    },
+    "hard_boundary_field_rmse": 1.7550138922049867e-08
+  },
+  "acceptance": {
+    "complex_l2_below_5_percent": true,
+    "contrast_distance_from_one_below_0_1": true,
+    "accepted": true
+  },
+  "status": "diagnostic spectral PINN; angular spectrum used only for evaluation"
+}
