@@ -17,5 +17,6 @@
 \contentsline {table}{\numberline {4.11}{\ignorespaces NB03 modal con $\omega _0$ calibrado: cinco pantallas de fase independientes en $\tilde z=1\lambda $.}}{42}{table.caption.37}%
 \contentsline {table}{\numberline {4.12}{\ignorespaces Piso evanescente y contraste de la referencia en función de la distancia.}}{42}{table.caption.39}%
 \contentsline {table}{\numberline {4.13}{\ignorespaces Ensayo de extensión a $\tilde z=2\lambda $ con presupuesto uniforme.}}{45}{table.caption.42}%
-\contentsline {table}{\numberline {4.14}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{47}{table.caption.44}%
-\contentsline {table}{\numberline {4.15}{\ignorespaces Estado de los experimentos planificados.}}{48}{table.caption.46}%
+\contentsline {table}{\numberline {4.14}{\ignorespaces Tiempo de evaluación: PINN-SIREN modal frente al espectro angular.}}{46}{table.caption.44}%
+\contentsline {table}{\numberline {4.15}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{48}{table.caption.46}%
+\contentsline {table}{\numberline {4.16}{\ignorespaces Estado de los experimentos planificados.}}{49}{table.caption.48}%

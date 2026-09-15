@@ -965,6 +965,80 @@ En consecuencia, el alcance validado de este trabajo es $\tilde z=1\lambda$.
 Cualquier afirmación sobre distancias mayores exigiría un procedimiento de
 optimización distinto y su propia campaña de validación.
 
+\subsection{Tiempo de inferencia frente a la referencia de propagación}
+\label{sec:nb03_inferencia}
+
+Los alcances del Capítulo~\ref{cap1:generalidades} comprometen un
+\textit{benchmark} del tiempo de inferencia contra una referencia numérica de
+propagación, independiente de la comparación con FEM. Esa medición sí puede
+realizarse con los elementos disponibles y se reporta aquí.
+
+La comparación se plantea a igualdad de salida: ambos métodos producen el mismo
+campo complejo en $\tilde z = 1\lambda$ sobre los mismos $1{,}024$ puntos
+transversales, y se verificó que ambas salidas coinciden con una discrepancia
+relativa de $0.0475\%$ antes de cronometrar. El método de referencia calcula la
+transformada de Fourier de la pantalla, multiplica por el propagador
+$e^{ik_z\tilde z}$ y antitransforma, con coste $O(N\log N)$ por plano. La
+PINN evalúa la red en $\tilde z$, obtiene los $41$ coeficientes modales y
+reconstruye el campo por suma modal.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Tiempo de evaluación: PINN-SIREN modal frente al espectro angular.}
+\label{tab:nb03_inferencia}
+\begin{tabular}{lccc}
+\toprule
+Tarea & Espectro angular & PINN modal & Razón \\
+\midrule
+Un plano ($\tilde z = 1\lambda$)      & \textbf{0.070} ms & 0.905 ms & $12.9\times$ a favor del ASM \\
+$101$ planos simultáneos              & 3.718 ms & \textbf{2.276} ms & $1.63\times$ a favor de la PINN \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Medias de $50$ repeticiones (un plano) y $20$ (múltiples planos),
+    tras $10$ iteraciones de calentamiento y con sincronización explícita de
+    CUDA. Desviaciones estándar: $0.103$ y $0.320$~ms en el caso de un plano;
+    $0.272$ y $0.493$~ms en el de $101$. Para operaciones de esta duración el
+    mínimo observado es más representativo que la media, porque la dispersión
+    la domina la planificación del sistema operativo: los mínimos son
+    $0.039$ y $0.560$~ms (un plano) y $3.365$ y $1.766$~ms ($101$ planos).
+    GPU NVIDIA RTX~5050, PyTorch 2.11, CUDA 12.8. Fuente:
+    \texttt{results/nb03\_benchmark\_inferencia.json}, generado por
+    \texttt{scripts/experiments/nb03\_benchmark\_inferencia.py}.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+El resultado no favorece a la red. Para un solo plano el método del espectro
+angular es aproximadamente un orden de magnitud más rápido: es una transformada
+rápida de Fourier sobre $1{,}024$ puntos, difícil de superar. La PINN sólo
+aventaja al método de referencia cuando se evalúan muchos planos a la vez,
+porque resuelve los $101$ valores de $\tilde z$ en un único paso por lotes
+mientras el espectro angular requiere una antitransformada por plano; incluso
+entonces la ventaja es de un factor $1.63$.
+
+\textbf{El costo de entrenamiento invierte cualquier lectura favorable.} Como se
+señala en §\ref{sec:nb03_limitaciones}, el modelo es específico de su
+realización: los datos de Cauchy están incorporados a la arquitectura, de modo
+que cada pantalla nueva exige entrenar una red desde cero, lo que en este equipo
+requiere $351.9$~s. Con un ahorro de $1.44$~ms por evaluación de $101$ planos,
+serían necesarias unas $2.4\times10^{5}$ evaluaciones \emph{sobre la misma
+pantalla} para amortizar ese entrenamiento. Ningún uso realista del método
+alcanza esa cifra.
+
+Se sigue de aquí que, frente a la referencia de propagación y con la
+formulación actual, \textbf{no se observa ganancia en tiempo de cómputo}. Este
+resultado cubre el alcance comprometido, pero no responde la hipótesis (ii),
+que se plantea frente a una implementación FEM: esa comparación requiere NB04 y
+queda pendiente. Debe anticiparse, no obstante, que el costo de entrenamiento
+por realización es independiente del método de referencia con el que se
+compare, y condicionará igualmente esa medición.
+
+La aportación de la formulación modal debe valorarse por tanto en términos de
+precisión y de correcto planteamiento del problema
+--§\ref{sec:nb03_diagnostico} y §\ref{sec:nb02b_puente}--, no de velocidad.
+
 \subsection{Limitaciones del método}
 \label{sec:nb03_limitaciones}
 
@@ -1087,6 +1161,7 @@ NB01 & Helmholtz 1D, validación analítica & Completo & $L^2 = 0.006\%$ \\
 NB02 & Helmholtz 2D, campo complejo       & Completo & $L^2 = 0.171\%$ \\
 NB03-A & Speckle, referencia por espectro angular & Completo & $C=0.9661$ (conjunto, 64 real.) \\
 NB03-B & PINN-SIREN modal en $\tilde z=1\lambda$ & Completo & $L^2 = 3.161\%$ (5 pantallas) \\
+NB03-C & Inferencia frente al espectro angular & Completo & Sin ganancia de tiempo \\
 NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
@@ -1111,7 +1186,16 @@ independiente}, y la empleada aquí es semianalítica
 (Sección~\ref{sec:nb03_referencia}): la verificación de esa hipótesis en su
 sentido estricto queda condicionada a NB04. La hipótesis
 estadística se cumple en los dos niveles definidos en
-Sección~\ref{sec:nb03_goodman}. La hipótesis de velocidad ($S > 1$) permanece
-sin responder: requiere la implementación de la referencia FEM (NB04), que es
-además la que aportaría una referencia numérica independiente del método, según
-se discute en la Sección~\ref{sec:nb03_referencia}.
+Sección~\ref{sec:nb03_goodman}.
+
+La hipótesis de velocidad ($S > 1$) permanece sin responder en sus propios
+términos, que la plantean frente a una implementación FEM: eso requiere NB04,
+que es además la única vía para disponer de una referencia numérica
+independiente del método (Sección~\ref{sec:nb03_referencia}). Sí se midió, en
+cambio, el tiempo frente a la referencia de propagación comprometido en los
+alcances, y el resultado es negativo: el espectro angular resulta un orden de
+magnitud más rápido para un plano, la ventaja de la red en evaluación por lotes
+es de un factor $1.63$, y el costo de entrenamiento por realización exigiría del
+orden de $10^{5}$ evaluaciones de la misma pantalla para amortizarse
+(Sección~\ref{sec:nb03_inferencia}). La contribución de este trabajo reside por
+tanto en el planteamiento y la precisión, no en el tiempo de cómputo.

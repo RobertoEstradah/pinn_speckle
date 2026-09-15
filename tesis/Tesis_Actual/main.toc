@@ -65,7 +65,8 @@
 \contentsline {subsection}{\numberline {4.4.7}Dependencia del piso evanescente con la distancia}{41}{subsection.4.4.7}%
 \contentsline {subsection}{\numberline {4.4.8}Criterio estadístico: conjunto frente a realización individual}{43}{subsection.4.4.8}%
 \contentsline {subsection}{\numberline {4.4.9}Ensayo de extensión a $\tilde z=2\lambda $: resultado negativo}{45}{subsection.4.4.9}%
-\contentsline {subsection}{\numberline {4.4.10}Limitaciones del método}{45}{subsection.4.4.10}%
-\contentsline {section}{\numberline {4.5}Contexto en la literatura}{46}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{47}{section.4.6}%
-\contentsline {chapter}{Bibliografía}{49}{table.caption.46}%
+\contentsline {subsection}{\numberline {4.4.10}Tiempo de inferencia frente a la referencia de propagación}{45}{subsection.4.4.10}%
+\contentsline {subsection}{\numberline {4.4.11}Limitaciones del método}{47}{subsection.4.4.11}%
+\contentsline {section}{\numberline {4.5}Contexto en la literatura}{48}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{49}{section.4.6}%
+\contentsline {chapter}{Bibliografía}{50}{table.caption.48}%
