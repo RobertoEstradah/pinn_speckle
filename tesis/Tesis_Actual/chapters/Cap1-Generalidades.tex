@@ -101,10 +101,8 @@ PINN aplicados a la ecuación de Helmholtz incluidos en esta revisión.
 
 La contribución se plantea como un marco de validación reproducible: la PINN se
 compara contra una referencia independiente de propagación por espectro angular,
-que no interviene en ningún momento del entrenamiento --tampoco como
-etiquetas en puntos interiores--, se valida sobre cinco realizaciones de
-fase independientes, cada una con su propio ajuste, y se reportan
-simultáneamente métricas de campo complejo y estadísticas de
+se evalúa con realizaciones de fase no utilizadas durante el ajuste y se
+reportan simultáneamente métricas de campo complejo y estadísticas de
 \textit{speckle}. La afirmación de novedad queda limitada a esta combinación y
 deberá sostenerse únicamente con los resultados que superen los criterios
 cuantitativos definidos en el Capítulo~\ref{cap3:modelo}.
