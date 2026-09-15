@@ -8,15 +8,20 @@ Se presenta una implementación de Redes Neuronales Informadas por Física con
 activación sinusoidal (PINN-SIREN) para la validación de la resolución de la
 ecuación de Helmholtz en una y dos dimensiones, como base para la simulación
 de speckle óptico.
-La arquitectura SIREN propuesta ($5 \times 128$ neuronas, $\omega_0 = 1.0$)
-alcanza errores $L^2$ de $0.006\%$ en el caso 1D y $0.171\%$ en el caso 2D
-respecto a soluciones analíticas, varios órdenes de magnitud por debajo del
-umbral de tesis ($5\%$).
+Con $\omega_0 = 1.0$ calibrado al número de onda, la arquitectura SIREN
+alcanza un error $L^2$ de $0.006\%$ en el caso 1D ($5 \times 64$ neuronas) y
+de $0.171\%$ en el caso 2D ($5 \times 128$) respecto a soluciones analíticas,
+tres y casi dos órdenes de magnitud por debajo del umbral de tesis ($5\%$).
 La extensión a speckle se formula mediante una pantalla de fase aleatoria
-espacialmente correlacionada y una referencia independiente de propagación por
-espectro angular. En el conjunto de 64 realizaciones de referencia se obtuvo
-un contraste $C=0.9732$ en $z=20\lambda$; la validación de la PINN contra esa
-referencia permanece en progreso.
+espacialmente correlacionada y una referencia semianalítica de propagación
+por espectro angular, y se resuelve con una reducción modal que impone la
+condición de Cauchy de forma exacta en la arquitectura. En cinco
+realizaciones de fase independientes a $z=1\lambda$ el error $L^2$ del campo
+complejo es de $3.161\%$, dominado por la fracción evanescente del espectro
+que la base modal no puede representar; medido sobre el subespacio
+propagante, el error es de $0.042\%$. El contraste del conjunto es
+$C=0.9489$. El contraste de referencia promedio de los conjuntos de 64
+realizaciones es $C=0.9661$.
 Una estrategia de optimización bifásica Adam~+~L-BFGS y el muestreo por
 hipercubo latino (LHS) se emplean en el protocolo de entrenamiento.
 La reproducibilidad del método fue verificada con tres semillas independientes,

@@ -6,15 +6,19 @@
 
 Physics-Informed Neural Networks with sinusoidal activation functions
 (SIREN-PINNs) are evaluated for solving the Helmholtz equation in one and two
-dimensions as a foundation for optical speckle simulation. The proposed SIREN
-architecture ($5 \times 128$, $\omega_0 = 1.0$)
-achieves relative $L^2$ errors of $0.006\%$ (1D) and $0.171\%$ (2D) against
-analytical solutions, several orders of magnitude below the $5\%$ thesis
-threshold.
-The speckle extension uses a spatially correlated random-phase screen and an
-independent angular-spectrum propagation reference. The reference ensemble of
-64 realizations gives a contrast of $C=0.9732$ at $z=20\lambda$; validation of
-the PINN against this reference remains in progress.
+dimensions as a foundation for optical speckle simulation. With $\omega_0 = 1.0$
+calibrated to the wavenumber, the SIREN architecture achieves relative $L^2$
+errors of $0.006\%$ in 1D ($5 \times 64$ neurons) and $0.171\%$ in 2D
+($5 \times 128$) against analytical solutions, three and nearly two orders of
+magnitude below the $5\%$ thesis threshold.
+The speckle extension uses a spatially correlated random-phase screen and a
+semianalytical angular-spectrum reference, and is solved through a modal
+reduction that imposes the Cauchy condition exactly within the architecture.
+Across five independent phase realizations at $z=1\lambda$ the complex-field
+$L^2$ error is $3.161\%$, dominated by the evanescent fraction of the spectrum
+that the modal basis cannot represent; measured over the propagating subspace
+the error is $0.042\%$. The ensemble contrast is $C=0.9489$, against a mean
+reference ensemble contrast of $C=0.9661$ over 64 realizations each.
 A two-phase Adam~+~L-BFGS optimization strategy and Latin Hypercube Sampling
 (LHS) are used in the training protocol.
 Reproducibility was verified with three independent random seeds, yielding a

@@ -255,10 +255,17 @@ reserva para evaluación independiente.
 
 Para NB02, los $N_c = 3{,}000$ puntos de colocación interiores se generan
 mediante LHS \parencite{mckay1979lhs} usando
-\texttt{scipy.stats.qmc.LatinHypercube} con dimensión $n = 2$. En NB03 los
-puntos se muestrean dentro de cada bloque longitudinal, conservando cobertura
-en $x$ y $z$ sin exigir una malla cartesiana global. La evaluación final se
-realiza sobre la misma malla de la referencia angular.
+\texttt{scipy.stats.qmc.LatinHypercube} con dimensión $n = 2$.
+
+En NB03 el muestreo es de naturaleza distinta, porque la red no recibe la
+coordenada transversal: la dependencia en $\tilde x$ queda resuelta de forma
+exacta por el desarrollo modal de la
+ecuación~\eqref{eq:desarrollo_modal}. En cada época se sortean $256$ valores
+de $\tilde z$ con distribución uniforme sobre $[0,1]$, remuestreados en cada
+iteración; no se emplea muestreo por hipercubo latino en este experimento. La
+evaluación del campo se realiza sobre la malla transversal de la referencia
+angular, y la del residuo sobre una malla propia de $1{,}001$ valores de
+$\tilde z$, independiente del muestreo de entrenamiento.
 
 \subsection{Puntos de frontera}
 
@@ -268,16 +275,19 @@ En NB02, los $N_b = 300$ puntos de frontera por borde se distribuyen
 uniformemente sobre cada uno de los cuatro lados del dominio $\partial\Omega$
 (1{,}200 puntos en total). Para cada lado, se evalúa la solución exacta y se
 construye el par $(\mathbf{r}^b_j,\, E(\mathbf{r}^b_j))$ utilizado en
-$\mathcal{L}_\text{datos}$. NB03 sigue el esquema por bloques descrito en la
-Sección~\ref{cap3:nb03}: la interfaz inferior recibe el campo y la derivada
-saliente; las interfaces laterales imponen periodicidad de valor y derivada, y
-las interfaces internas reciben únicamente la transferencia producida por la
-PINN anterior. No se dejan bordes libres sin condición física.
+$\mathcal{L}_\text{datos}$. En NB03, en cambio, ninguna condición de frontera
+se impone mediante puntos de muestreo: las tres se satisfacen por
+construcción. La periodicidad lateral está contenida en el desarrollo de
+Fourier de la ecuación~\eqref{eq:desarrollo_modal}; el valor y la derivada
+saliente en la interfaz de entrada quedan fijados exactamente por la función
+de prueba de la ecuación~\eqref{eq:cauchy_dura_cap3}, con independencia de los
+parámetros de la red. No hay, por tanto, ni bordes libres sin condición física
+ni término de frontera en la pérdida.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Estrategia de optimización}
 
-El entrenamiento sigue la estrategia bifásica descrita en el
+El entrenamiento de NB01 y NB02 sigue la estrategia bifásica descrita en el
 Capítulo~\ref{cap2:marcos}, con los hiperparámetros consolidados en la
 Tabla~\ref{tab:hiperparametros}.
 
@@ -395,14 +405,16 @@ Helmholtz identificadas posteriormente (Tabla~\ref{tab:comparativa}).
 El código fuente está organizado en módulos reutilizables en \texttt{src/}:
 
 \begin{description}
-    \item[\texttt{models.py}] Clase \texttt{PINN\_2D\_SIREN} que implementa
+    \item[\texttt{models.py}] Clases \texttt{PINN\_1D\_SIREN} y
+    \texttt{PINN\_2D\_SIREN}, que implementan
     la arquitectura SIREN con la inicialización de \textcite{sitzmann2020siren}.
     El método \texttt{forward(x)} aplica la activación sinusoidal capa por capa
     y retorna el campo complejo como un tensor de dos columnas
     $(E_\text{real}, E_\text{imag})$.
 
-    \item[\texttt{losses.py}] Función \texttt{pinn\_loss\_2d(model, xy\_int,
-    xy\_bc, E\_bc, k, lam)} que calcula la pérdida total~\eqref{eq:loss_2d}.
+    \item[\texttt{losses.py}] Función \texttt{pinn\_loss\_2d(model,
+    xy\_colloc, xy\_bc, E\_bc, k, lambda\_phys)} que calcula la pérdida
+    total~\eqref{eq:loss_2d}.
     El cálculo del Laplaciano utiliza \texttt{torch.autograd.grad} con
     \texttt{create\_graph=True} para habilitar la diferenciación de segundo orden.
     El escalar $k$ se convierte explícitamente a \texttt{float(k)} antes de
@@ -412,8 +424,11 @@ El código fuente está organizado en módulos reutilizables en \texttt{src/}:
     \item[\texttt{training.py}] Loop de entrenamiento que integra las fases
     Adam y L-BFGS con \textit{early stopping}.
 
-    \item[\texttt{utils.py}] Métricas ($L^2$, $R^2$, RMSE, MAE), funciones de
-    muestreo LHS y rutinas de visualización.
+    \item[\texttt{utils.py}] Métrica de error $L^2$ relativo y utilidades de
+    rutas y de guardado de modelos. Las métricas $R^2$, RMSE y MAE se
+    calculan en los propios notebooks, y el muestreo por hipercubo latino se
+    invoca directamente desde \texttt{scipy.stats.qmc}. El módulo no incluye
+    rutinas de visualización: las figuras se generan en los notebooks.
 \end{description}
 
 Los experimentos están reproducidos en los notebooks

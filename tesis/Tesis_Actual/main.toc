@@ -36,7 +36,7 @@
 \contentsline {section}{\numberline {3.4}Estrategia de muestreo}{22}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{22}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Puntos de frontera}{22}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Estrategia de optimización}{22}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Estrategia de optimización}{23}{section.3.5}%
 \contentsline {section}{\numberline {3.6}Métricas de validación}{23}{section.3.6}%
 \contentsline {subsection}{\numberline {3.6.1}Métricas de NB03: campo complejo y estadística de speckle}{23}{subsection.3.6.1}%
 \contentsline {subsection}{\numberline {3.6.2}Error $L^2$ relativo (NB01 y NB02)}{24}{subsection.3.6.2}%

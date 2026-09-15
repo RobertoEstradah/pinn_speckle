@@ -46,7 +46,7 @@ La intensidad física observable del \textit{speckle} se calcula como:
 
 \subsection{Speckle óptico completamente desarrollado}
 
-Cuando una superficie rugosa con variación de fase $\Delta\psi \gg 2\pi$ es
+Cuando una superficie rugosa con variación de fase $\Delta\psi \gtrsim 2\pi$ es
 iluminada por luz coherente, las contribuciones de los distintos puntos de la
 superficie interfieren de forma aleatoria. Por el Teorema del Límite Central,
 el campo complejo resultante sigue una distribución gaussiana circular compleja
@@ -191,7 +191,7 @@ una malla cartesiana equivalente.
 
 \subsection{Optimización híbrida Adam + L-BFGS}
 
-El entrenamiento sigue una estrategia bifásica de Adam seguido de L-BFGS,
+El entrenamiento de NB01 y NB02 sigue una estrategia bifásica de Adam seguido de L-BFGS,
 práctica extendida en la literatura de PINNs \parencite{cuomo2022scientific}:
 
 \begin{enumerate}
@@ -325,5 +325,5 @@ infraestructura:
     estadísticas y curvas de entrenamiento.
     \item \textbf{Módulos propios:} \texttt{src/models.py} (arquitectura SIREN),
     \texttt{src/losses.py} (función de pérdida PINN), \texttt{src/utils.py}
-    (métricas y visualización).
+    (métrica de error $L^2$ y utilidades de rutas y de guardado).
 \end{itemize}
