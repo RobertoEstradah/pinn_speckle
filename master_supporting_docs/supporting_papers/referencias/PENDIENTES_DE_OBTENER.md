@@ -1,10 +1,16 @@
 # Citas sin copia local — lista de obtención manual
 
 **Fecha:** 2026-09-15
-**Estado:** 21 de 28 citas tienen PDF local y su contenido fue verificado. Estas
-7 no. (Actualizado: se obtuvieron Alkhalifah et al. y Fang y Zhan, ambas de
-acceso abierto.) **Todas existen y están correctamente citadas**; lo que falta es el
-documento para comprobar que dicen lo que la tesis les atribuye.
+**Estado (recontado el 2026-09-15 contra el inventario real de PDFs):** la tesis
+cita **28 claves**. De ellas **17 tienen copia local completa**, **2 la tienen
+parcial** (Goodman: sólo preliminares de la 2.ª ed.; Born y Wolf: vista previa
+legal con el capítulo 1) y **9 no tienen ninguna**.
+
+El conteo anterior de esta ficha decía «21 de 28 … estas 7» y era **incorrecto**:
+omitía tres claves sin copia --`wang2022ntk`, `karniadakis2021physics` y
+`moseley2020wave`-- que se añaden abajo. **Todas las citas existen y están
+correctamente referenciadas**; lo que falta es el documento para comprobar que
+dicen lo que la tesis les atribuye.
 
 Al conseguir cada una, guardarla en
 `master_supporting_docs/supporting_papers/referencias/` con el patrón
@@ -113,6 +119,40 @@ Al conseguir cada una, guardarla en
 
 ---
 
+## Prioridad media — detectadas en el recuento del 2026-09-15
+
+Las tres se omitieron en la revisión anterior. Ninguna sostiene una cifra de la
+tesis, pero las dos primeras hacen una afirmación de contenido sobre lo que sus
+autores hicieron, que es exactamente la clase de afirmación que falló en el caso
+de Fang y Zhan.
+
+### 2b. Moseley, Markham y Nissen-Meyer (2020) — Ecuación de onda con PINNs
+- arXiv:2006.11894 · **Acceso abierto**
+- **Usos:** 1 (Cap2) · Afirmación: «aplicaron PINNs para resolver la ecuación de
+  onda acústica 2D en modelos de velocidad variables»
+- **Cuidado:** en `referencias/NB03/` hay un `Moseley_etal_2023_FBPINNs.pdf`, que
+  es **otro artículo** de los mismos autores. No sirve para verificar esta cita.
+- Descargable: `https://arxiv.org/pdf/2006.11894`
+
+### 2c. Wang, Yu y Perdikaris (2022) — Perspectiva NTK
+- *Journal of Computational Physics* **449**, 110768 · DOI `10.1016/j.jcp.2021.110768`
+- Preprint **abierto**: arXiv:2007.14527
+- **Usos:** 2 (Cap2 y Cap4) · La tesis **aplica su método**: la
+  Sección~`sec:ntk_analisis` de Cap4 calcula la traza NTK física/datos. Las
+  cifras son propias, no atribuidas a ellos, pero conviene tener el texto para
+  respaldar cómo se aplica.
+- **Cuidado:** `referencias/NB03/Wang_etal_2021_PINN_gradient_pathologies.pdf`
+  corresponde a `wang2021failure`, que es **otra** cita. No confundir.
+- Descargable: `https://arxiv.org/pdf/2007.14527`
+
+### 2d. Karniadakis et al. (2021) — Aprendizaje automático informado por física
+- *Nature Reviews Physics* **3**, 422–440 · DOI `10.1038/s42254-021-00314-5`
+- **Usos:** 1 (Cap2) · Afirmación: es una revisión extensa del tema. De contexto,
+  sin cifras.
+- De pago, sin preprint en arXiv. Acceso institucional UJAT o biblioteca.
+
+---
+
 ## Prioridad baja — citas de contexto, sin cifras atribuidas
 
 Ninguna sostiene un número de la tesis. Conviene tenerlas, pero no comprometen
@@ -171,13 +211,17 @@ ninguna afirmación cuantitativa.
 
 ## Resumen
 
+Inventario verificado contra `master_supporting_docs/supporting_papers/referencias/`
+el 2026-09-15.
+
 | Prioridad | Cuántas | Acción |
 |---|---:|---|
 | Alta | 2 | Goodman y Zhang: biblioteca o acceso institucional. De Goodman ya se tienen los preliminares de la 2.ª ed. (índice y paginación), no el texto |
 | ~~Acceso abierto~~ | ~~2~~ | **Obtenidas el 2026-09-15.** La de Fang reveló una atribución incorrecta, ya corregida en Cap2 |
+| Media | 3 | Moseley y Wang (NTK): **acceso abierto en arXiv**. Karniadakis: de pago |
 | Baja, acceso institucional | 5 | Jin, McKay, Lagaris, Hornik, Nocedal |
 
-Quedan **7** sin copia local, de las cuales sólo dos son de prioridad alta.
+Quedan **9** sin copia local: 2 de prioridad alta, 3 de media --dos de ellas descargables de arXiv-- y 4 de baja. A esas se suman 2 con copia parcial (Goodman y Born y Wolf).
 
 
 ---
