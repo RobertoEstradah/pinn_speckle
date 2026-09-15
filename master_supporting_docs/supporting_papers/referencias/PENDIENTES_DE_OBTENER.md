@@ -1,8 +1,9 @@
 # Citas sin copia local — lista de obtención manual
 
 **Fecha:** 2026-09-15
-**Estado:** 19 de 28 citas tienen PDF local y su contenido fue verificado. Estas
-9 no. **Todas existen y están correctamente citadas**; lo que falta es el
+**Estado:** 21 de 28 citas tienen PDF local y su contenido fue verificado. Estas
+7 no. (Actualizado: se obtuvieron Alkhalifah et al. y Fang y Zhan, ambas de
+acceso abierto.) **Todas existen y están correctamente citadas**; lo que falta es el
 documento para comprobar que dicen lo que la tesis les atribuye.
 
 Al conseguir cada una, guardarla en
@@ -81,19 +82,27 @@ ninguna afirmación cuantitativa.
 - **Usos:** 1 (Cap2) · Afirmación: L-BFGS como método cuasi-Newton
 - Biblioteca. El PDF circula ampliamente.
 
-### 8. Alkhalifah et al. (2021) — Soluciones de campo de onda
+### ~~8. Alkhalifah et al. (2021) — Soluciones de campo de onda~~ OBTENIDA
 - *Artificial Intelligence in Geosciences* **2**, 11–19 · DOI `10.1016/j.aiig.2021.08.002`
 - **Usos:** 1 (Cap2)
-- **Revista de acceso abierto (KeAi/Elsevier)** — debería estar disponible sin
-  pago. Es la más fácil de las nueve.
+- **OBTENIDA** el 2026-09-15 como preprint arXiv:2106.01433v1, 23 páginas, en
+  `arxiv_verificacion/Alkhalifah_etal_2021_WavefieldHelmholtz.pdf`. ScienceDirect
+  bloquea la descarga automatizada; el preprint tiene los mismos cuatro autores.
+  **Nota:** el título del preprint es *Wavefield solutions from machine learned
+  functions*, sin el sufijo *constrained by the Helmholtz equation* que añadió la
+  versión publicada. **Afirmación verificada:** Cap2 le atribuye usar Helmholtz
+  como restricción en la función de pérdida, y el abstract lo confirma.
 
-### 9. Fang y Zhan (2020) — PINNs para diseño de metamateriales
+### ~~9. Fang y Zhan (2020) — PINNs para diseño de metamateriales~~ OBTENIDA
 - *IEEE Access* **8**, 24506–24513 · DOI `10.1109/ACCESS.2019.2963375`
 - **Usos:** 1 (Cap2)
-- **IEEE Access es de acceso abierto** — descarga libre.
-- **Revisar al obtenerlo:** la tesis dice que aplicaron PINNs a «dispersión de
-  ondas en medios inhomogéneos 2D», pero el título del artículo es sobre
-  *diseño de metamateriales*. Puede que la afirmación necesite ajustarse.
+- **OBTENIDA** el 2026-09-15 de IEEE Xplore (documento 8946546), en
+  `referencias/Fang_Zhan_2020_DeepPINN_MetamaterialDesign.pdf`.
+- **La sospecha se confirmó.** Cap2 decía que aplicaron PINNs a «dispersión de
+  ondas en medios inhomogéneos 2D». El abstract real: proponen un enfoque de
+  PINN para *diseño de metamateriales electromagnéticos* (encubrimiento,
+  rotadores, concentradores) y, «as a byproduct», un método para la ecuación de
+  Helmholtz de alta frecuencia. **Cap2 ya fue corregido.**
 
 ---
 
@@ -102,8 +111,7 @@ ninguna afirmación cuantitativa.
 | Prioridad | Cuántas | Acción |
 |---|---:|---|
 | Alta | 2 | Goodman y Zhang: biblioteca o acceso institucional |
-| Baja, acceso abierto | 2 | Alkhalifah y Fang: descarga directa, gratis |
+| ~~Acceso abierto~~ | ~~2~~ | **Obtenidas el 2026-09-15.** La de Fang reveló una atribución incorrecta, ya corregida en Cap2 |
 | Baja, acceso institucional | 5 | Jin, McKay, Lagaris, Hornik, Nocedal |
 
-Las dos de acceso abierto (#8 y #9) se pueden obtener hoy mismo sin trámite, y
-la #9 además tiene una posible imprecisión que conviene revisar.
+Quedan **7** sin copia local, de las cuales sólo dos son de prioridad alta.
