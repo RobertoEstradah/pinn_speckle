@@ -1,0 +1,115 @@
+{
+  "experiment": "NB03 adaptive-frequency pre-registered confirmation",
+  "screen_seed": 31415,
+  "network_seeds": [
+    73,
+    101,
+    211
+  ],
+  "pre_registered_confirmation_rule": "at least 2 of 3 seeds with full final L2 < 5%",
+  "primary_pass_count": 2,
+  "primary_confirmed": true,
+  "all_metrics_pass_count": 1,
+  "cases": [
+    {
+      "network_seed": 73,
+      "source": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_holdout\\screen31415_net73_adaptiveomega_lbfgs180\\summary.json",
+      "l2_propagating_final": 0.007547504074511725,
+      "l2_propagating_max": 0.008854092291159433,
+      "l2_full_final": 0.021017551992631722,
+      "residual_rmse": 0.005766049027442932,
+      "coherence_full_final": 0.9997837950859203,
+      "contrast_difference": 0.0019442084275673732,
+      "adaptive_scale_final": 0.466844379901886,
+      "primary_full_l2_pass": true,
+      "propagating_final_pass": true,
+      "propagating_interval_pass": true,
+      "contrast_pass": true,
+      "all_predefined_metrics_pass": true
+    },
+    {
+      "network_seed": 101,
+      "source": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_holdout\\screen31415_net101_adaptiveomega_lbfgs180\\summary.json",
+      "l2_propagating_final": 1.3495575803270499,
+      "l2_propagating_max": 1.3495575803270499,
+      "l2_full_final": 1.349440487253662,
+      "residual_rmse": 0.3006478250026703,
+      "coherence_full_final": 0.7457282780649573,
+      "contrast_difference": 0.07135182385217975,
+      "adaptive_scale_final": 0.8883249759674072,
+      "primary_full_l2_pass": false,
+      "propagating_final_pass": false,
+      "propagating_interval_pass": false,
+      "contrast_pass": false,
+      "all_predefined_metrics_pass": false
+    },
+    {
+      "network_seed": 211,
+      "source": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_holdout\\screen31415_net211_adaptiveomega_lbfgs180\\summary.json",
+      "l2_propagating_final": 0.011500436871860937,
+      "l2_propagating_max": 0.011500436871860937,
+      "l2_full_final": 0.0227377164432631,
+      "residual_rmse": 0.006110801361501217,
+      "coherence_full_final": 0.9997526198949935,
+      "contrast_difference": 0.00036192348077523917,
+      "adaptive_scale_final": 0.28235915303230286,
+      "primary_full_l2_pass": true,
+      "propagating_final_pass": false,
+      "propagating_interval_pass": false,
+      "contrast_pass": true,
+      "all_predefined_metrics_pass": false
+    }
+  ],
+  "aggregate": {
+    "l2_propagating_final": {
+      "mean": 0.45620184042447415,
+      "median": 0.011500436871860937,
+      "std_population": 0.6316999630267964,
+      "minimum": 0.007547504074511725,
+      "maximum": 1.3495575803270499
+    },
+    "l2_propagating_max": {
+      "mean": 0.45663736983002345,
+      "median": 0.011500436871860937,
+      "std_population": 0.6313908602022735,
+      "minimum": 0.008854092291159433,
+      "maximum": 1.3495575803270499
+    },
+    "l2_full_final": {
+      "mean": 0.4643985852298523,
+      "median": 0.0227377164432631,
+      "std_population": 0.6258195245675208,
+      "minimum": 0.021017551992631722,
+      "maximum": 1.349440487253662
+    },
+    "residual_rmse": {
+      "mean": 0.10417489179720481,
+      "median": 0.006110801361501217,
+      "std_population": 0.13892741468194206,
+      "minimum": 0.005766049027442932,
+      "maximum": 0.3006478250026703
+    },
+    "coherence_full_final": {
+      "mean": 0.9150882310152904,
+      "median": 0.9997526198949935,
+      "std_population": 0.11975557186891808,
+      "minimum": 0.7457282780649573,
+      "maximum": 0.9997837950859203
+    },
+    "contrast_difference": {
+      "mean": 0.024552651920174123,
+      "median": 0.0019442084275673732,
+      "std_population": 0.033098315934543446,
+      "minimum": 0.00036192348077523917,
+      "maximum": 0.07135182385217975
+    },
+    "adaptive_scale_final": {
+      "mean": 0.545842836300532,
+      "median": 0.466844379901886,
+      "std_population": 0.2536128436894593,
+      "minimum": 0.28235915303230286,
+      "maximum": 0.8883249759674072
+    }
+  },
+  "interpretation": "The pre-registered primary rule is met, but one catastrophic initialization remains and only one seed passes every stricter propagating-field criterion. The method is promising but not initialization-robust enough for unconditional replacement."
+}

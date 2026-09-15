@@ -1,0 +1,36 @@
+{
+  "experiment": "NB03 adaptive slabs multiseed consolidation",
+  "screen_seed": 31415,
+  "network_seeds": [73, 211],
+  "distance_lambda": 5.0,
+  "runs": [
+    {
+      "network_seed": 73,
+      "l2_full_final": 0.007889813959042528,
+      "l2_propagating_final": 0.007889812305242206,
+      "l2_propagating_max": 0.008851272651949807,
+      "intensity_correlation_final": 0.9999708516511959,
+      "contrast_difference": 0.0010620865502743992
+    },
+    {
+      "network_seed": 211,
+      "l2_full_final": 0.009149258242730095,
+      "l2_propagating_final": 0.00914925681661487,
+      "l2_propagating_max": 0.011500377056359612,
+      "intensity_correlation_final": 0.9999637052152294,
+      "contrast_difference": 0.0009405018352148797
+    }
+  ],
+  "aggregate": {
+    "accepted_runs_below_5pct": "2/2",
+    "mean_l2_full_final": 0.008519536100886312,
+    "worst_l2_full_final": 0.009149258242730095,
+    "worst_l2_propagating_max": 0.011500377056359612,
+    "mean_contrast_difference": 0.0010012941927446394
+  },
+  "limitations": {
+    "independent_phase_screens_pending": true,
+    "goodman_absolute_rule_at_z5_pass": false,
+    "reason": "The angular-spectrum reference itself has C=1.1463428357 at z=5 lambda."
+  }
+}

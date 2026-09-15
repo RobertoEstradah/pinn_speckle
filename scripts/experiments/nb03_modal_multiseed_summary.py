@@ -18,13 +18,33 @@ from scripts.experiments import nb03_modal_pinn_siren as modal
 from scripts.experiments import nb03_pinn_slabs as base
 
 
-CASES = (
-    (42, "_z1_corr0.10", "_z1_modal_scaled1", "_z1_modal_scaled1_finetune"),
-    (123, "_z1_seed123_corr0.10", "_z1_screen123_scaled1", "_z1_screen123_scaled1_finetune"),
-    (321, "_z1_seed321_corr0.10", "_z1_screen321_scaled1", "_z1_screen321_scaled1_finetune"),
-    (777, "_z1_seed777_corr0.10", "_z1_screen777_scaled1", "_z1_screen777_scaled1_finetune"),
-    (2026, "_z1_seed2026_corr0.10", "_z1_screen2026_scaled1", "_z1_screen2026_scaled1_finetune"),
-)
+# Variante de la corrida a consolidar. Cadena vacia = corrida original con
+# FIRST_OMEGA=30; "_omega1" = corrida con omega_0 calibrado segun la regla de
+# NB01 (omega_0 ~ k/2pi = 1). Se elige con NB03_SUMMARY_VARIANT.
+VARIANT = os.environ.get("NB03_SUMMARY_VARIANT", "")
+if VARIANT not in ("", "_omega1"):
+    raise ValueError('NB03_SUMMARY_VARIANT debe ser "" o "_omega1".')
+
+
+def _case(screen_seed):
+    reference = ("_z1_corr0.10" if screen_seed == 42
+                 else f"_z1_seed{screen_seed}_corr0.10")
+    if VARIANT == "_omega1":
+        initial = f"_z1_screen{screen_seed}_omega1"
+    else:
+        initial = ("_z1_modal_scaled1" if screen_seed == 42
+                   else f"_z1_screen{screen_seed}_scaled1")
+    return (screen_seed, reference, initial, initial + "_finetune")
+
+
+CASES = tuple(_case(s) for s in (42, 123, 321, 777, 2026))
+
+# omega no vive en el state_dict: es un atributo de SineLayer fijado al
+# construir la red. Reconstruir con FIRST_OMEGA=30 y cargarle pesos entrenados
+# con FIRST_OMEGA=1 produciria una funcion distinta, no el modelo entrenado.
+if VARIANT == "_omega1":
+    modal.FIRST_OMEGA = 1.0
+
 
 
 def build_model(reference, model_path):
@@ -214,12 +234,12 @@ def main():
             "total_screens": len(rows),
         },
     }
-    json_path = results_dir / "nb03_modal_multiseed_z1_summary.json"
+    json_path = results_dir / f"nb03_modal_multiseed_z1{VARIANT}_summary.json"
     json_path.write_text(
         json.dumps(output, indent=2, ensure_ascii=False), encoding="utf-8"
     )
     np.savez_compressed(
-        results_dir / "nb03_modal_multiseed_z1_l2_curves.npz",
+        results_dir / f"nb03_modal_multiseed_z1{VARIANT}_l2_curves.npz",
         z_lambda=z_common,
         screen_seeds=np.asarray(output["screen_seeds"]),
         l2_curves=l2_curves,
@@ -238,7 +258,7 @@ def main():
     ax.set_title("NB03: error a lo largo de la propagacion")
     ax.grid(alpha=0.25)
     ax.legend(ncol=2)
-    figure_path = results_dir / "figures" / "nb03_modal_multiseed_z1_l2.png"
+    figure_path = results_dir / "figures" / f"nb03_modal_multiseed_z1{VARIANT}_l2.png"
     fig.savefig(figure_path, dpi=170, bbox_inches="tight")
     plt.close(fig)
 

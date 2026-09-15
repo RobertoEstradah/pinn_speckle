@@ -1,0 +1,68 @@
+{
+  "experiment": "NB03-E modal PINN-SIREN for full 2D Helmholtz",
+  "seed": 42,
+  "reference_seed": 2026,
+  "device": "cuda",
+  "representation": {
+    "equation": "a_m''(z) + (k^2-kx_m^2) a_m(z) = 0",
+    "field": "sum_m a_m(z) exp(i kx_m x)",
+    "n_complex_modes": 41,
+    "hard_cauchy": "a0 + z*a0_prime + z^2*N_theta(z)",
+    "interior_labels": false,
+    "mode_conditioning": "output scaled by k^2 times boundary modal amplitude; residual normalized by the same modal scale",
+    "modal_amplitude_floor": 3.216439672223856e-05
+  },
+  "architecture": {
+    "hidden_dim": 128,
+    "num_hidden_layers": 4,
+    "first_omega": 30.0,
+    "hidden_omega": 1.0,
+    "real_outputs": 82
+  },
+  "training": {
+    "epochs": 5000,
+    "n_z_per_epoch": 256,
+    "learning_rate": 0.0002,
+    "gradient_clip": 1.0,
+    "seconds": 251.66458773612976,
+    "best_training_loss": 0.000703855708707124,
+    "resume_model": null
+  },
+  "independent_modal_residual": {
+    "n_z": 1001,
+    "normalized_mse": 0.0026868032291531563,
+    "normalized_rmse": 0.051834382116794586,
+    "normalized_max_abs": 0.6704121232032776
+  },
+  "metrics": {
+    "target_complex_relative_l2": 0.04647367479002165,
+    "target_real_relative_l2": 0.04959506859493437,
+    "target_imag_relative_l2": 0.043585214958204284,
+    "target_phase_aligned_relative_l2": 0.03786217912505196,
+    "target_complex_coherence": 0.9992928274001717,
+    "target_global_phase_shift_rad": 0.02702915608817153,
+    "target_intensity_relative_l2": 0.0408306168656508,
+    "target_intensity_pearson_correlation": 0.9979210187321716,
+    "reference_target_statistics": {
+      "mean_intensity": 0.4131689316517375,
+      "std_intensity": 0.32276887240406366,
+      "contrast": 0.7812031536682129
+    },
+    "pinn_target_statistics": {
+      "mean_intensity": 0.4089278797175664,
+      "std_intensity": 0.3193473178430689,
+      "contrast": 0.7809379934271834
+    },
+    "hard_boundary_field_rmse": 1.8721916306582553e-08
+  },
+  "acceptance": {
+    "complex_l2_below_5_percent": true,
+    "legacy_contrast_distance_from_one_below_0_1": false,
+    "contrast_reference_absolute_error": 0.0002651602410295162,
+    "contrast_reference_error_below_0_05": true,
+    "legacy_accepted": false,
+    "accepted": true,
+    "criterion_note": "C near one is an ensemble speckle criterion; an individual screen is judged by agreement with its reference contrast"
+  },
+  "status": "diagnostic spectral PINN; angular spectrum used only for evaluation"
+}

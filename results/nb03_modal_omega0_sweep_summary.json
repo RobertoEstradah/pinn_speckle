@@ -1,0 +1,53 @@
+{
+  "experiment": "NB03 modal: barrido de omega_0 de la primera capa",
+  "screen_seed": 42,
+  "reference_suffix": "_z1_corr0.10",
+  "protocol": "Identico en los cuatro casos: 5000 epocas Adam, lr 2e-4, 256 posiciones de z por epoca, sin refinamiento posterior. Solo cambia omega_0 de la primera capa; omega_0 interno fijo en 1.",
+  "decomposition_note": "L2_total^2 = L2_propagante^2 + piso^2 de forma exacta: la base modal solo contiene los 41 modos propagantes y el sector evanescente de la referencia es ortogonal a ella.",
+  "per_omega": [
+    {
+      "first_omega": 1.0,
+      "complex_relative_l2_total": 0.03819455576894403,
+      "complex_relative_l2_propagating": 0.0008994273901705432,
+      "evanescent_floor": 0.038183979628211503,
+      "modal_residual_normalized_rmse": 0.003593323053792119,
+      "complex_coherence": 0.9992703874115358,
+      "training_seconds": 220.969584941864,
+      "epochs": 5000
+    },
+    {
+      "first_omega": 5.0,
+      "complex_relative_l2_total": 0.03819261995947141,
+      "complex_relative_l2_propagating": 0.0008129469224170254,
+      "evanescent_floor": 0.038183979628211503,
+      "modal_residual_normalized_rmse": 0.0026110706385225058,
+      "complex_coherence": 0.9992705870288224,
+      "training_seconds": 219.06499814987183,
+      "epochs": 5000
+    },
+    {
+      "first_omega": 15.0,
+      "complex_relative_l2_total": 0.038325611210091995,
+      "complex_relative_l2_propagating": 0.0032942369021691383,
+      "evanescent_floor": 0.038183979628211503,
+      "modal_residual_normalized_rmse": 0.013323980383574963,
+      "complex_coherence": 0.9992656175752421,
+      "training_seconds": 218.76786637306213,
+      "epochs": 5000
+    },
+    {
+      "first_omega": 30.0,
+      "complex_relative_l2_total": 0.04962340572454357,
+      "complex_relative_l2_propagating": 0.031716443082707976,
+      "evanescent_floor": 0.038183979628211503,
+      "modal_residual_normalized_rmse": 0.05491453409194946,
+      "complex_coherence": 0.9990056022552317,
+      "training_seconds": 220.28456020355225,
+      "epochs": 5000
+    }
+  ],
+  "ratios": {
+    "propagating_error_30_over_1": 35.262927757508166,
+    "residual_30_over_1": 15.282381592157948
+  }
+}

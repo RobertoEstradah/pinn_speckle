@@ -1,5 +1,14 @@
 # Reproducción de NB03: PINN-SIREN modal para speckle 2D
 
+Actualización de robustez: una pantalla reservada (31415) con semilla neuronal
+73 no alcanzó el umbral con la SIREN fija (L2 completo 6.7397 %). Una variante
+con frecuencia sinusoidal global entrenable, respaldada por Jagtap, Kawaguchi
+y Karniadakis (2020), redujo el L2 propagante a 0.7548 %, el máximo en 201
+planos a 0.8854 % y el L2 completo a 2.1018 %. Una confirmación predefinida
+aprobó el criterio de L2 completo en 2 de 3 semillas neuronales, pero una
+inicialización falló de forma catastrófica; por ello aún no sustituye el
+protocolo principal. Véase `results/nb03_holdout/README.md`.
+
 Actualización: se ejecutó una comparación adicional con selección de pesos
 corregida y Adam/L-BFGS en las pantallas 42 y 123. L-BFGS float32 redujo el
 error propagante final a 0.5145 % y 0.3740 %; los errores frente al campo
@@ -18,6 +27,14 @@ Este documento reproduce el modelo de NB03 que obtuvo los mejores resultados
 en la propagación de speckle óptico hasta `z = 1 lambda`. El campo final sigue
 expresado en coordenadas cartesianas `(x,z)`, pero la PINN utiliza internamente
 una representación espectral-modal.
+
+Estado posterior: el mismo método fue validado controladamente en cinco
+pantallas hasta `z = 2 lambda`, con L2 completo final medio de 1.935 %. Una
+prueba reservada adicional en `z = 1 lambda`, con pantalla 31415 y semilla
+neuronal 73, terminó en 6.740 % y no fue aceptada. Por ello existe evidencia
+de precisión a 1--2 lambda, pero aún no de robustez ante cualquier
+inicialización. Véanse `results/nb03_distance_pilot/README.md` y
+`results/nb03_holdout/README.md`.
 
 ## Resultado que debe reproducirse
 
@@ -230,7 +247,7 @@ cercanía `C aproximadamente 1` corresponde a la estadística de conjunto.
 | `scripts/experiments/nb03_modal_pinn_siren.py` | Entrena y evalúa la PINN-SIREN modal |
 | `scripts/experiments/nb03_modal_multiseed_summary.py` | Recalcula métricas agregadas y L2 a lo largo de z |
 | `scripts/experiments/run_nb03_modal_multiseed.ps1` | Ejecuta el protocolo completo |
-| `notebooks/03_pinn_optical_speckle_simulation.ipynb` | Presentación interactiva de NB03 |
+| `notebooks/03_simulacion_speckle_2d_pinn_siren_modal.ipynb` | Presentación interactiva de NB03 |
 | `results/nb03_modal_multiseed_z1_summary.json` | Resultados consolidados |
 | `results/nb03_modal_multiseed_z1_l2_curves.npz` | Curvas L2 para las cinco pantallas |
 | `results/figures/nb03_modal_multiseed_z1_l2.png` | Figura comparativa |
@@ -268,5 +285,9 @@ Una reproducción correcta debe verificar:
 - La formulación aprovecha un medio homogéneo y periodicidad transversal.
 - El espectro angular y la PINN modal comparten una base Fourier compatible;
   la comparación futura con FEM aportará una validación numérica adicional.
-- No se ha demostrado todavía propagación a 2, 5, 10 o 20 longitudes de onda.
+- Se demostró propagación controlada hasta 2 longitudes de onda en las cinco
+  pantallas conocidas; no se ha demostrado todavía a 5, 10 o 20 longitudes de
+  onda.
+- Una pantalla y semilla neuronal reservadas no alcanzaron el umbral de 5 %;
+  la robustez entre inicializaciones permanece abierta.
 - No se ha medido aún aceleración frente a FEM.

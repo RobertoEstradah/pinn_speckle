@@ -15,7 +15,10 @@ soluciones analíticas. NB03 requiere un dominio de propagación más amplio par
 representar varios periodos ópticos y separar la pantalla de fase de la región
 de observación. Por ello se define de forma independiente
 $\Omega_{03}=[-10,10]\times[0,20]$ en coordenadas $(x/\lambda,z/\lambda)$,
-manteniendo $k=2\pi$.
+manteniendo $k=2\pi$. Ese es el dominio declarado como objetivo; la validación
+reportada en el Capítulo~\ref{cap4:resultados} se realiza sobre el subdominio
+$[-10,10]\times[0,1]$, y la extensión a distancias mayores se documenta con su
+propio alcance.
 
 Se plantean tres experimentos sucesivos de complejidad creciente:
 
@@ -64,7 +67,7 @@ separando la solución en sus partes real e imaginaria:
 La ecuación de Helmholtz 2D en $\Omega_{03}$ con una pantalla de fase
 aleatoria en la entrada $z=0$. La fase no se genera de forma independiente en
 cada punto: se obtiene como un proceso gaussiano periódico con longitud de
-correlación $\ell_\phi=0.5\lambda$ y desviación estándar $2$ rad. Esta
+correlación $\ell_\phi=0.10\lambda$ y desviación estándar $2$ rad. Esta
 correlación evita que la condición de entrada quede dominada por componentes
 evanescentes no observables en la región de propagación:
 %
@@ -87,12 +90,65 @@ angular. La derivada de entrada se fija mediante la condición saliente:
     \label{eq:derivada_saliente}
 \end{equation}
 %
-En $x$ se imponen periodicidad de valor y de derivada. El dominio longitudinal
-se divide en bloques cortos; cada bloque recibe el campo y la derivada de la
-interfaz anterior, satisface Helmholtz en su interior y transfiere esas dos
-cantidades al bloque siguiente. Esta formulación conserva la ecuación de
-Helmholtz, pero evita tratar las fronteras restantes como bordes libres sin
-condición física.
+En $x$ se imponen periodicidad de valor y de derivada.
+
+\subsubsection*{Reducción modal}
+
+La periodicidad transversal permite desarrollar el campo en serie de Fourier de
+forma exacta,
+%
+\begin{equation}
+    u(\tilde x,\tilde z)=\sum_{m} a_m(\tilde z)\,e^{i k_{x,m}\tilde x},
+    \qquad k_{x,m}=2\pi m ,
+    \label{eq:desarrollo_modal}
+\end{equation}
+%
+con lo que la ecuación de Helmholtz 2D se separa en un sistema de ecuaciones
+diferenciales ordinarias desacopladas,
+%
+\begin{equation}
+    a_m''(\tilde z) + \left(k^2-k_{x,m}^2\right) a_m(\tilde z) = 0 .
+    \label{eq:edo_modal_cap3}
+\end{equation}
+%
+La base se trunca a los $41$ modos propagantes ($k_{x,m}^2<k^2$). Los modos
+evanescentes se descartan porque su rama creciente $e^{+|\kappa_m|\tilde z}$
+hace que la solución no dependa de forma continua de los datos; el truncamiento
+espectral es la regularización de este problema de Cauchy analizada por
+\textcite{nguyen2016truncation}.
+
+\subsubsection*{Condición de Cauchy dura}
+
+En lugar de penalizar la frontera en la función de pérdida, se impone dentro de
+la arquitectura mediante la función de prueba
+%
+\begin{equation}
+    a_m(\tilde z)=a_m(0)+\tilde z\,a_m'(0)+\tilde z^{\,2}\,N_\theta(\tilde z),
+    \label{eq:cauchy_dura_cap3}
+\end{equation}
+%
+donde $N_\theta$ es la salida de la red. El término $\tilde z^{\,2}$ no
+contribuye ni al valor ni a la primera derivada en $\tilde z=0$, de modo que
+ambas condiciones se satisfacen exactamente para cualquier valor de los
+parámetros. Una ecuación de segundo orden con valor y derivada fijados en un
+punto tiene solución única, por lo que la
+ecuación~\eqref{eq:cauchy_dura_cap3} determina el problema. Esta estrategia de
+imponer la frontera en la función de prueba corresponde al enfoque de
+\textcite{sukumar2022exact}.
+
+De aquí se siguen dos diferencias metodológicas con NB01 y NB02. Primero, la
+pérdida de NB03 contiene únicamente el residuo modal: al no existir término de
+datos, \textbf{no hay peso $\lambda_\text{fís}$ que calibrar}. Segundo, cada
+salida se escala por
+$s_m=k^2\max\!\left(|a_m(0)|,\,|a_m'(0)|/k,\,\epsilon\right)$, con $\epsilon$ un
+piso que evita divisiones por cero, de modo que los modos de amplitud pequeña
+contribuyen al residuo en la misma escala que los dominantes.
+
+La extensión a distancias mayores que $1\lambda$ sí emplea una división del
+dominio longitudinal en bloques, en la que cada bloque recibe el campo y la
+derivada de la interfaz anterior por la misma construcción de la
+ecuación~\eqref{eq:cauchy_dura_cap3}; esa extensión se reporta por separado y
+con su propio alcance de validación.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Arquitectura SIREN}
@@ -101,24 +157,29 @@ Se emplea una arquitectura SIREN con los parámetros consolidados a partir de la
 validación 1D (NB01) y escalados para el caso 2D (NB02):
 
 \begin{itemize}
-    \item \textbf{Entrada:} coordenadas espaciales; $(x,y)\in[0,1]^2$ en NB02
-    y $(x,z)\in\Omega_{03}$ en NB03.
+    \item \textbf{Entrada:} coordenadas espaciales, $x\in[0,1]$ en NB01 y
+    $(x,y)\in[0,1]^2$ en NB02. En NB03 la entrada es la coordenada de
+    propagación $\tilde z$ como escalar, porque la dependencia transversal está
+    resuelta de forma exacta por el desarrollo modal.
     \item \textbf{Capas ocultas:} $L = 5$ capas de dimensión $d$ neuronas cada
-    una ($d = 64$ en NB01, $d = 128$ en NB02/NB03).
-    \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$. NB01/NB02 usan
-    $\omega_0=1.0$; NB03 normaliza localmente las coordenadas de cada bloque y
-    calibra $\omega_0$ como parte del experimento de alta frecuencia.
+    una ($d = 64$ en NB01, $d = 128$ en NB02). NB03 emplea $4$ capas de $128$.
+    \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$, con
+    $\omega_0=1.0$ en los tres experimentos, conforme a la regla
+    $\omega_0\approx k/2\pi$ verificada en NB01 y en el régimen modal de NB03.
     \item \textbf{Salida:} capa lineal de dos neuronas $(E_\text{real}, E_\text{imag})$
-    para el caso 2D, o una neurona $E$ para el caso 1D.
+    en NB02, una neurona $E$ en NB01, y $82$ neuronas en NB03
+    ($41$ coeficientes modales complejos).
     \item \textbf{Parámetros totales:} $16{,}833$ (NB01) y $66{,}690$ (NB02).
 \end{itemize}
 
 La elección $\omega_0 = 1.0$ en NB01/NB02 se conserva porque esos casos ya
-fueron validados en $[0,1]^2$. En NB03 el ancho físico del dominio es veinte
-longitudes de onda y la red se entrena por bloques; por ello las coordenadas de
-cada bloque se transforman a $[-1,1]^2$ y $\omega_0$ se trata como un
-hiperparámetro calibrable. La selección definitiva se hará con error contra la
-referencia de espectro angular, no únicamente con la pérdida de entrenamiento.
+fueron validados en $[0,1]^2$. En NB03 la entrada de la red es $\tilde z$
+normalizado y cada coeficiente modal oscila como
+$a_m(\tilde z)\propto e^{i k_{z,m}\tilde z}$ con $k_{z,m}\leq k$: a lo sumo una
+oscilación completa en el dominio, de modo que la misma regla predice
+$\omega_0=1$. Esa predicción se contrastó experimentalmente contra
+$\omega_0\in\{5,15,30\}$ y el resultado se reporta en el
+Capítulo~\ref{cap4:resultados}.
 
 La inicialización sigue el esquema de \textcite{sitzmann2020siren}:
 $\mathbf{W}_0 \sim \mathcal{U}(-1/n_\text{in}, 1/n_\text{in})$ para la primera
@@ -163,23 +224,28 @@ Es crítico que $k^2$ se convierta a tipo \texttt{float} de Python antes de
 multiplicar por el tensor de la red, para evitar conflictos de tipo entre
 \texttt{numpy.float64} y \texttt{torch.float32}.
 
-Para NB03 se agrega la pérdida de la derivada longitudinal en la interfaz de
-entrada, la periodicidad lateral y la transferencia entre bloques:
+En NB03 la función de pérdida es estructuralmente distinta. El valor y la
+derivada en la interfaz de entrada, y la periodicidad lateral, dejan de ser
+términos de la pérdida: los tres se satisfacen exactamente por construcción --el
+desarrollo modal impone la periodicidad y la ecuación~\eqref{eq:cauchy_dura_cap3}
+impone los datos de Cauchy--. La pérdida se reduce al residuo modal normalizado
+por la escala de cada modo:
 %
 \begin{equation}
-    \mathcal{L}_{03} =
-    \mathcal{L}_{E,0}
-    + \lambda_z\mathcal{L}_{\partial_z E,0}
-    + \lambda_p\mathcal{L}_{\mathrm{per}}
-    + \lambda_f\frac{\mathcal{L}_{R_\mathrm{real}}
-    +\mathcal{L}_{R_\mathrm{imag}}}{k^4}.
+    \mathcal{L}_{03} = \frac{1}{M N}\sum_{m}\sum_{j}
+    \left\lvert
+    \frac{a_m''(\tilde z_j)+\left(k^2-k_{x,m}^2\right)a_m(\tilde z_j)}{s_m}
+    \right\rvert^{2},
+    \qquad
+    s_m=k^2\max\!\left(|a_m(0)|,\tfrac{|a_m'(0)|}{k},\epsilon\right).
     \label{eq:loss_nb03}
 \end{equation}
 %
-La división por $k^4$ normaliza la escala del residuo de segundo orden. La
-condición de derivada saliente no se usa como etiqueta interior: en el primer
-bloque se calcula desde la pantalla radiativa y, en los bloques posteriores, se
-transfiere desde la salida del bloque anterior. Así, la referencia angular se
+No hay, por tanto, ningún peso relativo que calibrar en NB03: el problema de
+balance entre términos que motivó la ablación de $\lambda_\text{fís}$ en NB02
+desaparece al imponer la frontera dentro de la arquitectura. La condición de
+derivada saliente no se usa como etiqueta interior: se calcula desde la
+pantalla radiativa. Así, la referencia angular se
 reserva para evaluación independiente.
 
 % ──────────────────────────────────────────────────────────────────────────────
@@ -246,6 +312,41 @@ Peso de física $\lambda_\text{fís}$ & 1.0 (NB01), 0.1 (NB02) & - \\
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Métricas de validación}
+
+\subsection{Métricas de NB03: campo complejo y estadística de speckle}
+\label{cap3:metricas_nb03}
+
+Para NB03 se evalúan tres familias de métricas contra la referencia por
+espectro angular, que no se utiliza en ningún momento del entrenamiento:
+
+\begin{itemize}
+    \item \textbf{Error de campo.} Error $L^2$ relativo complejo
+    $\varepsilon_{L^2}=\lVert E_\text{PINN}-E_\text{AS}\rVert_2/\lVert E_\text{AS}\rVert_2$
+    y coherencia compleja
+    $\gamma=|\langle E_\text{AS},E_\text{PINN}\rangle|/(\lVert E_\text{AS}\rVert_2\lVert E_\text{PINN}\rVert_2)$.
+    Puesto que la base modal contiene sólo los modos propagantes, el error se
+    descompone de forma exacta como
+    $\varepsilon_{L^2}^2=\varepsilon_\text{prop}^2+\varepsilon_\text{evan}^2$,
+    donde $\varepsilon_\text{evan}$ es la fracción evanescente de la referencia
+    --irrepresentable por construcción-- y $\varepsilon_\text{prop}$ el error
+    sobre el subespacio que el modelo sí puede expresar. Ambos se reportan.
+
+    \item \textbf{Residuo físico.} RMSE del residuo de la
+    ecuación~\eqref{eq:edo_modal_cap3}, normalizado por la escala modal $s_m$ y
+    evaluado en una malla fija de $\tilde z$ independiente del muestreo de
+    entrenamiento.
+
+    \item \textbf{Estadística de \textit{speckle}.} Contraste
+    $C=\sigma_I/\langle I\rangle$, evaluado en dos niveles: sobre el conjunto de
+    realizaciones frente al criterio $|C-1|<0.1$ de
+    \textcite{goodman2007speckle}, y sobre cada realización individual como
+    fidelidad al contraste de su propia referencia,
+    $|C_\text{PINN}-C_\text{ref}|<0.05$. El test de Kolmogorov--Smirnov contra
+    la exponencial y la fracción de píxeles con $I>2\langle I\rangle$ (valor
+    teórico $e^{-2}$) se reportan como estadísticos descriptivos; el primero
+    supone muestras independientes, hipótesis que un corte espacial de
+    \textit{speckle} no satisface por la correlación dentro de cada grano.
+\end{itemize}
 
 \subsection{Error $L^2$ relativo (NB01 y NB02)}
 
@@ -314,7 +415,7 @@ El código fuente está organizado en módulos reutilizables en \texttt{src/}:
 \end{description}
 
 Los experimentos están reproducidos en los notebooks
-\texttt{01\_pinn\_helmholtz\_1d\_validation.ipynb},
-\texttt{02\_pinn\_helmholtz\_2d\_complex\_field.ipynb} y
-\texttt{03\_pinn\_optical\_speckle\_simulation.ipynb}.
+\texttt{01\_validacion\_helmholtz\_1d\_normalizada.ipynb},
+\texttt{02\_validacion\_helmholtz\_2d\_normalizada.ipynb} y
+\texttt{03\_simulacion\_speckle\_2d\_pinn\_siren\_modal.ipynb}.
 Los resultados numéricos están archivados en formato JSON en \texttt{results/}.

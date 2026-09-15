@@ -1,0 +1,78 @@
+{
+  "experiment": "NB03 chained modal PINN-SIREN distance pilot",
+  "scope": "One-lambda slabs; first slab is the validated z=1 model",
+  "configuration": {
+    "seeds": [
+      42
+    ],
+    "distances": [
+      2
+    ],
+    "seconds": 60.0,
+    "n_train": 1024,
+    "threads": 4,
+    "name": "pilot_z2_slabs_v1"
+  },
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.3.5",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "cpu",
+    "threads": 4
+  },
+  "source_script_sha256": "41f20ec0a4a95dd4c4b632c4a872e2ccbf054f15b8126a5d751620e2718b9fa0",
+  "protocol": "Each slab solves the modal Helmholtz residual locally. The next slab receives value and derivative from the previous slab. Angular spectrum is used only for independent evaluation.",
+  "cases": [
+    {
+      "seed": 42,
+      "distances": {
+        "z2": {
+          "training": [
+            {
+              "slab_index": 1,
+              "width_lambda": 1.0,
+              "seconds": 60.291884700010996,
+              "budget_seconds": 60.0,
+              "steps": 91,
+              "closure_calls": 1036,
+              "selection_initial_mse": 3.1698386669158936,
+              "selection_best_mse": 0.10857421904802322,
+              "optimizer": "LBFGS_float32"
+            }
+          ],
+          "metrics": {
+            "distance_lambda": 2.0,
+            "n_slabs": 2,
+            "l2_full_final": 1.3800178441071227,
+            "l2_propagating_final": 1.3800246577887507,
+            "l2_propagating_max": 1.391974049776908,
+            "l2_propagating_max_z": 1.97,
+            "l2_full_max": 1.3919661283421516,
+            "evanescent_floor_final": 0.004559867119196805,
+            "coherence_full_final": 0.8129614411307711,
+            "intensity_correlation_full_final": 0.6566503393951989,
+            "contrast_full": 1.1594649921167448,
+            "contrast_pinn": 0.8451200641899076,
+            "contrast_difference": 0.3143449279268372,
+            "reference_fidelity_pass": false,
+            "slab_residuals": [
+              {
+                "mse": 0.00011679124872898683,
+                "rmse": 0.01080700010061264,
+                "max_abs": 0.2798462510108948,
+                "p99_abs": 0.028713414445519447
+              },
+              {
+                "mse": 0.1065230593085289,
+                "rmse": 0.3263787031173706,
+                "max_abs": 1.6657259464263916,
+                "p99_abs": 1.1181013584136963
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

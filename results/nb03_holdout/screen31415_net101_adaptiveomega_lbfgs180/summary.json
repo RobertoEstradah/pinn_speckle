@@ -1,0 +1,168 @@
+{
+  "experiment": "NB03 global adaptive SIREN frequency holdout",
+  "literature_basis": {
+    "citation": "Jagtap, Kawaguchi and Karniadakis, JCP 404 (2020) 109136",
+    "doi": "10.1016/j.jcp.2019.109136",
+    "adaptation": "shared trainable n*a multiplier applied to every sine activation"
+  },
+  "configuration": {
+    "reference_suffix": "_z1_seed31415_corr0.10",
+    "screen_seed": 31415,
+    "network_seed": 101,
+    "adam_seconds": 0.0,
+    "lbfgs_seconds": 120.0,
+    "n_train": 1024,
+    "threads": 4,
+    "slope_multiplier": 10.0,
+    "resume_model": "results/nb03_holdout/screen31415_net101_adaptiveomega_v1/adaptiveomega_lbfgs32.pt",
+    "name": "screen31415_net101_adaptiveomega_lbfgs180"
+  },
+  "protocol": {
+    "training_labels": false,
+    "selection_uses_reference_field": false,
+    "hard_cauchy": true,
+    "equation": "complete modal Helmholtz equation",
+    "fixed_training_points": 1024,
+    "fixed_selection_points": 997,
+    "independent_residual_test_points": 2001,
+    "field_test_planes": 201
+  },
+  "activation_scale": {
+    "initial": 0.9163904190063477,
+    "after_adam": 0.9163904190063477,
+    "after_lbfgs": 0.8883249759674072
+  },
+  "adam32": {
+    "training": {
+      "skipped": true,
+      "resume_model": "results/nb03_holdout/screen31415_net101_adaptiveomega_v1/adaptiveomega_lbfgs32.pt"
+    },
+    "metrics": {
+      "l2_full_final": 1.4809613684468161,
+      "l2_propagating_final": 1.4811164391806588,
+      "l2_propagating_max": 1.495574058260938,
+      "l2_propagating_max_z": 0.48,
+      "l2_full_max": 1.4922473863347891,
+      "evanescent_floor_final": 0.019616181936404364,
+      "coherence_full_final": 0.7943049198715811,
+      "intensity_correlation_full_final": 0.5894973455677051,
+      "contrast_full": 1.0922219724993996,
+      "contrast_pinn": 0.9608726980199055,
+      "contrast_difference": 0.13134927447949407,
+      "original_contrast_rule_pass": true,
+      "test_residual": {
+        "mse": 0.11794565618038177,
+        "rmse": 0.34343215823173523,
+        "max_abs": 1.614443063735962,
+        "p99_abs": 1.111667275428772
+      },
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "spectral_error_identity_max_abs": 1.3322676295501878e-15
+    }
+  },
+  "lbfgs32": {
+    "training": {
+      "seconds": 126.84307880001143,
+      "budget_seconds": 120.0,
+      "steps": 11,
+      "closure_calls": 125,
+      "best_step": 11,
+      "learning_rate_initial": null,
+      "selection_initial_mse": 0.11350851505994797,
+      "selection_best_mse": 0.09035567939281464,
+      "history": [
+        {
+          "step": 0,
+          "seconds": 0.0,
+          "selection_mse": 0.11350851505994797
+        },
+        {
+          "step": 1,
+          "seconds": 13.723440999980085,
+          "selection_mse": 0.11197727173566818
+        },
+        {
+          "step": 2,
+          "seconds": 34.479102200013585,
+          "selection_mse": 0.10981187224388123
+        },
+        {
+          "step": 3,
+          "seconds": 49.85439860000042,
+          "selection_mse": 0.10744545608758926
+        },
+        {
+          "step": 4,
+          "seconds": 61.52579099999275,
+          "selection_mse": 0.10515090078115463
+        },
+        {
+          "step": 5,
+          "seconds": 70.88393619999988,
+          "selection_mse": 0.10322088748216629
+        },
+        {
+          "step": 6,
+          "seconds": 80.8473124000011,
+          "selection_mse": 0.1012449711561203
+        },
+        {
+          "step": 7,
+          "seconds": 90.27459500002442,
+          "selection_mse": 0.09983821958303452
+        },
+        {
+          "step": 8,
+          "seconds": 101.16770049999468,
+          "selection_mse": 0.09743848443031311
+        },
+        {
+          "step": 9,
+          "seconds": 110.32148550002603,
+          "selection_mse": 0.0951237604022026
+        },
+        {
+          "step": 10,
+          "seconds": 118.99674800003413,
+          "selection_mse": 0.0925835371017456
+        },
+        {
+          "step": 11,
+          "seconds": 126.55126320000272,
+          "selection_mse": 0.09035567939281464
+        }
+      ],
+      "optimizer_state_resumed": false
+    },
+    "metrics": {
+      "l2_full_final": 1.349440487253662,
+      "l2_propagating_final": 1.3495575803270499,
+      "l2_propagating_max": 1.3495575803270499,
+      "l2_propagating_max_z": 1.0,
+      "l2_full_max": 1.349440487253662,
+      "evanescent_floor_final": 0.019616181936404364,
+      "coherence_full_final": 0.7457282780649573,
+      "intensity_correlation_full_final": 0.530749189569794,
+      "contrast_full": 1.0922219724993996,
+      "contrast_pinn": 1.0208701486472198,
+      "contrast_difference": 0.07135182385217975,
+      "original_contrast_rule_pass": true,
+      "test_residual": {
+        "mse": 0.09038911014795303,
+        "rmse": 0.3006478250026703,
+        "max_abs": 1.3517829179763794,
+        "p99_abs": 0.9334380626678467
+      },
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "spectral_error_identity_max_abs": 8.881784197001252e-16
+    }
+  },
+  "acceptance": {
+    "propagating_final_below_1pct": false,
+    "propagating_all_201_planes_below_1pct": false,
+    "full_final_below_5pct": false,
+    "contrast_reference_error_below_0_05": false
+  }
+}

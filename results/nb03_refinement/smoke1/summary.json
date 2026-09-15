@@ -1,0 +1,230 @@
+{
+  "configuration": {
+    "seeds": [
+      42
+    ],
+    "arms": [
+      "adam32",
+      "lbfgs32",
+      "lbfgs64"
+    ],
+    "seconds": 1.0,
+    "n_train": 64,
+    "threads": 4,
+    "name": "smoke1"
+  },
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.3.5",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "cpu",
+    "threads": 4
+  },
+  "source_sha256": "2076539035958dfda6907292e6da311b693216a9dd5fb37abe6f7717c0dde16e",
+  "protocol": "Continue the same saved 8000-epoch Adam weights in each arm. Fixed training points; post-update checkpoint selection on 997 fixed random points; independent 2001-point residual test and 201 field planes. No field labels for training/selection. All inherited float32 boundary buffers are cast, not recomputed, in float64.",
+  "cases": [
+    {
+      "seed": 42,
+      "input_model": "C:\\roberto\\Tesis_Maestria - codex\\results\\models\\nb03_modal_pinn_siren_z1_modal_scaled1_finetune.pt",
+      "input_model_sha256": "3f6fca008317ba568380867c1dedb589b9070f4acbc80b026cb0f04fea4df3e0",
+      "reference_sha256": "9357a8879d8198c206dda6127c0c2d133f5abf06bd78f76b427cafab1b8bdf00",
+      "baseline": {
+        "l2_full_final": 0.04118441899893996,
+        "l2_propagating_final": 0.015443049799621076,
+        "l2_propagating_max": 0.047925557463628816,
+        "l2_propagating_max_z": 0.72,
+        "l2_full_max": 0.7681696642918943,
+        "evanescent_floor_final": 0.03818397962821149,
+        "coherence_full_final": 0.9991936389083069,
+        "intensity_correlation_full_final": 0.998341730757347,
+        "contrast_full": 0.9063411935214372,
+        "contrast_pinn": 0.9019329771057529,
+        "contrast_difference": 0.00440821641568423,
+        "original_contrast_rule_pass": true,
+        "test_residual": {
+          "mse": 0.0014710637042298913,
+          "rmse": 0.03835444897413254,
+          "max_abs": 0.6330202221870422,
+          "p99_abs": 0.17527209222316742
+        },
+        "cauchy_field_max_abs": 0.0,
+        "cauchy_derivative_max_abs": 0.0,
+        "spectral_error_identity_max_abs": 2.290837101057881e-16
+      },
+      "arms": {
+        "adam32": {
+          "training": {
+            "seconds": 1.0774371999723371,
+            "budget_seconds": 1.0,
+            "steps": 31,
+            "closure_calls": 31,
+            "best_step": 0,
+            "selection_initial_mse": 0.0020897367503494024,
+            "selection_best_mse": 0.0020897367503494024,
+            "history": [
+              {
+                "step": 0,
+                "seconds": 0.0,
+                "selection_mse": 0.0020897367503494024
+              },
+              {
+                "step": 10,
+                "seconds": 0.3353221999714151,
+                "selection_mse": 0.01681789755821228
+              },
+              {
+                "step": 20,
+                "seconds": 0.6512342999922112,
+                "selection_mse": 0.0034039048478007317
+              },
+              {
+                "step": 30,
+                "seconds": 0.9781547999882605,
+                "selection_mse": 0.0023976683150976896
+              }
+            ],
+            "optimizer_state_resumed": false
+          },
+          "metrics": {
+            "l2_full_final": 0.04118441899893996,
+            "l2_propagating_final": 0.015443049799621076,
+            "l2_propagating_max": 0.047925557463628816,
+            "l2_propagating_max_z": 0.72,
+            "l2_full_max": 0.7681696642918943,
+            "evanescent_floor_final": 0.03818397962821149,
+            "coherence_full_final": 0.9991936389083069,
+            "intensity_correlation_full_final": 0.998341730757347,
+            "contrast_full": 0.9063411935214372,
+            "contrast_pinn": 0.9019329771057529,
+            "contrast_difference": 0.00440821641568423,
+            "original_contrast_rule_pass": true,
+            "test_residual": {
+              "mse": 0.0014710637042298913,
+              "rmse": 0.03835444897413254,
+              "max_abs": 0.6330202221870422,
+              "p99_abs": 0.17527209222316742
+            },
+            "cauchy_field_max_abs": 0.0,
+            "cauchy_derivative_max_abs": 0.0,
+            "spectral_error_identity_max_abs": 2.290837101057881e-16
+          }
+        },
+        "lbfgs32": {
+          "training": {
+            "seconds": 1.1524861000070814,
+            "budget_seconds": 1.0,
+            "steps": 3,
+            "closure_calls": 34,
+            "best_step": 0,
+            "selection_initial_mse": 0.0020897367503494024,
+            "selection_best_mse": 0.0020897367503494024,
+            "history": [
+              {
+                "step": 0,
+                "seconds": 0.0,
+                "selection_mse": 0.0020897367503494024
+              },
+              {
+                "step": 1,
+                "seconds": 0.3760900000052061,
+                "selection_mse": 0.0021062600426375866
+              },
+              {
+                "step": 2,
+                "seconds": 0.725515500002075,
+                "selection_mse": 0.0021170207764953375
+              },
+              {
+                "step": 3,
+                "seconds": 1.0793237999896519,
+                "selection_mse": 0.002144566038623452
+              }
+            ],
+            "optimizer_state_resumed": false
+          },
+          "metrics": {
+            "l2_full_final": 0.04118441899893996,
+            "l2_propagating_final": 0.015443049799621076,
+            "l2_propagating_max": 0.047925557463628816,
+            "l2_propagating_max_z": 0.72,
+            "l2_full_max": 0.7681696642918943,
+            "evanescent_floor_final": 0.03818397962821149,
+            "coherence_full_final": 0.9991936389083069,
+            "intensity_correlation_full_final": 0.998341730757347,
+            "contrast_full": 0.9063411935214372,
+            "contrast_pinn": 0.9019329771057529,
+            "contrast_difference": 0.00440821641568423,
+            "original_contrast_rule_pass": true,
+            "test_residual": {
+              "mse": 0.0014710637042298913,
+              "rmse": 0.03835444897413254,
+              "max_abs": 0.6330202221870422,
+              "p99_abs": 0.17527209222316742
+            },
+            "cauchy_field_max_abs": 0.0,
+            "cauchy_derivative_max_abs": 0.0,
+            "spectral_error_identity_max_abs": 2.290837101057881e-16
+          }
+        },
+        "lbfgs64": {
+          "training": {
+            "seconds": 1.3030484000046272,
+            "budget_seconds": 1.0,
+            "steps": 3,
+            "closure_calls": 34,
+            "best_step": 0,
+            "selection_initial_mse": 0.002089740004322647,
+            "selection_best_mse": 0.002089740004322647,
+            "history": [
+              {
+                "step": 0,
+                "seconds": 0.0,
+                "selection_mse": 0.002089740004322647
+              },
+              {
+                "step": 1,
+                "seconds": 0.4178355000040028,
+                "selection_mse": 0.002106434752535739
+              },
+              {
+                "step": 2,
+                "seconds": 0.8116902000037953,
+                "selection_mse": 0.0021165994186690762
+              },
+              {
+                "step": 3,
+                "seconds": 1.2197963999933563,
+                "selection_mse": 0.0021454097971647405
+              }
+            ],
+            "optimizer_state_resumed": false
+          },
+          "metrics": {
+            "l2_full_final": 0.0411844734397691,
+            "l2_propagating_final": 0.015443195196979308,
+            "l2_propagating_max": 0.047925624192003864,
+            "l2_propagating_max_z": 0.72,
+            "l2_full_max": 0.7681696642918943,
+            "evanescent_floor_final": 0.03818397962821149,
+            "coherence_full_final": 0.999193638193156,
+            "intensity_correlation_full_final": 0.9983417309254863,
+            "contrast_full": 0.9063411935214372,
+            "contrast_pinn": 0.9019328180798006,
+            "contrast_difference": 0.004408375441636525,
+            "original_contrast_rule_pass": true,
+            "test_residual": {
+              "mse": 0.0014710656769917501,
+              "rmse": 0.03835447401531861,
+              "max_abs": 0.6330203278284305,
+              "p99_abs": 0.17527220576882932
+            },
+            "cauchy_field_max_abs": 0.0,
+            "cauchy_derivative_max_abs": 0.0,
+            "spectral_error_identity_max_abs": 2.1262942674343838e-16
+          }
+        }
+      }
+    }
+  ]
+}

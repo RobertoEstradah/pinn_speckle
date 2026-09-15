@@ -1,0 +1,77 @@
+{
+  "experiment": "NB01 diagnostic omega_0 sweep",
+  "scope": "Same NB01 problem; diagnostic only; validated notebook/checkpoint untouched",
+  "problem": {
+    "k": 6.283185307179586,
+    "domain": [
+      0.0,
+      1.0
+    ],
+    "hidden_dim": 64,
+    "num_layers": 5,
+    "n_collocation": 2000,
+    "n_boundary": 5,
+    "epochs": 3000,
+    "learning_rate": 0.001,
+    "lambda_phys": 1.0,
+    "seed": 42
+  },
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.3.5",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "threads": 4
+  },
+  "results": [
+    {
+      "omega_0": 1.0,
+      "status": "completed",
+      "epochs": 3000,
+      "best_total_loss": 0.26801517605781555,
+      "final_total_loss": 0.2687113583087921,
+      "final_data_loss": 0.237951397895813,
+      "final_physics_loss": 0.03075997345149517,
+      "l2_relative": 0.6302371025085449,
+      "seconds": 31.310759699961636,
+      "history_last": 0.2687113583087921
+    },
+    {
+      "omega_0": 5.0,
+      "status": "completed",
+      "epochs": 3000,
+      "best_total_loss": 0.18135392665863037,
+      "final_total_loss": 0.18497011065483093,
+      "final_data_loss": 0.17700828611850739,
+      "final_physics_loss": 0.007961819879710674,
+      "l2_relative": 0.5433622598648071,
+      "seconds": 29.670498300052714,
+      "history_last": 0.43841615319252014
+    },
+    {
+      "omega_0": 15.0,
+      "status": "completed",
+      "epochs": 3000,
+      "best_total_loss": 0.40993377566337585,
+      "final_total_loss": 0.40995490550994873,
+      "final_data_loss": 0.40895596146583557,
+      "final_physics_loss": 0.0009989496320486069,
+      "l2_relative": 0.8257889747619629,
+      "seconds": 30.80116980004823,
+      "history_last": 0.42355477809906006
+    },
+    {
+      "omega_0": 30.0,
+      "status": "completed",
+      "epochs": 3000,
+      "best_total_loss": 0.6030272841453552,
+      "final_total_loss": 0.6030248999595642,
+      "final_data_loss": 0.6012598276138306,
+      "final_physics_loss": 0.0017650913214311004,
+      "l2_relative": 1.001016616821289,
+      "seconds": 29.91989989997819,
+      "history_last": 0.6030272841453552
+    }
+  ],
+  "interpretation": "The sweep tests convergence sensitivity to omega_0; it does not prove a universal calibration law and does not replace NB01."
+}

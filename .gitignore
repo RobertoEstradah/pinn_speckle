@@ -93,3 +93,16 @@ explorations/
 
 # ── Logs de experimentos ──────────────────────────────────────────────────────
 results/*.txt
+results/.matplotlib_cache/
+
+# ── Evidencia cruda de NB03 importada desde la copia paralela (2026-09-15) ────
+# Los campos .npz y los pesos .pt de estos experimentos pesan ~570 MB. Se
+# conservan EN DISCO como evidencia y son regenerables con los scripts de
+# scripts/experiments/. Las metricas (.json), figuras (.png) y documentacion
+# (.md) de esas mismas carpetas SI se rastrean: son lo que la tesis cita.
+results/nb03_distance_pilot/**/*.npz
+results/nb03_distance_pilot/**/*.pt
+results/nb03_holdout/**/*.npz
+results/nb03_holdout/**/*.pt
+results/nb03_refinement/**/*.npz
+results/nb03_refinement/**/*.pt

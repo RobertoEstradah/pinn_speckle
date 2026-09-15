@@ -1,0 +1,312 @@
+{
+  "experiment": "NB03 global adaptive SIREN frequency holdout",
+  "literature_basis": {
+    "citation": "Jagtap, Kawaguchi and Karniadakis, JCP 404 (2020) 109136",
+    "doi": "10.1016/j.jcp.2019.109136",
+    "adaptation": "shared trainable n*a multiplier applied to every sine activation"
+  },
+  "configuration": {
+    "reference_suffix": "_z1_seed31415_corr0.10",
+    "screen_seed": 31415,
+    "network_seed": 211,
+    "adam_seconds": 180.0,
+    "lbfgs_seconds": 60.0,
+    "n_train": 1024,
+    "threads": 4,
+    "slope_multiplier": 10.0,
+    "resume_model": "",
+    "name": "screen31415_net211_adaptiveomega_v1"
+  },
+  "protocol": {
+    "training_labels": false,
+    "selection_uses_reference_field": false,
+    "hard_cauchy": true,
+    "equation": "complete modal Helmholtz equation",
+    "fixed_training_points": 1024,
+    "fixed_selection_points": 997,
+    "independent_residual_test_points": 2001,
+    "field_test_planes": 201
+  },
+  "activation_scale": {
+    "initial": 1.0,
+    "after_adam": 0.9637216329574585,
+    "after_lbfgs": 0.4215870499610901
+  },
+  "adam32": {
+    "training": {
+      "seconds": 180.86044469999615,
+      "budget_seconds": 180.0,
+      "steps": 783,
+      "closure_calls": 783,
+      "best_step": 783,
+      "learning_rate_initial": 0.0002,
+      "selection_initial_mse": 3.1603941917419434,
+      "selection_best_mse": 0.2001888006925583,
+      "history": [
+        {
+          "step": 0,
+          "seconds": 0.0,
+          "selection_mse": 3.1603941917419434
+        },
+        {
+          "step": 50,
+          "seconds": 30.149250300019048,
+          "selection_mse": 1.8012540340423584
+        },
+        {
+          "step": 100,
+          "seconds": 47.83192329999292,
+          "selection_mse": 1.2258883714675903
+        },
+        {
+          "step": 150,
+          "seconds": 59.743029700010084,
+          "selection_mse": 1.0141723155975342
+        },
+        {
+          "step": 200,
+          "seconds": 69.23407990002306,
+          "selection_mse": 0.9356156587600708
+        },
+        {
+          "step": 250,
+          "seconds": 78.14824280003086,
+          "selection_mse": 0.7109265923500061
+        },
+        {
+          "step": 300,
+          "seconds": 86.69402110000374,
+          "selection_mse": 0.5958470702171326
+        },
+        {
+          "step": 350,
+          "seconds": 97.94998590002069,
+          "selection_mse": 0.4908299148082733
+        },
+        {
+          "step": 400,
+          "seconds": 106.1885481000063,
+          "selection_mse": 0.42636263370513916
+        },
+        {
+          "step": 450,
+          "seconds": 114.8968620999949,
+          "selection_mse": 0.3575440049171448
+        },
+        {
+          "step": 500,
+          "seconds": 124.40131079999264,
+          "selection_mse": 0.3081148564815521
+        },
+        {
+          "step": 550,
+          "seconds": 135.8039279000368,
+          "selection_mse": 0.2734798789024353
+        },
+        {
+          "step": 600,
+          "seconds": 140.8663164000027,
+          "selection_mse": 0.2467825561761856
+        },
+        {
+          "step": 650,
+          "seconds": 146.0372315000277,
+          "selection_mse": 0.2280207872390747
+        },
+        {
+          "step": 700,
+          "seconds": 155.21553190000122,
+          "selection_mse": 0.21354664862155914
+        },
+        {
+          "step": 750,
+          "seconds": 169.17811880004592,
+          "selection_mse": 0.20413950085639954
+        }
+      ],
+      "optimizer_state_resumed": false
+    },
+    "metrics": {
+      "l2_full_final": 1.6626103966584438,
+      "l2_propagating_final": 1.6628146244387765,
+      "l2_propagating_max": 1.9945849617417242,
+      "l2_propagating_max_z": 0.535,
+      "l2_full_max": 1.990473983399004,
+      "evanescent_floor_final": 0.019616181936404364,
+      "coherence_full_final": 0.8051724925997061,
+      "intensity_correlation_full_final": 0.6088482102911442,
+      "contrast_full": 1.0922219724993996,
+      "contrast_pinn": 0.9283652017913453,
+      "contrast_difference": 0.16385677070805427,
+      "original_contrast_rule_pass": true,
+      "test_residual": {
+        "mse": 0.2045571208000183,
+        "rmse": 0.4522799253463745,
+        "max_abs": 1.97101628780365,
+        "p99_abs": 1.4733160734176636
+      },
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "spectral_error_identity_max_abs": 1.7763568394002505e-15
+    }
+  },
+  "lbfgs32": {
+    "training": {
+      "seconds": 61.431425599963404,
+      "budget_seconds": 60.0,
+      "steps": 22,
+      "closure_calls": 244,
+      "best_step": 22,
+      "learning_rate_initial": null,
+      "selection_initial_mse": 0.2001888006925583,
+      "selection_best_mse": 0.03982564061880112,
+      "history": [
+        {
+          "step": 0,
+          "seconds": 0.0,
+          "selection_mse": 0.2001888006925583
+        },
+        {
+          "step": 1,
+          "seconds": 3.590219400008209,
+          "selection_mse": 0.1976059079170227
+        },
+        {
+          "step": 2,
+          "seconds": 5.729520199995022,
+          "selection_mse": 0.1865415722131729
+        },
+        {
+          "step": 3,
+          "seconds": 8.047535199963022,
+          "selection_mse": 0.1749684363603592
+        },
+        {
+          "step": 4,
+          "seconds": 10.477445699973032,
+          "selection_mse": 0.16357700526714325
+        },
+        {
+          "step": 5,
+          "seconds": 12.706667799968272,
+          "selection_mse": 0.14682143926620483
+        },
+        {
+          "step": 6,
+          "seconds": 17.082557399990037,
+          "selection_mse": 0.1359115093946457
+        },
+        {
+          "step": 7,
+          "seconds": 19.76875089999521,
+          "selection_mse": 0.1276550143957138
+        },
+        {
+          "step": 8,
+          "seconds": 24.13426469999831,
+          "selection_mse": 0.12007330358028412
+        },
+        {
+          "step": 9,
+          "seconds": 26.663968299981207,
+          "selection_mse": 0.11446986347436905
+        },
+        {
+          "step": 10,
+          "seconds": 29.7415191999753,
+          "selection_mse": 0.10868436843156815
+        },
+        {
+          "step": 11,
+          "seconds": 32.09037549997447,
+          "selection_mse": 0.10319124162197113
+        },
+        {
+          "step": 12,
+          "seconds": 34.20265689998632,
+          "selection_mse": 0.09933453053236008
+        },
+        {
+          "step": 13,
+          "seconds": 36.267499100009445,
+          "selection_mse": 0.09371213614940643
+        },
+        {
+          "step": 14,
+          "seconds": 38.47639749996597,
+          "selection_mse": 0.08676864206790924
+        },
+        {
+          "step": 15,
+          "seconds": 40.671030699973926,
+          "selection_mse": 0.07917250692844391
+        },
+        {
+          "step": 16,
+          "seconds": 42.78790479997406,
+          "selection_mse": 0.0722854807972908
+        },
+        {
+          "step": 17,
+          "seconds": 44.81513299996732,
+          "selection_mse": 0.0671001672744751
+        },
+        {
+          "step": 18,
+          "seconds": 47.303886500012595,
+          "selection_mse": 0.06301360577344894
+        },
+        {
+          "step": 19,
+          "seconds": 49.31959959998494,
+          "selection_mse": 0.057483043521642685
+        },
+        {
+          "step": 20,
+          "seconds": 53.321432999975514,
+          "selection_mse": 0.05177217721939087
+        },
+        {
+          "step": 21,
+          "seconds": 58.52932279999368,
+          "selection_mse": 0.04559970274567604
+        },
+        {
+          "step": 22,
+          "seconds": 61.01650109997718,
+          "selection_mse": 0.03982564061880112
+        }
+      ],
+      "optimizer_state_resumed": false
+    },
+    "metrics": {
+      "l2_full_final": 0.6449078438213165,
+      "l2_propagating_final": 0.6447334986949563,
+      "l2_propagating_max": 0.7903336618947804,
+      "l2_propagating_max_z": 0.4,
+      "l2_full_max": 0.7937582131093922,
+      "evanescent_floor_final": 0.019616181936404364,
+      "coherence_full_final": 0.8035956009320431,
+      "intensity_correlation_full_final": 0.7537192031249921,
+      "contrast_full": 1.0922219724993996,
+      "contrast_pinn": 1.15135027320731,
+      "contrast_difference": 0.05912830070791042,
+      "original_contrast_rule_pass": false,
+      "test_residual": {
+        "mse": 0.0366542786359787,
+        "rmse": 0.19145306944847107,
+        "max_abs": 0.9747154116630554,
+        "p99_abs": 0.7701727747917175
+      },
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "spectral_error_identity_max_abs": 2.9170459450722497e-16
+    }
+  },
+  "acceptance": {
+    "propagating_final_below_1pct": false,
+    "propagating_all_201_planes_below_1pct": false,
+    "full_final_below_5pct": false,
+    "contrast_reference_error_below_0_05": false
+  }
+}
