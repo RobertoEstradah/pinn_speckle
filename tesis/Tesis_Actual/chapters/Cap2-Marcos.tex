@@ -125,7 +125,8 @@ $\nabla^2 E$ se obtienen mediante diferenciación automática
 
 \subsection{Redes SIREN y sesgo espectral}
 
-Las activaciones estándar (ReLU, tanh) presentan un sesgo espectral
+Las activaciones estándar basadas en rectificadores presentan un sesgo
+espectral
 \parencite{rahaman2019spectral}: tienden a aprender frecuencias bajas antes que
 las altas. En una PINN para Helmholtz, esta tendencia puede dificultar el ajuste
 de soluciones oscilatorias y hacer más exigente la optimización de derivadas de
@@ -228,8 +229,10 @@ entre los términos de la función de pérdida y las características espectrale
 del problema. Desde una perspectiva más empírica,
 \textcite{krishnapriyan2021characterizing} caracterizan sistemáticamente los
 modos de falla de las PINN con pesos fijos entre los términos de datos y de
-física, mostrando que el entrenamiento puede estancarse en soluciones
-incorrectas incluso cuando la pérdida global parece decrecer — un fenómeno que
+física, mostrando que el optimizador puede quedar atrapado en mínimos locales
+de pérdida elevada por un paisaje de optimización mal condicionado, y que
+ajustar el peso relativo atenúa el error sin resolver el problema — un fenómeno
+que
 se retoma en el Capítulo~\ref{cap4:resultados} al analizar la ablación del peso
 de física $\lambda_\text{fís}$.
 
@@ -244,7 +247,7 @@ función de pérdida.
 En el campo de la óptica y el electromagnetismo, \textcite{fang2020physics}
 aplicaron PINNs para resolver problemas de dispersión de ondas en medios
 inhomogéneos 2D, mientras que \textcite{chen2020physics} las utilizaron para
-el diseño inverso en nanofotónica. \textcite{lu2021deepxde} desarrollaron la
+resolver problemas inversos de dispersión en nanofotónica. \textcite{lu2021deepxde} desarrollaron la
 biblioteca DeepXDE que sistematiza la implementación de PINNs para diversas EDPs.
 
 Un antecedente relevante es el de \textcite{schoder2024helmholtz}, quienes

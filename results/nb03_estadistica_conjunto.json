@@ -1,0 +1,69 @@
+{
+  "experiment": "NB03: estadistica de conjunto sobre las cinco pantallas",
+  "note": "El conjunto lo forman las cinco realizaciones de fase validadas en z=1 lambda. No es comparable en tamano con el conjunto de 64 realizaciones de cada referencia individual, que se reporta aparte en los JSON de espectro angular.",
+  "screen_seeds": [
+    42,
+    123,
+    321,
+    777,
+    2026
+  ],
+  "n_realizations": 5,
+  "n_samples_total": 5120,
+  "ensemble": {
+    "contrast_pinn": 0.9488737018013088,
+    "contrast_reference": 0.9455723770342047,
+    "goodman_absolute_deviation_pinn": 0.05112629819869119,
+    "goodman_absolute_pass_pinn": true,
+    "ks_statistic_pinn": 0.024603247896773317,
+    "ks_pvalue_pinn": 0.001979317016901069,
+    "ks_statistic_reference": 0.027473360764370958,
+    "ks_pvalue_reference": 0.00042447292430769246,
+    "fraction_above_2mean_pinn": 0.1466796875,
+    "fraction_above_2mean_reference": 0.1474609375,
+    "expected_fraction_above_2mean": 0.1353352832366127
+  },
+  "per_screen": [
+    {
+      "screen_seed": 42,
+      "contrast_pinn": 0.9011974606408816,
+      "contrast_reference": 0.9063411935214372,
+      "absolute_contrast_error": 0.005143732880555585,
+      "goodman_absolute_pass": true,
+      "n_samples": 1024
+    },
+    {
+      "screen_seed": 123,
+      "contrast_pinn": 0.8821209657044633,
+      "contrast_reference": 0.8827017967922942,
+      "absolute_contrast_error": 0.0005808310878309131,
+      "goodman_absolute_pass": false,
+      "n_samples": 1024
+    },
+    {
+      "screen_seed": 321,
+      "contrast_pinn": 0.9230617191366309,
+      "contrast_reference": 0.9200243447161064,
+      "absolute_contrast_error": 0.003037374420524541,
+      "goodman_absolute_pass": true,
+      "n_samples": 1024
+    },
+    {
+      "screen_seed": 777,
+      "contrast_pinn": 1.2403087291916648,
+      "contrast_reference": 1.2246460835380946,
+      "absolute_contrast_error": 0.01566264565357023,
+      "goodman_absolute_pass": false,
+      "n_samples": 1024
+    },
+    {
+      "screen_seed": 2026,
+      "contrast_pinn": 0.7841034604709451,
+      "contrast_reference": 0.7812031536682129,
+      "absolute_contrast_error": 0.002900306802732233,
+      "goodman_absolute_pass": false,
+      "n_samples": 1024
+    }
+  ],
+  "individual_goodman_pass_count": 2
+}

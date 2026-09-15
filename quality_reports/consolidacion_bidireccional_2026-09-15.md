@@ -373,3 +373,117 @@ métricas. **El pipeline de NB03 es determinista** bajo la semilla fijada y
 Tras la comprobación se restauró `RUN_TRAINING = False` y se reejecutó el
 notebook, para que el código y las salidas almacenadas vuelvan a corresponder
 --el mismo tipo de incoherencia que se corrigió en la Fase 2--.
+
+---
+
+## Validación con cuatro auditores independientes
+
+Se desplegaron cuatro agentes en paralelo, sin permiso de edición, con el
+encargo de detectar datos inventados, atribuciones falsas y afirmaciones sin
+respaldo. Revisaron en conjunto más de 300 afirmaciones.
+
+### Conclusión central
+
+**No se encontró ningún dato numérico inventado.** Los dos valores atribuidos a
+terceros que se marcaron como riesgo máximo se verificaron en la fuente: el
+$2.49\%$ de Schoder y Kraxberger aparece en su Tabla 2, y el rango
+$1.40\%$–$5.82\%$ de Zhang et al. consta literalmente en el resumen publicado.
+
+### Correcciones aplicadas — 26
+
+**De sobreinterpretación (13, en Cap4).** Encabezado del capítulo
+desactualizado; «ventaja intrínseca» de SIREN afirmada sin línea base
+comparativa; ablación de profundidad presentada como justificación cuando la
+diferencia (0.057 pp) es menor que la dispersión inter-semilla ($\pm$0.089 pp);
+atribución causal en la ablación de $\lambda$ sobre 0.008 pp; el NTK pasa de
+«explicación cuantitativa» a «diagnóstico espectral», con la salvedad de que se
+midió sobre el modelo estable y no sobre el que falló; el alcance del barrido de
+$\omega_0$ se acota a lo que sostiene ($\omega_0=5$ da $0.081\%$ frente a
+$0.090\%$ de $\omega_0=1$: la regla acierta el orden, no el óptimo); el contraste
+B–C del experimento puente deja de atribuirse sólo a la representación, porque
+también cambian profundidad y optimizador.
+
+**Dos correcciones de hechos que contradecían sus propias tablas:**
+- La nota de la Tabla del piso evanescente afirmaba que el contraste «crece
+  monótonamente» y «alcanza el régimen de Goodman a partir de $2\lambda$». Su
+  propia columna lo desmiente: cae de 1.2069 en $3\lambda$ a 1.0476 en
+  $5\lambda$, y de las distancias tabuladas sólo $1\lambda$ ($|C-1|=0.0937$) y
+  $5\lambda$ ($0.0476$) satisfarían el criterio.
+- El pie de la figura de resultados presentaba el cruce en
+  $\tilde z\approx3.2\lambda$ como un hecho. Es una extrapolación que supone
+  error constante, y el ensayo a $2\lambda$ la contradice. Ahora está marcada
+  como condicional y remite al resultado negativo.
+
+**Una corrección de coherencia con la hipótesis.** El cierre del capítulo
+declaraba verificada la hipótesis (i) para NB03, cuando esa hipótesis exige una
+referencia *numérica independiente* y el propio capítulo declara que la suya es
+semianalítica. Ahora se dice que cumple el umbral y que la verificación estricta
+queda condicionada a NB04.
+
+**De atribución bibliográfica (8).**
+- La frase «incluso cuando la pérdida global parece decrecer», atribuida a
+  Krishnapriyan et al., **no está en ese artículo** y contradice lo que reportan
+  («local minima with a very high loss function»). Corregida en Cap2 y Cap4.
+- $\omega_0=30$ se presentaba como «el valor recomendado para señales de
+  imagen». Sitzmann et al. lo proponen para **todas** sus aplicaciones,
+  incluida la propia ecuación de Helmholtz (§4.3). Corregido en tres lugares.
+  El cambio refuerza el resultado: el contraste se establece frente al valor por
+  defecto de la literatura en este mismo dominio.
+- El umbral $|C-1|<0.1$ se citaba como «criterio de Goodman». Goodman establece
+  $C=1$; la tolerancia del 10 % es decisión de este trabajo. Corregido en Cap3
+  y Cap4.
+- El sesgo espectral de Rahaman et al. se analiza sobre ReLU, no sobre tanh.
+- El $2.49\%$ de Schoder es una de cuatro filas según la nitidez de la fuente;
+  se añadió nota al pie.
+- La analogía con Sukumar y Srivastava pasa de «corresponde al enfoque» a «sigue
+  el mismo principio»: el mecanismo de ellos son funciones de distancia sobre
+  fronteras geométricas, no una condición de Cauchy en una EDO modal.
+- Chen et al. resuelven problemas inversos de dispersión, no «diseño inverso».
+- `references.bib`: el título de `chen2020physics` decía «plasmonics» donde el
+  original dice «metamaterials».
+
+**De método frente a código (2).** La ablación de $\lambda$ no se ejecutó bajo
+un protocolo homogéneo: `run_ablation_lambda.py` **precarga a mano** los
+resultados de $\lambda=0.01$ y $\lambda=0.1$ de corridas previas con distinto
+presupuesto y sólo ejecuta $\lambda=1.0$, sin restaurar el mejor estado tras el
+*early stopping*. La nota de la tabla lo declara ahora.
+
+### Secciones añadidas
+
+- **§Ensayo de extensión a $\tilde z=2\lambda$: resultado negativo.** Se reporta
+  la corrida uniforme completa, con su tabla: dos pantallas superan el 5 % en el
+  error final, tres en el máximo, y el error no decrece de forma monótona con el
+  presupuesto. Cap3 prometía este reporte y el capítulo no lo entregaba.
+- **§Limitaciones del método.** Seis restricciones que estaban dispersas o
+  ausentes: periodicidad lateral obligatoria, medio homogéneo, modelo específico
+  de cada realización y sus consecuencias sobre el factor de aceleración, una
+  sola semilla de red, naturaleza semianalítica de la referencia y alcance en
+  distancia.
+
+### Artefactos creados
+
+- `scripts/experiments/nb03_estadistica_conjunto.py` y su JSON: persisten el
+  contraste de conjunto $C=0.9489$ y añaden el test KS de conjunto, que rechaza
+  tanto para la PINN ($p=1.98\times10^{-3}$) como para la referencia exacta
+  ($p=4.24\times10^{-4}$). Que la referencia sea rechazada igual que el modelo
+  respalda que la causa es la hipótesis de independencia del test.
+- `master_supporting_docs/supporting_papers/referencias/arxiv_verificacion/`:
+  cuatro fuentes descargadas de arXiv y verificadas contra su portada (Rahaman
+  et al. 2019, Tancik et al. 2020, Baydin et al. 2018, Kingma y Ba 2015). Las
+  fuentes verificables pasan de 15 a 19 de 28.
+
+### Pendientes que requieren decisión del autor
+
+1. **Cap1 (Generalidades) no se modificó**, pero acumula ocho hallazgos, cuatro
+   sustantivos: la afirmación de que se evalúa con realizaciones no usadas en el
+   ajuste (falsa: los datos de Cauchy están en la arquitectura); el criterio
+   $|C-1|<0.1$ que sólo cumplen 2 de 5 pantallas; el dominio $[0,20]$ no
+   validado; y la descripción del método por bloques, ya abandonado.
+2. **El adjetivo «acelerada» del título** no tiene medición detrás mientras NB04
+   no exista.
+3. **Resumen y Abstract** están desincronizados: atribuyen la arquitectura
+   $5\times128$ al resultado 1D (es $5\times64$), citan $C=0.9732$ en
+   $z=20\lambda$ de una configuración retirada, y declaran NB03 «en progreso»
+   cuando Cap4 lo da por completo.
+4. **Dos fuentes sin copia local**: el libro de Goodman (11 citas) y Zhang et al.
+   (verificado por web, no reproducible desde el repositorio).

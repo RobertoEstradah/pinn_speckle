@@ -1,10 +1,11 @@
 \chapter{Experimentos y Resultados}\label{cap4:resultados}
 
-Este capítulo presenta los resultados de dos experimentos completos y el
-diagnóstico preliminar de un tercero, ejecutados en GPU NVIDIA RTX~5050
-(CUDA 12.8, PyTorch 2.11, SEED = 42). Los experimentos siguen una complejidad
+Este capítulo presenta los resultados de tres experimentos, ejecutados en GPU
+NVIDIA RTX~5050 (CUDA 12.8, PyTorch 2.11, SEED = 42). Siguen una complejidad
 creciente: validación analítica 1D (NB01), validación 2D con campo complejo
-(NB02) y simulación de \textit{speckle} óptico aún en progreso (NB03).
+(NB02) y simulación de \textit{speckle} óptico mediante una formulación modal
+(NB03), validada en $\tilde z = 1\lambda$ sobre cinco realizaciones de fase
+independientes.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{NB01: Validación 1D, Helmholtz con solución analítica}
@@ -84,9 +85,11 @@ Tiempo total (s)             & 131.1 \\
 \subsection{Análisis y comparativa con el estado del arte}
 
 El error $L^2 = 0.006\%$ se mantiene por debajo del umbral de la tesis
-($< 5\%$) por casi tres órdenes de magnitud. Este resultado es atribuible a
-la ventaja intrínseca de
-la activación sinusoidal SIREN para representar funciones oscilatorias: la
+($< 5\%$) por casi tres órdenes de magnitud. Este resultado es consistente con
+la motivación de la activación sinusoidal para representar funciones
+oscilatorias \parencite{sitzmann2020siren}; este trabajo no contrasta SIREN
+frente a activaciones alternativas, de modo que la ventaja no se cuantifica
+aquí. La
 red aprende la solución $\cos(kx)$ de forma casi exacta, con
 $R^2 = 1.000000$ y correlación de Pearson $= 1.000000$ en toda la malla de
 evaluación.
@@ -126,8 +129,10 @@ del error y las métricas de ajuste adicionales.
 
 La regla de calibración $\omega_0 \approx k/(2\pi)$ (Tabla~\ref{tab:hiperparametros})
 se documentó originalmente a partir de un único caso puntual: $\omega_0 = 30$
-(el valor recomendado por \textcite{sitzmann2020siren} para señales de imagen)
-desestabiliza el entrenamiento con $k \approx 2\pi$. Para verificar esta regla
+--el valor que \textcite{sitzmann2020siren} reportan como adecuado para
+\emph{todas} las aplicaciones de su trabajo, incluida la resolución de la
+propia ecuación de Helmholtz-- desestabiliza el entrenamiento con
+$k \approx 2\pi$. Para verificar esta regla
 más allá de un solo punto, se entrenó el mismo problema de NB01 con
 $\omega_0 \in \{1.0,\ 5.0,\ 15.0,\ 30.0\}$ durante 3{,}000 épocas Adam
 idénticas (sin L-BFGS), manteniendo $k = 2\pi$ fijo.
@@ -144,7 +149,7 @@ $\omega_0$ & Pérdida total final & Observación \\
 1.0  & \textbf{0.2656} & Calibrado ($\omega_0 = k/2\pi$) \\
 5.0  & 0.5355 & Descalibrado \\
 15.0 & 0.4375 & Descalibrado \\
-30.0 & 0.6030 & Descalibrado (valor de \textcite{sitzmann2020siren} para imágenes) \\
+30.0 & 0.6030 & Descalibrado (valor propuesto por \textcite{sitzmann2020siren}) \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
@@ -356,8 +361,12 @@ NB02 (2D) & \textbf{5} & 66{,}690 & \textbf{0.171} \\
     $5$ capas obtiene menor error en ambos casos, con un incremento de
     parámetros del $33\%$ en 1D y del $33\%$ en 2D. La diferencia es de un
     factor $2.2$ en 1D y $1.3$ en 2D, ambas muy por debajo del umbral del
-    $5\%$: la elección de profundidad no condiciona el cumplimiento de la
-    hipótesis, pero queda justificada por evidencia y no por herencia. Fuente:
+    $5\%$. La comparación se realizó con una sola semilla: en 2D la diferencia
+    ($0.057$ puntos porcentuales) es menor que la dispersión inter-semilla
+    medida para configuración idéntica en la Tabla~\ref{tab:multiseed}
+    ($\pm0.089$ pp), por lo que el contraste no distingue ambas profundidades.
+    Se reporta como verificación de que $4$ capas tampoco comprometen el
+    umbral, no como justificación de la elección. Fuente:
     \texttt{explorations/architecture\_ablation\_4layers/output/}.
 \end{tablenotes}
 \end{threeparttable}
@@ -389,7 +398,13 @@ $\lambda_\text{fís}$ & Error $L^2$ prom. (\%) & Convergencia & Observación \\
 \end{tabular}
 \begin{tablenotes}\small
     \item Arquitectura SIREN $5 \times 128$, $\omega_0 = 1.0$, SEED = 42.
-    Mismo protocolo Adam + L-BFGS que NB02.
+    Las tres filas no proceden de una misma corrida por lotes: $\lambda = 0.1$
+    es el resultado de NB02; $\lambda = 0.01$ procede de una corrida previa con
+    $6{,}575$ épocas Adam y $320$ evaluaciones de L-BFGS, frente a $8{,}737$ y
+    $1{,}035$ de NB02; y sólo $\lambda = 1.0$ se ejecutó con
+    \texttt{run\_ablation\_lambda.py}, que además no restaura el mejor estado
+    tras el \textit{early stopping}. La comparación es por tanto indicativa del
+    comportamiento cualitativo, no una ablación bajo protocolo homogéneo.
     El caso $\lambda = 1.0$ no produjo un valor de $L^2$: la corrida se
     interrumpió por una excepción de CUDA antes de completar el
     entrenamiento. El registro de la corrida asocia el fallo con el crecimiento
@@ -402,10 +417,13 @@ $\lambda_\text{fís}$ & Error $L^2$ prom. (\%) & Convergencia & Observación \\
 \end{table}
 
 El valor $\lambda_\text{fís} = 0.1$ se seleccionó por la estabilidad numérica
-observada, no por precisión: el modelo con $\lambda = 0.01$ obtiene un error
-ligeramente menor (0.163\% frente a 0.171\%) al asignar menor peso a la
-restricción física, mientras que $\lambda = 1.0$ se interrumpió antes de
-completar el entrenamiento. Entre las dos configuraciones que sí convergen,
+observada, no por precisión: el modelo con $\lambda = 0.01$ registra
+$0.163\%$ frente a $0.171\%$, diferencia de $0.008$ puntos porcentuales que es
+un orden de magnitud menor que la dispersión inter-semilla
+(Tabla~\ref{tab:multiseed}) y que además procede de una corrida con distinto
+presupuesto de L-BFGS, por lo que no distingue ambas configuraciones en
+precisión. $\lambda = 1.0$ se interrumpió antes de completar el
+entrenamiento. Entre las dos configuraciones que sí convergen,
 $\lambda = 0.1$ se prefiere porque impone una restricción física más fuerte sin
 un costo de precisión relevante frente al umbral de la tesis.
 
@@ -413,9 +431,9 @@ Esta fragilidad frente al peso relativo de los términos de pérdida no es un
 fenómeno aislado de esta implementación: \textcite{krishnapriyan2021characterizing}
 documentan sistemáticamente que las PINN con pesos fijos entre el término de
 datos/condición inicial y el término de residuo físico pueden fallar en
-converger a la solución correcta incluso cuando la función de pérdida global
-parece decrecer, atribuyendo el problema a un paisaje de optimización mal
-condicionado por la competencia entre ambos términos. \textcite{wang2021failure}
+converger a la solución correcta, quedando el optimizador atrapado en mínimos
+locales de pérdida elevada, y atribuyen el problema a un paisaje de
+optimización mal condicionado por la competencia entre ambos términos. \textcite{wang2021failure}
 describen un mecanismo relacionado: los gradientes del término físico pueden
 dominar en magnitud a los del término de datos durante el entrenamiento,
 generando un flujo de gradiente patológico que dificulta la convergencia. La
@@ -425,7 +443,7 @@ peso efectivo de la contribución del término físico, un posible factor del
 mismo tipo de desbalance; esta interpretación no se aisló experimentalmente en
 la corrida de ablación.
 
-\subsection{Explicación cuantitativa: análisis del núcleo tangente neuronal (NTK)}
+\subsection{Diagnóstico espectral: análisis del núcleo tangente neuronal (NTK)}
 \label{sec:ntk_analisis}
 
 La teoría del núcleo tangente neuronal (\textit{Neural Tangent Kernel}, NTK)
@@ -464,10 +482,13 @@ Razón física / datos        & \textbf{858$\times$} & \textbf{1{,}605$\times$} 
 \end{table}
 
 El espectro NTK del término de física es entre 858 y 1{,}605 veces mayor que
-el del término de datos, lo que explica cuantitativamente por qué
-$\lambda_\text{fís} = 1.0$ (peso igual entre ambos términos) resulta en que
-el gradiente de la física domine por completo el paso de optimización,
-consistente con la inestabilidad numérica reportada arriba. Esta razón no
+el del término de datos, magnitud consistente con que
+$\lambda_\text{fís} = 1.0$ (peso igual entre ambos términos) deje al gradiente
+de la física dominando el paso de optimización, y con la inestabilidad
+numérica reportada arriba. La medición se realizó sobre los pesos finales del
+modelo entrenado con $\lambda_\text{fís} = 0.1$, no sobre la corrida que falló,
+de modo que ofrece una magnitud plausible del desbalance y no una observación
+directa de su dinámica. Esta razón no
 debe interpretarse como que $\lambda_\text{fís} = 0.1$ sea el valor que
 compensa exactamente el desbalance (una compensación literal sugeriría un
 factor de reescalamiento considerablemente menor); el análisis NTK aquí
@@ -554,9 +575,15 @@ C & Cauchy idéntico a B, formulación modal        & \textbf{0.155\%} & $0\%$ \
 \end{threeparttable}
 \end{table}
 
-Con información idéntica, la representación modal es unos dos órdenes de
-magnitud más precisa que la directa. La diferencia no procede de los datos
-disponibles ni de la arquitectura, sino del espacio de funciones representable.
+Con información idéntica, la formulación modal es unos dos órdenes de magnitud
+más precisa que la directa. La diferencia no procede de los datos disponibles:
+los casos B y C reciben exactamente el mismo valor y la misma derivada en la
+frontera. Procede de la formulación completa --base modal truncada al cono
+propagante, imposición dura de la condición de Cauchy y ausencia de término de
+datos--, que además emplea $4$ capas y otro presupuesto de optimización. El
+diseño aísla el planteamiento del problema (contraste A frente a B), pero no
+separa la contribución del truncamiento espectral de la de la imposición dura
+(contraste B frente a C).
 
 \subsection{Formulación modal adoptada}
 \label{sec:nb03_config}
@@ -591,8 +618,12 @@ aritmética en \texttt{float32} y no del ajuste. Una ecuación diferencial de se
 derivada fijados en un punto tiene solución única, por lo que la
 ecuación~\eqref{eq:cauchy_dura} restaura la unicidad perdida en
 §\ref{sec:nb03_diagnostico}. Esta estrategia de imponer la frontera dentro de la
-función de prueba, en lugar de penalizarla en la pérdida, corresponde al enfoque
-descrito por \textcite{sukumar2022exact}.
+imponer la frontera dentro de la función de prueba, en lugar de penalizarla en
+la pérdida, sigue el mismo principio que \textcite{sukumar2022exact}, quienes
+lo aplican mediante funciones de distancia aproximadas para condiciones de
+Dirichlet, Neumann y Robin sobre fronteras geométricas; aquí el mecanismo es
+distinto --una prolongación polinómica que fija valor y derivada en un punto--
+aunque la consecuencia sobre la pérdida es la misma.
 
 Dos consecuencias metodológicas se siguen de la ecuación~\eqref{eq:cauchy_dura}.
 Primero, la pérdida contiene únicamente el residuo modal: no hay término de
@@ -678,10 +709,12 @@ $\omega_0$ & $L^2$ total & $L^2$ propagante & Residuo de la EDO \\
 \end{tabular}
 \begin{tablenotes}\small
     \item Mismo protocolo en los cuatro casos, sin refinamiento posterior. El
-    valor $\omega_0=30$ es el recomendado por \textcite{sitzmann2020siren} para
-    señales de imagen. El error propagante --la componente que la
-    representación puede expresar-- se degrada en un factor de $35$ entre el
-    valor calibrado y el descalibrado, y el residuo de la ecuación en un factor
+    valor $\omega_0=30$ es el que \textcite{sitzmann2020siren} proponen para el
+    conjunto de sus aplicaciones, entre ellas la ecuación de Helmholtz, de modo
+    que el contraste se establece frente al valor por defecto de la literatura
+    en este mismo dominio. El error propagante --la componente que la
+    representación puede expresar-- se degrada en un factor de $35$ entre
+    $\omega_0 = 1$ y $\omega_0 = 30$, y el residuo de la ecuación en un factor
     de $15$. El comportamiento es el esperado del sesgo espectral descrito por
     \textcite{rahaman2019spectral} y replica, en un problema con entrada,
     salida y física distintas, el resultado de la Tabla~\ref{tab:omega0_sweep}.
@@ -694,10 +727,16 @@ $\omega_0$ & $L^2$ total & $L^2$ propagante & Residuo de la EDO \\
 
 Consolidado sobre las cinco pantallas, el cambio de $\omega_0=30$ a
 $\omega_0=1$ reduce el error propagante medio a lo largo de la propagación de
-$2.983\%$ a $0.042\%$, y el máximo de $4.791\%$ a $0.084\%$. Este
-resultado es la evidencia más directa de que NB01 no es un preámbulo
-pedagógico: la regla derivada allí es la que determina el desempeño de la
-formulación modal.
+$2.983\%$ a $0.042\%$, y el máximo de $4.791\%$ a $0.084\%$.
+
+El barrido reproduce el patrón observado en NB01: $\omega_0 = 1$ y
+$\omega_0 = 5$ quedan próximos entre sí --de hecho $\omega_0 = 5$ registra un
+error propagante marginalmente menor, $0.081\%$ frente a $0.090\%$-- y ambos
+separados por más de un orden de magnitud de los valores altos. Lo que el
+barrido establece, por tanto, es que calibrar $\omega_0$ al orden de
+$k/2\pi$ es condición relevante del desempeño de la formulación modal, no que
+la regla acierte el valor óptimo dentro del rango bajo. En ese sentido acotado,
+la regla derivada en NB01 sí resulta determinante para el tercer experimento.
 
 \subsection{Resultados en \texorpdfstring{$\tilde z=1\lambda$}{z=1 lambda}}
 \label{sec:nb03_resultados_z1}
@@ -773,9 +812,13 @@ $\tilde z/\lambda$ & Piso evanescente & $C$ de la referencia \\
     campo cercano estricto: es la peor distancia posible para la métrica de
     campo completo, porque casi el $4\%$ de la energía es irrepresentable por
     la base propagante y el patrón aún no ha madurado estadísticamente. El
-    contraste de la referencia crece monótonamente desde $C=0$ exactamente en
-    $\tilde z=0$ --donde la pantalla es de fase pura y la intensidad es
-    uniforme-- y alcanza el régimen de Goodman a partir de $\tilde z\geq2\lambda$.
+    contraste de la referencia parte de $C=0$ exactamente en $\tilde z=0$
+    --donde la pantalla es de fase pura y la intensidad es uniforme--, crece
+    hasta superar la unidad alrededor de $\tilde z=2\lambda$ y después fluctúa,
+    sin comportamiento monótono: cae de $1.2069$ en $3\lambda$ a $1.0476$ en
+    $5\lambda$. Estos son valores de una realización individual, para la que el
+    criterio de conjunto $|C-1|<0.1$ no es aplicable; de las distancias
+    tabuladas sólo lo satisfarían $1\lambda$ ($0.0937$) y $5\lambda$ ($0.0476$).
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -793,9 +836,13 @@ $\tilde z/\lambda$ & Piso evanescente & $C$ de la referencia \\
     distancia de propagación, en escala logarítmica, junto al error medio del
     modelo calibrado. Cómo leerla: en $\tilde z=1\lambda$ el piso es
     $92$ veces mayor que el error del modelo, de modo que la métrica de campo
-    completo mide la física irrepresentable y no el ajuste de la red; ambas
-    curvas se cruzan en $\tilde z\approx3.2\lambda$, distancia a partir de la
-    cual el error total sí queda dominado por el modelo. Fuentes:
+    completo mide la física irrepresentable y no el ajuste de la red. El piso
+    decae con la distancia y cruzaría el nivel de error aquí medido alrededor
+    de $\tilde z\approx3.2\lambda$ \emph{si ese error se mantuviera constante},
+    extrapolación que este trabajo no verifica: el modelo sólo se validó en
+    $\tilde z=1\lambda$, y el ensayo de extensión a $2\lambda$
+    (§\ref{sec:nb03_extension}) muestra que el error crece con la distancia.
+    Fuentes:
     \texttt{results/nb03\_modal\_multiseed\_z1\_omega1\_l2\_curves.npz} y
     \texttt{results/nb03\_angular\_spectrum\_reference\_z1\_corr0.10.npz}.}
     \label{fig:nb03_modal}
@@ -811,9 +858,10 @@ pasa de $0.298\lambda$ a $0.378\lambda$.
 \subsection{Criterio estadístico: conjunto frente a realización individual}
 \label{sec:nb03_goodman}
 
-El criterio $|C-1|<0.1$ de \textcite{goodman2007speckle} caracteriza el
-\textit{speckle} completamente desarrollado como propiedad del conjunto de
-realizaciones. Aplicado a una pantalla finita individual, el criterio no se
+\textcite{goodman2007speckle} caracteriza el \textit{speckle} completamente
+desarrollado como aquel cuyo contraste vale $C=1$, propiedad del conjunto de
+realizaciones. La tolerancia $|C-1|<0.1$ con la que se evalúa aquí es una
+decisión operativa de este trabajo y no un umbral establecido por ese autor. Aplicado a una pantalla finita individual, el criterio no se
 cumple ni siquiera para la referencia exacta: su contraste varía entre $0.7812$
 y $1.2246$ según la realización (Tabla~\ref{tab:nb03_cinco}). La evaluación se
 realiza por ello en dos niveles:
@@ -821,13 +869,19 @@ realiza por ello en dos niveles:
 \begin{itemize}
     \item \textbf{Conjunto.} Reuniendo las cinco pantallas, el contraste del
     campo de la PINN es $C=0.9489$, esto es $|C-1|=0.051$, dentro del criterio.
+    Este conjunto lo forman cinco realizaciones, mientras que cada contraste de
+    conjunto de la referencia citado a continuación procede de $64$: las dos
+    cifras no son equivalentes en tamaño muestral.
     Las referencias por espectro angular, cada una sobre $64$ realizaciones en
     $\tilde z=1\lambda$, dan contrastes de $0.9759$, $0.9757$, $0.9531$,
     $0.9619$ y $0.9637$, con media $0.9661$: el conjunto sí se encuentra en el
     régimen de \textit{speckle} completamente desarrollado.
     \item \textbf{Realización individual.} Fidelidad al contraste de su propia
     referencia, $|C_\text{PINN}-C_\text{ref}|<0.05$, que se cumple en las cinco
-    pantallas con un error máximo de $0.0157$.
+    pantallas con un error máximo de $0.0157$. El criterio absoluto
+    $|C-1|<0.1$ aplicado a cada realización por separado se cumple, en cambio,
+    en sólo $2$ de las $5$ pantallas, tanto para la PINN como para su
+    referencia exacta.
 \end{itemize}
 
 Esta distinción no relaja el criterio: lo aplica al objeto estadístico para el
@@ -844,10 +898,117 @@ correlacionados dentro de cada grano --de tamaño transversal $0.378\lambda$ en
 $\tilde z=1\lambda$, es decir unas $19$ muestras por grano en esta malla--, lo
 que reduce drásticamente el número efectivo de muestras independientes y sesga
 el $p$-valor hacia el rechazo. Por ello el test se reporta aquí como estadístico
-descriptivo y no como criterio de aceptación. La fracción de píxeles con
-$I>2\langle I\rangle$, que no depende de esa hipótesis, se sitúa entre $0.1299$
-y $0.1543$ frente al valor teórico $e^{-2}=0.1353$, consistente con la
-distribución esperada.
+descriptivo y no como criterio de aceptación.
+
+Debe añadirse que el rechazo persiste al agregar las cinco pantallas: sobre el
+conjunto, el test da $p=1.98\times10^{-3}$ para el campo de la PINN y
+$p=4.24\times10^{-4}$ para la referencia por espectro angular. Que la
+referencia exacta sea rechazada con la misma claridad que el modelo respalda
+que la causa es la hipótesis de independencia del test y no un defecto del
+ajuste; esta explicación es, sin embargo, una interpretación y no un resultado:
+el trabajo no incluye un contraste con número efectivo de muestras corregido ni
+un remuestreo por bloques que la verifique formalmente.
+
+La fracción de píxeles con $I>2\langle I\rangle$, que no depende de esa
+hipótesis, se sitúa entre $0.1299$ y $0.1543$ por pantalla frente al valor
+teórico $e^{-2}=0.1353$, y sobre el conjunto da $0.1467$ para la PINN y
+$0.1475$ para la referencia. Fuente:
+\texttt{results/nb03\_estadistica\_conjunto.json}, generado por
+\texttt{scripts/experiments/nb03\_estadistica\_conjunto.py}.
+
+\subsection{Ensayo de extensión a \texorpdfstring{$\tilde z=2\lambda$}{z=2 lambda}: resultado negativo}
+\label{sec:nb03_extension}
+
+La validación reportada se limita a $\tilde z=1\lambda$. Se ensayó extenderla a
+$2\lambda$ partiendo del punto de control validado de cada pantalla y
+reentrenando únicamente sobre el residuo, con un presupuesto uniforme de
+$180$~s por pantalla.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Ensayo de extensión a $\tilde z=2\lambda$ con presupuesto uniforme.}
+\label{tab:nb03_z2}
+\begin{tabular}{lcccc}
+\toprule
+Pantalla & $L^2$ propagante & $L^2$ complejo & Máximo propagante & Piso evan. \\
+\midrule
+42   & 1.690\% & 1.750\% & 2.499\% & 0.456\% \\
+123  & 6.144\% & \textbf{6.151\%} & 7.373\% & 0.292\% \\
+321  & 8.069\% & \textbf{8.082\%} & 10.010\% & 0.462\% \\
+777  & 4.178\% & 4.192\% & \textbf{5.651\%} & 0.340\% \\
+2026 & 1.047\% & 1.111\% & 1.722\% & 0.371\% \\
+\midrule
+Media & 4.226\% & 4.257\% & \textbf{5.451\%} & 0.384\% \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Presupuesto idéntico de $180$~s para las cinco pantallas. Dos de
+    ellas superan el umbral del $5\%$ en el error final y tres lo superan en el
+    máximo sobre los planos evaluados; la media del máximo propagante queda
+    también por encima. Fuente:
+    \texttt{results/nb03\_distance\_pilot/z2\_cinco\_uniforme\_180s/}.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{La extensión a $2\lambda$ no supera el criterio de aceptación} y se
+reporta aquí como resultado negativo. Un segundo hecho agrava el diagnóstico:
+el error no decrece de forma monótona con el presupuesto de cómputo. Con
+$120$~s en lugar de $180$~s, la pantalla 321 había registrado $3.108\%$ y la
+123, $4.457\%$; al aumentar el tiempo empeoran a $8.069\%$ y $6.144\%$. Un
+refinamiento que se degrada al recibir más iteraciones indica que el
+procedimiento no converge de forma estable en ese régimen, no que le falte
+presupuesto.
+
+En consecuencia, el alcance validado de este trabajo es $\tilde z=1\lambda$.
+Cualquier afirmación sobre distancias mayores exigiría un procedimiento de
+optimización distinto y su propia campaña de validación.
+
+\subsection{Limitaciones del método}
+\label{sec:nb03_limitaciones}
+
+La formulación modal obtiene su precisión a cambio de restricciones que
+conviene declarar de forma explícita:
+
+\begin{itemize}
+    \item \textbf{Fronteras laterales periódicas.} El desarrollo de la
+    ecuación~\eqref{eq:desarrollo_modal} es exacto porque el dominio es
+    periódico en $\tilde x$. Sin esa periodicidad no existe la serie de Fourier
+    discreta que desacopla el problema, y toda la reducción modal deja de
+    aplicarse. Un difusor físico real no es periódico.
+
+    \item \textbf{Medio homogéneo.} El desacoplamiento de la
+    ecuación~\eqref{eq:edo_modal} exige $k$ constante. Con permitividad
+    variable en el espacio los modos se acoplan y el sistema deja de ser un
+    conjunto de ecuaciones independientes. Es una diferencia sustantiva frente
+    a trabajos que sí tratan medios inhomogéneos, como
+    \textcite{panagiotakopoulos2026helmholtz}.
+
+    \item \textbf{El modelo es específico de cada realización.} Los datos de
+    Cauchy $a_m(0)$ y $a_m'(0)$ están incorporados a la arquitectura como
+    constantes de la función de prueba
+    (ecuación~\eqref{eq:cauchy_dura}). Cada pantalla nueva exige entrenar una
+    red desde cero, del orden de $350$~s en el equipo empleado. La red no es un
+    sustituto entrenado que generalice a realizaciones no vistas, sino un
+    solucionador de un problema dado. Esto condiciona directamente cómo debe
+    plantearse el factor de aceleración frente a FEM: un cómputo que considere
+    sólo la inferencia sería engañoso.
+
+    \item \textbf{Una sola inicialización de red.} Las cinco pantallas varían
+    la realización física, no la semilla de la red, fija en $42$. La dispersión
+    inter-semilla medida en NB02 (Tabla~\ref{tab:multiseed}) es de un
+    coeficiente de variación del $46\%$, de modo que la robustez frente a la
+    inicialización no está caracterizada en NB03.
+
+    \item \textbf{Referencia semianalítica.} Según lo discutido en
+    §\ref{sec:nb03_referencia}, la referencia comparte con el modelo la base
+    modal y la ecuación diferencial, por lo que mide exactitud del solucionador
+    y no acuerdo con un método numérico independiente.
+
+    \item \textbf{Alcance en distancia.} Validado en $\tilde z=1\lambda$; el
+    ensayo a $2\lambda$ de §\ref{sec:nb03_extension} no supera el criterio.
+\end{itemize}
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Contexto en la literatura}
@@ -864,7 +1025,7 @@ PINN-SIREN propuesta junto al antecedente más cercano en la literatura.
 \toprule
 Método & Dimensión & Comparación & Error $L^2$ (\%) \\
 \midrule
-\textcite{schoder2024helmholtz} & 3D (acústica) & PINN vs.\ FEM (malla fina) & 2.49 \\
+\textcite{schoder2024helmholtz} & 3D (acústica) & PINN vs.\ FEM (malla fina) & 2.49\tnote{b} \\
 \textcite{zhang2025fepirbn} & 2D (EM) & PINN vs.\ simulación numérica & 1.40--5.82 \\
 \textbf{PINN-SIREN (este trabajo)} & \textbf{1D (óptica)} & PINN vs.\ solución analítica & \textbf{0.006} \\
 \textbf{PINN-SIREN (este trabajo)} & \textbf{2D (óptica)} & PINN vs.\ solución analítica & \textbf{0.171} \\
@@ -879,6 +1040,10 @@ Método & Dimensión & Comparación & Error $L^2$ (\%) \\
     base de comparación cuantitativa. Los resultados propios se validan
     contra el umbral fijo de la tesis ($L^2 < 5\%$), independiente de
     trabajos externos.
+    \item[b] \textcite{schoder2024helmholtz} reportan cuatro valores en esa
+    columna según la nitidez de la fuente (0.9718, 0.0997, 0.0243 y 0.0249); se
+    cita el correspondiente a la fuente más concentrada. No es un valor único
+    del trabajo.
     \item[a] Valor de campo completo. Está dominado por la fracción evanescente
     de la referencia, irrepresentable por la base modal: el error sobre el
     subespacio propagante es de $0.042\%$ en promedio
@@ -937,10 +1102,14 @@ NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\
 
 Los tres experimentos completados verifican la hipótesis de precisión. NB01 y
 NB02 cumplen el umbral $L^2 < 5\%$ con amplitud frente a soluciones analíticas.
-NB03 lo cumple en las cinco pantallas de fase independientes frente a la
-referencia por espectro angular, con la precisión adicional de que el error
+NB03 cumple el umbral en las cinco pantallas de fase independientes frente a
+la referencia por espectro angular, con la precisión adicional de que el error
 residual está dominado por la fracción evanescente del espectro y no por el
-ajuste de la red (Sección~\ref{sec:nb03_resultados_z1}). La hipótesis
+ajuste de la red (Sección~\ref{sec:nb03_resultados_z1}). Debe señalarse, no
+obstante, que la hipótesis (i) exige para NB03 una referencia \emph{numérica
+independiente}, y la empleada aquí es semianalítica
+(Sección~\ref{sec:nb03_referencia}): la verificación de esa hipótesis en su
+sentido estricto queda condicionada a NB04. La hipótesis
 estadística se cumple en los dos niveles definidos en
 Sección~\ref{sec:nb03_goodman}. La hipótesis de velocidad ($S > 1$) permanece
 sin responder: requiere la implementación de la referencia FEM (NB04), que es
