@@ -106,3 +106,12 @@ results/nb03_holdout/**/*.npz
 results/nb03_holdout/**/*.pt
 results/nb03_refinement/**/*.npz
 results/nb03_refinement/**/*.pt
+
+# ── Vista previa comercial de Born y Wolf (2026-09-15) ───────────────────────
+# Extracto de 99 paginas de "Principles of Optics" (Cambridge University Press),
+# generado por la plataforma de distribucion de la editorial como muestra de
+# venta. Se conserva EN DISCO para verificar las citas de born1999principles,
+# pero no se versiona: redistribuir contenido comercial fuera del canal del
+# titular en un repositorio publico es lo unico del lote sin defensa razonable.
+# El origen, la edicion y el DOI estan documentados en el _SOURCE.md contiguo.
+master_supporting_docs/supporting_papers/referencias/Born_Wolf_1999_Principles_of_Optics_Legal_Preview.pdf
