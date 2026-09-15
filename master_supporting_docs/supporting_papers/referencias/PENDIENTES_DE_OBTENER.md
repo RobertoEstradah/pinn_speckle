@@ -30,8 +30,45 @@ Al conseguir cada una, guardarla en
     ya se corrigió para declararlo como tolerancia operativa propia; conviene
     confirmarlo con el texto en mano.
   - La condición sobre la desviación de fase del difusor (la tesis usa 2.0 rad).
-- **Dónde:** biblioteca UJAT o préstamo interbibliotecario. No hay versión
-  legal gratuita.
+- **Dónde conseguirlo (enlaces verificados el 2026-09-15):**
+
+  | Vía | Enlace | Qué obtienes |
+  |---|---|---|
+  | ~~**Muestra oficial de SPIE**~~ **OBTENIDA** | `https://spie.org/samples/PM312.pdf` | 26 páginas de preliminares de la 2.ª ed.: créditos, **índice completo** y prefacio. **No trae capítulos.** Ver más abajo |
+  | Espejo de la muestra | `https://www.spiedigitallibrary.org/samples/PM312.pdf` | Mismo archivo |
+  | Ficha de la 2.ª edición | `https://spie.org/publications/book/2548482` | Índice completo y compra |
+  | Vista previa de Google Books | `https://books.google.com/books/about/Speckle_Phenomena_in_Optics.html?id=TynXEcS0DncC` | Búsqueda dentro del libro: sirve para localizar páginas exactas y citar |
+  | Biblioteca UJAT / préstamo interbibliotecario | — | El ejemplar completo |
+  | Dr. Adán | — | Probablemente lo tenga; es doctor en óptica |
+
+  **Ediciones:** 1.ª ed. Roberts & Company, 2007 (la que cita tu `.bib`).
+  2.ª ed. SPIE Press, 2020, ISBN 9781510631489 (papel) y 9781510631496 (PDF),
+  con material nuevo sobre speckle polarizado y estadística de superficies
+  «lisas». Si consigues la 2.ª, actualiza la entrada del `.bib`.
+
+  La vista previa de Google Books es la vía más rápida para **verificar el
+  umbral**: busca «contrast» dentro del libro y comprueba si aparece alguna
+  tolerancia numérica, o sólo `C = 1`.
+
+- **Parcialmente obtenida el 2026-09-15.** La muestra de SPIE está en
+  `referencias/Goodman_2020_SpecklePhenomena_2ed_SPIE_Muestra.pdf` (excluida del
+  repositorio: lleva «All rights reserved»; ver el `_SOURCE.md` que la acompaña).
+  Trae sólo preliminares, de modo que **no verifica ninguna de las tres cosas de
+  la lista de arriba**. Lo que sí aporta:
+
+  - Las **ubicaciones exactas** para citar con sección y página en la 2.ª ed.:
+    camino aleatorio §2.2 p. 10; estadística de primer orden §3 p. 25; intensidad
+    y fase §3.2 p. 27 (ahí viven la exponencial y `C = 1`); pupila y rugosidad
+    frente al contraste §5.10 p. 167.
+  - Un hallazgo: la 2.ª ed. tiene un **Apéndice B, «Contrast of Partially
+    Developed Speckle Intensity and Phase», p. 389**, que trata exactamente el
+    régimen de NB03 --la pantalla usa 2.0 rad de desviación de fase, por debajo
+    de 2π, así que el speckle no está completamente desarrollado--. Es la
+    referencia correcta para justificar ese régimen y hoy no está citada.
+  - Confirmación de que la 2.ª ed. es de SPIE Press, 2020, ISBN 9781510631489.
+    Si se adopta, hay que actualizar la clave `goodman2007speckle` del `.bib`.
+
+  Sigue haciendo falta el **texto completo** para cerrar §3.2 y el umbral.
 
 ### 2. Zhang et al. (2025) — FE-PIRBN
 
@@ -45,8 +82,34 @@ Al conseguir cada una, guardarla en
   publicado**, pero no es reproducible desde el repositorio.
 - **Qué hay que verificar:** que el rango corresponda a la métrica y al tipo de
   referencia que la tabla comparativa declara.
-- **Dónde:** ScienceDirect (de pago). Acceso institucional UJAT, o escribir a
-  los autores.
+- **Dónde conseguirlo (enlaces verificados el 2026-09-15):**
+
+  | Vía | Enlace |
+  |---|---|
+  | Artículo en ScienceDirect (de pago) | `https://www.sciencedirect.com/science/article/abs/pii/S0021999125000816` |
+  | Resolutor DOI | `https://doi.org/10.1016/j.jcp.2025.113798` |
+  | Ficha en NASA ADS | `https://ui.adsabs.harvard.edu/abs/2025JCoPh.52713798Z/abstract` |
+  | Acceso institucional UJAT a Elsevier | — |
+
+  **No existe preprint.** Se buscó en arXiv y en repositorios institucionales
+  el 2026-09-15 y no hay versión de autor depositada.
+
+  **La vía más efectiva es escribir a los autores**, que pueden compartir su
+  propio trabajo legítimamente. Los correos están en la primera página del
+  artículo; la afiliación se ve en la ficha de ADS. Borrador:
+
+  > Asunto: Request for a copy of your JCP paper on FE-PIRBN
+  >
+  > Dear Dr. Zhang,
+  >
+  > I am a master's student at Universidad Juárez Autónoma de Tabasco, working
+  > on physics-informed neural networks for the Helmholtz equation. I would like
+  > to cite your paper *FE-PIRBN* (J. Comput. Phys. 527, 113798) in my thesis,
+  > in particular the reported L² error range of 1.40–5.82%. Unfortunately I do
+  > not have institutional access to ScienceDirect. Would you be willing to
+  > share a copy?
+  >
+  > Thank you for your time.
 
 ---
 
@@ -110,8 +173,29 @@ ninguna afirmación cuantitativa.
 
 | Prioridad | Cuántas | Acción |
 |---|---:|---|
-| Alta | 2 | Goodman y Zhang: biblioteca o acceso institucional |
+| Alta | 2 | Goodman y Zhang: biblioteca o acceso institucional. De Goodman ya se tienen los preliminares de la 2.ª ed. (índice y paginación), no el texto |
 | ~~Acceso abierto~~ | ~~2~~ | **Obtenidas el 2026-09-15.** La de Fang reveló una atribución incorrecta, ya corregida en Cap2 |
 | Baja, acceso institucional | 5 | Jin, McKay, Lagaris, Hornik, Nocedal |
 
 Quedan **7** sin copia local, de las cuales sólo dos son de prioridad alta.
+
+
+---
+
+## Plan B: si no llegan a tiempo
+
+Ninguna de las dos bloquea la tesis. Basta declarar el alcance de la
+verificación.
+
+**Zhang et al.** — nota al pie en la tabla comparativa de Cap4:
+
+> El rango reportado se verificó contra el resumen publicado del artículo; no se
+> dispuso del texto completo para comprobar la configuración experimental a la
+> que corresponde.
+
+**Goodman** — ya está cubierto. La tesis declara en Cap3 y Cap4 que la
+tolerancia `|C−1| < 0.1` es una decisión operativa de este trabajo y no un
+umbral publicado por ese autor, que es exactamente la afirmación que requeriría
+el libro para sostenerse. Citar un texto canónico sin tener el ejemplar es
+práctica habitual; lo que no se puede es atribuirle un umbral que no da, y eso
+ya se corrigió.

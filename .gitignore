@@ -116,3 +116,11 @@ results/nb03_refinement/**/*.pt
 # El origen, la edicion y el DOI estan documentados en el _SOURCE.md contiguo.
 master_supporting_docs/supporting_papers/referencias/Born_Wolf_1999_Principles_of_Optics_Legal_Preview.pdf
 limpiar_historial.sh
+
+# ── Muestra oficial de Goodman 2.a ed. (SPIE, 2020) — 2026-09-15 ─────────────
+# Preliminares (creditos, indice, prefacio) de "Speckle Phenomena in Optics",
+# descargados de https://spie.org/samples/PM312.pdf. Llevan la nota "All rights
+# reserved. No part of this publication may be reproduced or distributed".
+# Mismo criterio que la vista previa de Born y Wolf: se conserva en disco para
+# consulta y se excluye del repositorio publico.
+master_supporting_docs/supporting_papers/referencias/Goodman_2020_SpecklePhenomena_2ed_SPIE_Muestra.pdf
