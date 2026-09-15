@@ -115,3 +115,4 @@ results/nb03_refinement/**/*.pt
 # titular en un repositorio publico es lo unico del lote sin defensa razonable.
 # El origen, la edicion y el DOI estan documentados en el _SOURCE.md contiguo.
 master_supporting_docs/supporting_papers/referencias/Born_Wolf_1999_Principles_of_Optics_Legal_Preview.pdf
+limpiar_historial.sh
