@@ -46,7 +46,6 @@ if VARIANT == "_omega1":
     modal.FIRST_OMEGA = 1.0
 
 
-
 def build_model(reference, model_path):
     x = reference["x_lambda"]
     kx = reference["kx"]

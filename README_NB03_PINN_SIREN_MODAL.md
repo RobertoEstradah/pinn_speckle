@@ -28,30 +28,75 @@ en la propagación de speckle óptico hasta `z = 1 lambda`. El campo final sigue
 expresado en coordenadas cartesianas `(x,z)`, pero la PINN utiliza internamente
 una representación espectral-modal.
 
-Estado posterior: el mismo método fue validado controladamente en cinco
-pantallas hasta `z = 2 lambda`, con L2 completo final medio de 1.935 %. Una
-prueba reservada adicional en `z = 1 lambda`, con pantalla 31415 y semilla
-neuronal 73, terminó en 6.740 % y no fue aceptada. Por ello existe evidencia
-de precisión a 1--2 lambda, pero aún no de robustez ante cualquier
-inicialización. Véanse `results/nb03_distance_pilot/README.md` y
+Estado posterior: la configuración oficial con `omega_0 = 1` se extendió de
+manera controlada hasta `z = 2 lambda` en las mismas cinco pantallas. El L2
+completo final medio fue 0.993 %, el peor máximo propagante en 201 planos fue
+1.165 % y las cinco pantallas cumplieron todos los criterios. Una prueba
+reservada adicional en `z = 1 lambda`, con pantalla 31415 y semilla neuronal
+73, terminó en 6.740 % con la configuración fija y no fue aceptada. Por ello
+existe evidencia sólida para las cinco pantallas conocidas entre 1 y 2
+longitudes de onda, pero aún no de generalización a cualquier pantalla o
+inicialización. Véanse `results/nb03_distance_pilot/z2_omega1_five_120s/` y
 `results/nb03_holdout/README.md`.
 
-## Resultado que debe reproducirse
+## Resultado oficial que debe reproducirse
 
 Se entrenó la misma arquitectura con cinco pantallas físicas distintas y la
 semilla de la red fija en 42.
 
 | Semilla de pantalla | L2 complejo en z=1 | Coherencia | C referencia | C PINN | Error absoluto de C | Residuo RMSE |
 |---:|---:|---:|---:|---:|---:|---:|
-| 42 | 4.12 % | 0.9992 | 0.9063 | 0.9019 | 0.0044 | 0.0387 |
-| 123 | 2.91 % | 0.9996 | 0.8827 | 0.8841 | 0.0014 | 0.0370 |
-| 321 | 3.89 % | 0.9993 | 0.9200 | 0.9211 | 0.0011 | 0.0363 |
-| 777 | 3.25 % | 0.9995 | 1.2246 | 1.2391 | 0.0144 | 0.0357 |
-| 2026 | 3.54 % | 0.9995 | 0.7812 | 0.7822 | 0.0010 | 0.0363 |
+| 42 | 3.82 % | 0.9993 | 0.9063 | 0.9012 | 0.0051 | 0.00232 |
+| 123 | 2.40 % | 0.9997 | 0.8827 | 0.8821 | 0.0006 | 0.00224 |
+| 321 | 3.57 % | 0.9994 | 0.9200 | 0.9231 | 0.0030 | 0.00240 |
+| 777 | 2.95 % | 0.9996 | 1.2246 | 1.2403 | 0.0157 | 0.00246 |
+| 2026 | 3.06 % | 0.9995 | 0.7812 | 0.7841 | 0.0029 | 0.00229 |
 
-Resumen: L2 medio de **3.54 %**, desviación poblacional de **0.43 puntos
-porcentuales**, peor resultado final de **4.12 %** y cinco de cinco pantallas
+Resumen: L2 medio de **3.16 %**, desviación poblacional de **0.50 puntos
+porcentuales**, peor resultado final de **3.82 %** y cinco de cinco pantallas
 aceptadas por fidelidad de campo y contraste.
+
+## Puente analítico NB02B hasta 2 lambda
+
+La misma arquitectura modal de NB03, con `omega` de primera capa igual a 1,
+se contrastó también contra una solución analítica multimodal sobre
+`z/lambda in [0,2]`. Esta prueba no utiliza speckle aleatorio y, por tanto, no
+sustituye la validación de NB03; verifica de manera controlada la arquitectura,
+la condición de Cauchy dura y el residuo de Helmholtz antes de aplicarlos al
+campo aleatorio.
+
+| Modos complejos | L2 global | L2 en z=2 | Coherencia | Residuo normalizado |
+|---:|---:|---:|---:|---:|
+| 1 | 0.210 % | 0.150 % | 1.000000 | 0.00768 |
+| 5 | 0.334 % | 0.180 % | 1.000000 | 0.00663 |
+| 41 | 0.195 % | 0.184 % | 0.999999 | 0.00413 |
+
+Los tres casos satisfacen el umbral L2 menor que 5 %. Los artefactos se
+encuentran en `results/nb02b_modal_bridge/z_2lambda/` y se reproducen desde
+`notebooks/02b_validacion_puente_arquitectura_modal_nb03.ipynb`.
+
+## NB03B: speckle aleatorio hasta 2 lambda
+
+Después del puente analítico NB02B, la PINN-SIREN modal se entrenó sin
+etiquetas interiores para propagar cinco campos aleatorios conocidos desde
+`z=0` hasta `z=2 lambda`. La referencia del espectro angular se consultó solo
+después del entrenamiento. Se mantuvieron `omega_0=1`, 41 modos propagantes,
+la condición de Cauchy dura y la selección del modelo mediante el residuo de
+Helmholtz.
+
+| Pantalla | L2 completo final | L2 propagante final | Máximo propagante en z | Coherencia | Error de C | Residuo normalizado |
+|---:|---:|---:|---:|---:|---:|---:|
+| 42 | 1.0377 % | 0.9321 % | 1.1648 % | 0.999951 | 0.002666 | 0.005417 |
+| 123 | 0.9409 % | 0.8944 % | 1.0810 % | 0.999961 | 0.000582 | 0.005385 |
+| 321 | 1.0057 % | 0.8931 % | 1.0780 % | 0.999951 | 0.001406 | 0.004924 |
+| 777 | 0.8637 % | 0.7940 % | 0.9986 % | 0.999965 | 0.000720 | 0.004501 |
+| 2026 | 1.1175 % | 1.0542 % | 1.0542 % | 0.999960 | 0.000446 | 0.004867 |
+| **Resumen** | **media 0.9931 %** | **media 0.9136 %** | **peor 1.1648 %** | **media 0.999958** | **media 0.001164** | **media 0.005019** |
+
+Las cinco pantallas fueron aceptadas. El notebook reproducible es
+`notebooks/03b_validacion_speckle_2d_z2lambda.ipynb`; el resumen verificable
+está en
+`results/nb03_distance_pilot/z2_omega1_five_120s/validation_summary.json`.
 
 ## Formulación física
 
@@ -116,7 +161,7 @@ sin escalado hasta 4.88 %, y la afinación lo redujo a 4.12 % en la pantalla 42.
 | Capas ocultas | 4 |
 | Neuronas por capa | 128 |
 | Salidas reales | 82: parte real e imaginaria de 41 modos |
-| `omega` primera capa | 30 |
+| `omega` primera capa | 1 |
 | `omega` capas ocultas | 1 |
 | Puntos z remuestreados por época | 256 |
 | Recorte de gradiente | 1.0 |
@@ -198,14 +243,14 @@ $env:NB03_SEED = "42"
 $env:NB03_MODAL_EPOCHS = "5000"
 $env:NB03_MODAL_N_Z_TRAIN = "256"
 $env:NB03_MODAL_LR = "0.0002"
-$env:NB03_MODAL_FIRST_OMEGA = "30"
+$env:NB03_MODAL_FIRST_OMEGA = "1"
 $env:NB03_MODAL_HIDDEN_OMEGA = "1"
 $env:NB03_MODAL_HIDDEN_DIM = "128"
 $env:NB03_MODAL_NUM_LAYERS = "4"
 $env:NB03_MODAL_GRAD_CLIP = "1"
 $env:NB03_MODAL_VALIDATION_N_Z = "1001"
 $env:NB03_MODAL_RESUME_MODEL = ""
-$env:NB03_MODAL_OUTPUT_SUFFIX = "_z1_modal_scaled1"
+$env:NB03_MODAL_OUTPUT_SUFFIX = "_z1_screen42_omega1"
 python -u scripts/experiments/nb03_modal_pinn_siren.py
 ```
 
@@ -214,14 +259,15 @@ python -u scripts/experiments/nb03_modal_pinn_siren.py
 ```powershell
 $env:NB03_MODAL_EPOCHS = "3000"
 $env:NB03_MODAL_LR = "0.00005"
-$env:NB03_MODAL_RESUME_MODEL = "results/models/nb03_modal_pinn_siren_z1_modal_scaled1.pt"
-$env:NB03_MODAL_OUTPUT_SUFFIX = "_z1_modal_scaled1_finetune"
+$env:NB03_MODAL_RESUME_MODEL = "results/models/nb03_modal_pinn_siren_z1_screen42_omega1.pt"
+$env:NB03_MODAL_OUTPUT_SUFFIX = "_z1_screen42_omega1_finetune"
 python -u scripts/experiments/nb03_modal_pinn_siren.py
 ```
 
 ### 4. Consolidar las cinco pantallas
 
 ```powershell
+$env:NB03_SUMMARY_VARIANT = "_omega1"
 python -u scripts/experiments/nb03_modal_multiseed_summary.py
 ```
 
@@ -248,9 +294,9 @@ cercanía `C aproximadamente 1` corresponde a la estadística de conjunto.
 | `scripts/experiments/nb03_modal_multiseed_summary.py` | Recalcula métricas agregadas y L2 a lo largo de z |
 | `scripts/experiments/run_nb03_modal_multiseed.ps1` | Ejecuta el protocolo completo |
 | `notebooks/03_simulacion_speckle_2d_pinn_siren_modal.ipynb` | Presentación interactiva de NB03 |
-| `results/nb03_modal_multiseed_z1_summary.json` | Resultados consolidados |
-| `results/nb03_modal_multiseed_z1_l2_curves.npz` | Curvas L2 para las cinco pantallas |
-| `results/figures/nb03_modal_multiseed_z1_l2.png` | Figura comparativa |
+| `results/nb03_modal_multiseed_z1_omega1_summary.json` | Resultados consolidados oficiales |
+| `results/nb03_modal_multiseed_z1_omega1_l2_curves.npz` | Curvas L2 para las cinco pantallas |
+| `results/figures/nb03_modal_multiseed_z1_omega1_l2.png` | Figura comparativa |
 | `results/nb03_modal_z1_report.md` | Reporte técnico resumido |
 
 Cada corrida individual produce cuatro artefactos con el mismo sufijo:
@@ -275,8 +321,8 @@ Una reproducción correcta debe verificar:
 
 ## Alcance y limitaciones
 
-- El resultado está validado preliminarmente para cinco pantallas y
-  `z=1 lambda`.
+- El resultado está validado para cinco pantallas conocidas tanto en
+  `z=1 lambda` como en `z=2 lambda`.
 - Cada pantalla requiere entrenamiento; todavía no es un operador neuronal
   capaz de generalizar sin reentrenamiento.
 - Cuatro pantallas conservaron L2 menor que 5 % en todo el intervalo. La
@@ -285,9 +331,11 @@ Una reproducción correcta debe verificar:
 - La formulación aprovecha un medio homogéneo y periodicidad transversal.
 - El espectro angular y la PINN modal comparten una base Fourier compatible;
   la comparación futura con FEM aportará una validación numérica adicional.
-- Se demostró propagación controlada hasta 2 longitudes de onda en las cinco
-  pantallas conocidas; no se ha demostrado todavía a 5, 10 o 20 longitudes de
-  onda.
+- En `z=2 lambda`, el L2 completo final medio fue 0.993 % y el peor error
+  propagante observado en 201 planos fue 1.165 %, ambos muy por debajo del
+  umbral de 5 %.
+- No se ha demostrado generalización sin reentrenamiento a pantallas nuevas ni
+  validez universal a 5, 10 o 20 longitudes de onda.
 - Una pantalla y semilla neuronal reservadas no alcanzaron el umbral de 5 %;
   la robustez entre inicializaciones permanece abierta.
 - No se ha medido aún aceleración frente a FEM.

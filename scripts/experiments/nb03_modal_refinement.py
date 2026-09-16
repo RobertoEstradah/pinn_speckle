@@ -100,7 +100,10 @@ def evaluate(model, ref, field_scale, kx, kz2):
                     'field_full': full, 'field_propagating': prop}
 
 
-def train(model, ref, arm, seconds, n_train):
+def train(model, ref, arm, seconds, n_train, learning_rate=None,
+          selection_interval=10):
+    if selection_interval < 1:
+        raise ValueError('selection_interval must be positive')
     dtype = next(model.parameters()).dtype
     active = ref['propagating_mask'].astype(bool)
     kz2 = torch.tensor(np.maximum(base.K ** 2 - ref['kx'][active] ** 2, 0), dtype=dtype)
@@ -114,7 +117,8 @@ def train(model, ref, arm, seconds, n_train):
     best_step = 0
     history = [{'step': 0, 'seconds': 0., 'selection_mse': best_mse}]
     if arm == 'adam32':
-        optimizer = torch.optim.Adam(model.parameters(), lr=5e-5)
+        adam_lr = 5e-5 if learning_rate is None else float(learning_rate)
+        optimizer = torch.optim.Adam(model.parameters(), lr=adam_lr)
     else:
         optimizer = torch.optim.LBFGS(model.parameters(), lr=1., max_iter=10,
                                      max_eval=15, history_size=50,
@@ -139,14 +143,15 @@ def train(model, ref, arm, seconds, n_train):
     while time.perf_counter() - t0 < seconds:
         if arm == 'adam32':
             elapsed_fraction = min((time.perf_counter() - t0) / seconds, 1.)
-            optimizer.param_groups[0]['lr'] = 1e-6 + .5 * (5e-5 - 1e-6) * (
+            min_lr = adam_lr * .02
+            optimizer.param_groups[0]['lr'] = min_lr + .5 * (adam_lr - min_lr) * (
                 1 + math.cos(math.pi * elapsed_fraction))
             closure()
             optimizer.step()
         else:
             optimizer.step(closure)
         step += 1
-        if arm != 'adam32' or step % 10 == 0:
+        if arm != 'adam32' or step % selection_interval == 0:
             score = residual_score(model, z_selection, kz2)
             if score['mse'] < best_mse:
                 best_mse = score['mse']
@@ -164,6 +169,7 @@ def train(model, ref, arm, seconds, n_train):
     assert np.isclose(verified, best_mse, rtol=1e-6, atol=1e-12)
     return kz2, {'seconds': elapsed, 'budget_seconds': seconds, 'steps': step,
                  'closure_calls': closure_calls, 'best_step': best_step,
+                 'learning_rate_initial': adam_lr if arm == 'adam32' else None,
                  'selection_initial_mse': initial['mse'], 'selection_best_mse': verified,
                  'history': history, 'optimizer_state_resumed': False}
 

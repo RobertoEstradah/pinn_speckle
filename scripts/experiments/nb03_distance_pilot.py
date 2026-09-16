@@ -29,7 +29,6 @@ import numpy as np
 import torch
 from torch.func import jvp
 
-from scripts.experiments import nb03_modal_multiseed_summary as previous
 from scripts.experiments import nb03_modal_pinn_siren as modal
 from scripts.experiments import nb03_pinn_slabs as base
 
@@ -38,7 +37,7 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def make_model(reference, model_path, distance):
+def make_model(reference, model_path, distance, device="cpu"):
     x = reference["x_lambda"]
     kx = reference["kx"]
     active = reference["propagating_mask"].astype(bool)
@@ -66,13 +65,13 @@ def make_model(reference, model_path, distance):
         (base.K ** 2 * modal_amplitude).astype(np.float32), 2
     )
     model = modal.ModalSiren(
-        torch.tensor(coefficient0),
-        torch.tensor(derivative0),
-        torch.tensor(correction_scale),
+        torch.tensor(coefficient0, device=device),
+        torch.tensor(derivative0, device=device),
+        torch.tensor(correction_scale, device=device),
         float(distance),
-    )
+    ).to(device)
     model.load_state_dict(torch.load(
-        model_path, map_location="cpu", weights_only=True
+        model_path, map_location=device, weights_only=True
     ))
     model.eval()
     return model, field_scale, kx_active
@@ -99,10 +98,13 @@ def residual_score(model, coordinates, kz2):
 
 def evaluate(model, reference, field_scale, kx_active, distance, kz2):
     dtype = next(model.parameters()).dtype
+    device = next(model.parameters()).device
     z = np.linspace(0.0, distance, 201)
     with torch.no_grad():
-        values = model(torch.tensor(z, dtype=dtype).reshape(-1, 1))
-    values = values.cpu().numpy().reshape(len(z), -1, 2)
+        values = model(torch.tensor(
+            z, dtype=dtype, device=device
+        ).reshape(-1, 1))
+    values = values.detach().cpu().numpy().reshape(len(z), -1, 2)
     coefficients = values[..., 0] + 1j * values[..., 1]
     phase_x = np.exp(1j * np.outer(reference["x_lambda"], kx_active))
     prediction = field_scale * (coefficients @ phase_x.T)
@@ -131,7 +133,7 @@ def evaluate(model, reference, field_scale, kx_active, distance, kz2):
     assert identity < 1e-10, identity
     assert np.isfinite(prediction).all()
 
-    z0 = torch.zeros((1, 1), dtype=dtype)
+    z0 = torch.zeros((1, 1), dtype=dtype, device=device)
     value0, dz0 = jvp(model, (z0,), (torch.ones_like(z0),))
     boundary_error = float((value0 - model.coefficient0).abs().max().detach())
     derivative_error = float((dz0 - model.derivative0).abs().max().detach())
@@ -176,18 +178,19 @@ def evaluate(model, reference, field_scale, kx_active, distance, kz2):
 
 def train(model, reference, distance, seconds, n_train, seed):
     dtype = next(model.parameters()).dtype
+    device = next(model.parameters()).device
     active = reference["propagating_mask"].astype(bool)
     kz2 = torch.tensor(
         np.maximum(base.K ** 2 - reference["kx"][active] ** 2, 0),
-        dtype=dtype,
+        dtype=dtype, device=device,
     )
     z_train = torch.tensor(
         (np.arange(n_train) + 0.5) / n_train * distance,
-        dtype=dtype,
+        dtype=dtype, device=device,
     ).reshape(-1, 1)
     z_selection = torch.tensor(
         np.random.default_rng(1717 + seed).uniform(0.0, distance, size=997),
-        dtype=dtype,
+        dtype=dtype, device=device,
     ).reshape(-1, 1)
     initial = residual_score(model, z_selection, kz2)
     best_mse = initial["mse"]
@@ -252,8 +255,18 @@ def main():
     parser.add_argument("--n-train", type=int, default=1024)
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--name", default="pilot_z2_z5")
+    parser.add_argument("--first-omega", type=float, default=30.0)
+    parser.add_argument("--hidden-omega", type=float, default=1.0)
+    parser.add_argument(
+        "--source-variant", choices=("legacy-refinement", "omega1"),
+        default="legacy-refinement",
+    )
+    parser.add_argument(
+        "--device", choices=("auto", "cpu", "cuda"), default="auto",
+    )
     args = parser.parse_args()
-    if args.seconds <= 0 or args.n_train < 2 or args.threads < 1:
+    if (args.seconds <= 0 or args.n_train < 2 or args.threads < 1 or
+            min(args.first_omega, args.hidden_omega) <= 0):
         parser.error("seconds, n-train and threads must be positive")
     if any(distance <= 1.0 for distance in args.distances):
         parser.error("distances must be greater than 1 lambda")
@@ -267,25 +280,26 @@ def main():
     torch.set_num_threads(args.threads)
     torch.manual_seed(42)
     modal.HIDDEN_DIM, modal.NUM_LAYERS = 128, 4
-    modal.FIRST_OMEGA, modal.HIDDEN_OMEGA = 30.0, 1.0
+    modal.FIRST_OMEGA = args.first_omega
+    modal.HIDDEN_OMEGA = args.hidden_omega
+    if args.device == "auto":
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    else:
+        device = torch.device(args.device)
+    if device.type == "cuda" and not torch.cuda.is_available():
+        parser.error("Se solicitó CUDA, pero torch.cuda.is_available() es falso.")
 
     summary = {
         "experiment": "NB03 distance-extension pilot",
         "scope": "Independent retraining at each distance; same modal PINN-SIREN architecture",
         "configuration": vars(args),
-        "source_dirs": {
-            "42": "results/nb03_refinement/pilot1",
-            "123": "results/nb03_refinement/pilot1",
-            "321": "results/nb03_refinement/confirmation3",
-            "777": "results/nb03_refinement/confirmation3",
-            "2026": "results/nb03_refinement/confirmation3",
-        },
+        "source_variant": args.source_variant,
         "runtime": {
             "python": sys.version,
             "torch": torch.__version__,
             "numpy": np.__version__,
             "platform": platform.platform(),
-            "device": "cpu",
+            "device": str(device),
             "threads": torch.get_num_threads(),
         },
         "source_script_sha256": digest(Path(__file__)),
@@ -299,22 +313,44 @@ def main():
     }
 
     for seed in args.seeds:
-        case = next(c for c in previous.CASES if c[0] == seed)
+        reference_suffix = (
+            "_z1_corr0.10" if seed == 42
+            else f"_z1_seed{seed}_corr0.10"
+        )
         reference_path = ROOT / "results" / (
-            f"nb03_angular_spectrum_reference{case[1]}.npz"
+            f"nb03_angular_spectrum_reference{reference_suffix}.npz"
         )
-        source_dir = ROOT / "results" / "nb03_refinement" / (
-            "pilot1" if seed in (42, 123) else "confirmation3"
-        )
-        source_model = source_dir / f"seed{seed}_lbfgs32.pt"
+        if args.source_variant == "omega1":
+            source_model = ROOT / "results" / "models" / (
+                "nb03_modal_pinn_siren_z1_"
+                f"screen{seed}_omega1_finetune.pt"
+            )
+            source_report = ROOT / "results" / (
+                "nb03_modal_pinn_siren_z1_"
+                f"screen{seed}_omega1_finetune.json"
+            )
+            if not source_report.exists():
+                raise FileNotFoundError(source_report)
+            recorded = json.loads(source_report.read_text(encoding="utf-8"))
+            recorded_omega = recorded["architecture"]["first_omega"]
+            if not np.isclose(recorded_omega, args.first_omega):
+                raise ValueError(
+                    f"El checkpoint registra omega_0={recorded_omega}, "
+                    f"pero se solicitó {args.first_omega}."
+                )
+        else:
+            source_dir = ROOT / "results" / "nb03_refinement" / (
+                "pilot1" if seed in (42, 123) else "confirmation3"
+            )
+            source_model = source_dir / f"seed{seed}_lbfgs32.pt"
         if not source_model.exists():
             raise FileNotFoundError(source_model)
         reference = dict(np.load(reference_path))
         case_entry = {
             "seed": seed,
-            "reference_path": str(reference_path),
+            "reference_path": reference_path.relative_to(ROOT).as_posix(),
             "reference_sha256": digest(reference_path),
-            "source_model": str(source_model),
+            "source_model": source_model.relative_to(ROOT).as_posix(),
             "source_model_sha256": digest(source_model),
             "distances": {},
         }
@@ -322,7 +358,7 @@ def main():
         for distance in args.distances:
             label = f"z{distance:g}"
             model, field_scale, kx_active = make_model(
-                reference, source_model, distance
+                reference, source_model, distance, device
             )
             kz2, training = train(
                 model, reference, distance, args.seconds, args.n_train, seed
@@ -333,10 +369,11 @@ def main():
             selection_z = torch.tensor(
                 np.random.default_rng(1717 + seed).uniform(
                     0.0, distance, size=997
-                ), dtype=torch.float32
+                ), dtype=torch.float32, device=device
             ).reshape(-1, 1)
             metrics["test_residual"] = residual_score(model, torch.tensor(
-                np.linspace(0.0, distance, 2001), dtype=torch.float32
+                np.linspace(0.0, distance, 2001),
+                dtype=torch.float32, device=device
             ).reshape(-1, 1), kz2)
             metrics["selection_residual"] = residual_score(
                 model, selection_z, kz2

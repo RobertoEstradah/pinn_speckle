@@ -129,3 +129,7 @@ master_supporting_docs/supporting_papers/referencias/Goodman_2020_SpecklePhenome
 # FORCE_RETRAIN=True en notebooks/02b_...ipynb. Las metricas (summary.json) y
 # las figuras si se rastrean.
 results/nb02b_modal_bridge/*.npz
+
+# Cache de bytecode: nunca debe versionarse
+__pycache__/
+*.py[cod]

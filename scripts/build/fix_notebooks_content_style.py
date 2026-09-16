@@ -19,12 +19,12 @@ def clean_mechanical(s):
 # ---- Reemplazos de contenido exactos, por notebook ----------------------------
 
 FILENAME_FIXES = [
-    ('01_teoria_pinns_completo.ipynb', '01_pinn_helmholtz_1d_validation.ipynb'),
-    ('01_helmholtz_1D_tesis.ipynb', '01_pinn_helmholtz_1d_validation.ipynb'),
-    ('02_helmholtz_2D_tesis.ipynb', '02_pinn_helmholtz_2d_complex_field.ipynb'),
-    ('02_helmholtz_2D.ipynb', '02_pinn_helmholtz_2d_complex_field.ipynb'),
-    ('03_speckle_tesis.ipynb', '03_pinn_optical_speckle_simulation.ipynb'),
-    ('03_speckle.ipynb', '03_pinn_optical_speckle_simulation.ipynb'),
+    ('01_teoria_pinns_completo.ipynb', '01_validacion_helmholtz_1d_normalizada.ipynb'),
+    ('01_helmholtz_1D_tesis.ipynb', '01_validacion_helmholtz_1d_normalizada.ipynb'),
+    ('02_helmholtz_2D_tesis.ipynb', '02_validacion_helmholtz_2d_normalizada.ipynb'),
+    ('02_helmholtz_2D.ipynb', '02_validacion_helmholtz_2d_normalizada.ipynb'),
+    ('03_speckle_tesis.ipynb', '03_simulacion_speckle_2d_pinn_siren_modal.ipynb'),
+    ('03_speckle.ipynb', '03_simulacion_speckle_2d_pinn_siren_modal.ipynb'),
 ]
 
 ROADMAP_OLD_BLOCK_MD = """| `04_benchmark.ipynb` | PINN vs FEniCSx (Speed-up Factor) | Pendiente |"""
@@ -48,9 +48,9 @@ ROADMAP_OLD_TABLE_ESTADO = """| Notebook | Contenido | Estado |
 
 ROADMAP_NEW_TABLE_ESTADO = """| Notebook | Contenido | Estado |
 |---|---|---|
-| `01_pinn_helmholtz_1d_validation.ipynb` | Helmholtz 1D - SIREN ω₀=1.0, 5×64 | Error L2 = 0.006% |
-| `02_pinn_helmholtz_2d_complex_field.ipynb` | Helmholtz 2D - campo complejo, LHS, 5×128 | Error L2 = 0.171% |
-| **`03_pinn_optical_speckle_simulation.ipynb`** | **Speckle - frontera rugosa φ~U(0,2π), C ≈ 1** | Completado |
+| `01_validacion_helmholtz_1d_normalizada.ipynb` | Helmholtz 1D - SIREN ω₀=1.0, 5×64 | Error L2 = 0.006% |
+| `02_validacion_helmholtz_2d_normalizada.ipynb` | Helmholtz 2D - campo complejo, LHS, 5×128 | Error L2 = 0.171% |
+| **`03_simulacion_speckle_2d_pinn_siren_modal.ipynb`** | **Speckle 2D (x,z) - PINN-SIREN modal** | Validado en z=1λ |
 | `04_benchmark.ipynb` | PINN vs FEniCSx - Speed-up Factor | Pendiente |
 | `05_speckle_distancias_estadistico.ipynb` | Speckle a distancias reales (2-20cm), generacion estadistica de Goodman | Completado |
 
@@ -138,14 +138,14 @@ def fix_nb03(nb):
     return nb
 
 FIXERS = {
-    '01_pinn_helmholtz_1d_validation.ipynb': fix_nb01,
-    '02_pinn_helmholtz_2d_complex_field.ipynb': fix_nb02,
-    '03_pinn_optical_speckle_simulation.ipynb': fix_nb03,
+    '01_validacion_helmholtz_1d_normalizada.ipynb': fix_nb01,
+    '02_validacion_helmholtz_2d_normalizada.ipynb': fix_nb02,
+    '03_simulacion_speckle_2d_pinn_siren_modal.ipynb': fix_nb03,
 }
 
-for path in ['01_pinn_helmholtz_1d_validation.ipynb',
-             '02_pinn_helmholtz_2d_complex_field.ipynb',
-             '03_pinn_optical_speckle_simulation.ipynb',
+for path in ['01_validacion_helmholtz_1d_normalizada.ipynb',
+             '02_validacion_helmholtz_2d_normalizada.ipynb',
+             '03_simulacion_speckle_2d_pinn_siren_modal.ipynb',
              '05_speckle_distancias_estadistico.ipynb']:
     with open(path, encoding='utf-8') as f:
         nb = json.load(f)

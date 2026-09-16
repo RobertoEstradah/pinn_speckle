@@ -1,0 +1,190 @@
+{
+  "experiment": "NB02B analytic bridge for NB03 modal PINN-SIREN",
+  "purpose": "Validar la arquitectura exacta de NB03 con soluciones complejas multimodales conocidas antes de usar una pantalla aleatoria.",
+  "physics": {
+    "coordinates": "Cartesian normalized (x_tilde, z_tilde)",
+    "equation": "d2E/dx2 + d2E/dz2 + (2*pi)^2 E = 0",
+    "domain_x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "domain_z_lambda": [
+      0.0,
+      2.0
+    ],
+    "exact_field": "sum_m A_m exp(i*(kx_m*x+kz_m*z))",
+    "interior_training_labels": 0,
+    "hard_cauchy": "a_m(0), a_m'(0)=i*kz_m*a_m(0)"
+  },
+  "architecture": {
+    "source": "scripts/experiments/nb03_modal_pinn_siren.py",
+    "hidden_dim": 128,
+    "num_hidden_layers": 4,
+    "first_omega": 1.0,
+    "hidden_omega": 1.0
+  },
+  "training": {
+    "seed": 2026,
+    "epochs_per_case": 90,
+    "n_z_per_epoch": 512,
+    "learning_rate": 0.0002,
+    "gradient_clip": 1.0,
+    "optimizer": "L-BFGS strong Wolfe; 20 inner iterations",
+    "resume_existing_checkpoints": true
+  },
+  "acceptance_criteria": {
+    "global_complex_relative_l2": "< 0.05",
+    "target_complex_relative_l2": "< 0.05",
+    "target_complex_coherence": "> 0.90",
+    "normalized_helmholtz_residual_rmse": "< 0.05"
+  },
+  "cases": [
+    {
+      "n_complex_modes": 1,
+      "mode_indices": [
+        0
+      ],
+      "training_seconds": 49.158132553100586,
+      "stage_epochs": 90,
+      "cumulative_recorded_epochs": 8590,
+      "resumed_from": "C:\\roberto\\Tesis_Maestria\\results\\nb02b_modal_bridge\\z_2lambda\\models\\case_01_modes.pt",
+      "optimizer": "lbfgs",
+      "best_training_loss": 2.776264227577485e-05,
+      "metrics": {
+        "global_complex_relative_l2": 0.0020965449822271517,
+        "target_complex_relative_l2": 0.0015002881866880771,
+        "global_complex_coherence": 0.9999987354577977,
+        "target_complex_coherence": 1.0000000000000013,
+        "global_intensity_relative_l2": 0.0025718091149002816,
+        "target_intensity_relative_l2": 0.0028174064611016228,
+        "global_phase_mae_rad": 0.0013758154506465772,
+        "target_phase_mae_rad": 0.000513801108606685,
+        "max_l2_over_z": 0.004554655581334657,
+        "helmholtz_field_residual_normalized_rmse": 0.007681069656757334,
+        "helmholtz_field_residual_normalized_max_abs": 0.049422709202274914,
+        "hard_cauchy_coefficient_rmse": 0.0,
+        "hard_cauchy_derivative_rmse": 1.7484556025237907e-07
+      },
+      "acceptance": {
+        "global_complex_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "target_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "accepted": true
+      }
+    },
+    {
+      "n_complex_modes": 5,
+      "mode_indices": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "training_seconds": 84.15036034584045,
+      "stage_epochs": 90,
+      "cumulative_recorded_epochs": 8590,
+      "resumed_from": "C:\\roberto\\Tesis_Maestria\\results\\nb02b_modal_bridge\\z_2lambda\\models\\case_05_modes.pt",
+      "optimizer": "lbfgs",
+      "best_training_loss": 2.0429521100595593e-05,
+      "metrics": {
+        "global_complex_relative_l2": 0.0033391055252034625,
+        "target_complex_relative_l2": 0.0017984350184489602,
+        "global_complex_coherence": 0.9999966949640164,
+        "target_complex_coherence": 0.9999995894502695,
+        "global_intensity_relative_l2": 0.0038988248459253523,
+        "target_intensity_relative_l2": 0.0025726922823944023,
+        "global_phase_mae_rad": 0.0022070673735366153,
+        "target_phase_mae_rad": 0.0014301782799304476,
+        "max_l2_over_z": 0.005597369840284803,
+        "helmholtz_field_residual_normalized_rmse": 0.006631553861850047,
+        "helmholtz_field_residual_normalized_max_abs": 0.06503378002114603,
+        "hard_cauchy_coefficient_rmse": 8.851339251846761e-09,
+        "hard_cauchy_derivative_rmse": 6.676046125040123e-08
+      },
+      "acceptance": {
+        "global_complex_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "target_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "accepted": true
+      }
+    },
+    {
+      "n_complex_modes": 41,
+      "mode_indices": [
+        -20,
+        -19,
+        -18,
+        -17,
+        -16,
+        -15,
+        -14,
+        -13,
+        -12,
+        -11,
+        -10,
+        -9,
+        -8,
+        -7,
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "training_seconds": 126.85102152824402,
+      "stage_epochs": 90,
+      "cumulative_recorded_epochs": 8590,
+      "resumed_from": "C:\\roberto\\Tesis_Maestria\\results\\nb02b_modal_bridge\\z_2lambda\\models\\case_41_modes.pt",
+      "optimizer": "lbfgs",
+      "best_training_loss": 4.042206001031445e-06,
+      "metrics": {
+        "global_complex_relative_l2": 0.0019494722793626529,
+        "target_complex_relative_l2": 0.0018409064804493596,
+        "global_complex_coherence": 0.9999984482151362,
+        "target_complex_coherence": 0.9999991810665653,
+        "global_intensity_relative_l2": 0.002231104963570238,
+        "target_intensity_relative_l2": 0.0014014787016949815,
+        "global_phase_mae_rad": 0.0017483498446517472,
+        "target_phase_mae_rad": 0.0024836424561423894,
+        "max_l2_over_z": 0.0026442741885666795,
+        "helmholtz_field_residual_normalized_rmse": 0.004125581410315831,
+        "helmholtz_field_residual_normalized_max_abs": 0.045422162275179104,
+        "hard_cauchy_coefficient_rmse": 3.9727042247367306e-09,
+        "hard_cauchy_derivative_rmse": 2.4838062854210745e-08
+      },
+      "acceptance": {
+        "global_complex_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "target_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "accepted": true
+      }
+    }
+  ],
+  "all_cases_accepted": true
+}

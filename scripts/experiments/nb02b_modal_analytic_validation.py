@@ -49,7 +49,15 @@ CASE_COUNTS = tuple(
     for value in os.environ.get("NB02B_CASE_COUNTS", "1,5,41").split(",")
     if value.strip()
 )
-OUTPUT_DIR = PROJECT_ROOT / "results" / "nb02b_modal_bridge"
+_RESULTS_ROOT = PROJECT_ROOT / "results" / "nb02b_modal_bridge"
+if abs(DISTANCE_LAMBDA - 1.0) < 1e-12:
+    _DEFAULT_OUTPUT_DIR = _RESULTS_ROOT
+else:
+    _distance_label = f"{DISTANCE_LAMBDA:g}".replace(".", "p")
+    _DEFAULT_OUTPUT_DIR = _RESULTS_ROOT / f"z_{_distance_label}lambda"
+OUTPUT_DIR = Path(os.environ.get(
+    "NB02B_OUTPUT_DIR", str(_DEFAULT_OUTPUT_DIR)
+)).resolve()
 RESUME_EXISTING = os.environ.get("NB02B_RESUME_EXISTING", "0") == "1"
 
 
@@ -452,7 +460,9 @@ def make_figures(reports: list[dict], arrays_by_count: dict[int, dict]) -> None:
         axes[0, 0].plot(
             x, np.abs(predicted[-1]) ** 2, "--", label="PINN-SIREN"
         )
-        axes[0, 0].set_title(r"Intensidad en $\tilde z=1$")
+        axes[0, 0].set_title(
+            rf"Intensidad en $\tilde z={DISTANCE_LAMBDA:g}$"
+        )
         axes[0, 0].set_xlabel(r"$\tilde x=x/\lambda$")
         axes[0, 0].set_ylabel(r"$I=|E|^2$")
         axes[0, 0].legend()
@@ -504,7 +514,10 @@ def make_figures(reports: list[dict], arrays_by_count: dict[int, dict]) -> None:
     ]
     fig, axis = plt.subplots(figsize=(8, 5), constrained_layout=True)
     axis.semilogy(counts, global_l2, "o-", label="L2 global")
-    axis.semilogy(counts, target_l2, "s-", label="L2 en z=1")
+    axis.semilogy(
+        counts, target_l2, "s-",
+        label=f"L2 en z={DISTANCE_LAMBDA:g}",
+    )
     axis.semilogy(counts, residual, "^-", label="residuo Helmholtz")
     axis.axhline(0.05, color="tab:red", linestyle=":", label="umbral 5 %")
     axis.set_xticks(counts)
@@ -544,7 +557,8 @@ def main() -> None:
         print(
             f"  resultado {count:2d}: "
             f"L2 global={report['metrics']['global_complex_relative_l2']:.3%}, "
-            f"L2 z=1={report['metrics']['target_complex_relative_l2']:.3%}, "
+            f"L2 z={DISTANCE_LAMBDA:g}="
+            f"{report['metrics']['target_complex_relative_l2']:.3%}, "
             f"coherencia={report['metrics']['target_complex_coherence']:.6f}, "
             f"aceptado={report['acceptance']['accepted']}"
         )

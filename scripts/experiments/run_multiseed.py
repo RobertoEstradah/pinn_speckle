@@ -4,7 +4,7 @@ run_multiseed.py
 Reproducibilidad multi-semilla de NB02 (Helmholtz 2D, campo complejo, lambda=0.1).
 
 Este script replica EXACTAMENTE el camino de codigo de
-`notebooks/02_pinn_helmholtz_2d_complex_field.ipynb`, de modo que la semilla 42
+`notebooks/02_validacion_helmholtz_2d_normalizada.ipynb`, de modo que la semilla 42
 debe devolver el mismo resultado que el notebook (L2_avg = 0.171 %). Esa
 coincidencia es la prueba de que notebook y script son equivalentes y que los
 valores de las tres semillas son comparables entre si.

@@ -1,0 +1,209 @@
+{
+  "experiment": "NB03B random-speckle validation at z=2 lambda",
+  "coordinate_system": "Cartesian (x,z)",
+  "equation": "Normalized homogeneous Helmholtz equation",
+  "architecture": {
+    "model": "modal PINN-SIREN with hard Cauchy conditions",
+    "first_omega": 1.0,
+    "hidden_omega": 1.0,
+    "hidden_layers": 4,
+    "hidden_width": 128,
+    "complex_propagating_modes": 41
+  },
+  "protocol": {
+    "distance_lambda": 2.0,
+    "screen_seeds": [
+      42,
+      123,
+      321,
+      777,
+      2026
+    ],
+    "seconds_per_screen": 120.0,
+    "training_labels": false,
+    "selection_uses_reference_field": false,
+    "independent_reference": "angular spectrum",
+    "field_test_planes": 201,
+    "source_summary": "results/nb03_distance_pilot/z2_omega1_five_120s/summary.json"
+  },
+  "per_screen": [
+    {
+      "screen_seed": 42,
+      "reference_path": "results/nb03_angular_spectrum_reference_z1_corr0.10.npz",
+      "source_model": "results/models/nb03_modal_pinn_siren_z1_screen42_omega1_finetune.pt",
+      "training_seconds": 120.14256419998128,
+      "l2_full_final": 0.01037661174019548,
+      "l2_propagating_final": 0.009321131346422998,
+      "l2_propagating_max": 0.011647801823141957,
+      "coherence_full_final": 0.9999507328229392,
+      "intensity_correlation_full_final": 0.9999435489767737,
+      "contrast_reference": 1.1594649921167448,
+      "contrast_pinn": 1.162130653697653,
+      "contrast_difference": 0.0026656615809081963,
+      "residual_normalized_rmse": 0.005417210049927235,
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "hard_cauchy_below_1e_6": true
+      },
+      "accepted": true
+    },
+    {
+      "screen_seed": 123,
+      "reference_path": "results/nb03_angular_spectrum_reference_z1_seed123_corr0.10.npz",
+      "source_model": "results/models/nb03_modal_pinn_siren_z1_screen123_omega1_finetune.pt",
+      "training_seconds": 120.15441800002009,
+      "l2_full_final": 0.009408906911856675,
+      "l2_propagating_final": 0.008944169011376119,
+      "l2_propagating_max": 0.010809982634440888,
+      "coherence_full_final": 0.9999612266009453,
+      "intensity_correlation_full_final": 0.9999443604772172,
+      "contrast_reference": 1.068355058075981,
+      "contrast_pinn": 1.0689373396871662,
+      "contrast_difference": 0.0005822816111851203,
+      "residual_normalized_rmse": 0.005384877789765596,
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "hard_cauchy_below_1e_6": true
+      },
+      "accepted": true
+    },
+    {
+      "screen_seed": 321,
+      "reference_path": "results/nb03_angular_spectrum_reference_z1_seed321_corr0.10.npz",
+      "source_model": "results/models/nb03_modal_pinn_siren_z1_screen321_omega1_finetune.pt",
+      "training_seconds": 120.0072080999962,
+      "l2_full_final": 0.010057207596302778,
+      "l2_propagating_final": 0.008930839074343517,
+      "l2_propagating_max": 0.01078030331187568,
+      "coherence_full_final": 0.9999506662489638,
+      "intensity_correlation_full_final": 0.9999211386350522,
+      "contrast_reference": 0.9391089806064069,
+      "contrast_pinn": 0.9377033933721969,
+      "contrast_difference": 0.0014055872342100262,
+      "residual_normalized_rmse": 0.004923505242913961,
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "hard_cauchy_below_1e_6": true
+      },
+      "accepted": true
+    },
+    {
+      "screen_seed": 777,
+      "reference_path": "results/nb03_angular_spectrum_reference_z1_seed777_corr0.10.npz",
+      "source_model": "results/models/nb03_modal_pinn_siren_z1_screen777_omega1_finetune.pt",
+      "training_seconds": 120.62686079996638,
+      "l2_full_final": 0.0086370772271046,
+      "l2_propagating_final": 0.007940088225374516,
+      "l2_propagating_max": 0.009985917985882279,
+      "coherence_full_final": 0.9999653761510909,
+      "intensity_correlation_full_final": 0.9999286421454691,
+      "contrast_reference": 1.011566039169704,
+      "contrast_pinn": 1.0122855881178208,
+      "contrast_difference": 0.0007195489481168771,
+      "residual_normalized_rmse": 0.004501457326114178,
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "hard_cauchy_below_1e_6": true
+      },
+      "accepted": true
+    },
+    {
+      "screen_seed": 2026,
+      "reference_path": "results/nb03_angular_spectrum_reference_z1_seed2026_corr0.10.npz",
+      "source_model": "results/models/nb03_modal_pinn_siren_z1_screen2026_omega1_finetune.pt",
+      "training_seconds": 120.05965420004213,
+      "l2_full_final": 0.011174500883674129,
+      "l2_propagating_final": 0.010542281599664834,
+      "l2_propagating_max": 0.010542281599664834,
+      "coherence_full_final": 0.99996033486194,
+      "intensity_correlation_full_final": 0.999895569062043,
+      "contrast_reference": 0.8373943708320373,
+      "contrast_pinn": 0.8369488252965883,
+      "contrast_difference": 0.0004455455354489546,
+      "residual_normalized_rmse": 0.004867499228566885,
+      "cauchy_field_max_abs": 0.0,
+      "cauchy_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "hard_cauchy_below_1e_6": true
+      },
+      "accepted": true
+    }
+  ],
+  "aggregate": {
+    "l2_full_final": {
+      "mean": 0.009930860871826732,
+      "std_population": 0.0008611167012878125,
+      "minimum": 0.0086370772271046,
+      "maximum": 0.011174500883674129
+    },
+    "l2_propagating_final": {
+      "mean": 0.009135701851436395,
+      "std_population": 0.0008391658018320292,
+      "minimum": 0.007940088225374516,
+      "maximum": 0.010542281599664834
+    },
+    "l2_propagating_max": {
+      "mean": 0.010753257471001126,
+      "std_population": 0.0005361864458062144,
+      "minimum": 0.009985917985882279,
+      "maximum": 0.011647801823141957
+    },
+    "coherence_full_final": {
+      "mean": 0.9999576673371757,
+      "std_population": 5.93822503407753e-06,
+      "minimum": 0.9999506662489638,
+      "maximum": 0.9999653761510909
+    },
+    "intensity_correlation_full_final": {
+      "mean": 0.9999266518593111,
+      "std_population": 1.788633497069819e-05,
+      "minimum": 0.999895569062043,
+      "maximum": 0.9999443604772172
+    },
+    "contrast_difference": {
+      "mean": 0.0011637249819738348,
+      "std_population": 0.0008204220080145465,
+      "minimum": 0.0004455455354489546,
+      "maximum": 0.0026656615809081963
+    },
+    "residual_normalized_rmse": {
+      "mean": 0.005018909927457571,
+      "std_population": 0.00034419759209213864,
+      "minimum": 0.004501457326114178,
+      "maximum": 0.005417210049927235
+    },
+    "accepted_screens": 5,
+    "total_screens": 5
+  },
+  "all_screens_accepted": true,
+  "scope_limitation": "Validates five known random phase screens at z=2 lambda; it does not prove arbitrary-distance or unseen-screen generalization."
+}
