@@ -18,42 +18,42 @@
   "equivalence_relative_l2": 0.00047485017281715275,
   "timings_ms": {
     "asm_un_plano": {
-      "mean": 0.07031999877654016,
-      "std": 0.10280547099882932,
+      "mean": 0.044393999269232154,
+      "std": 0.01423431437105913,
       "min": 0.03860000288113952
     },
     "pinn_un_plano": {
-      "mean": 0.9047220041975379,
-      "std": 0.31973615999667626,
-      "min": 0.5596000119112432
+      "mean": 0.8191819989588112,
+      "std": 0.3397495959386632,
+      "min": 0.5523000145331025
     },
     "asm_101_planos": {
-      "mean": 3.717845000210218,
-      "std": 0.2716671773810539,
-      "min": 3.3654000144451857
+      "mean": 3.245555004104972,
+      "std": 0.08707987133442772,
+      "min": 3.1639999942854047
     },
     "pinn_101_planos": {
-      "mean": 2.275544995791279,
-      "std": 0.4930183645735978,
-      "min": 1.7654999974183738
+      "mean": 1.8452700052876025,
+      "std": 0.18434043527994204,
+      "min": 1.6604000120423734
     }
   },
   "speedup_inference_only": {
-    "un_plano_asm_sobre_pinn": 0.07772553165534196,
-    "101_planos_asm_sobre_pinn": 1.6338261854134009
+    "un_plano_asm_sobre_pinn": 0.05419308447409414,
+    "101_planos_asm_sobre_pinn": 1.7588510054381563
   },
   "training_cost_seconds": 351.9022047519684,
   "amortization_note": "El modelo es especifico de su pantalla: los datos de Cauchy estan incorporados a la arquitectura, de modo que cada realizacion nueva exige entrenar desde cero. El costo de entrenamiento debe incluirse en cualquier comparacion por pantalla nueva.",
   "amortization": {
     "un_plano": {
       "pinn_gana": true,
-      "ahorro_ms_por_evaluacion": -0.8344020054209977,
+      "ahorro_ms_por_evaluacion": -0.774787999689579,
       "evaluaciones_para_amortizar": null
     },
     "101_planos": {
       "pinn_gana": true,
-      "ahorro_ms_por_evaluacion": 1.4423000044189394,
-      "evaluaciones_para_amortizar": 243986.82914359384
+      "ahorro_ms_por_evaluacion": 1.4002849988173693,
+      "evaluaciones_para_amortizar": 251307.5588534994
     }
   }
 }
