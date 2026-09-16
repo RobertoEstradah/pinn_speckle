@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "checkedAt": "2026-08-31T21:35:13.044Z",
+  "workspace": "C:\\roberto\\Tesis_Maestria\\tmp\\smf_cartel",
+  "finalPptx": "C:\\roberto\\Tesis_Maestria\\slides\\smf\\cartel_pinn_siren_2d.pptx",
+  "starterPptx": "C:\\roberto\\Tesis_Maestria\\tmp\\smf_cartel\\template-starter.pptx",
+  "mapPath": "C:\\roberto\\Tesis_Maestria\\tmp\\smf_cartel\\template-frame-map.json",
+  "starterLayoutDir": "C:\\roberto\\Tesis_Maestria\\tmp\\smf_cartel\\template-starter-layout",
+  "finalLayoutDir": "C:\\roberto\\Tesis_Maestria\\tmp\\smf_cartel\\final-layout",
+  "editDir": "C:\\roberto\\Tesis_Maestria\\tmp\\smf_cartel",
+  "issueCount": 0,
+  "issues": []
+}

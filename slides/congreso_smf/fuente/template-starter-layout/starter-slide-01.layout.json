@@ -1,0 +1,3547 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/4j7hjl",
+    "id": "4j7hjl",
+    "slide": 1,
+    "layoutId": "/ppt/slideLayouts/slideLayout7.xml",
+    "layoutName": "En blanco",
+    "layoutType": "blank",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 3401.5,
+      "height": 4913.33
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Tema de Office",
+    "colors": {
+      "accent1": "#4472C4",
+      "accent2": "#ED7D31",
+      "accent3": "#A5A5A5",
+      "accent4": "#FFC000",
+      "accent5": "#5B9BD5",
+      "accent6": "#70AD47",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#44546A",
+      "lt2": "#E7E6E6",
+      "hlink": "#0563C1",
+      "folHlink": "#954F72"
+    },
+    "fontScheme": {
+      "name": "Tema de Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Arial",
+      "Calibri",
+      "Calibri Light"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout7.xml",
+      "name": "En blanco",
+      "type": "blank",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/2",
+          "id": "2",
+          "name": "Date Placeholder 1",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "05/10/2023",
+          "textPreview": "05/10/2023",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "05/10/2023",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "05/10/2023"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/3",
+          "id": "3",
+          "name": "Footer Placeholder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/4",
+          "id": "4",
+          "name": "Slide Number Placeholder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "‹Nº›",
+          "textPreview": "‹Nº›",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹Nº›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹Nº›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            233.85,
+            261.59,
+            2933.79,
+            949.68
+          ],
+          "geometry": "rect",
+          "text": "Haga clic para modificar el estilo de título del patrón",
+          "textPreview": "Haga clic para modificar el estilo de título del patrón",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Haga clic para modificar el estilo de título del patrón",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Haga clic para modificar el estilo de título del patrón"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            233.85,
+            1307.95,
+            2933.79,
+            3117.46
+          ],
+          "geometry": "rect",
+          "text": "Haga clic para modificar los estilos de texto del patrón\nSegundo nivel\nTercer nivel\nCuarto nivel\nQuinto nivel",
+          "textPreview": "Haga clic para modificar los estilos de texto del patrón | Segundo nivel | Tercer nivel | Cuarto nivel | Quinto nivel",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Haga clic para modificar los estilos de texto del patrón",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Haga clic para modificar los estilos de texto del patrón"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Segundo nivel",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Segundo nivel"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Tercer nivel",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Tercer nivel"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Cuarto nivel",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Cuarto nivel"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Quinto nivel",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Quinto nivel"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Date Placeholder 3",
+          "bbox": [
+            233.85,
+            4553.93,
+            765.34,
+            261.59
+          ],
+          "geometry": "rect",
+          "text": "05/10/2023",
+          "textPreview": "05/10/2023",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "05/10/2023",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "05/10/2023"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Footer Placeholder 4",
+          "bbox": [
+            1126.75,
+            4553.93,
+            1148.01,
+            261.59
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Slide Number Placeholder 5",
+          "bbox": [
+            2402.31,
+            4553.93,
+            765.34,
+            261.59
+          ],
+          "geometry": "rect",
+          "text": "‹Nº›",
+          "textPreview": "‹Nº›",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹Nº›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹Nº›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/axsnelc7",
+      "id": "33",
+      "name": "Rectángulo 32",
+      "bbox": [
+        0,
+        -23.49,
+        3401.5,
+        554.1
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": {
+        "type": "theme",
+        "value": "accent1",
+        "transform": {
+          "lighten": 0.4
+        }
+      },
+      "lineColor": {
+        "type": "theme",
+        "value": "accent5",
+        "transform": {
+          "lighten": 0.8
+        }
+      },
+      "lineWidth": 1.33
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cf610nip",
+      "id": "2",
+      "name": "Título 1",
+      "bbox": [
+        15.92,
+        30.93,
+        3385.58,
+        507.17
+      ],
+      "text": "GENERACIÓN DE SONIDO MEDIANTE EFECTO TERMOACÚSTICO \nEMPLEANDO ÓXIDO DE GRAFENO.\n\nHernández Estrada Roberto, Feria Rodríguez Yuritzi Azarel, Ramón Frías Abraham, \nHernández García Kevin, R. Falconi y J.L. Benítez.\nDivisión Académica de Ciencias Básicas, Universidad Juárez Autónoma de Tabasco, \nKm 1 Ctra. Cunduacán-Jalpa, Apartado Postal 24, 86690 Cunduacán, Tabasco, México\nrobehdzestrada@gmail.com",
+      "textPreview": "GENERACIÓN DE SONIDO MEDIANTE EFECTO TERMOACÚSTICO  | EMPLEANDO ÓXIDO DE GRAFENO. |  | Hernández Estrada Roberto, Feria Rodríguez Yuritzi...",
+      "resolvedFontSize": 187.08,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 207.87,
+        "typeface": "Calibri Light",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.9,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 8,
+        "lines": [
+          {
+            "index": 1,
+            "text": "GENERACIÓN DE SONIDO MEDIANTE EFECTO TERMOACÚSTICO"
+          },
+          {
+            "index": 2,
+            "text": "EMPLEANDO ÓXIDO DE GRAFENO."
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "Hernández Estrada Roberto, Feria Rodríguez Yuritzi Azarel, Ramón Frías Abraham,"
+          },
+          {
+            "index": 5,
+            "text": "Hernández García Kevin, R. Falconi y J.L. Benítez."
+          },
+          {
+            "index": 6,
+            "text": "División Académica de Ciencias Básicas, Universidad Juárez Autónoma de Tabasco,"
+          },
+          {
+            "index": 7,
+            "text": "Km 1 Ctra. Cunduacán-Jalpa, Apartado Postal 24, 86690 Cunduacán, Tabasco, México"
+          },
+          {
+            "index": 8,
+            "text": "robehdzestrada@gmail.com"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "GENERACIÓN DE SONIDO MEDIANTE EFECTO TERMOACÚSTICO \nEMPLEANDO ÓXIDO DE GRAFENO.\n\nHernández Estrada Roberto, Feria Rodríguez Yuritzi Azarel, Ramón Frías Abraham, \nHernández García Kevin, R. Falconi y J.L. Benítez.\nDivisión Académica de Ciencias Básicas, Universidad Juárez Autónoma de Tabasco, \nKm 1 Ctra. Cunduacán-Jalpa, Apartado Postal 24, 86690 Cunduacán, Tabasco, México\nrobehdzestrada@gmail.com",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "GENERACIÓN DE SONIDO MEDIANTE EFECTO TERMOACÚSTICO ",
+              "fontSize": 74.67,
+              "typeface": "Arial",
+              "bold": true
+            },
+            {
+              "index": 2,
+              "text": "\n",
+              "alignment": "center"
+            },
+            {
+              "index": 3,
+              "text": "EMPLEANDO ÓXIDO DE GRAFENO.",
+              "fontSize": 74.67,
+              "typeface": "Arial",
+              "bold": true
+            },
+            {
+              "index": 4,
+              "text": "\n",
+              "alignment": "center"
+            },
+            {
+              "index": 5,
+              "text": "\n",
+              "alignment": "center"
+            },
+            {
+              "index": 6,
+              "text": "Hernández Estrada Roberto, Feria Rodríguez Yuritzi ",
+              "fontSize": 53.33,
+              "typeface": "Arial",
+              "bold": true
+            },
+            {
+              "index": 7,
+              "text": "Azarel",
+              "fontSize": 53.33,
+              "typeface": "Arial",
+              "bold": true
+            },
+            {
+              "index": 8,
+              "text": ", ",
+              "fontSize": 53.33,
+              "typeface": "Arial",
+              "bold": true
+            },
+            {
+              "index": 9,
+              "text": "Ramón Frías Abraham, ",
+              "fontSize": 53.33,
+              "typeface": "Arial",
+              "color": "#000000",
+              "bold": true
+            },
+            {
+              "index": 10,
+              "text": "\n",
+              "alignment": "center"
+            },
+            {
+              "index": 11,
+              "text": "Hernández García Kevin, R. Falconi y J.L. Benítez.",
+              "fontSize": 53.33,
+              "typeface": "Arial",
+              "color": "#000000",
+              "bold": true
+            },
+            {
+              "index": 12,
+              "text": "\n",
+              "alignment": "center"
+            },
+            {
+              "index": 13,
+              "text": "División Académica de Ciencias Básicas, Universidad Juárez Autónoma de Tabasco, ",
+              "fontSize": 53.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 14,
+              "text": "\n",
+              "alignment": "center"
+            },
+            {
+              "index": 15,
+              "text": "Km 1 Ctra. Cunduacán-Jalpa, Apartado Postal 24, 86690 Cunduacán, Tabasco, México",
+              "fontSize": 53.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 16,
+              "text": "\n",
+              "alignment": "center"
+            },
+            {
+              "index": 17,
+              "text": "robehdzestrada@gmail.com",
+              "fontSize": 48,
+              "typeface": "Arial"
+            }
+          ],
+          "bulletCharacter": "",
+          "lineSpacingPercent": 90000
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/nm18jmhg",
+      "id": "48",
+      "name": "Imagen 4",
+      "bbox": [
+        2952.49,
+        29.41,
+        349.06,
+        448.31
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image1.png",
+        "contentType": "image/png",
+        "byteLength": 39615
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image1.png",
+        "contentType": "image/png",
+        "byteLength": 39615
+      }
+    },
+    {
+      "order": 4,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/ml8rahgv",
+      "id": "49",
+      "name": "Imagen 10",
+      "bbox": [
+        84.17,
+        62.08,
+        299.83,
+        396.3
+      ],
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0.27243,
+        "top": 0,
+        "right": 0.25987,
+        "bottom": 0.37906
+      },
+      "asset": {
+        "assetId": "/ppt/media/image2.png",
+        "contentType": "image/png",
+        "byteLength": 191331
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image2.png",
+        "contentType": "image/png",
+        "byteLength": 191331
+      }
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mx0vq5c7",
+      "id": "46",
+      "name": "Rectángulo 45",
+      "bbox": [
+        0,
+        515.67,
+        3401.5,
+        61.1
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": {
+        "type": "theme",
+        "value": "accent1",
+        "transform": {
+          "darken": 0.5
+        }
+      }
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ny9cjats",
+      "id": "47",
+      "name": "CuadroTexto 46",
+      "bbox": [
+        2324.69,
+        3676.77,
+        976.86,
+        607.47
+      ],
+      "geometry": "rect",
+      "text": "5. CONCLUSIONES.\n\nSe pudo observar como el efecto termoacústico actuó en la bocina empleada de óxido de grafeno, ya que si se aplicaba una frecuencia de la corriente alterna se obtenía una frecuencia acústica de aproximadamente el doble. \nLas ondas termoacústicas tienen una amplia gama de aplicaciones en diversos campos de la ciencia y la tecnología.",
+      "textPreview": "5. CONCLUSIONES. |  | Se pudo observar como el efecto termoacústico actuó en la bocina empleada de óxido de grafeno, ya que si se aplicab...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 11,
+        "lines": [
+          {
+            "index": 1,
+            "text": "5. CONCLUSIONES."
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "Se pudo observar como el efecto"
+          },
+          {
+            "index": 4,
+            "text": "termoacústico actuó en la bocina empleada de"
+          },
+          {
+            "index": 5,
+            "text": "óxido de grafeno, ya que si se aplicaba una"
+          },
+          {
+            "index": 6,
+            "text": "frecuencia de la corriente alterna se obtenía"
+          },
+          {
+            "index": 7,
+            "text": "una frecuencia acústica de aproximadamente"
+          },
+          {
+            "index": 8,
+            "text": "el doble."
+          },
+          {
+            "index": 9,
+            "text": "Las ondas termoacústicas tienen una amplia"
+          },
+          {
+            "index": 10,
+            "text": "gama de aplicaciones en diversos campos de"
+          },
+          {
+            "index": 11,
+            "text": "la ciencia y la tecnología."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "5. CONCLUSIONES.",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "5. CONCLUSIONES.",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "color": "bg1",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Se pudo observar como el efecto termoacústico actuó en la bocina empleada de óxido de grafeno, ya que si se aplicaba una frecuencia de la corriente alterna se obtenía una frecuencia acústica de aproximadamente el doble. ",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Se pudo observar como el efecto termoacústico actuó en la bocina empleada de óxido de grafeno, ya que si se aplicaba una frecuencia de la corriente alterna se obtenía una frecuencia acústica de aproximadamente el doble. ",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Las ondas termoacústicas tienen una amplia gama de aplicaciones en diversos campos de la ciencia y la tecnología.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "L",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            },
+            {
+              "index": 2,
+              "text": "as ondas termoacústicas tienen una amplia gama de aplicaciones en diversos campos de la ciencia y la tecnología.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": {
+        "type": "theme",
+        "value": "accent1",
+        "transform": {
+          "darken": 0.25
+        }
+      },
+      "lineColor": {
+        "type": "theme",
+        "value": "accent6",
+        "transform": {
+          "lighten": 0.8
+        }
+      },
+      "lineWidth": 1.33
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/re9gfyp4",
+      "id": "14",
+      "name": "AutoShape 2",
+      "bbox": [
+        1684.67,
+        2440.58,
+        32,
+        32
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6d0zmt8j",
+      "id": "15",
+      "name": "AutoShape 4",
+      "bbox": [
+        1700.67,
+        2456.58,
+        32,
+        32
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cz61k7at",
+      "id": "22",
+      "name": "CuadroTexto 21",
+      "bbox": [
+        72.87,
+        4646.01,
+        3190.86,
+        216.49
+      ],
+      "geometry": "rect",
+      "text": "7. FUENTES CITADAS.\n[1] Huelsz, G. (s/f). Efecto termoacústico y sus aplicaciones. Unam.mx. \n[2] Arnold, H. D., & Crandall., I. B. (1917). The thermophone as a precision source of sound. The Physical Review, 10(1), 22–38. \n[3] H. Tian, T.L. Ren, D. Xie, Y.F. Wang, C.J. Zhou, T.T. Feng, D. Fu, Y. Yang, P.G. Peng, L.G. Wang, Graphene-on-paper sound source devices, ACS Nano 5 (2011)",
+      "textPreview": "7. FUENTES CITADAS. | [1] Huelsz, G. (s/f). Efecto termoacústico y sus aplicaciones. Unam.mx.  | [2] Arnold, H. D., & Crandall., I. B. (1...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "7. FUENTES CITADAS."
+          },
+          {
+            "index": 2,
+            "text": "[1] Huelsz, G. (s/f). Efecto termoacústico y sus aplicaciones. Unam.mx."
+          },
+          {
+            "index": 3,
+            "text": "[2] Arnold, H. D., & Crandall., I. B. (1917). The thermophone as a precision source of sound. The Physical Review, 10(1), 22–38."
+          },
+          {
+            "index": 4,
+            "text": "[3] H. Tian, T.L. Ren, D. Xie, Y.F. Wang, C.J. Zhou, T.T. Feng, D. Fu, Y. Yang, P.G. Peng, L.G. Wang, Graphene-on-paper sound source devices, ACS Nano 5 (2011)"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "7. FUENTES CITADAS.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "7. FUENTES CITADAS.",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "[1] Huelsz, G. (s/f). Efecto termoacústico y sus aplicaciones. Unam.mx. ",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "[1] ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": "Huelsz",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 3,
+              "text": ", G. (s/f). ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 4,
+              "text": "Efecto termoacústico y sus aplicaciones",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "italic": true
+            },
+            {
+              "index": 5,
+              "text": ". Unam.mx. ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "[2] Arnold, H. D., & Crandall., I. B. (1917). The thermophone as a precision source of sound. The Physical Review, 10(1), 22–38. ",
+          "runs": [
+            {
+              "index": 1,
+              "text": "[2] Arnold, H. D., & Crandall., I. B. (1917). The thermophone as a precision source of sound. ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": "The Physical Review",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "italic": true
+            },
+            {
+              "index": 3,
+              "text": ", ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 4,
+              "text": "10",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "italic": true
+            },
+            {
+              "index": 5,
+              "text": "(1), 22–38. ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "[3] H. Tian, T.L. Ren, D. Xie, Y.F. Wang, C.J. Zhou, T.T. Feng, D. Fu, Y. Yang, P.G. Peng, L.G. Wang, Graphene-on-paper sound source devices, ACS Nano 5 (2011)",
+          "runs": [
+            {
+              "index": 1,
+              "text": "[3] H. ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": "Tian",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 3,
+              "text": ", T.L. Ren, D. ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 4,
+              "text": "Xie",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 5,
+              "text": ", Y.F. Wang, C.J. Zhou, T.T. Feng, D. Fu, Y. Yang, P.G. ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 6,
+              "text": "Peng",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 7,
+              "text": ", L.G. Wang, Graphene-",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 8,
+              "text": "on",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 9,
+              "text": "-",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 10,
+              "text": "paper",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 11,
+              "text": " ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 12,
+              "text": "sound",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 13,
+              "text": " ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 14,
+              "text": "source",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 15,
+              "text": " ",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 16,
+              "text": "devices",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            },
+            {
+              "index": 17,
+              "text": ", ACS Nano 5 (2011)",
+              "fontSize": 42.67,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/pcvipsze",
+      "id": "7",
+      "name": "CuadroTexto 6",
+      "bbox": [
+        84.17,
+        1441.21,
+        1002.33,
+        240.19
+      ],
+      "geometry": "rect",
+      "text": "2. OBJETIVO.\nExplorar y demostrar el potencial del efecto termoacústico del óxido de grafeno para la generación de sonido.",
+      "textPreview": "2. OBJETIVO. | Explorar y demostrar el potencial del efecto termoacústico del óxido de grafeno para la generación de sonido.",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "2. OBJETIVO."
+          },
+          {
+            "index": 2,
+            "text": "Explorar y demostrar el potencial del efecto"
+          },
+          {
+            "index": 3,
+            "text": "termoacústico del óxido de grafeno para la"
+          },
+          {
+            "index": 4,
+            "text": "generación de sonido."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "2. OBJETIVO.",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2. OBJETIVO.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Explorar y demostrar el potencial del efecto termoacústico del óxido de grafeno para la generación de sonido.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Explorar y demostrar el potencial del efecto termoacústico del óxido de grafeno para la generación de sonido.",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/294jud0n",
+      "id": "4",
+      "name": "CuadroTexto 3",
+      "bbox": [
+        2327.66,
+        1498.24,
+        992.64,
+        2169.51
+      ],
+      "geometry": "rect",
+      "text": "4. RESULTADOS.\n\nEn esta gráfica se muestra los resultados obtenidos de los diferentes resultados obtenidos de la bocina termoacústica empleando el óxido de grafeno [figura 7 y 8].\n\n\n\n\n\n\n\n\n\n\n\nFIGURA 7. SEÑALES DE SONIDO MEDIDO MEDIANTE UN ELECTRETE.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFIGURA 8. GRÁFICA DE LA FRECUENCIA DEL EFECTO TERMOACÚSTICO.",
+      "textPreview": "4. RESULTADOS. |  | En esta gráfica se muestra los resultados obtenidos de los diferentes resultados obtenidos de la bocina termoacústica...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 37,
+        "lines": [
+          {
+            "index": 1,
+            "text": "4. RESULTADOS."
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "En esta gráfica se muestra los resultados"
+          },
+          {
+            "index": 4,
+            "text": "obtenidos de los diferentes resultados obtenidos"
+          },
+          {
+            "index": 5,
+            "text": "de la bocina termoacústica empleando el óxido"
+          },
+          {
+            "index": 6,
+            "text": "de grafeno [figura 7 y 8]."
+          },
+          {
+            "index": 7,
+            "text": ""
+          },
+          {
+            "index": 8,
+            "text": ""
+          },
+          {
+            "index": 9,
+            "text": ""
+          },
+          {
+            "index": 10,
+            "text": ""
+          },
+          {
+            "index": 11,
+            "text": ""
+          },
+          {
+            "index": 12,
+            "text": ""
+          },
+          {
+            "index": 13,
+            "text": ""
+          },
+          {
+            "index": 14,
+            "text": ""
+          },
+          {
+            "index": 15,
+            "text": ""
+          },
+          {
+            "index": 16,
+            "text": ""
+          },
+          {
+            "index": 17,
+            "text": ""
+          },
+          {
+            "index": 18,
+            "text": "FIGURA 7. SEÑALES DE SONIDO MEDIDO MEDIANTE UN"
+          },
+          {
+            "index": 19,
+            "text": "ELECTRETE."
+          },
+          {
+            "index": 20,
+            "text": ""
+          },
+          {
+            "index": 21,
+            "text": ""
+          },
+          {
+            "index": 22,
+            "text": ""
+          },
+          {
+            "index": 23,
+            "text": ""
+          },
+          {
+            "index": 24,
+            "text": ""
+          },
+          {
+            "index": 25,
+            "text": ""
+          },
+          {
+            "index": 26,
+            "text": ""
+          },
+          {
+            "index": 27,
+            "text": ""
+          },
+          {
+            "index": 28,
+            "text": ""
+          },
+          {
+            "index": 29,
+            "text": ""
+          },
+          {
+            "index": 30,
+            "text": ""
+          },
+          {
+            "index": 31,
+            "text": ""
+          },
+          {
+            "index": 32,
+            "text": ""
+          },
+          {
+            "index": 33,
+            "text": ""
+          },
+          {
+            "index": 34,
+            "text": ""
+          },
+          {
+            "index": 35,
+            "text": ""
+          },
+          {
+            "index": 36,
+            "text": "FIGURA 8. GRÁFICA DE LA FRECUENCIA DEL EFECTO"
+          },
+          {
+            "index": 37,
+            "text": "TERMOACÚSTICO."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "4. RESULTADOS.",
+          "lineSpacingPercent": 107000,
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "4. RESULTADOS.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "En esta gráfica se muestra los resultados obtenidos de los diferentes resultados obtenidos de la bocina termoacústica empleando el óxido de grafeno [figura 7 y 8].",
+          "lineSpacingPercent": 107000,
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "En esta gráfica se muestra los resultados obtenidos de los diferentes resultados obtenidos de la bocina termoacústica empleando el óxido de grafeno [figura 7 y 8].",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 15,
+          "text": "FIGURA 7. SEÑALES DE SONIDO MEDIDO MEDIANTE UN ELECTRETE.",
+          "lineSpacingPercent": 107000,
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIGURA 7. SEÑALES DE SONIDO MEDIDO MEDIANTE UN ELECTRETE.",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 32,
+          "text": "FIGURA 8. GRÁFICA DE LA FRECUENCIA DEL EFECTO TERMOACÚSTICO.",
+          "lineSpacingPercent": 107000,
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIGURA 8. GRÁFICA DE LA FRECUENCIA DEL EFECTO TERMOACÚSTICO.",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/m5oj6h0r",
+      "id": "8",
+      "name": "CuadroTexto 7",
+      "bbox": [
+        74.69,
+        634.06,
+        1011.82,
+        772.27
+      ],
+      "geometry": "rect",
+      "text": "RESUMEN.\n\nSe presenta el uso de óxido de grafeno para generar sonido, empleando el fenómeno termoacústico,  aplicando un voltaje de polarización  entre dos electrodos  coplanares.\nLas variaciones de temperaturas son generadas por el calentamiento debido al efecto joule. Estas variaciones de la temperatura provocan cambios locales en la densidad del aire cercano al óxido de grafeno, generando ondas acústicas. Las frecuencias características del sonido  de este fenómeno siempre son el doble de la frecuencia de excitación. ",
+      "textPreview": "RESUMEN. |  | Se presenta el uso de óxido de grafeno para generar sonido, empleando el fenómeno termoacústico,  aplicando un voltaje de p...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "dk1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 14,
+        "lines": [
+          {
+            "index": 1,
+            "text": "1. RESUMEN."
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "Se presenta el uso de óxido de grafeno para"
+          },
+          {
+            "index": 4,
+            "text": "generar sonido, empleando el fenómeno"
+          },
+          {
+            "index": 5,
+            "text": "termoacústico,  aplicando un voltaje de"
+          },
+          {
+            "index": 6,
+            "text": "polarización  entre dos electrodos  coplanares."
+          },
+          {
+            "index": 7,
+            "text": "Las variaciones de temperaturas son generadas"
+          },
+          {
+            "index": 8,
+            "text": "por el calentamiento debido al efecto joule. Estas"
+          },
+          {
+            "index": 9,
+            "text": "variaciones de la temperatura provocan cambios"
+          },
+          {
+            "index": 10,
+            "text": "locales en la densidad del aire cercano al óxido"
+          },
+          {
+            "index": 11,
+            "text": "de grafeno, generando ondas acústicas. Las"
+          },
+          {
+            "index": 12,
+            "text": "frecuencias características del sonido  de este"
+          },
+          {
+            "index": 13,
+            "text": "fenómeno siempre son el doble de la frecuencia"
+          },
+          {
+            "index": 14,
+            "text": "de excitación."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "RESUMEN.",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "RESUMEN.",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "color": "bg1",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Se presenta el uso de óxido de grafeno para generar sonido, empleando el fenómeno termoacústico,  aplicando un voltaje de polarización  entre dos electrodos  coplanares.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Se presenta el uso de óxido de grafeno para generar sonido, empleando el fenómeno termoacústico, ",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            },
+            {
+              "index": 2,
+              "text": " aplicando un voltaje de polarización  entre dos electrodos ",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            },
+            {
+              "index": 3,
+              "text": " coplanares.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Las variaciones de temperaturas son generadas por el calentamiento debido al efecto joule. Estas variaciones de la temperatura provocan cambios locales en la densidad del aire cercano al óxido de grafeno, generando ondas acústicas. Las frecuencias características del sonido  de este fenómeno siempre son el doble de la frecuencia de excitación. ",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Las variaciones de temperaturas son generadas por el calentamiento debido al efecto joule. Estas variaciones de la temperatura provocan cambios locales en la densidad del aire cercano al óxido de grafeno, generando ondas acústicas. Las frecuencias características del sonido  de este fenómeno siempre son el doble de la frecuencia de excitación. ",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": {
+        "type": "theme",
+        "value": "accent1",
+        "transform": {
+          "darken": 0.25
+        }
+      },
+      "lineColor": "bg1",
+      "lineWidth": 1.33
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tgbyho7a",
+      "id": "16",
+      "name": "CuadroTexto 15",
+      "bbox": [
+        1200.1,
+        980.64,
+        1017.22,
+        3619
+      ],
+      "geometry": "rect",
+      "text": "3. DESARROLLO EXPERIMENTAL.\n\nPara fabricar las bocinas, se utilizó oxido de grafeno sintetizado mediante el método de Hummers [figura 2].\n\n\n\n\n\n\n\n\n\n\n\n\nFIGURA 2. OXIDO DE GRAFENO USADO.\n\n\nEstas fueron aplicadas en el portaobjetos para así generar una bocina termoacústica [figura 3].\n\n\n\n\n\n\n\n\n\n\n\n\nFIGURA 3. DIAGRAMA DEL ARMADO DEL CAPACITOR.\n\n\nPor consiguiente, se emplearon dos electrodos coplanares para así emplear un electrete. Adicionalmente se elaboró el siguiente circuito eléctrico [figura 4].\n\n\n\n\n\n\n\n\n\n\n\nFIGURA 4. DIAGRAMA DEL CIRCUITO DE POLARIZACIÓN DE LA PELÍCULA DE GO.\n\n\nDe esta manera se visualizaba el portaobjetos empleando el óxido de grafeno [figura 5].\n\n\n\n\n\n\n\n\n\n\nFIGURA 5. PELÍCULA DE ÓXIDO DE GRAFENO SOBRE VIDRIO PORTAOBJETOS.",
+      "textPreview": "3. DESARROLLO EXPERIMENTAL. |  | Para fabricar las bocinas, se utilizó oxido de grafeno sintetizado mediante el método de Hummers [figura...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 70,
+        "lines": [
+          {
+            "index": 1,
+            "text": "3. DESARROLLO EXPERIMENTAL."
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "Para fabricar las bocinas, se utilizó oxido de"
+          },
+          {
+            "index": 4,
+            "text": "grafeno sintetizado mediante el método de"
+          },
+          {
+            "index": 5,
+            "text": "Hummers [figura 2]."
+          },
+          {
+            "index": 6,
+            "text": ""
+          },
+          {
+            "index": 7,
+            "text": ""
+          },
+          {
+            "index": 8,
+            "text": ""
+          },
+          {
+            "index": 9,
+            "text": ""
+          },
+          {
+            "index": 10,
+            "text": ""
+          },
+          {
+            "index": 11,
+            "text": ""
+          },
+          {
+            "index": 12,
+            "text": ""
+          },
+          {
+            "index": 13,
+            "text": ""
+          },
+          {
+            "index": 14,
+            "text": ""
+          },
+          {
+            "index": 15,
+            "text": ""
+          },
+          {
+            "index": 16,
+            "text": ""
+          },
+          {
+            "index": 17,
+            "text": ""
+          },
+          {
+            "index": 18,
+            "text": "FIGURA 2. OXIDO DE GRAFENO USADO."
+          },
+          {
+            "index": 19,
+            "text": ""
+          },
+          {
+            "index": 20,
+            "text": ""
+          },
+          {
+            "index": 21,
+            "text": "Estas fueron aplicadas en el portaobjetos para"
+          },
+          {
+            "index": 22,
+            "text": "así generar una bocina termoacústica [figura 3]."
+          },
+          {
+            "index": 23,
+            "text": ""
+          },
+          {
+            "index": 24,
+            "text": ""
+          },
+          {
+            "index": 25,
+            "text": ""
+          },
+          {
+            "index": 26,
+            "text": ""
+          },
+          {
+            "index": 27,
+            "text": ""
+          },
+          {
+            "index": 28,
+            "text": ""
+          },
+          {
+            "index": 29,
+            "text": ""
+          },
+          {
+            "index": 30,
+            "text": ""
+          },
+          {
+            "index": 31,
+            "text": ""
+          },
+          {
+            "index": 32,
+            "text": ""
+          },
+          {
+            "index": 33,
+            "text": ""
+          },
+          {
+            "index": 34,
+            "text": ""
+          },
+          {
+            "index": 35,
+            "text": "FIGURA 3. DIAGRAMA DEL ARMADO DEL CAPACITOR."
+          },
+          {
+            "index": 36,
+            "text": ""
+          },
+          {
+            "index": 37,
+            "text": ""
+          },
+          {
+            "index": 38,
+            "text": "Por consiguiente, se emplearon dos electrodos"
+          },
+          {
+            "index": 39,
+            "text": "coplanares para así emplear un electrete."
+          },
+          {
+            "index": 40,
+            "text": "Adicionalmente se elaboró el siguiente circuito"
+          },
+          {
+            "index": 41,
+            "text": "eléctrico [figura 4]."
+          },
+          {
+            "index": 42,
+            "text": ""
+          },
+          {
+            "index": 43,
+            "text": ""
+          },
+          {
+            "index": 44,
+            "text": ""
+          },
+          {
+            "index": 45,
+            "text": ""
+          },
+          {
+            "index": 46,
+            "text": ""
+          },
+          {
+            "index": 47,
+            "text": ""
+          },
+          {
+            "index": 48,
+            "text": ""
+          },
+          {
+            "index": 49,
+            "text": ""
+          },
+          {
+            "index": 50,
+            "text": ""
+          },
+          {
+            "index": 51,
+            "text": ""
+          },
+          {
+            "index": 52,
+            "text": ""
+          },
+          {
+            "index": 53,
+            "text": "FIGURA 4. DIAGRAMA DEL CIRCUITO DE POLARIZACIÓN DE LA"
+          },
+          {
+            "index": 54,
+            "text": "PELÍCULA DE GO."
+          },
+          {
+            "index": 55,
+            "text": ""
+          },
+          {
+            "index": 56,
+            "text": ""
+          },
+          {
+            "index": 57,
+            "text": "De esta manera se visualizaba el portaobjetos"
+          },
+          {
+            "index": 58,
+            "text": "empleando el óxido de grafeno [figura 5]."
+          },
+          {
+            "index": 59,
+            "text": ""
+          },
+          {
+            "index": 60,
+            "text": ""
+          },
+          {
+            "index": 61,
+            "text": ""
+          },
+          {
+            "index": 62,
+            "text": ""
+          },
+          {
+            "index": 63,
+            "text": ""
+          },
+          {
+            "index": 64,
+            "text": ""
+          },
+          {
+            "index": 65,
+            "text": ""
+          },
+          {
+            "index": 66,
+            "text": ""
+          },
+          {
+            "index": 67,
+            "text": ""
+          },
+          {
+            "index": 68,
+            "text": ""
+          },
+          {
+            "index": 69,
+            "text": "FIGURA 5. PELÍCULA DE ÓXIDO DE GRAFENO SOBRE VIDRIO"
+          },
+          {
+            "index": 70,
+            "text": "PORTAOBJETOS."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "3. DESARROLLO EXPERIMENTAL.",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3. DESARROLLO EXPERIMENTAL.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Para fabricar las bocinas, se utilizó oxido de grafeno sintetizado mediante el método de Hummers [figura 2].",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Para fabricar las bocinas, se utilizó oxido de grafeno sintetizado mediante el método de ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": "Hummers",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 3,
+              "text": " [figura 2].",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 16,
+          "text": "FIGURA 2. OXIDO DE GRAFENO USADO.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIGURA 2. OXIDO DE GRAFENO USADO.",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 19,
+          "text": "Estas fueron aplicadas en el portaobjetos para así generar una bocina termoacústica [figura 3].",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Estas fueron aplicadas en el portaobjetos para así generar una bocina termoacústica [figura 3].",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 32,
+          "text": "FIGURA 3. DIAGRAMA DEL ARMADO DEL CAPACITOR.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIGURA 3. DIAGRAMA DEL ARMADO DEL CAPACITOR.",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 35,
+          "text": "Por consiguiente, se emplearon dos electrodos coplanares para así emplear un electrete. Adicionalmente se elaboró el siguiente circuito eléctrico [figura 4].",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Por consiguiente, se emplearon ",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            },
+            {
+              "index": 2,
+              "text": "d",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 3,
+              "text": "os electrodos coplanares para así emplear un",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            },
+            {
+              "index": 4,
+              "text": " ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 5,
+              "text": "electrete",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            },
+            {
+              "index": 6,
+              "text": ". ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 7,
+              "text": "Adicionalmente se elaboró el siguiente circuito eléctrico [figura 4].",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 47,
+          "text": "FIGURA 4. DIAGRAMA DEL CIRCUITO DE POLARIZACIÓN DE LA PELÍCULA DE GO.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIGURA 4",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "bold": true
+            },
+            {
+              "index": 2,
+              "text": ". DIAGRAMA DEL CIRCUITO DE POLARIZACIÓN DE LA PELÍCULA DE GO.",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 50,
+          "text": "De esta manera se visualizaba el portaobjetos empleando el óxido de grafeno [figura 5].",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "De esta manera se visualizaba el portaobjetos empleando el óxido de grafeno [figura 5].",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 61,
+          "text": "FIGURA 5. PELÍCULA DE ÓXIDO DE GRAFENO SOBRE VIDRIO PORTAOBJETOS.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIGURA 5. PELÍCULA DE ÓXIDO DE GRAFENO SOBRE VIDRIO PORTAOBJETOS.",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 14,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/cr65kned",
+      "id": "50",
+      "name": "Imagen 27",
+      "bbox": [
+        1184.39,
+        2263.71,
+        1041.91,
+        501
+      ],
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0,
+        "top": 0.08114,
+        "right": 0,
+        "bottom": 0.08776
+      },
+      "asset": {
+        "assetId": "/ppt/media/image3.png",
+        "contentType": "image/png",
+        "byteLength": 57199
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image3.png",
+        "contentType": "image/png",
+        "byteLength": 57199
+      }
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fitgjypg",
+      "id": "18",
+      "name": "CuadroTexto 17",
+      "bbox": [
+        74.69,
+        1725.59,
+        1002.33,
+        1859.33
+      ],
+      "geometry": "rect",
+      "text": "EL EFECTO TERMOACÚSTICO.\n\nEl efecto termoacústico se puede generar empleando un conductor muy delgado con capacidad calorífica muy pequeña, cuando se aplica corriente alterna. El paso de la coriente por el conductor lo calienta debido al efecto Juole,  provocando cambios de temperatura en sus vecindades, generando variaciones en densidad aire circundante, generando sonido. \n\nDe acuerdo con la dirección de la conversión de energía, los efectos termoacústicos se dividen en dos sentidos: producción de sonido en un fluido por gradientes térmicos en la pared sólida en contacto y producción de gradientes térmicos en la pared por el sonido en el fluido [1,2].\n\n\n\n\n\n\n\n\n\nFIGURA 1. DIAGRAMA ACERCA DEL FUNCIONAMIENTO DEL EFECTO TERMOACÚSTICO.\n\nCuando se suministra una corriente alterna de la forma , el efecto de calentamiento es proporcional a la potencia eléctrica (ecuación 1) a, \n          (1)",
+      "textPreview": "EL EFECTO TERMOACÚSTICO. |  | El efecto termoacústico se puede generar empleando un conductor muy delgado con capacidad calorífica muy pe...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 34,
+        "lines": [
+          {
+            "index": 1,
+            "text": "EL EFECTO TERMOACÚSTICO."
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "El efecto termoacústico se puede generar"
+          },
+          {
+            "index": 4,
+            "text": "empleando un conductor muy delgado con"
+          },
+          {
+            "index": 5,
+            "text": "capacidad calorífica muy pequeña, cuando se"
+          },
+          {
+            "index": 6,
+            "text": "aplica corriente alterna. El paso de la coriente"
+          },
+          {
+            "index": 7,
+            "text": "por el conductor lo calienta debido al efecto"
+          },
+          {
+            "index": 8,
+            "text": "Juole,  provocando cambios de temperatura en"
+          },
+          {
+            "index": 9,
+            "text": "sus vecindades, generando variaciones en"
+          },
+          {
+            "index": 10,
+            "text": "densidad aire circundante, generando sonido."
+          },
+          {
+            "index": 11,
+            "text": ""
+          },
+          {
+            "index": 12,
+            "text": "De acuerdo con la dirección de la conversión de"
+          },
+          {
+            "index": 13,
+            "text": "energía, los efectos termoacústicos se dividen"
+          },
+          {
+            "index": 14,
+            "text": "en dos sentidos: producción de sonido en un"
+          },
+          {
+            "index": 15,
+            "text": "fluido por gradientes térmicos en la pared sólida"
+          },
+          {
+            "index": 16,
+            "text": "en contacto y producción de gradientes térmicos"
+          },
+          {
+            "index": 17,
+            "text": "en la pared por el sonido en el fluido [1,2]."
+          },
+          {
+            "index": 18,
+            "text": ""
+          },
+          {
+            "index": 19,
+            "text": ""
+          },
+          {
+            "index": 20,
+            "text": ""
+          },
+          {
+            "index": 21,
+            "text": ""
+          },
+          {
+            "index": 22,
+            "text": ""
+          },
+          {
+            "index": 23,
+            "text": ""
+          },
+          {
+            "index": 24,
+            "text": ""
+          },
+          {
+            "index": 25,
+            "text": ""
+          },
+          {
+            "index": 26,
+            "text": ""
+          },
+          {
+            "index": 27,
+            "text": "FIGURA 1. DIAGRAMA ACERCA DEL FUNCIONAMIENTO DEL"
+          },
+          {
+            "index": 28,
+            "text": "EFECTO TERMOACÚSTICO."
+          },
+          {
+            "index": 29,
+            "text": ""
+          },
+          {
+            "index": 30,
+            "text": "Cuando se suministra una corriente alterna de la"
+          },
+          {
+            "index": 31,
+            "text": "forma , el efecto de calentamiento es"
+          },
+          {
+            "index": 32,
+            "text": "proporcional a la potencia eléctrica (ecuación 1)"
+          },
+          {
+            "index": 33,
+            "text": "a,"
+          },
+          {
+            "index": 34,
+            "text": "          (1)"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "EL EFECTO TERMOACÚSTICO.",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "EL EFECTO TERMOACÚSTICO.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "El efecto termoacústico se puede generar empleando un conductor muy delgado con capacidad calorífica muy pequeña, cuando se aplica corriente alterna. El paso de la coriente por el conductor lo calienta debido al efecto Juole,  provocando cambios de temperatura en sus vecindades, generando variaciones en densidad aire circundante, generando sonido. ",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "El efecto termoacústico se puede generar empleando un conductor muy delgado con capacidad calorífica muy pequeña, cuando se aplica corriente alterna",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": ". El paso de la coriente ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 3,
+              "text": "por",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 4,
+              "text": " ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 5,
+              "text": "el",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 6,
+              "text": " conductor lo calienta debido al ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 7,
+              "text": "efecto",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 8,
+              "text": " ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 9,
+              "text": "Juole",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 10,
+              "text": ",  ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 11,
+              "text": "provocando",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 12,
+              "text": " cambios de temperatura ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 13,
+              "text": "en",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 14,
+              "text": " sus ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 15,
+              "text": "vecindades, ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 16,
+              "text": "generando ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 17,
+              "text": "variaciones",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 18,
+              "text": " ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 19,
+              "text": "en",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 20,
+              "text": " ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 21,
+              "text": "densidad",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 22,
+              "text": " ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 23,
+              "text": "aire",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 24,
+              "text": " ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 25,
+              "text": "circundante",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 26,
+              "text": ", generando ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 27,
+              "text": "sonido",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 28,
+              "text": ". ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "De acuerdo con la dirección de la conversión de energía, los efectos termoacústicos se dividen en dos sentidos: producción de sonido en un fluido por gradientes térmicos en la pared sólida en contacto y producción de gradientes térmicos en la pared por el sonido en el fluido [1,2].",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "De acuerdo con la dirección de la conversión de energía, los efectos termoacústicos se dividen en dos sentidos: producción de sonido en un fluido por gradientes térmicos en la pared sólida en contacto y producción de gradientes térmicos en la pared por el sonido en el fluido [1,2].",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 15,
+          "text": "FIGURA 1. DIAGRAMA ACERCA DEL FUNCIONAMIENTO DEL EFECTO TERMOACÚSTICO.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIGURA 1. DIAGRAMA ACERCA DEL FUNCIONAMIENTO DEL EFECTO TERMOACÚSTICO.",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 17,
+          "text": "Cuando se suministra una corriente alterna de la forma , el efecto de calentamiento es proporcional a la potencia eléctrica (ecuación 1) a, ",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Cuando se suministra una corriente alterna de la forma ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": ", el efecto de calentamiento es proporcional a la potencia eléctrica (ecuación 1) a, ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 18,
+          "text": "          (1)",
+          "resolvedTextStyle": {
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "          (1)",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 16,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/dsf6tsvy",
+      "id": "51",
+      "name": "Imagen 8",
+      "bbox": [
+        93.66,
+        2717.55,
+        992.85,
+        407.88
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image5.png",
+        "contentType": "image/png",
+        "byteLength": 72239
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image5.png",
+        "contentType": "image/png",
+        "byteLength": 72239
+      }
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ja9gbep8",
+      "id": "10",
+      "name": "AutoShape 2",
+      "bbox": [
+        1716.67,
+        2472.67,
+        32,
+        32
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/d0f2dcre",
+      "id": "23",
+      "name": "CuadroTexto 22",
+      "bbox": [
+        2318.44,
+        629.73,
+        1022,
+        840.13
+      ],
+      "geometry": "rect",
+      "text": "Con ayuda del osciloscopio se obtuvieron los datos siguientes [figura 6].\n\n\n\n\n\n\n\n\n\n\n\n\nFIGURA 6. IMAGEN DE LA CAPTURA DEL OSCILOSCOPIO DEL CAPACITOR.",
+      "textPreview": "Con ayuda del osciloscopio se obtuvieron los datos siguientes [figura 6]. |  |  |  |  |  |  |  |  |  |  |  |  | FIGURA 6. IMAGEN DE LA CA...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 16,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Con ayuda del osciloscopio se obtuvieron los"
+          },
+          {
+            "index": 2,
+            "text": "datos siguientes [figura 6]."
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": ""
+          },
+          {
+            "index": 5,
+            "text": ""
+          },
+          {
+            "index": 6,
+            "text": ""
+          },
+          {
+            "index": 7,
+            "text": ""
+          },
+          {
+            "index": 8,
+            "text": ""
+          },
+          {
+            "index": 9,
+            "text": ""
+          },
+          {
+            "index": 10,
+            "text": ""
+          },
+          {
+            "index": 11,
+            "text": ""
+          },
+          {
+            "index": 12,
+            "text": ""
+          },
+          {
+            "index": 13,
+            "text": ""
+          },
+          {
+            "index": 14,
+            "text": ""
+          },
+          {
+            "index": 15,
+            "text": "FIGURA 6. IMAGEN DE LA CAPTURA DEL OSCILOSCOPIO DEL"
+          },
+          {
+            "index": 16,
+            "text": "CAPACITOR."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Con ayuda del osciloscopio se obtuvieron los datos siguientes [figura 6].",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Con ayuda del osciloscopio se obtuvieron los datos siguientes",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            },
+            {
+              "index": 2,
+              "text": " [figura 6].",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 14,
+          "text": "FIGURA 6. IMAGEN DE LA CAPTURA DEL OSCILOSCOPIO DEL CAPACITOR.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIGURA 6. IMAGEN DE LA CAPTURA DEL OSCILOSCOPIO DEL CAPACITOR.",
+              "fontSize": 32,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sf2hojqp",
+      "id": "17",
+      "name": "AutoShape 4",
+      "bbox": [
+        1732.67,
+        2488.67,
+        32,
+        32
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 20,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/qponidwn",
+      "id": "52",
+      "name": "Imagen 20",
+      "bbox": [
+        2353.07,
+        773.71,
+        950.1,
+        549.26
+      ],
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0.10102,
+        "top": 0.26197,
+        "right": 0.13377,
+        "bottom": 0.27223
+      },
+      "asset": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 1411088
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 1411088
+      }
+    },
+    {
+      "order": 21,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/rqxorid8",
+      "id": "53",
+      "name": "Imagen 5",
+      "bbox": [
+        2341.51,
+        2829.32,
+        937.73,
+        679.74
+      ],
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0.03892,
+        "top": 0.09508,
+        "right": 0.02626,
+        "bottom": 0.02773
+      },
+      "asset": {
+        "assetId": "/ppt/media/image7.png",
+        "contentType": "image/png",
+        "byteLength": 595115
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image7.png",
+        "contentType": "image/png",
+        "byteLength": 595115
+      }
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5crydo7y",
+      "id": "12",
+      "name": "CuadroTexto 11",
+      "bbox": [
+        2330.83,
+        4322.99,
+        965.24,
+        339.28
+      ],
+      "geometry": "rect",
+      "text": "6. AGRADECIMIENTOS.\n\nDamos agradecimientos a los profesores Dr. José Luis Benítez Benítez y Dr. Richart Falconi Calderón por su asesoramiento y colaboración.",
+      "textPreview": "6. AGRADECIMIENTOS. |  | Damos agradecimientos a los profesores Dr. José Luis Benítez Benítez y Dr. Richart Falconi Calderón por su aseso...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 6,
+        "lines": [
+          {
+            "index": 1,
+            "text": "6. AGRADECIMIENTOS."
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "Damos agradecimientos a los profesores Dr."
+          },
+          {
+            "index": 4,
+            "text": "José Luis Benítez Benítez y Dr. Richart Falconi"
+          },
+          {
+            "index": 5,
+            "text": "Calderón por su asesoramiento y"
+          },
+          {
+            "index": 6,
+            "text": "colaboración."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "6. AGRADECIMIENTOS.",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "6. AGRADECIMIENTOS.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Damos agradecimientos a los profesores Dr. José Luis Benítez Benítez y Dr. Richart Falconi Calderón por su asesoramiento y colaboración.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Damos agradecimientos a los profesores Dr. José Luis Benítez ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": "Benítez",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 3,
+              "text": " y Dr. ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 4,
+              "text": "Richart",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 5,
+              "text": " Falconi Calderón por su asesoramiento y colaboración.",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "bg1",
+      "lineWidth": 0
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/obm1gnax",
+      "id": "26",
+      "name": "CuadroTexto 25",
+      "bbox": [
+        74.69,
+        3658.7,
+        1011.97,
+        943.53
+      ],
+      "geometry": "rect",
+      "text": "BOCINAS TERMOACÚSTICAS.\n\nLas primeras observaciones de la producción de sonido a través del calentamiento adecuado en un sistema datan de mediados del siglo XVIII. \nDonde Rayleigh (1896) fue el primero en dar una explicación a este fenómeno.[3]\nRayleigh explicó en términos de la fase relativa de la oscilación de presión y la entrada de calor al fluido. Mencionó lo siguiente: “Si se transfiere calor al fluido en el momento de máxima presión aumentará aún más la presión y si se extrae calor en el momento de mínima presión, se disminuirá aún más la presión”, por lo que se estará aumentando la amplitud de la perturbación de presión original, es decir la onda acústica será excitada.",
+      "textPreview": "BOCINAS TERMOACÚSTICAS. |  | Las primeras observaciones de la producción de sonido a través del calentamiento adecuado en un sistema data...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 17,
+        "lines": [
+          {
+            "index": 1,
+            "text": "BOCINAS TERMOACÚSTICAS."
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "Las primeras observaciones de la producción de"
+          },
+          {
+            "index": 4,
+            "text": "sonido a través del calentamiento adecuado en"
+          },
+          {
+            "index": 5,
+            "text": "un sistema datan de mediados del siglo XVIII."
+          },
+          {
+            "index": 6,
+            "text": "Donde Rayleigh (1896) fue el primero en dar una"
+          },
+          {
+            "index": 7,
+            "text": "explicación a este fenómeno.[3]"
+          },
+          {
+            "index": 8,
+            "text": "Rayleigh explicó en términos de la fase relativa"
+          },
+          {
+            "index": 9,
+            "text": "de la oscilación de presión y la entrada de calor"
+          },
+          {
+            "index": 10,
+            "text": "al fluido. Mencionó lo siguiente: “Si se transfiere"
+          },
+          {
+            "index": 11,
+            "text": "calor al fluido en el momento de máxima presión"
+          },
+          {
+            "index": 12,
+            "text": "aumentará aún más la presión y si se extrae"
+          },
+          {
+            "index": 13,
+            "text": "calor en el momento de mínima presión, se"
+          },
+          {
+            "index": 14,
+            "text": "disminuirá aún más la presión”, por lo que se"
+          },
+          {
+            "index": 15,
+            "text": "estará aumentando la amplitud de la"
+          },
+          {
+            "index": 16,
+            "text": "perturbación de presión original, es decir la onda"
+          },
+          {
+            "index": 17,
+            "text": "acústica será excitada."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "BOCINAS TERMOACÚSTICAS.",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "BOCINAS TERMOACÚSTICAS.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "#1A1A1A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Las primeras observaciones de la producción de sonido a través del calentamiento adecuado en un sistema datan de mediados del siglo XVIII. ",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Las primeras observaciones de la producción de sonido a través del calentamiento adecuado en un sistema datan de mediados del siglo XVIII. ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Donde Rayleigh (1896) fue el primero en dar una explicación a este fenómeno.[3]",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Donde ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": "Rayleigh (1896) fue el primero en dar una explicación a este fenómeno.[3]",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "Rayleigh explicó en términos de la fase relativa de la oscilación de presión y la entrada de calor al fluido. Mencionó lo siguiente: “Si se transfiere calor al fluido en el momento de máxima presión aumentará aún más la presión y si se extrae calor en el momento de mínima presión, se disminuirá aún más la presión”, por lo que se estará aumentando la amplitud de la perturbación de presión original, es decir la onda acústica será excitada.",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Rayleigh explicó en términos de la fase relativa de la oscilación de presión y la entrada de calor al fluido. Mencionó lo siguiente: ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": "“Si se transfiere calor al fluido en el momento de máxima presión aumentará aún más la presión y si se extrae calor en el momento de mínima presión, se disminuirá aún más la presión”",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "italic": true
+            },
+            {
+              "index": 3,
+              "text": ", por lo que se estará aumentando la amplitud de la perturbación de presión original, es decir la onda acústica será excitada.",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/n6hkjm9g",
+      "id": "29",
+      "name": "CuadroTexto 28",
+      "bbox": [
+        1200.1,
+        634.13,
+        1017.22,
+        229.42
+      ],
+      "geometry": "rect",
+      "text": "El trabajo adicional de Langle en 1915 introdujo el concepto de un termófono. En lo que se considera la primera exploración teórica exhaustiva del termófono [2].",
+      "textPreview": "El trabajo adicional de Langle en 1915 introdujo el concepto de un termófono. En lo que se considera la primera exploración teórica exhau...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "El trabajo adicional de Langle en 1915 introdujo"
+          },
+          {
+            "index": 2,
+            "text": "el concepto de un termófono. En lo que se"
+          },
+          {
+            "index": 3,
+            "text": "considera la primera exploración teórica"
+          },
+          {
+            "index": 4,
+            "text": "exhaustiva del termófono [2]."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "El trabajo adicional de Langle en 1915 introdujo el concepto de un termófono. En lo que se considera la primera exploración teórica exhaustiva del termófono [2].",
+          "resolvedTextStyle": {
+            "alignment": "justify"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "El trabajo adicional de ",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 2,
+              "text": "Langle",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            },
+            {
+              "index": 3,
+              "text": " en 1915 introdujo el concepto de un termófono. En lo que se considera la primera exploración teórica exhaustiva del termófono [2].",
+              "fontSize": 45.33,
+              "typeface": "Arial"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 25,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/4n65gneh",
+      "id": "54",
+      "name": "Imagen 23",
+      "bbox": [
+        1191.06,
+        3228.19,
+        1044.27,
+        501
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image8.png",
+        "contentType": "image/png",
+        "byteLength": 87787
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image8.png",
+        "contentType": "image/png",
+        "byteLength": 87787
+      }
+    },
+    {
+      "order": 26,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/5of6psf2",
+      "id": "55",
+      "name": "Imagen 30",
+      "bbox": [
+        1539.58,
+        3746.57,
+        347.24,
+        1026.2
+      ],
+      "rotation": 270,
+      "verticalFlip": true,
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0.21461,
+        "top": 0.09278,
+        "right": 0.1672,
+        "bottom": 0.05983
+      },
+      "asset": {
+        "assetId": "/ppt/media/image9.png",
+        "contentType": "image/png",
+        "byteLength": 1725583
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image9.png",
+        "contentType": "image/png",
+        "byteLength": 1725583
+      }
+    },
+    {
+      "order": 27,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/il4nedwb",
+      "id": "56",
+      "name": "Imagen 33",
+      "bbox": [
+        2324.69,
+        1903.35,
+        971.39,
+        720.71
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image10.png",
+        "contentType": "image/png",
+        "byteLength": 99657
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image10.png",
+        "contentType": "image/png",
+        "byteLength": 99657
+      }
+    },
+    {
+      "order": 28,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/3mdonixw",
+      "id": "57",
+      "name": "Imagen 2",
+      "bbox": [
+        1472.74,
+        1337.26,
+        583.86,
+        542.45
+      ],
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0.08043,
+        "top": 0.21676,
+        "right": 0.0616,
+        "bottom": 0.22074
+      },
+      "asset": {
+        "assetId": "/ppt/media/image11.png",
+        "contentType": "image/png",
+        "byteLength": 2858483
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image11.png",
+        "contentType": "image/png",
+        "byteLength": 2858483
+      }
+    }
+  ],
+  "composeRuns": []
+}

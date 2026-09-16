@@ -1,0 +1,2626 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/y90nupkv",
+    "id": "y90nupkv",
+    "slide": 1,
+    "layoutId": "/ppt/slideLayouts/slideLayout7.xml",
+    "layoutName": "En blanco",
+    "layoutType": "blank",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 3401.5,
+      "height": 4913.33
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Tema de Office",
+    "colors": {
+      "accent1": "#4472C4",
+      "accent2": "#ED7D31",
+      "accent3": "#A5A5A5",
+      "accent4": "#FFC000",
+      "accent5": "#5B9BD5",
+      "accent6": "#70AD47",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#44546A",
+      "lt2": "#E7E6E6",
+      "hlink": "#0563C1",
+      "folHlink": "#954F72"
+    },
+    "fontScheme": {
+      "name": "Tema de Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Arial",
+      "Calibri",
+      "Calibri Light"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout7.xml",
+      "name": "En blanco",
+      "type": "blank",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/2",
+          "id": "2",
+          "name": "Date Placeholder 1",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "05/10/2023",
+          "textPreview": "05/10/2023",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "05/10/2023",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "05/10/2023"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/3",
+          "id": "3",
+          "name": "Footer Placeholder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/4",
+          "id": "4",
+          "name": "Slide Number Placeholder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "‹Nº›",
+          "textPreview": "‹Nº›",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹Nº›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹Nº›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            233.85,
+            261.59,
+            2933.79,
+            949.68
+          ],
+          "geometry": "rect",
+          "text": "Haga clic para modificar el estilo de título del patrón",
+          "textPreview": "Haga clic para modificar el estilo de título del patrón",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Haga clic para modificar el estilo de título del patrón",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Haga clic para modificar el estilo de título del patrón"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            233.85,
+            1307.95,
+            2933.79,
+            3117.46
+          ],
+          "geometry": "rect",
+          "text": "Haga clic para modificar los estilos de texto del patrón\nSegundo nivel\nTercer nivel\nCuarto nivel\nQuinto nivel",
+          "textPreview": "Haga clic para modificar los estilos de texto del patrón | Segundo nivel | Tercer nivel | Cuarto nivel | Quinto nivel",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Haga clic para modificar los estilos de texto del patrón",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Haga clic para modificar los estilos de texto del patrón"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Segundo nivel",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Segundo nivel"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Tercer nivel",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Tercer nivel"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Cuarto nivel",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Cuarto nivel"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Quinto nivel",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Quinto nivel"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Date Placeholder 3",
+          "bbox": [
+            233.85,
+            4553.93,
+            765.34,
+            261.59
+          ],
+          "geometry": "rect",
+          "text": "05/10/2023",
+          "textPreview": "05/10/2023",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "05/10/2023",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "05/10/2023"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Footer Placeholder 4",
+          "bbox": [
+            1126.75,
+            4553.93,
+            1148.01,
+            261.59
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Slide Number Placeholder 5",
+          "bbox": [
+            2402.31,
+            4553.93,
+            765.34,
+            261.59
+          ],
+          "geometry": "rect",
+          "text": "‹Nº›",
+          "textPreview": "‹Nº›",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹Nº›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹Nº›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/h072l4jy",
+      "id": "33",
+      "name": "Rectángulo 32",
+      "bbox": [
+        0,
+        0,
+        3401.5,
+        530.61
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": {
+        "type": "theme",
+        "value": "accent1",
+        "transform": {
+          "lighten": 0.4
+        }
+      },
+      "lineColor": {
+        "type": "theme",
+        "value": "accent5",
+        "transform": {
+          "lighten": 0.8
+        }
+      },
+      "lineWidth": 1.33
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/547294r6",
+      "id": "2",
+      "name": "Título 1",
+      "bbox": [
+        15.92,
+        30.93,
+        3385.58,
+        507.17
+      ],
+      "text": "Solución mesh-free de la ecuación de Helmholtz\nmediante redes neuronales físicamente informadas (PINN-SIREN)\nRoberto Hernández Estrada¹ · José Adán Hernández Nolasco¹\nIbis Ricárdez Vargas² · Óscar Andrés Flores Vargas²\n¹ División Académica de Ciencias y Tecnologías de la Información · ² División Académica de Ciencias Básicas\nUniversidad Juárez Autónoma de Tabasco · Sesión de Óptica · LXIX Congreso Nacional de Física · 15 de octubre de 2026",
+      "textPreview": "Solución mesh-free de la ecuación de Helmholtz | mediante redes neuronales físicamente informadas (PINN-SIREN) | Roberto Hernández Estrad...",
+      "resolvedFontSize": 207.87,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 207.87,
+        "typeface": "Calibri Light",
+        "color": "tx1",
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 6,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Solución mesh-free de la ecuación de Helmholtz"
+          },
+          {
+            "index": 2,
+            "text": "mediante redes neuronales físicamente informadas (PINN-SIREN)"
+          },
+          {
+            "index": 3,
+            "text": "Roberto Hernández Estrada¹ · José Adán Hernández Nolasco¹"
+          },
+          {
+            "index": 4,
+            "text": "Ibis Ricárdez Vargas² · Óscar Andrés Flores Vargas²"
+          },
+          {
+            "index": 5,
+            "text": "¹ División Académica de Ciencias y Tecnologías de la Información · ² División Académica de Ciencias Básicas"
+          },
+          {
+            "index": 6,
+            "text": "Universidad Juárez Autónoma de Tabasco · Sesión de Óptica · LXIX Congreso Nacional de Física · 15 de octubre de 2026"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Solución mesh-free de la ecuación de Helmholtz\nmediante redes neuronales físicamente informadas (PINN-SIREN)",
+          "resolvedTextStyle": {
+            "alignment": "center",
+            "autoFit": "shrinkText",
+            "autoFitScale": 0.9
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Solución mesh-free de la ecuación de Helmholtz\nmediante redes neuronales físicamente informadas (PINN-SIREN)",
+              "fontSize": 74.67,
+              "typeface": "Arial",
+              "color": "#000000",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "lineSpacingPercent": 90000
+        },
+        {
+          "index": 2,
+          "text": "Roberto Hernández Estrada¹ · José Adán Hernández Nolasco¹",
+          "resolvedTextStyle": {
+            "alignment": "center",
+            "autoFit": "shrinkText",
+            "autoFitScale": 0.9
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Roberto Hernández Estrada¹ · José Adán Hernández Nolasco¹",
+              "fontSize": 53.33,
+              "typeface": "Arial",
+              "color": "#000000",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "lineSpacingPercent": 90000
+        },
+        {
+          "index": 3,
+          "text": "Ibis Ricárdez Vargas² · Óscar Andrés Flores Vargas²",
+          "resolvedTextStyle": {
+            "alignment": "center",
+            "autoFit": "shrinkText",
+            "autoFitScale": 0.9
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ibis Ricárdez Vargas² · Óscar Andrés Flores Vargas²",
+              "fontSize": 53.33,
+              "typeface": "Arial",
+              "color": "#000000",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "lineSpacingPercent": 90000
+        },
+        {
+          "index": 4,
+          "text": "¹ División Académica de Ciencias y Tecnologías de la Información · ² División Académica de Ciencias Básicas",
+          "resolvedTextStyle": {
+            "alignment": "center",
+            "autoFit": "shrinkText",
+            "autoFitScale": 0.9
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "¹ División Académica de Ciencias y Tecnologías de la Información · ² División Académica de Ciencias Básicas",
+              "fontSize": 53.33,
+              "typeface": "Arial"
+            }
+          ],
+          "bulletCharacter": "",
+          "lineSpacingPercent": 90000
+        },
+        {
+          "index": 5,
+          "text": "Universidad Juárez Autónoma de Tabasco · Sesión de Óptica · LXIX Congreso Nacional de Física · 15 de octubre de 2026",
+          "resolvedTextStyle": {
+            "alignment": "center",
+            "autoFit": "shrinkText",
+            "autoFitScale": 0.9
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Universidad Juárez Autónoma de Tabasco · Sesión de Óptica · LXIX Congreso Nacional de Física · 15 de octubre de 2026",
+              "fontSize": 48,
+              "typeface": "Arial"
+            }
+          ],
+          "bulletCharacter": "",
+          "lineSpacingPercent": 90000
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/0vyloz2h",
+      "id": "48",
+      "name": "Imagen 4",
+      "bbox": [
+        2952.49,
+        29.41,
+        349.06,
+        448.31
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image.png",
+        "contentType": "image/png",
+        "byteLength": 39615
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image.png",
+        "contentType": "image/png",
+        "byteLength": 39615
+      }
+    },
+    {
+      "order": 4,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/1w7mxkj2",
+      "id": "49",
+      "name": "Imagen 10",
+      "bbox": [
+        84.17,
+        62.08,
+        299.83,
+        396.3
+      ],
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0.27243,
+        "top": 0,
+        "right": 0.25987,
+        "bottom": 0.37906
+      },
+      "asset": {
+        "assetId": "/ppt/media/image2.png",
+        "contentType": "image/png",
+        "byteLength": 191331
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image2.png",
+        "contentType": "image/png",
+        "byteLength": 191331
+      }
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9sfylgbq",
+      "id": "46",
+      "name": "Rectángulo 45",
+      "bbox": [
+        0,
+        515.67,
+        3401.5,
+        61.1
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": {
+        "type": "theme",
+        "value": "accent1",
+        "transform": {
+          "darken": 0.5
+        }
+      }
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/or6hcvu5",
+      "id": "47",
+      "name": "CuadroTexto 46",
+      "bbox": [
+        2324.69,
+        3710,
+        976.86,
+        570
+      ],
+      "geometry": "rect",
+      "text": "5. CONCLUSIONES.\nPINN-SIREN resuelve Helmholtz con precisión subporcentual: 0.006% en 1D y 0.171% en 2D.\nLa representación sinusoidal, el muestreo LHS y Adam + L-BFGS favorecen la convergencia del campo complejo.\nLa frontera de fase aleatoria produce speckle 2D con contraste C = 1.0253, conforme al criterio de Goodman.",
+      "textPreview": "5. CONCLUSIONES. | PINN-SIREN resuelve Helmholtz con precisión subporcentual: 0.006% en 1D y 0.171% en 2D. | La representación sinusoidal...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 9,
+        "lines": [
+          {
+            "index": 1,
+            "text": "5. CONCLUSIONES."
+          },
+          {
+            "index": 2,
+            "text": "PINN-SIREN resuelve Helmholtz con precisión"
+          },
+          {
+            "index": 3,
+            "text": "subporcentual: 0.006% en 1D y 0.171% en 2D."
+          },
+          {
+            "index": 4,
+            "text": "La representación sinusoidal, el muestreo LHS"
+          },
+          {
+            "index": 5,
+            "text": "y Adam + L-BFGS favorecen la convergencia"
+          },
+          {
+            "index": 6,
+            "text": "del campo complejo."
+          },
+          {
+            "index": 7,
+            "text": "La frontera de fase aleatoria produce speckle"
+          },
+          {
+            "index": 8,
+            "text": "2D con contraste C = 1.0253, conforme al"
+          },
+          {
+            "index": 9,
+            "text": "criterio de Goodman."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "5. CONCLUSIONES.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "5. CONCLUSIONES.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "PINN-SIREN resuelve Helmholtz con precisión subporcentual: 0.006% en 1D y 0.171% en 2D.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PINN-SIREN resuelve Helmholtz con precisión subporcentual: 0.006% en 1D y 0.171% en 2D.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "La representación sinusoidal, el muestreo LHS y Adam + L-BFGS favorecen la convergencia del campo complejo.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "La representación sinusoidal, el muestreo LHS y Adam + L-BFGS favorecen la convergencia del campo complejo.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "La frontera de fase aleatoria produce speckle 2D con contraste C = 1.0253, conforme al criterio de Goodman.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "La frontera de fase aleatoria produce speckle 2D con contraste C = 1.0253, conforme al criterio de Goodman.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": {
+        "type": "theme",
+        "value": "accent1",
+        "transform": {
+          "darken": 0.25
+        }
+      },
+      "lineColor": {
+        "type": "theme",
+        "value": "accent6",
+        "transform": {
+          "lighten": 0.8
+        }
+      },
+      "lineWidth": 1.33
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4r6dg7et",
+      "id": "14",
+      "name": "AutoShape 2",
+      "bbox": [
+        1684.67,
+        2440.58,
+        32,
+        32
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5sfepcfe",
+      "id": "15",
+      "name": "AutoShape 4",
+      "bbox": [
+        1700.67,
+        2456.58,
+        32,
+        32
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zadcv2p8",
+      "id": "22",
+      "name": "CuadroTexto 21",
+      "bbox": [
+        72.87,
+        4646.01,
+        3190.86,
+        265.6
+      ],
+      "geometry": "rect",
+      "text": "7. FUENTES CITADAS.\n[1] Raissi, M., Perdikaris, P. & Karniadakis, G. (2019). Physics-informed neural networks. Journal of Computational Physics.\n[2] Sitzmann, V. et al. (2020). Implicit neural representations with periodic activation functions. NeurIPS.\n[3] Goodman, J. W. (2007). Speckle Phenomena in Optics: Theory and Applications.\n[4] McKay, M. D., Beckman, R. J. & Conover, W. J. (1979). Latin hypercube sampling. Technometrics.",
+      "textPreview": "7. FUENTES CITADAS. | [1] Raissi, M., Perdikaris, P. & Karniadakis, G. (2019). Physics-informed neural networks. Journal of Computational...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "7. FUENTES CITADAS."
+          },
+          {
+            "index": 2,
+            "text": "[1] Raissi, M., Perdikaris, P. & Karniadakis, G. (2019). Physics-informed neural networks. Journal of Computational Physics."
+          },
+          {
+            "index": 3,
+            "text": "[2] Sitzmann, V. et al. (2020). Implicit neural representations with periodic activation functions. NeurIPS."
+          },
+          {
+            "index": 4,
+            "text": "[3] Goodman, J. W. (2007). Speckle Phenomena in Optics: Theory and Applications."
+          },
+          {
+            "index": 5,
+            "text": "[4] McKay, M. D., Beckman, R. J. & Conover, W. J. (1979). Latin hypercube sampling. Technometrics."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "7. FUENTES CITADAS.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "7. FUENTES CITADAS.",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "[1] Raissi, M., Perdikaris, P. & Karniadakis, G. (2019). Physics-informed neural networks. Journal of Computational Physics.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "[1] Raissi, M., Perdikaris, P. & Karniadakis, G. (2019). Physics-informed neural networks. Journal of Computational Physics.",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "[2] Sitzmann, V. et al. (2020). Implicit neural representations with periodic activation functions. NeurIPS.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "[2] Sitzmann, V. et al. (2020). Implicit neural representations with periodic activation functions. NeurIPS.",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "[3] Goodman, J. W. (2007). Speckle Phenomena in Optics: Theory and Applications.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "[3] Goodman, J. W. (2007). Speckle Phenomena in Optics: Theory and Applications.",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "[4] McKay, M. D., Beckman, R. J. & Conover, W. J. (1979). Latin hypercube sampling. Technometrics.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "[4] McKay, M. D., Beckman, R. J. & Conover, W. J. (1979). Latin hypercube sampling. Technometrics.",
+              "fontSize": 42.67,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sryl4zqx",
+      "id": "7",
+      "name": "CuadroTexto 6",
+      "bbox": [
+        84.17,
+        1370,
+        1002.33,
+        281.6
+      ],
+      "geometry": "rect",
+      "text": "2. OBJETIVO.\nConstruir y validar un modelo PINN-SIREN que resuelva la ecuación de Helmholtz 2D con campo complejo y reproduzca patrones de speckle óptico con alta precisión.",
+      "textPreview": "2. OBJETIVO. | Construir y validar un modelo PINN-SIREN que resuelva la ecuación de Helmholtz 2D con campo complejo y reproduzca patrones...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "2. OBJETIVO."
+          },
+          {
+            "index": 2,
+            "text": "Construir y validar un modelo PINN-SIREN que"
+          },
+          {
+            "index": 3,
+            "text": "resuelva la ecuación de Helmholtz 2D con"
+          },
+          {
+            "index": 4,
+            "text": "campo complejo y reproduzca patrones de"
+          },
+          {
+            "index": 5,
+            "text": "speckle óptico con alta precisión."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "2. OBJETIVO.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2. OBJETIVO.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Construir y validar un modelo PINN-SIREN que resuelva la ecuación de Helmholtz 2D con campo complejo y reproduzca patrones de speckle óptico con alta precisión.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Construir y validar un modelo PINN-SIREN que resuelva la ecuación de Helmholtz 2D con campo complejo y reproduzca patrones de speckle óptico con alta precisión.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7qp4be9c",
+      "id": "4",
+      "name": "CuadroTexto 3",
+      "bbox": [
+        2327.66,
+        1600,
+        992.64,
+        780
+      ],
+      "geometry": "rect",
+      "text": "4. RESULTADOS.\nEl modelo reproduce la solución analítica con alta precisión en 1D y en ambas componentes del campo complejo 2D.\nNB01 | εL² = 0.006% | R² = 1.000000.\nNB02 | εL² promedio = 0.171% | R² > 0.9999.\nLa arquitectura 5 × 128 reduce el error 2.5× frente a 5 × 64; la variación entre semillas es 0.155 ± 0.020%.\nSpeckle 2D: contraste C = 1.0253, consistente con speckle completamente desarrollado.",
+      "textPreview": "4. RESULTADOS. | El modelo reproduce la solución analítica con alta precisión en 1D y en ambas componentes del campo complejo 2D. | NB01 ...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 11,
+        "lines": [
+          {
+            "index": 1,
+            "text": "4. RESULTADOS."
+          },
+          {
+            "index": 2,
+            "text": "El modelo reproduce la solución analítica con"
+          },
+          {
+            "index": 3,
+            "text": "alta precisión en 1D y en ambas componentes"
+          },
+          {
+            "index": 4,
+            "text": "del campo complejo 2D."
+          },
+          {
+            "index": 5,
+            "text": "NB01 | εL² = 0.006% | R² = 1.000000."
+          },
+          {
+            "index": 6,
+            "text": "NB02 | εL² promedio = 0.171% | R² > 0.9999."
+          },
+          {
+            "index": 7,
+            "text": "La arquitectura 5 × 128 reduce el error 2.5×"
+          },
+          {
+            "index": 8,
+            "text": "frente a 5 × 64; la variación entre semillas es"
+          },
+          {
+            "index": 9,
+            "text": "0.155 ± 0.020%."
+          },
+          {
+            "index": 10,
+            "text": "Speckle 2D: contraste C = 1.0253, consistente"
+          },
+          {
+            "index": 11,
+            "text": "con speckle completamente desarrollado."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "4. RESULTADOS.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "4. RESULTADOS.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "El modelo reproduce la solución analítica con alta precisión en 1D y en ambas componentes del campo complejo 2D.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "El modelo reproduce la solución analítica con alta precisión en 1D y en ambas componentes del campo complejo 2D.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "NB01 | εL² = 0.006% | R² = 1.000000.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "NB01 | εL² = 0.006% | R² = 1.000000.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "NB02 | εL² promedio = 0.171% | R² > 0.9999.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "NB02 | εL² promedio = 0.171% | R² > 0.9999.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "La arquitectura 5 × 128 reduce el error 2.5× frente a 5 × 64; la variación entre semillas es 0.155 ± 0.020%.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "La arquitectura 5 × 128 reduce el error 2.5× frente a 5 × 64; la variación entre semillas es 0.155 ± 0.020%.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "Speckle 2D: contraste C = 1.0253, consistente con speckle completamente desarrollado.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Speckle 2D: contraste C = 1.0253, consistente con speckle completamente desarrollado.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fu94fe98",
+      "id": "8",
+      "name": "CuadroTexto 7",
+      "bbox": [
+        74.69,
+        634.06,
+        1011.82,
+        700
+      ],
+      "geometry": "rect",
+      "text": "1. RESUMEN.\nSe propone un modelo PINN-SIREN para resolver la ecuación de Helmholtz y acelerar la simulación de speckle óptico en dominios 2D.\nEl campo eléctrico complejo se aprende directamente desde la EDP y sus condiciones de frontera, sin construir una malla de elementos finitos.\nEl modelo alcanza εL² = 0.006% en 1D y 0.171% en 2D, ambos por debajo del umbral de tesis (< 5%).",
+      "textPreview": "1. RESUMEN. | Se propone un modelo PINN-SIREN para resolver la ecuación de Helmholtz y acelerar la simulación de speckle óptico en domini...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "dk1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 11,
+        "lines": [
+          {
+            "index": 1,
+            "text": "1. RESUMEN."
+          },
+          {
+            "index": 2,
+            "text": "Se propone un modelo PINN-SIREN para"
+          },
+          {
+            "index": 3,
+            "text": "resolver la ecuación de Helmholtz y acelerar la"
+          },
+          {
+            "index": 4,
+            "text": "simulación de speckle óptico en dominios 2D."
+          },
+          {
+            "index": 5,
+            "text": "El campo eléctrico complejo se aprende"
+          },
+          {
+            "index": 6,
+            "text": "directamente desde la EDP y sus condiciones de"
+          },
+          {
+            "index": 7,
+            "text": "frontera, sin construir una malla de elementos"
+          },
+          {
+            "index": 8,
+            "text": "finitos."
+          },
+          {
+            "index": 9,
+            "text": "El modelo alcanza εL² = 0.006% en 1D y 0.171%"
+          },
+          {
+            "index": 10,
+            "text": "en 2D, ambos por debajo del umbral de tesis (<"
+          },
+          {
+            "index": 11,
+            "text": "5%)."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "1. RESUMEN.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "1. RESUMEN.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Se propone un modelo PINN-SIREN para resolver la ecuación de Helmholtz y acelerar la simulación de speckle óptico en dominios 2D.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Se propone un modelo PINN-SIREN para resolver la ecuación de Helmholtz y acelerar la simulación de speckle óptico en dominios 2D.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "El campo eléctrico complejo se aprende directamente desde la EDP y sus condiciones de frontera, sin construir una malla de elementos finitos.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "El campo eléctrico complejo se aprende directamente desde la EDP y sus condiciones de frontera, sin construir una malla de elementos finitos.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "El modelo alcanza εL² = 0.006% en 1D y 0.171% en 2D, ambos por debajo del umbral de tesis (< 5%).",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "El modelo alcanza εL² = 0.006% en 1D y 0.171% en 2D, ambos por debajo del umbral de tesis (< 5%).",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "bg1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": {
+        "type": "theme",
+        "value": "accent1",
+        "transform": {
+          "darken": 0.25
+        }
+      },
+      "lineColor": "bg1",
+      "lineWidth": 1.33
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ipovexwn",
+      "id": "16",
+      "name": "CuadroTexto 15",
+      "bbox": [
+        1200.1,
+        920,
+        1017.22,
+        760
+      ],
+      "geometry": "rect",
+      "text": "3. METODOLOGÍA.\n1. NB01 — Validación 1D: SIREN 5 × 64 contra E(x) = cos(kx).\n2. NB02 — Validación 2D: SIREN 5 × 128, salida (Ereal, Eimag), LHS con Nc = 3,000 y Nb = 300 por borde.\n3. NB03 — Speckle 2D: frontera E(x,0) = e^{iψ(x)}, ψ ~ U(0, 2π), con bordes libres.\nOptimización bifásica Adam + L-BFGS; λfis = 0.1; evaluación en malla 100 × 100.\nLas figuras muestran la validación analítica 1D y la aplicación 2D al patrón de speckle.",
+      "textPreview": "3. METODOLOGÍA. | 1. NB01 — Validación 1D: SIREN 5 × 64 contra E(x) = cos(kx). | 2. NB02 — Validación 2D: SIREN 5 × 128, salida (Ereal, E...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 12,
+        "lines": [
+          {
+            "index": 1,
+            "text": "3. METODOLOGÍA."
+          },
+          {
+            "index": 2,
+            "text": "1. NB01 — Validación 1D: SIREN 5 × 64 contra"
+          },
+          {
+            "index": 3,
+            "text": "E(x) = cos(kx)."
+          },
+          {
+            "index": 4,
+            "text": "2. NB02 — Validación 2D: SIREN 5 × 128, salida"
+          },
+          {
+            "index": 5,
+            "text": "(Ereal, Eimag), LHS con Nc = 3,000 y Nb = 300"
+          },
+          {
+            "index": 6,
+            "text": "por borde."
+          },
+          {
+            "index": 7,
+            "text": "3. NB03 — Speckle 2D: frontera E(x,0) ="
+          },
+          {
+            "index": 8,
+            "text": "e^{iψ(x)}, ψ ~ U(0, 2π), con bordes libres."
+          },
+          {
+            "index": 9,
+            "text": "Optimización bifásica Adam + L-BFGS; λfis = 0.1;"
+          },
+          {
+            "index": 10,
+            "text": "evaluación en malla 100 × 100."
+          },
+          {
+            "index": 11,
+            "text": "Las figuras muestran la validación analítica 1D y"
+          },
+          {
+            "index": 12,
+            "text": "la aplicación 2D al patrón de speckle."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "3. METODOLOGÍA.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3. METODOLOGÍA.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "1. NB01 — Validación 1D: SIREN 5 × 64 contra E(x) = cos(kx).",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "1. NB01 — Validación 1D: SIREN 5 × 64 contra E(x) = cos(kx).",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "2. NB02 — Validación 2D: SIREN 5 × 128, salida (Ereal, Eimag), LHS con Nc = 3,000 y Nb = 300 por borde.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2. NB02 — Validación 2D: SIREN 5 × 128, salida (Ereal, Eimag), LHS con Nc = 3,000 y Nb = 300 por borde.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "3. NB03 — Speckle 2D: frontera E(x,0) = e^{iψ(x)}, ψ ~ U(0, 2π), con bordes libres.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3. NB03 — Speckle 2D: frontera E(x,0) = e^{iψ(x)}, ψ ~ U(0, 2π), con bordes libres.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "Optimización bifásica Adam + L-BFGS; λfis = 0.1; evaluación en malla 100 × 100.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Optimización bifásica Adam + L-BFGS; λfis = 0.1; evaluación en malla 100 × 100.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "Las figuras muestran la validación analítica 1D y la aplicación 2D al patrón de speckle.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Las figuras muestran la validación analítica 1D y la aplicación 2D al patrón de speckle.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 14,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/v2tw3ipg",
+      "id": "50",
+      "name": "Imagen 27",
+      "bbox": [
+        1190,
+        1810,
+        1025,
+        490
+      ],
+      "rotation": 0,
+      "alt": "Validación PINN-SIREN 1D frente a la solución analítica",
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "/ppt/media/image3.png",
+        "contentType": "image/png",
+        "byteLength": 211601
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image3.png",
+        "contentType": "image/png",
+        "byteLength": 211601
+      }
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sfqdkrep",
+      "id": "18",
+      "name": "CuadroTexto 17",
+      "bbox": [
+        74.69,
+        1710,
+        1002.33,
+        770
+      ],
+      "geometry": "rect",
+      "text": "PROBLEMA FÍSICO.\nEl speckle óptico surge por la interferencia de luz coherente dispersada. Su simulación exige resolver campos oscilatorios con gran resolución espacial.\nLos métodos basados en malla pueden ser costosos para estudios con muchas realizaciones. Las PINNs imponen la EDP en puntos de colocación y SIREN representa mejor las oscilaciones.",
+      "textPreview": "PROBLEMA FÍSICO. | El speckle óptico surge por la interferencia de luz coherente dispersada. Su simulación exige resolver campos oscilato...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 10,
+        "lines": [
+          {
+            "index": 1,
+            "text": "PROBLEMA FÍSICO."
+          },
+          {
+            "index": 2,
+            "text": "El speckle óptico surge por la interferencia de"
+          },
+          {
+            "index": 3,
+            "text": "luz coherente dispersada. Su simulación exige"
+          },
+          {
+            "index": 4,
+            "text": "resolver campos oscilatorios con gran resolución"
+          },
+          {
+            "index": 5,
+            "text": "espacial."
+          },
+          {
+            "index": 6,
+            "text": "Los métodos basados en malla pueden ser"
+          },
+          {
+            "index": 7,
+            "text": "costosos para estudios con muchas"
+          },
+          {
+            "index": 8,
+            "text": "realizaciones. Las PINNs imponen la EDP en"
+          },
+          {
+            "index": 9,
+            "text": "puntos de colocación y SIREN representa mejor"
+          },
+          {
+            "index": 10,
+            "text": "las oscilaciones."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "PROBLEMA FÍSICO.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PROBLEMA FÍSICO.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "El speckle óptico surge por la interferencia de luz coherente dispersada. Su simulación exige resolver campos oscilatorios con gran resolución espacial.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "El speckle óptico surge por la interferencia de luz coherente dispersada. Su simulación exige resolver campos oscilatorios con gran resolución espacial.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Los métodos basados en malla pueden ser costosos para estudios con muchas realizaciones. Las PINNs imponen la EDP en puntos de colocación y SIREN representa mejor las oscilaciones.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Los métodos basados en malla pueden ser costosos para estudios con muchas realizaciones. Las PINNs imponen la EDP en puntos de colocación y SIREN representa mejor las oscilaciones.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 16,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/a1kfad8b",
+      "id": "51",
+      "name": "Imagen 8",
+      "bbox": [
+        90,
+        2500,
+        980,
+        420
+      ],
+      "rotation": 0,
+      "alt": "Métricas adicionales de entrenamiento NB01",
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "/ppt/media/image4.png",
+        "contentType": "image/png",
+        "byteLength": 122253
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image4.png",
+        "contentType": "image/png",
+        "byteLength": 122253
+      }
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wn6dc7eh",
+      "id": "10",
+      "name": "AutoShape 2",
+      "bbox": [
+        1716.67,
+        2472.67,
+        32,
+        32
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e94v2hon",
+      "id": "23",
+      "name": "CuadroTexto 22",
+      "bbox": [
+        2318.44,
+        629.73,
+        1022,
+        250
+      ],
+      "geometry": "rect",
+      "text": "VALIDACIÓN 2D.\nOnda plana compleja en Ω = [0,1]²; se comparan Ereal y Eimag con la solución analítica. La diferencia visual es mínima.",
+      "textPreview": "VALIDACIÓN 2D. | Onda plana compleja en Ω = [0,1]²; se comparan Ereal y Eimag con la solución analítica. La diferencia visual es mínima.",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "VALIDACIÓN 2D."
+          },
+          {
+            "index": 2,
+            "text": "Onda plana compleja en Ω = [0,1]²; se comparan"
+          },
+          {
+            "index": 3,
+            "text": "Ereal y Eimag con la solución analítica. La"
+          },
+          {
+            "index": 4,
+            "text": "diferencia visual es mínima."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "VALIDACIÓN 2D.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "VALIDACIÓN 2D.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Onda plana compleja en Ω = [0,1]²; se comparan Ereal y Eimag con la solución analítica. La diferencia visual es mínima.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Onda plana compleja en Ω = [0,1]²; se comparan Ereal y Eimag con la solución analítica. La diferencia visual es mínima.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3qxwn2x8",
+      "id": "17",
+      "name": "AutoShape 4",
+      "bbox": [
+        1732.67,
+        2488.67,
+        32,
+        32
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 20,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/h4by5s7m",
+      "id": "52",
+      "name": "Imagen 20",
+      "bbox": [
+        2340,
+        920,
+        980,
+        610
+      ],
+      "rotation": 0,
+      "alt": "Validación PINN-SIREN 2D para el campo complejo",
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "/ppt/media/image5.png",
+        "contentType": "image/png",
+        "byteLength": 394790
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image5.png",
+        "contentType": "image/png",
+        "byteLength": 394790
+      }
+    },
+    {
+      "order": 21,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/w32xcnq1",
+      "id": "53",
+      "name": "Imagen 5",
+      "bbox": [
+        2340,
+        3150,
+        980,
+        520
+      ],
+      "rotation": 0,
+      "alt": "Métricas adicionales y mapas de error NB02",
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 205005
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 205005
+      }
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ul4vaxgb",
+      "id": "12",
+      "name": "CuadroTexto 11",
+      "bbox": [
+        2330.83,
+        4320,
+        965.24,
+        270
+      ],
+      "geometry": "rect",
+      "text": "6. AGRADECIMIENTOS.\nAgradecemos al Dr. José Adán Hernández Nolasco por la dirección de este trabajo y a la UJAT por el apoyo académico.",
+      "textPreview": "6. AGRADECIMIENTOS. | Agradecemos al Dr. José Adán Hernández Nolasco por la dirección de este trabajo y a la UJAT por el apoyo académico.",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "6. AGRADECIMIENTOS."
+          },
+          {
+            "index": 2,
+            "text": "Agradecemos al Dr. José Adán Hernández"
+          },
+          {
+            "index": 3,
+            "text": "Nolasco por la dirección de este trabajo y a la"
+          },
+          {
+            "index": 4,
+            "text": "UJAT por el apoyo académico."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "6. AGRADECIMIENTOS.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "6. AGRADECIMIENTOS.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Agradecemos al Dr. José Adán Hernández Nolasco por la dirección de este trabajo y a la UJAT por el apoyo académico.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Agradecemos al Dr. José Adán Hernández Nolasco por la dirección de este trabajo y a la UJAT por el apoyo académico.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "bg1",
+      "lineWidth": 0
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nydczmpk",
+      "id": "26",
+      "name": "CuadroTexto 25",
+      "bbox": [
+        74.69,
+        3000,
+        1011.97,
+        720
+      ],
+      "geometry": "rect",
+      "text": "ALCANCE DEL ESTUDIO.\n• Casos 1D y 2D; el desarrollo 3D queda fuera del alcance.\n• Dominio normalizado Ω = [0,1]², k = 2π y campo complejo en 2D.\n• Validación analítica mediante error L² y evaluación estadística del speckle.",
+      "textPreview": "ALCANCE DEL ESTUDIO. | • Casos 1D y 2D; el desarrollo 3D queda fuera del alcance. | • Dominio normalizado Ω = [0,1]², k = 2π y campo comp...",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 7,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ALCANCE DEL ESTUDIO."
+          },
+          {
+            "index": 2,
+            "text": "• Casos 1D y 2D; el desarrollo 3D queda fuera"
+          },
+          {
+            "index": 3,
+            "text": "del alcance."
+          },
+          {
+            "index": 4,
+            "text": "• Dominio normalizado Ω = [0,1]², k = 2π y"
+          },
+          {
+            "index": 5,
+            "text": "campo complejo en 2D."
+          },
+          {
+            "index": 6,
+            "text": "• Validación analítica mediante error L² y"
+          },
+          {
+            "index": 7,
+            "text": "evaluación estadística del speckle."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "ALCANCE DEL ESTUDIO.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ALCANCE DEL ESTUDIO.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "• Casos 1D y 2D; el desarrollo 3D queda fuera del alcance.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Casos 1D y 2D; el desarrollo 3D queda fuera del alcance.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "• Dominio normalizado Ω = [0,1]², k = 2π y campo complejo en 2D.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Dominio normalizado Ω = [0,1]², k = 2π y campo complejo en 2D.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "• Validación analítica mediante error L² y evaluación estadística del speckle.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Validación analítica mediante error L² y evaluación estadística del speckle.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/432dwn6l",
+      "id": "29",
+      "name": "CuadroTexto 28",
+      "bbox": [
+        1200.1,
+        634.13,
+        1017.22,
+        240
+      ],
+      "geometry": "rect",
+      "text": "FORMULACIÓN.\nHelmholtz: ∇²E + k²E = 0.\n1D: E(x) = cos(kx).  2D: E(x,y) = e^{i(kₓx + kᵧy)}.",
+      "textPreview": "FORMULACIÓN. | Helmholtz: ∇²E + k²E = 0. | 1D: E(x) = cos(kx).  2D: E(x,y) = e^{i(kₓx + kᵧy)}.",
+      "resolvedFontSize": 85.04,
+      "resolvedTextStyle": {
+        "fontSize": 85.04,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FORMULACIÓN."
+          },
+          {
+            "index": 2,
+            "text": "Helmholtz: ∇²E + k²E = 0."
+          },
+          {
+            "index": 3,
+            "text": "1D: E(x) = cos(kx).  2D: E(x,y) = e^{i(kₓx + kᵧy)}."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FORMULACIÓN.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FORMULACIÓN.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Helmholtz: ∇²E + k²E = 0.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Helmholtz: ∇²E + k²E = 0.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "1D: E(x) = cos(kx).  2D: E(x,y) = e^{i(kₓx + kᵧy)}.",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "1D: E(x) = cos(kx).  2D: E(x,y) = e^{i(kₓx + kᵧy)}.",
+              "fontSize": 45.33,
+              "typeface": "Arial",
+              "color": "tx1"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 25,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/j6tg72ps",
+      "id": "54",
+      "name": "Imagen 23",
+      "bbox": [
+        1190,
+        3000,
+        1025,
+        490
+      ],
+      "rotation": 0,
+      "alt": "Patrón de speckle óptico simulado en 2D",
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "/ppt/media/image7.png",
+        "contentType": "image/png",
+        "byteLength": 463270
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image7.png",
+        "contentType": "image/png",
+        "byteLength": 463270
+      }
+    },
+    {
+      "order": 26,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/58vy9s7y",
+      "id": "56",
+      "name": "Imagen 33",
+      "bbox": [
+        2340,
+        2500,
+        980,
+        550
+      ],
+      "rotation": 0,
+      "alt": "Validación estadística del speckle óptico",
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "/ppt/media/image9.png",
+        "contentType": "image/png",
+        "byteLength": 461961
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image9.png",
+        "contentType": "image/png",
+        "byteLength": 461961
+      }
+    }
+  ],
+  "composeRuns": []
+}
