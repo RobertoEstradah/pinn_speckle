@@ -42,6 +42,8 @@ N_Z_EVAL = int(os.environ.get("NB02B_N_Z_EVAL", 301))
 N_X_EVAL = int(os.environ.get("NB02B_N_X_EVAL", 512))
 LEARNING_RATE = float(os.environ.get("NB02B_LR", 2e-4))
 GRAD_CLIP = float(os.environ.get("NB02B_GRAD_CLIP", 1.0))
+OPTIMIZER_NAME = os.environ.get("NB02B_OPTIMIZER", "adam").strip().lower()
+LBFGS_INNER_ITER = int(os.environ.get("NB02B_LBFGS_INNER_ITER", 20))
 CASE_COUNTS = tuple(
     int(value.strip())
     for value in os.environ.get("NB02B_CASE_COUNTS", "1,5,41").split(",")
@@ -300,12 +302,33 @@ def train_case(count: int, device: torch.device) -> tuple[dict, dict[str, np.nda
     residual_scale = torch.tensor(
         (K**2 * modal_scale).astype(np.float32), device=device
     ).reshape(1, -1, 1)
-    optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer,
-        T_max=max(EPOCHS, 1),
-        eta_min=LEARNING_RATE * 0.02,
-    )
+    if OPTIMIZER_NAME == "adam":
+        optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+            optimizer,
+            T_max=max(EPOCHS, 1),
+            eta_min=LEARNING_RATE * 0.02,
+        )
+        fixed_z = None
+    elif OPTIMIZER_NAME == "lbfgs":
+        optimizer = torch.optim.LBFGS(
+            model.parameters(),
+            lr=1.0,
+            max_iter=LBFGS_INNER_ITER,
+            max_eval=LBFGS_INNER_ITER + 5,
+            history_size=100,
+            tolerance_grad=1e-10,
+            tolerance_change=1e-12,
+            line_search_fn="strong_wolfe",
+        )
+        scheduler = None
+        fixed_z = torch.tensor(
+            (np.arange(N_Z_TRAIN) + 0.5) / N_Z_TRAIN * DISTANCE_LAMBDA,
+            dtype=torch.float32,
+            device=device,
+        ).reshape(-1, 1)
+    else:
+        raise ValueError("NB02B_OPTIMIZER debe ser 'adam' o 'lbfgs'.")
     best_loss = float("inf")
     best_state = None
     loss_history = []
@@ -313,23 +336,43 @@ def train_case(count: int, device: torch.device) -> tuple[dict, dict[str, np.nda
 
     print(f"Caso controlado: {count} modo(s) complejos")
     for epoch in range(EPOCHS):
-        z = torch.tensor(
-            rng.uniform(0.0, DISTANCE_LAMBDA, (N_Z_TRAIN, 1)),
-            dtype=torch.float32,
-            device=device,
-        )
-        optimizer.zero_grad()
-        residual = nb03.modal_residual(model, z, kz_squared)
-        loss = torch.mean((residual / residual_scale).square())
-        if not torch.isfinite(loss):
-            raise FloatingPointError(
-                f"Perdida no finita para {count} modos en epoca {epoch}."
+        if OPTIMIZER_NAME == "adam":
+            z = torch.tensor(
+                rng.uniform(0.0, DISTANCE_LAMBDA, (N_Z_TRAIN, 1)),
+                dtype=torch.float32,
+                device=device,
             )
-        loss.backward()
-        if GRAD_CLIP > 0:
-            torch.nn.utils.clip_grad_norm_(model.parameters(), GRAD_CLIP)
-        optimizer.step()
-        scheduler.step()
+            optimizer.zero_grad()
+            residual = nb03.modal_residual(model, z, kz_squared)
+            loss = torch.mean((residual / residual_scale).square())
+            if not torch.isfinite(loss):
+                raise FloatingPointError(
+                    f"Perdida no finita para {count} modos en epoca {epoch}."
+                )
+            loss.backward()
+            if GRAD_CLIP > 0:
+                torch.nn.utils.clip_grad_norm_(model.parameters(), GRAD_CLIP)
+            optimizer.step()
+            scheduler.step()
+        else:
+            def closure():
+                optimizer.zero_grad(set_to_none=True)
+                residual_value = nb03.modal_residual(
+                    model, fixed_z, kz_squared
+                )
+                objective = torch.mean(
+                    (residual_value / residual_scale).square()
+                )
+                if not torch.isfinite(objective):
+                    raise FloatingPointError(
+                        f"Perdida no finita para {count} modos en paso {epoch}."
+                    )
+                objective.backward()
+                return objective
+
+            optimizer.step(closure)
+            residual = nb03.modal_residual(model, fixed_z, kz_squared)
+            loss = torch.mean((residual / residual_scale).square())
 
         value = float(loss.detach().cpu())
         loss_history.append(value)
@@ -360,6 +403,7 @@ def train_case(count: int, device: torch.device) -> tuple[dict, dict[str, np.nda
         "stage_epochs": EPOCHS,
         "cumulative_recorded_epochs": int(arrays["loss_history"].size),
         "resumed_from": resumed_from,
+        "optimizer": OPTIMIZER_NAME,
         "best_training_loss": best_loss,
         "metrics": metrics,
         "acceptance": {
@@ -534,7 +578,11 @@ def main() -> None:
             "n_z_per_epoch": N_Z_TRAIN,
             "learning_rate": LEARNING_RATE,
             "gradient_clip": GRAD_CLIP,
-            "optimizer": "Adam with cosine annealing",
+            "optimizer": (
+                "Adam with cosine annealing"
+                if OPTIMIZER_NAME == "adam"
+                else f"L-BFGS strong Wolfe; {LBFGS_INNER_ITER} inner iterations"
+            ),
             "resume_existing_checkpoints": RESUME_EXISTING,
         },
         "acceptance_criteria": {

@@ -124,3 +124,8 @@ limpiar_historial.sh
 # Mismo criterio que la vista previa de Born y Wolf: se conserva en disco para
 # consulta y se excluye del repositorio publico.
 master_supporting_docs/supporting_papers/referencias/Goodman_2020_SpecklePhenomena_2ed_SPIE_Muestra.pdf
+
+# NB02B: campos crudos del puente modal (~9.8 MB). Regenerables en <1 min con
+# FORCE_RETRAIN=True en notebooks/02b_...ipynb. Las metricas (summary.json) y
+# las figuras si se rastrean.
+results/nb02b_modal_bridge/*.npz
