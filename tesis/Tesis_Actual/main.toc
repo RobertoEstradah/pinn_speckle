@@ -58,15 +58,16 @@
 \contentsline {section}{\numberline {4.4}NB03: Simulación de speckle óptico}{37}{section.4.4}%
 \contentsline {subsection}{\numberline {4.4.1}Diagnóstico del planteamiento: por qué la formulación directa no extiende}{37}{subsection.4.4.1}%
 \contentsline {subsection}{\numberline {4.4.2}Experimento puente: aislamiento del planteamiento}{37}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Formulación modal adoptada}{38}{subsection.4.4.3}%
-\contentsline {subsection}{\numberline {4.4.4}Verificación de la referencia}{39}{subsection.4.4.4}%
-\contentsline {subsection}{\numberline {4.4.5}Calibración de $\omega _0$ en el régimen modal}{40}{subsection.4.4.5}%
-\contentsline {subsection}{\numberline {4.4.6}Resultados en $\tilde z=1\lambda $}{41}{subsection.4.4.6}%
-\contentsline {subsection}{\numberline {4.4.7}Dependencia del piso evanescente con la distancia}{41}{subsection.4.4.7}%
-\contentsline {subsection}{\numberline {4.4.8}Criterio estadístico: conjunto frente a realización individual}{43}{subsection.4.4.8}%
-\contentsline {subsection}{\numberline {4.4.9}Ensayo de extensión a $\tilde z=2\lambda $: resultado negativo}{45}{subsection.4.4.9}%
-\contentsline {subsection}{\numberline {4.4.10}Tiempo de inferencia frente a la referencia de propagación}{45}{subsection.4.4.10}%
-\contentsline {subsection}{\numberline {4.4.11}Limitaciones del método}{47}{subsection.4.4.11}%
-\contentsline {section}{\numberline {4.5}Contexto en la literatura}{48}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{49}{section.4.6}%
-\contentsline {chapter}{Bibliografía}{50}{table.caption.48}%
+\contentsline {subsection}{\numberline {4.4.3}Validación de la arquitectura modal contra solución exacta}{38}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Formulación modal adoptada}{40}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Verificación de la referencia}{41}{subsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.4.6}Calibración de $\omega _0$ en el régimen modal}{42}{subsection.4.4.6}%
+\contentsline {subsection}{\numberline {4.4.7}Resultados en $\tilde z=1\lambda $}{43}{subsection.4.4.7}%
+\contentsline {subsection}{\numberline {4.4.8}Dependencia del piso evanescente con la distancia}{43}{subsection.4.4.8}%
+\contentsline {subsection}{\numberline {4.4.9}Criterio estadístico: conjunto frente a realización individual}{45}{subsection.4.4.9}%
+\contentsline {subsection}{\numberline {4.4.10}Ensayo de extensión a $\tilde z=2\lambda $: resultado negativo}{46}{subsection.4.4.10}%
+\contentsline {subsection}{\numberline {4.4.11}Tiempo de inferencia frente a la referencia de propagación}{47}{subsection.4.4.11}%
+\contentsline {subsection}{\numberline {4.4.12}Limitaciones del método}{48}{subsection.4.4.12}%
+\contentsline {section}{\numberline {4.5}Contexto en la literatura}{49}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{50}{section.4.6}%
+\contentsline {chapter}{Bibliografía}{52}{table.caption.50}%

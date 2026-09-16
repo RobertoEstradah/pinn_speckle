@@ -585,6 +585,93 @@ diseño aísla el planteamiento del problema (contraste A frente a B), pero no
 separa la contribución del truncamiento espectral de la de la imposición dura
 (contraste B frente a C).
 
+\subsection{Validación de la arquitectura modal contra solución exacta}
+\label{sec:nb02b_arquitectura}
+
+El experimento anterior aísla el planteamiento del problema, pero lo hace con
+una red distinta de la que se emplea en NB03. Queda por comprobar que la
+arquitectura concreta que se usará --con su condición de Cauchy dura, su base
+truncada y su ausencia de término de datos-- reproduce una solución conocida
+antes de exponerla a una pantalla aleatoria, donde ya no hay solución exacta
+contra la cual medir.
+
+La prueba importa la clase \texttt{ModalSiren} de NB03 sin modificarla y
+sustituye la pantalla de fase por una superposición de ondas planas
+\begin{equation}
+    E(\tilde x,\tilde z)=\sum_m A_m\,
+    e^{\,i\left(k_{x,m}\tilde x + k_{z,m}\tilde z\right)},
+    \qquad k_{z,m}=\sqrt{k^{2}-k_{x,m}^{2}},
+    \label{eq:campo_nb02b_arq}
+\end{equation}
+que satisface Helmholtz de forma exacta sobre el mismo dominio de NB03,
+$[-10,10]\times[0,1]$ en $(\tilde x,\tilde z)$ con $k=2\pi$. La condición de
+Cauchy dura impone $a_m'(0)=i\,k_{z,m}\,a_m(0)$, que es la condición de onda
+saliente, de modo que la solución de referencia contiene únicamente
+propagación hacia $+\tilde z$. No se emplean etiquetas interiores: la solución
+analítica se reserva por completo para la evaluación posterior. Se recorren
+tres tamaños de base --$1$, $5$ y $41$ modos-- para comprobar que el
+comportamiento no depende de haber ajustado la red a un número concreto de
+salidas.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Arquitectura modal de NB03 frente a una solución analítica exacta.}
+\label{tab:nb02b_arquitectura}
+\begin{tabular}{lcccc}
+\toprule
+Modos & $L^2$ global & $L^2$ en $\tilde z=1\lambda$ & Residuo de Helmholtz & Cauchy: $a_m'(0)$ \\
+\midrule
+1  & 0.0149\% & 0.0030\% & $1.74\times10^{-3}$ & $1.7\times10^{-7}$ \\
+5  & 0.0112\% & 0.0070\% & $1.55\times10^{-3}$ & $6.7\times10^{-8}$ \\
+41 & \textbf{0.0078\%} & 0.0073\% & $1.32\times10^{-3}$ & $2.5\times10^{-8}$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Protocolo idéntico en los tres casos: $2{,}500$ épocas de Adam con
+    $\text{lr}=2\times10^{-4}$, $6{,}000$ de Adam con $\text{lr}=5\times10^{-5}$
+    y $80$ pasos de L-BFGS \textit{strong Wolfe} con colocación fija,
+    $8{,}580$ en total. Arquitectura y $\omega_0$ los de NB03
+    (§\ref{sec:nb03_config}); semilla $2{,}026$. El residuo está normalizado por
+    $k^2$. La última columna es el RMSE del error en la derivada impuesta en
+    $\tilde z=0$; el error en el valor $a_m(0)$ es nulo o del orden de
+    $10^{-9}$, porque la condición se impone por construcción y no por
+    penalización. La coherencia compleja en $\tilde z=1\lambda$ es $1.000000$ en
+    los tres casos. Fuente:
+    \texttt{results/nb02b\_modal\_bridge/summary.json}, generado por
+    \texttt{notebooks/02b\_validacion\_puente\_arquitectura\_modal\_nb03.ipynb}.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+Los tres casos superan los criterios por más de dos órdenes de magnitud, y el
+error \emph{disminuye} al ampliar la base, de $0.0149\%$ con un modo a
+$0.0078\%$ con $41$. Esto último es lo que se espera de una representación que
+converge: añadir modos añade capacidad sin degradar el ajuste. Conviene
+subrayar qué se mide aquí y qué no. Estas cifras no son comparables con el
+$3.161\%$ de la Sección~\ref{sec:nb03_resultados_z1}: allí el $L^2$ total está
+dominado por el piso evanescente de la pantalla aleatoria, que la base modal no
+puede representar por construcción, mientras que el campo de la
+Ecuación~\eqref{eq:campo_nb02b_arq} es propagante puro y carece de ese piso. Lo
+que este experimento acota es el error atribuible a la arquitectura y a su
+optimización, aislado de la física del problema de Cauchy: es del orden de
+$10^{-4}$, dos órdenes de magnitud por debajo del error propagante medido sobre
+speckle ($0.042\%$).
+
+La prueba aporta además una tercera verificación de la regla de calibración
+$\omega_0\approx k/2\pi$, ahora contra solución exacta. Una ejecución preliminar
+de este mismo experimento con $\omega_0=30$ --el valor por defecto que
+\textcite{sitzmann2020siren} proponen-- obtuvo $1.637\%$ de error global con
+$41$ modos, frente al $0.0078\%$ de la Tabla~\ref{tab:nb02b_arquitectura}, e
+invertía la tendencia: el error crecía al añadir modos. Debe señalarse que esa
+ejecución preliminar no siguió el mismo presupuesto de optimización, de modo
+que la comparación es corroborativa y no un contraste controlado; el contraste
+controlado es el de la Tabla~\ref{tab:nb03_omega0}. Con esa salvedad, la regla
+queda respaldada en tres regímenes distintos: la solución analítica $\cos(kx)$
+de NB01 (Tabla~\ref{tab:omega0_sweep}), el speckle de NB03
+(Tabla~\ref{tab:nb03_omega0}) y la superposición de ondas planas de esta
+sección.
+
 \subsection{Formulación modal adoptada}
 \label{sec:nb03_config}
 
@@ -1159,6 +1246,7 @@ Experimento & Descripción & Estado & Métrica principal \\
 \midrule
 NB01 & Helmholtz 1D, validación analítica & Completo & $L^2 = 0.006\%$ \\
 NB02 & Helmholtz 2D, campo complejo       & Completo & $L^2 = 0.171\%$ \\
+NB02B & Arquitectura modal contra solución exacta & Completo & $L^2 = 0.0078\%$ (41 modos) \\
 NB03-A & Speckle, referencia por espectro angular & Completo & $C=0.9661$ (conjunto, 64 real.) \\
 NB03-B & PINN-SIREN modal en $\tilde z=1\lambda$ & Completo & $L^2 = 3.161\%$ (5 pantallas) \\
 NB03-C & Inferencia frente al espectro angular & Completo & Sin ganancia de tiempo \\

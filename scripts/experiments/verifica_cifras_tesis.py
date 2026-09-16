@@ -85,4 +85,25 @@ chk("B: L2 en y=0", 0.209, round(100 * pB["l2_of_y"][0], 3), tol=2e-2)
 chk("B: L2 en y=1", 73.7, round(100 * pB["l2_of_y"][-1], 1), tol=2e-2)
 chk("B: evanescente maximo", 13.2, round(100 * max(pB["evanescent_energy_fraction_of_y"]), 1), tol=2e-2)
 
+# ── arquitectura modal contra solucion exacta (tab:nb02b_arquitectura) ─────
+print("\nArquitectura modal vs solucion exacta:")
+a = json.load(open(rf"{R}\results\nb02b_modal_bridge\summary.json", encoding="utf-8"))
+casos = {c["n_complex_modes"]: c for c in a["cases"]}
+chk("omega_0 de la corrida", 1.0, a["architecture"]["first_omega"])
+for modos, l2g, l2t, res, cau in ((1, 0.0149, 0.0030, 1.74e-3, 1.7e-7),
+                                  (5, 0.0112, 0.0070, 1.55e-3, 6.7e-8),
+                                  (41, 0.0078, 0.0073, 1.32e-3, 2.5e-8)):
+    m = casos[modos]["metrics"]
+    chk(f"{modos} modos: L2 global", l2g,
+        round(100 * m["global_complex_relative_l2"], 4), tol=2e-2)
+    chk(f"{modos} modos: L2 en z=1", l2t,
+        round(100 * m["target_complex_relative_l2"], 4), tol=2e-2)
+    chk(f"{modos} modos: residuo", res,
+        float(f'{m["helmholtz_field_residual_normalized_rmse"]:.2e}'), tol=2e-2)
+    chk(f"{modos} modos: Cauchy derivada", cau,
+        float(f'{m["hard_cauchy_derivative_rmse"]:.1e}'), tol=1e-1)
+    chk(f"{modos} modos: coherencia", 1.000000,
+        round(m["target_complex_coherence"], 6))
+    chk(f"{modos} modos: pasos", 8580, casos[modos]["cumulative_recorded_epochs"])
+
 print(f"\n==== {ok} verificadas, {fallo} discrepancias ====")
