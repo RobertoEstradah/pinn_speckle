@@ -16,9 +16,9 @@
 \contentsline {table}{\numberline {4.10}{\ignorespaces Validación analítica de extensión de distancia: arquitectura modal sobre $\tilde z\in [0,2]$.}}{42}{table.caption.35}%
 \contentsline {table}{\numberline {4.11}{\ignorespaces Configuración de NB03 frente a NB01 y NB02.}}{44}{table.caption.38}%
 \contentsline {table}{\numberline {4.12}{\ignorespaces Barrido de $\omega _0$ en la formulación modal (pantalla 42, $5{,}000$ épocas Adam).}}{45}{table.caption.40}%
-\contentsline {table}{\numberline {4.13}{\ignorespaces NB03 modal con $\omega _0$ calibrado: cinco pantallas de fase independientes en $\tilde z=1\lambda $.}}{46}{table.caption.42}%
+\contentsline {table}{\numberline {4.13}{\ignorespaces NB03 modal con $\omega _0$ calibrado: cinco pantallas de fase independientes en $z=1\lambda $.}}{46}{table.caption.42}%
 \contentsline {table}{\numberline {4.14}{\ignorespaces Piso evanescente y contraste de la referencia en función de la distancia.}}{48}{table.caption.45}%
-\contentsline {table}{\numberline {4.15}{\ignorespaces Ensayo de extensión a $\tilde z=2\lambda $ con presupuesto uniforme.}}{51}{table.caption.48}%
+\contentsline {table}{\numberline {4.15}{\ignorespaces Ensayo de extensión a $z=2\lambda $ con presupuesto uniforme.}}{51}{table.caption.48}%
 \contentsline {table}{\numberline {4.16}{\ignorespaces Tiempo de evaluación: PINN-SIREN modal frente al espectro angular.}}{52}{table.caption.50}%
 \contentsline {table}{\numberline {4.17}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{54}{table.caption.52}%
 \contentsline {table}{\numberline {4.18}{\ignorespaces Estado de los experimentos planificados.}}{55}{table.caption.54}%

@@ -59,14 +59,14 @@
 \contentsline {subsection}{\numberline {4.4.1}Diagnóstico del planteamiento: por qué la formulación directa no extiende}{38}{subsection.4.4.1}%
 \contentsline {subsection}{\numberline {4.4.2}Experimento puente: aislamiento del planteamiento}{38}{subsection.4.4.2}%
 \contentsline {subsection}{\numberline {4.4.3}Validación de la arquitectura modal contra solución exacta}{39}{subsection.4.4.3}%
-\contentsline {subsection}{\numberline {4.4.4}Extensión analítica de la distancia a $\tilde z=2\lambda $}{41}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.4}Extensión analítica de la distancia a $z=2\lambda $}{41}{subsection.4.4.4}%
 \contentsline {subsection}{\numberline {4.4.5}Formulación modal adoptada}{43}{subsection.4.4.5}%
 \contentsline {subsection}{\numberline {4.4.6}Verificación de la referencia}{44}{subsection.4.4.6}%
 \contentsline {subsection}{\numberline {4.4.7}Calibración de $\omega _0$ en el régimen modal}{45}{subsection.4.4.7}%
-\contentsline {subsection}{\numberline {4.4.8}Resultados en $\tilde z=1\lambda $}{46}{subsection.4.4.8}%
+\contentsline {subsection}{\numberline {4.4.8}Resultados en $z=1\lambda $}{46}{subsection.4.4.8}%
 \contentsline {subsection}{\numberline {4.4.9}Dependencia del piso evanescente con la distancia}{46}{subsection.4.4.9}%
 \contentsline {subsection}{\numberline {4.4.10}Criterio estadístico: conjunto frente a realización individual}{49}{subsection.4.4.10}%
-\contentsline {subsection}{\numberline {4.4.11}Ensayo de extensión a $\tilde z=2\lambda $: resultado negativo}{50}{subsection.4.4.11}%
+\contentsline {subsection}{\numberline {4.4.11}Ensayo de extensión a $z=2\lambda $: resultado negativo}{50}{subsection.4.4.11}%
 \contentsline {subsection}{\numberline {4.4.12}Tiempo de inferencia frente a la referencia de propagación}{51}{subsection.4.4.12}%
 \contentsline {subsection}{\numberline {4.4.13}Limitaciones del método}{53}{subsection.4.4.13}%
 \contentsline {section}{\numberline {4.5}Contexto en la literatura}{54}{section.4.5}%

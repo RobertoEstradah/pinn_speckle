@@ -4,7 +4,7 @@ Este capítulo presenta los resultados de tres experimentos, ejecutados en GPU
 NVIDIA RTX~5050 (CUDA 12.8, PyTorch 2.11, SEED = 42). Siguen una complejidad
 creciente: validación analítica 1D (NB01), validación 2D con campo complejo
 (NB02) y simulación de \textit{speckle} óptico mediante una formulación modal
-(NB03), validada en $\tilde z = 1\lambda$ sobre cinco realizaciones de fase
+(NB03), validada en $z = 1\lambda$ sobre cinco realizaciones de fase
 independientes.
 
 % ──────────────────────────────────────────────────────────────────────────────
@@ -620,7 +620,7 @@ salidas.
 \label{tab:nb02b_arquitectura}
 \begin{tabular}{lcccc}
 \toprule
-Modos & $L^2$ global & $L^2$ en $\tilde z=1\lambda$ & Residuo de Helmholtz & Cauchy: $a_m'(0)$ \\
+Modos & $L^2$ global & $L^2$ en $z=1\lambda$ & Residuo de Helmholtz & Cauchy: $a_m'(0)$ \\
 \midrule
 1  & 0.0149\% & 0.0030\% & $1.74\times10^{-3}$ & $1.7\times10^{-7}$ \\
 5  & 0.0112\% & 0.0070\% & $1.55\times10^{-3}$ & $6.7\times10^{-8}$ \\
@@ -636,7 +636,7 @@ Modos & $L^2$ global & $L^2$ en $\tilde z=1\lambda$ & Residuo de Helmholtz & Cau
     $k^2$. La última columna es el RMSE del error en la derivada impuesta en
     $\tilde z=0$; el error en el valor $a_m(0)$ es nulo o del orden de
     $10^{-9}$, porque la condición se impone por construcción y no por
-    penalización. La coherencia compleja en $\tilde z=1\lambda$ es $1.000000$ en
+    penalización. La coherencia compleja en $z=1\lambda$ es $1.000000$ en
     los tres casos. Fuente:
     \texttt{results/nb02b\_modal\_bridge/summary.json}, generado por
     \texttt{notebooks/02b\_validacion\_puente\_arquitectura\_modal\_nb03.ipynb}.
@@ -676,7 +676,7 @@ de NB01 (Tabla~\ref{tab:omega0_sweep}), el speckle de NB03
 sección.
 
 \subsection{Extensión analítica de la distancia a
-\texorpdfstring{$\tilde z=2\lambda$}{z=2 lambda}}
+\texorpdfstring{$z=2\lambda$}{z=2 lambda}}
 \label{sec:nb02b_extension}
 
 La sección anterior valida la arquitectura sobre $\tilde z\in[0,1]$, que es el
@@ -687,7 +687,7 @@ sostenga la distancia, o que el obstáculo esté en la realización aleatoria y 
 la optimización. El experimento analítico de
 §\ref{sec:nb02b_arquitectura} permite decidirlo, porque su campo de referencia
 tiene expresión cerrada y puede evaluarse exactamente también en
-$\tilde z=2\lambda$.
+$z=2\lambda$.
 
 Se repitió por tanto la prueba con el dominio extendido a
 $\tilde z\in[0,2]$, sin cambiar nada más: misma clase \texttt{ModalSiren},
@@ -707,7 +707,7 @@ sobre $\tilde z\in[0,2]$.}
 \label{tab:nb02b_z2}
 \begin{tabular}{lcccc}
 \toprule
-Modos & $L^2$ global & $L^2$ en $\tilde z=2\lambda$ & Máximo sobre $\tilde z$ & Coherencia \\
+Modos & $L^2$ global & $L^2$ en $z=2\lambda$ & Máximo sobre $\tilde z$ & Coherencia \\
 \midrule
 1  & 0.210\% & 0.150\% & 0.455\% & 1.000000 \\
 5  & 0.334\% & 0.180\% & 0.560\% & 1.000000 \\
@@ -755,14 +755,14 @@ mantiene dos órdenes de magnitud por debajo del umbral del $5\%$.
 
 \textbf{Qué autoriza a concluir este resultado y qué no.} Autoriza a afirmar
 que la arquitectura modal, la imposición dura de la condición de Cauchy y el
-residuo de Helmholtz se sostienen hasta $\tilde z=2\lambda$ en un problema con
+residuo de Helmholtz se sostienen hasta $z=2\lambda$ en un problema con
 solución exacta. \textbf{No} autoriza a afirmar que la simulación de speckle
 esté validada a esa distancia: el campo de la
 ecuación~\eqref{eq:campo_nb02b_arq} es una superposición de unas pocas ondas
 planas de amplitud conocida, mientras que una pantalla de fase aleatoria
 produce un espectro de amplitudes dispares y una componente evanescente que la
 base no representa. La validación de speckle sigue siendo la de
-$\tilde z=1\lambda$ de la Sección~\ref{sec:nb03_resultados_z1}. Aplicar NB03 a
+$z=1\lambda$ de la Sección~\ref{sec:nb03_resultados_z1}. Aplicar NB03 a
 pantallas aleatorias en $2\lambda$ es el experimento siguiente, todavía no
 realizado.
 
@@ -833,7 +833,7 @@ Colocación             & uniforme / LHS 2D & $256$ posiciones de $\tilde z$ por
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
-    \item NB03 no emplea L-BFGS en el protocolo de $\tilde z=1\lambda$ ni tiene
+    \item NB03 no emplea L-BFGS en el protocolo de $z=1\lambda$ ni tiene
     peso de física que calibrar, por lo que las filas correspondientes de la
     Tabla~\ref{tab:hiperparametros} no le son aplicables. La inicialización
     sinusoidal de \textcite{sitzmann2020siren} y la autodiferenciación de
@@ -918,13 +918,13 @@ $k/2\pi$ es condición relevante del desempeño de la formulación modal, no que
 la regla acierte el valor óptimo dentro del rango bajo. En ese sentido acotado,
 la regla derivada en NB01 sí resulta determinante para el tercer experimento.
 
-\subsection{Resultados en \texorpdfstring{$\tilde z=1\lambda$}{z=1 lambda}}
+\subsection{Resultados en \texorpdfstring{$z=1\lambda$}{z=1 lambda}}
 \label{sec:nb03_resultados_z1}
 
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{NB03 modal con $\omega_0$ calibrado: cinco pantallas de fase independientes en $\tilde z=1\lambda$.}
+\caption{NB03 modal con $\omega_0$ calibrado: cinco pantallas de fase independientes en $z=1\lambda$.}
 \label{tab:nb03_cinco}
 \begin{tabular}{lcccccc}
 \toprule
@@ -960,7 +960,7 @@ Media & \textbf{3.161\%} & 3.160\% & 0.999488 & --- & --- & 0.0055 \\
 $|E|^2$ sobre el plano de propagación $(\tilde x,\tilde z)$ para la referencia
 por espectro angular (izquierda) y para la PINN-SIREN modal (derecha), en la
 misma escala de color; la línea discontinua marca el plano de validación
-$\tilde z=1\lambda$. Abajo, perfil transversal de intensidad en ese plano para
+$z=1\lambda$. Abajo, perfil transversal de intensidad en ese plano para
 ambas. La diferencia visible se concentra en las proximidades de
 $\tilde z=0$, donde la referencia presenta una estructura transversal fina que
 el modelo no reproduce y que se atenúa al propagar: es la contribución
@@ -999,7 +999,7 @@ método.
 \label{tab:nb03_piso}
 \begin{tabular}{lcc}
 \toprule
-$\tilde z/\lambda$ & Piso evanescente & $C$ de la referencia \\
+$z/\lambda$ & Piso evanescente & $C$ de la referencia \\
 \midrule
 0.25 & 25.49\% & 0.7968 \\
 0.50 & 12.61\% & 0.8283 \\
@@ -1011,13 +1011,13 @@ $\tilde z/\lambda$ & Piso evanescente & $C$ de la referencia \\
 \end{tabular}
 \begin{tablenotes}\small
     \item Calculado analíticamente desde el espectro de la pantalla 42, sin
-    entrenar ningún modelo. La distancia $\tilde z=1\lambda$ corresponde a
+    entrenar ningún modelo. La distancia $z=1\lambda$ corresponde a
     campo cercano estricto: es la peor distancia posible para la métrica de
     campo completo, porque casi el $4\%$ de la energía es irrepresentable por
     la base propagante y el patrón aún no ha madurado estadísticamente. El
     contraste de la referencia parte de $C=0$ exactamente en $\tilde z=0$
     --donde la pantalla es de fase pura y la intensidad es uniforme--, crece
-    hasta superar la unidad alrededor de $\tilde z=2\lambda$ y después fluctúa,
+    hasta superar la unidad alrededor de $z=2\lambda$ y después fluctúa,
     sin comportamiento monótono: cae de $1.2069$ en $3\lambda$ a $1.0476$ en
     $5\lambda$. Estos son valores de una realización individual, para la que el
     criterio de conjunto $|C-1|<0.1$ no es aplicable; de las distancias
@@ -1037,13 +1037,13 @@ $\tilde z/\lambda$ & Piso evanescente & $C$ de la referencia \\
     magnitud en todo el intervalo. \textbf{(b)} Fracción de energía
     irrepresentable por la base modal --el piso evanescente-- frente a la
     distancia de propagación, en escala logarítmica, junto al error medio del
-    modelo calibrado. Cómo leerla: en $\tilde z=1\lambda$ el piso es
+    modelo calibrado. Cómo leerla: en $z=1\lambda$ el piso es
     $92$ veces mayor que el error del modelo, de modo que la métrica de campo
     completo mide la física irrepresentable y no el ajuste de la red. El piso
     decae con la distancia y cruzaría el nivel de error aquí medido alrededor
     de $\tilde z\approx3.2\lambda$ \emph{si ese error se mantuviera constante},
     extrapolación que este trabajo no verifica: el modelo sólo se validó en
-    $\tilde z=1\lambda$, y el ensayo de extensión a $2\lambda$
+    $z=1\lambda$, y el ensayo de extensión a $2\lambda$
     (§\ref{sec:nb03_extension}) muestra que el error crece con la distancia.
     Fuentes:
     \texttt{results/nb03\_modal\_multiseed\_z1\_omega1\_l2\_curves.npz} y
@@ -1052,9 +1052,9 @@ $\tilde z/\lambda$ & Piso evanescente & $C$ de la referencia \\
 \end{figure}
 
 Este comportamiento explica el valor $C=0.906$ de la pantalla 42 en
-$\tilde z=1\lambda$ sin recurrir a una deficiencia del modelo: el patrón está
+$z=1\lambda$ sin recurrir a una deficiencia del modelo: el patrón está
 todavía en formación. El contraste transversal medido sobre la referencia crece
-de $0$ en la pantalla a $0.797$ en $\tilde z=0.25\lambda$, $0.828$ en
+de $0$ en la pantalla a $0.797$ en $z=0.25\lambda$, $0.828$ en
 $0.5\lambda$ y $0.906$ en $1\lambda$, mientras el tamaño de grano transversal
 pasa de $0.298\lambda$ a $0.378\lambda$.
 
@@ -1076,7 +1076,7 @@ realiza por ello en dos niveles:
     conjunto de la referencia citado a continuación procede de $64$: las dos
     cifras no son equivalentes en tamaño muestral.
     Las referencias por espectro angular, cada una sobre $64$ realizaciones en
-    $\tilde z=1\lambda$, dan contrastes de $0.9759$, $0.9757$, $0.9531$,
+    $z=1\lambda$, dan contrastes de $0.9759$, $0.9757$, $0.9531$,
     $0.9619$ y $0.9637$, con media $0.9661$: el conjunto sí se encuentra en el
     régimen de \textit{speckle} completamente desarrollado.
     \item \textbf{Realización individual.} Fidelidad al contraste de su propia
@@ -1098,7 +1098,7 @@ alcanza $p>0.05$ en una de las cinco pantallas (valores de $p$: $0.1423$, $0.026
 $0.0000$). El motivo es que la prueba supone muestras independientes, mientras
 que los valores de intensidad de un corte espacial de \textit{speckle} están
 correlacionados dentro de cada grano --de tamaño transversal $0.378\lambda$ en
-$\tilde z=1\lambda$, es decir unas $19$ muestras por grano en esta malla--, lo
+$z=1\lambda$, es decir unas $19$ muestras por grano en esta malla--, lo
 que reduce drásticamente el número efectivo de muestras independientes y sesga
 el $p$-valor hacia el rechazo. Por ello el test se reporta aquí como estadístico
 descriptivo y no como criterio de aceptación.
@@ -1122,10 +1122,10 @@ una propiedad de las realizaciones a esta distancia y no del ajuste. Fuente:
 \texttt{results/nb03\_estadistica\_conjunto.json}, generado por
 \texttt{scripts/experiments/nb03\_estadistica\_conjunto.py}.
 
-\subsection{Ensayo de extensión a \texorpdfstring{$\tilde z=2\lambda$}{z=2 lambda}: resultado negativo}
+\subsection{Ensayo de extensión a \texorpdfstring{$z=2\lambda$}{z=2 lambda}: resultado negativo}
 \label{sec:nb03_extension}
 
-La validación reportada se limita a $\tilde z=1\lambda$. Se ensayó extenderla a
+La validación reportada se limita a $z=1\lambda$. Se ensayó extenderla a
 $2\lambda$ partiendo del punto de control validado de cada pantalla y
 reentrenando únicamente sobre el residuo, con un presupuesto uniforme de
 $180$~s por pantalla. A diferencia del resto del capítulo, \textbf{este ensayo
@@ -1135,7 +1135,7 @@ efectivo no es comparable con el de los experimentos en GPU.
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Ensayo de extensión a $\tilde z=2\lambda$ con presupuesto uniforme.}
+\caption{Ensayo de extensión a $z=2\lambda$ con presupuesto uniforme.}
 \label{tab:nb03_z2}
 \begin{tabular}{lcccc}
 \toprule
@@ -1184,7 +1184,7 @@ comportamiento no monótono descrito arriba, no converge de forma estable en ese
 régimen.
 
 En consecuencia, el alcance validado de este trabajo para la simulación de
-speckle es $\tilde z=1\lambda$. Cualquier afirmación sobre distancias mayores
+speckle es $z=1\lambda$. Cualquier afirmación sobre distancias mayores
 exigiría un procedimiento de optimización distinto y su propia campaña de
 validación; lo que el resultado analítico añade es que esa campaña no tendría
 que rediseñar la arquitectura, sino la estrategia de entrenamiento.
@@ -1198,7 +1198,7 @@ propagación, independiente de la comparación con FEM. Esa medición sí puede
 realizarse con los elementos disponibles y se reporta aquí.
 
 La comparación se plantea a igualdad de salida: ambos métodos producen el mismo
-campo complejo en $\tilde z = 1\lambda$ sobre los mismos $1{,}024$ puntos
+campo complejo en $z = 1\lambda$ sobre los mismos $1{,}024$ puntos
 transversales, y se verificó que ambas salidas coinciden con una discrepancia
 relativa de $0.0475\%$ antes de cronometrar. El método de referencia calcula la
 transformada de Fourier de la pantalla, multiplica por el propagador
@@ -1215,7 +1215,7 @@ reconstruye el campo por suma modal.
 \toprule
 Tarea & Espectro angular & PINN modal & Razón \\
 \midrule
-Un plano ($\tilde z = 1\lambda$)      & \textbf{0.044} ms & 0.819 ms & $18.5\times$ a favor del ASM \\
+Un plano ($z = 1\lambda$)      & \textbf{0.044} ms & 0.819 ms & $18.5\times$ a favor del ASM \\
 $101$ planos simultáneos              & 3.246 ms & \textbf{1.845} ms & $1.76\times$ a favor de la PINN \\
 \bottomrule
 \end{tabular}
@@ -1309,7 +1309,7 @@ conviene declarar de forma explícita:
     y no acuerdo con un método numérico independiente.
 
     \item \textbf{Alcance en distancia.} La simulación de speckle está
-    validada en $\tilde z=1\lambda$; el ensayo con pantallas aleatorias a
+    validada en $z=1\lambda$; el ensayo con pantallas aleatorias a
     $2\lambda$ de §\ref{sec:nb03_extension} no supera el criterio. La
     arquitectura sí se valida hasta $2\lambda$ contra solución analítica
     (§\ref{sec:nb02b_extension}), pero eso acota la causa del fallo, no
@@ -1401,16 +1401,16 @@ NB02 & Helmholtz 2D, campo complejo       & Completo & $L^2 = 0.171\%$ \\
 NB02B & Arquitectura modal contra solución exacta & Completo & $L^2 = 0.0078\%$ (41 modos) \\
 NB02B-$2\lambda$ & Extensión analítica (campo propagante puro) & Completo & $L^2 = 0.195\%$ (41 modos) \\
 NB03-A & Speckle, referencia por espectro angular & Completo & $C=0.9661$ (conjunto, 64 real.) \\
-NB03-B & PINN-SIREN modal en $\tilde z=1\lambda$ & Completo & $L^2 = 3.161\%$ (5 pantallas) \\
+NB03-B & PINN-SIREN modal en $z=1\lambda$ & Completo & $L^2 = 3.161\%$ (5 pantallas) \\
 NB03-C & Inferencia frente al espectro angular & Completo & Sin ganancia de tiempo \\
-NB03-D & Speckle con pantalla aleatoria en $\tilde z=2\lambda$ & No supera el criterio & $L^2 = 4.226\%$ (2/5 $>5\%$) \\
+NB03-D & Speckle con pantalla aleatoria en $z=2\lambda$ & No supera el criterio & $L^2 = 4.226\%$ (2/5 $>5\%$) \\
 NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
     \item Los estados se refieren al cierre de esta versión de la tesis. El
     contraste de NB03-A es el promedio del contraste de conjunto de las cinco
-    pantallas, cada uno sobre $64$ realizaciones en $\tilde z=1\lambda$. NB04
+    pantallas, cada uno sobre $64$ realizaciones en $z=1\lambda$. NB04
     permanece abierto para trabajo posterior y es el único objetivo específico
     sin evidencia asociada.
 \end{tablenotes}
