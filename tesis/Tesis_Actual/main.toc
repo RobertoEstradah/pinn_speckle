@@ -31,16 +31,16 @@
 \contentsline {subsection}{\numberline {3.1.1}Experimento 1 (NB01): Validación 1D}{18}{subsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.1.2}Experimento 2 (NB02): Validación 2D con campo complejo}{18}{subsection.3.1.2}%
 \contentsline {subsection}{\numberline {3.1.3}Experimento 3 (NB03): Simulación de speckle óptico}{18}{subsection.3.1.3}%
-\contentsline {section}{\numberline {3.2}Arquitectura SIREN}{20}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{21}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{22}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{22}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.2}Arquitectura SIREN}{21}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{22}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{23}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{23}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Puntos de frontera}{23}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Estrategia de optimización}{23}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Métricas de validación}{23}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Métricas de NB03: campo complejo y estadística de speckle}{23}{subsection.3.6.1}%
+\contentsline {section}{\numberline {3.5}Estrategia de optimización}{24}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Métricas de validación}{24}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Métricas de NB03: campo complejo y estadística de speckle}{24}{subsection.3.6.1}%
 \contentsline {subsection}{\numberline {3.6.2}Error $L^2$ relativo (NB01 y NB02)}{25}{subsection.3.6.2}%
-\contentsline {section}{\numberline {3.7}Implementación modular}{25}{section.3.7}%
+\contentsline {section}{\numberline {3.7}Implementación modular}{26}{section.3.7}%
 \contentsline {chapter}{\numberline {4}Experimentos y Resultados}{27}{chapter.4}%
 \contentsline {section}{\numberline {4.1}NB01: Validación 1D, Helmholtz con solución analítica}{27}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Configuración experimental}{27}{subsection.4.1.1}%
@@ -66,8 +66,8 @@
 \contentsline {subsection}{\numberline {4.4.8}Resultados en $z=1\lambda $}{46}{subsection.4.4.8}%
 \contentsline {subsection}{\numberline {4.4.9}Dependencia del piso evanescente con la distancia}{46}{subsection.4.4.9}%
 \contentsline {subsection}{\numberline {4.4.10}Criterio estadístico: conjunto frente a realización individual}{49}{subsection.4.4.10}%
-\contentsline {subsection}{\numberline {4.4.11}Ensayo de extensión a $z=2\lambda $: resultado negativo}{50}{subsection.4.4.11}%
-\contentsline {subsection}{\numberline {4.4.12}Tiempo de inferencia frente a la referencia de propagación}{51}{subsection.4.4.12}%
+\contentsline {subsection}{\numberline {4.4.11}Extensión de la validación a $z=2\lambda $}{50}{subsection.4.4.11}%
+\contentsline {subsection}{\numberline {4.4.12}Tiempo de inferencia frente a la referencia de propagación}{52}{subsection.4.4.12}%
 \contentsline {subsection}{\numberline {4.4.13}Limitaciones del método}{53}{subsection.4.4.13}%
 \contentsline {section}{\numberline {4.5}Contexto en la literatura}{54}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{55}{section.4.6}%

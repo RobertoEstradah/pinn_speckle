@@ -21,9 +21,10 @@ $[-10,10]\times[0,1]$, y la extensión a distancias mayores se documenta con su
 propio alcance. Conviene separar desde ahora dos alcances que no coinciden: la
 \emph{arquitectura} se valida contra solución analítica hasta
 $z=2\lambda$ (§\ref{sec:nb02b_extension}), mientras que la
-\emph{simulación de speckle} con pantalla aleatoria permanece validada en
-$z=1\lambda$ (§\ref{sec:nb03_extension}). Lo primero no implica lo
-segundo.
+\emph{simulación de speckle} con pantalla aleatoria se valida en
+$z=1\lambda$ (§\ref{sec:nb03_resultados_z1}) y en $z=2\lambda$
+(§\ref{sec:nb03_extension}). Lo primero no implica lo segundo: son
+comprobaciones distintas, y cada distancia exige la suya.
 
 Se plantean tres experimentos sucesivos de complejidad creciente:
 
@@ -126,11 +127,40 @@ diferenciales ordinarias desacopladas,
 La base se trunca a los $41$ modos propagantes, los que cumplen
 $k_{x,m}^2\leq k^2$, es decir $|m|\leq20$; la desigualdad es no estricta, de
 modo que los dos modos de corte rasante $m=\pm20$ --para los que $k_{x,m}=k$ y
-por tanto $k_{z,m}=0$-- quedan incluidos. Los modos
-evanescentes se descartan porque su rama creciente $e^{+|\kappa_m|\tilde z}$
-hace que la solución no dependa de forma continua de los datos; el truncamiento
-espectral es la regularización de este problema de Cauchy analizada por
-\textcite{nguyen2016truncation}.
+por tanto $k_{z,m}=0$-- quedan incluidos. Los modos evanescentes se descartan, y conviene precisar por qué.
+
+Para $k_{x,m}^2>k^2$ la ecuación~\eqref{eq:edo_modal_cap3} admite dos ramas,
+$e^{-|\kappa_m|\tilde z}$ y $e^{+|\kappa_m|\tilde z}$, y es la segunda la que
+vuelve inestable el problema de Cauchy para Helmholtz en el caso general
+\parencite{nguyen2016truncation}. \textbf{Aquí, sin embargo, esa rama no es
+admisible}: la condición de entrada de la ecuación~\eqref{eq:derivada_saliente}
+fija $a_m'(0)=i\,k_{z,m}\,a_m(0)$, y para un modo evanescente
+$k_{z,m}=i|\kappa_m|$, de modo que $a_m'(0)=-|\kappa_m|\,a_m(0)$. El dato de
+Cauchy no es libre: valor y derivada están ligados por la condición de
+radiación, que selecciona por construcción la rama que decae. El problema que
+se resuelve es el de radiación en el semiespacio $\tilde z>0$, y no hereda la
+inestabilidad del problema de Cauchy con datos independientes.
+
+El truncamiento no es por tanto una regularización necesaria, sino una
+\textbf{decisión de tratabilidad numérica}, y se adopta por dos razones. La
+primera es de representación en precisión simple: el modo transversal más fino
+de la malla tiene $|\kappa|\approx160.7$, y $e^{-160.7}$ desborda por abajo en
+\texttt{float32}. La segunda, comprobada experimentalmente, es que incluir los
+modos evanescentes que sí son representables degrada el ajuste en lugar de
+mejorarlo. Ampliando la base a $|m|\leq35$ --$71$ modos, con
+$|\kappa|\leq9.02$ y por tanto $e^{-|\kappa|}\geq1.2\times10^{-4}$-- la energía
+de la referencia que queda fuera de la base cae del $3.818\%$ al $0.002\%$,
+pero el error dentro de la base crece de $1.98\%$ a $24.70\%$: la red debe
+representar simultáneamente $e^{-\kappa\tilde z}$ para $\kappa$ entre $0$ y
+$9$, un problema multiescala que una red con un solo $\omega_0$ resuelve mal.
+El error total resulta $5.7$ veces mayor. El experimento está documentado en
+\texttt{explorations/nb03\_base\_extendida/} de la copia de trabajo técnica.
+
+La consecuencia es que el error residual atribuible al truncamiento
+--el piso evanescente de §\ref{sec:nb03_piso}-- no es una barrera
+matemática sino el costo de una elección de método, y que reducirlo exigiría
+una arquitectura capaz de representar varias escalas de decaimiento a la vez,
+no simplemente ampliar la base.
 
 \subsubsection*{Condición de Cauchy dura}
 

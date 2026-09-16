@@ -1,0 +1,25 @@
+{
+  "experimento": "NB03: base modal extendida mas alla del cono propagante",
+  "pregunta": "Si la condicion de entrada ya selecciona la rama decreciente, el piso evanescente deberia ser evitable ampliando la base.",
+  "pantalla": 42,
+  "m_max": 35,
+  "n_modos": 71,
+  "n_propagantes": 41,
+  "n_evanescentes": 30,
+  "kappa_maximo": 9.023537904225105,
+  "omega_0_primera": 1.0,
+  "omega_0_interna": 1.0,
+  "epocas": 5000,
+  "epocas_refino": 3000,
+  "segundos": 900.1355366706848,
+  "mejor_perdida": 3.137765088467859e-05,
+  "l2_total": 0.24694966289999024,
+  "piso_fuera_de_banda": 2.0296259175713853e-05,
+  "l2_dentro_de_banda": 0.24694966211680125,
+  "coherencia": 0.9708816713457238,
+  "referencia_nb03_41_modos": {
+    "l2_total": 0.03818692779180966,
+    "piso": 0.038183979628211503,
+    "nota": "pantalla 42, omega_0=1, base de 41 modos propagantes"
+  }
+}

@@ -160,35 +160,48 @@ chk("ahorro por evaluacion (ms)", 1.40, round(am["ahorro_ms_por_evaluacion"], 2)
 chk("evaluaciones para amortizar (x1e5)", 2.5,
     round(am["evaluaciones_para_amortizar"] / 1e5, 1), tol=5e-2)
 
-# ── ensayo de extension a 2 lambda con speckle (tab:nb03_z2) ───────────────
-print("\nEnsayo de speckle a z=2 lambda:")
-pil = json.load(open(rf"{R}\results\nb03_distance_pilot\z2_cinco_uniforme_180s"
-                     rf"\summary.json", encoding="utf-8"))
-por_semilla = {c["seed"]: c["distances"]["z2"]["metrics"] for c in pil["cases"]}
-chk("piloto z2: dispositivo", "cpu", pil["runtime"]["device"])
-chk("piloto z2: presupuesto (s)", 180.0, float(pil["configuration"]["seconds"]))
-esperado = ((42, 1.690, 1.750, 2.499, 0.456), (123, 6.144, 6.151, 7.373, 0.292),
-            (321, 8.069, 8.082, 10.010, 0.462), (777, 4.178, 4.192, 5.651, 0.340),
-            (2026, 1.047, 1.111, 1.722, 0.371))
+# ── validacion de speckle a 2 lambda (tab:nb03_z2, NB03B) ─────────────────
+print("\nValidacion de speckle a z=2 lambda:")
+nb3b = json.load(open(rf"{R}\results\nb03_distance_pilot\z2_omega1_five_120s"
+                      rf"\validation_summary.json", encoding="utf-8"))
+por_pantalla = {c["screen_seed"]: c for c in nb3b["per_screen"]}
+chk("z2: omega_0 de la corrida", 1.0, nb3b["architecture"]["first_omega"])
+chk("z2: distancia", 2.0, float(nb3b["protocol"]["distance_lambda"]))
+chk("z2: segundos por pantalla", 120.0, float(nb3b["protocol"]["seconds_per_screen"]))
+chk("z2: sin etiquetas de entrenamiento", False, nb3b["protocol"]["training_labels"])
+esperado = ((42, 1.038, 0.932, 1.165, 0.999951, 1.1595, 1.1621),
+            (123, 0.941, 0.894, 1.081, 0.999961, 1.0684, 1.0689),
+            (321, 1.006, 0.893, 1.078, 0.999951, 0.9391, 0.9377),
+            (777, 0.864, 0.794, 0.999, 0.999965, 1.0116, 1.0123),
+            (2026, 1.117, 1.054, 1.054, 0.999960, 0.8374, 0.8369))
 acum = [0.0, 0.0, 0.0, 0.0]
-for semilla, prop, full, mx, piso in esperado:
-    m = por_semilla[semilla]
-    chk(f"z2 pantalla {semilla}: L2 propagante", prop,
-        round(100 * m["l2_propagating_final"], 3), tol=2e-2)
+for semilla, full, prop, mx, coh, cref, cp in esperado:
+    c = por_pantalla[semilla]
     chk(f"z2 pantalla {semilla}: L2 complejo", full,
-        round(100 * m["l2_full_final"], 3), tol=2e-2)
-    chk(f"z2 pantalla {semilla}: maximo propagante", mx,
-        round(100 * m["l2_propagating_max"], 3), tol=2e-2)
-    chk(f"z2 pantalla {semilla}: piso evanescente", piso,
-        round(100 * m["evanescent_floor_final"], 3), tol=2e-2)
-    for i, k in enumerate(("l2_propagating_final", "l2_full_final",
-                           "l2_propagating_max", "evanescent_floor_final")):
-        acum[i] += 100 * m[k] / 5
-for etiqueta, valor, real in (("L2 propagante", 4.226, acum[0]),
-                              ("L2 complejo", 4.257, acum[1]),
-                              ("maximo propagante", 5.451, acum[2]),
-                              ("piso evanescente", 0.384, acum[3])):
-    chk(f"z2 media: {etiqueta}", valor, round(real, 3), tol=2e-2)
+        round(100 * c["l2_full_final"], 3), tol=2e-2)
+    chk(f"z2 pantalla {semilla}: L2 propagante", prop,
+        round(100 * c["l2_propagating_final"], 3), tol=2e-2)
+    chk(f"z2 pantalla {semilla}: maximo sobre z", mx,
+        round(100 * c["l2_propagating_max"], 3), tol=2e-2)
+    chk(f"z2 pantalla {semilla}: coherencia", coh,
+        round(c["coherence_full_final"], 6))
+    chk(f"z2 pantalla {semilla}: C_ref", cref, round(c["contrast_reference"], 4))
+    chk(f"z2 pantalla {semilla}: C_pinn", cp, round(c["contrast_pinn"], 4))
+    chk(f"z2 pantalla {semilla}: seis criterios", True,
+        all(c["acceptance"].values()))
+    for i, k in enumerate(("l2_full_final", "l2_propagating_final",
+                           "l2_propagating_max", "coherence_full_final")):
+        acum[i] += c[k] / 5
+for etiqueta, valor, real, esc in (("L2 complejo", 0.993, acum[0], 100),
+                                   ("L2 propagante", 0.914, acum[1], 100),
+                                   ("maximo sobre z", 1.075, acum[2], 100),
+                                   ("coherencia", 0.999958, acum[3], 1)):
+    chk(f"z2 media: {etiqueta}", valor, round(esc * real, 3 if esc == 100 else 6),
+        tol=2e-2)
+chk("z2: diferencia de contraste media", 0.0012,
+    round(nb3b["aggregate"]["contrast_difference"]["mean"], 4), tol=5e-2)
+chk("z2: residuo modal medio", 5.02e-3,
+    round(nb3b["aggregate"]["residual_normalized_rmse"]["mean"], 5), tol=2e-2)
 
 # ── multisemilla de NB02 (tab:multiseed) ───────────────────────────────────
 print("\nMultisemilla NB02:")
@@ -247,5 +260,20 @@ if not zhang_local:
         r"1.40--5.82\tnote{c}" in CAP4)
     chk("Zhang: la nota declara el alcance", True,
         "Alcance de la verificación" in CAP4 and "no se dispuso del texto completo" in CAP4)
+
+# ── base modal extendida (Cap3: por que se trunca) ────────────────────────
+print("\nBase modal extendida:")
+be = {m: json.load(open(rf"{R}\results\nb03_base_extendida\base_extendida_m{m}.json",
+                        encoding="utf-8")) for m in (20, 35)}
+chk("control: modos", 41, be[20]["n_modos"])
+chk("control: piso", 3.8184, round(100 * be[20]["piso_fuera_de_banda"], 4), tol=2e-2)
+chk("control: error en banda", 1.98, round(100 * be[20]["l2_dentro_de_banda"], 2), tol=2e-2)
+chk("extendida: modos", 71, be[35]["n_modos"])
+chk("extendida: kappa maximo", 9.02, round(be[35]["kappa_maximo"], 2), tol=2e-2)
+chk("extendida: piso", 0.002, round(100 * be[35]["piso_fuera_de_banda"], 3), tol=1e-1)
+chk("extendida: error en banda", 24.70, round(100 * be[35]["l2_dentro_de_banda"], 2), tol=2e-2)
+chk("razon de error total", 5.7,
+    round(be[35]["l2_total"] / be[20]["l2_total"], 1), tol=2e-2)
+chk("extendida: omega_0", 1.0, be[35]["omega_0_primera"])
 
 print(f"\n==== {ok} verificadas, {fallo} discrepancias ====")

@@ -679,13 +679,12 @@ sección.
 \texorpdfstring{$z=2\lambda$}{z=2 lambda}}
 \label{sec:nb02b_extension}
 
-La sección anterior valida la arquitectura sobre $\tilde z\in[0,1]$, que es el
-alcance en el que se reporta el speckle. Como el ensayo con pantallas
-aleatorias a $2\lambda$ no supera el criterio (§\ref{sec:nb03_extension}),
-interesa separar dos causas posibles de ese fracaso: que la arquitectura no
-sostenga la distancia, o que el obstáculo esté en la realización aleatoria y en
-la optimización. El experimento analítico de
-§\ref{sec:nb02b_arquitectura} permite decidirlo, porque su campo de referencia
+La sección anterior valida la arquitectura sobre $\tilde z\in[0,1]$. Antes de
+extender la validación con pantallas aleatorias a $2\lambda$
+(§\ref{sec:nb03_extension}) conviene comprobar que la arquitectura sostiene esa
+distancia en un problema con solución conocida, donde el resultado no depende
+de la realización ni del presupuesto de optimización. El experimento analítico
+de §\ref{sec:nb02b_arquitectura} permite hacerlo, porque su campo de referencia
 tiene expresión cerrada y puede evaluarse exactamente también en
 $z=2\lambda$.
 
@@ -781,11 +780,16 @@ Como las fronteras laterales son periódicas, el campo admite el desarrollo
 exacto $u(\tilde x,\tilde z)=\sum_m a_m(\tilde z)e^{i k_{x,m}\tilde x}$, y
 Helmholtz 2D se separa en las $41$ ecuaciones diferenciales ordinarias
 desacopladas de la ecuación~\eqref{eq:edo_modal}. La base se trunca al conjunto
-propagante. Este truncamiento no es una simplificación de conveniencia: es la
-regularización del problema de Cauchy para Helmholtz analizada por
-\textcite{nguyen2016truncation}, quienes establecen la solución regularizada
-acotando la frecuencia mediante un parámetro de regularización y demuestran
-estabilidad y convergencia con estimaciones de error en norma $L^2$.
+propagante. El truncamiento espectral es la regularización del problema de
+Cauchy para Helmholtz analizada por \textcite{nguyen2016truncation}, quienes
+acotan la frecuencia mediante un parámetro de regularización y demuestran
+estabilidad y convergencia con estimaciones de error en norma $L^2$. Como se
+argumenta en el Capítulo~\ref{cap3:modelo}, en esta formulación el truncamiento
+no cumple ese papel --la condición de radiación ya liga $a_m(0)$ con
+$a_m'(0)$ y descarta la rama creciente--, sino el de mantener el ajuste
+numéricamente tratable. La diferencia importa para interpretar el piso
+evanescente de §\ref{sec:nb03_piso}: es el costo de una elección de método, no
+una barrera matemática.
 
 La condición de Cauchy se impone de forma exacta en la arquitectura,
 \begin{equation}
@@ -1122,72 +1126,88 @@ una propiedad de las realizaciones a esta distancia y no del ajuste. Fuente:
 \texttt{results/nb03\_estadistica\_conjunto.json}, generado por
 \texttt{scripts/experiments/nb03\_estadistica\_conjunto.py}.
 
-\subsection{Ensayo de extensión a \texorpdfstring{$z=2\lambda$}{z=2 lambda}: resultado negativo}
+\subsection{Extensión de la validación a \texorpdfstring{$z=2\lambda$}{z=2 lambda}}
 \label{sec:nb03_extension}
 
-La validación reportada se limita a $z=1\lambda$. Se ensayó extenderla a
-$2\lambda$ partiendo del punto de control validado de cada pantalla y
-reentrenando únicamente sobre el residuo, con un presupuesto uniforme de
-$180$~s por pantalla. A diferencia del resto del capítulo, \textbf{este ensayo
-se ejecutó en CPU} con cuatro hilos, de modo que su presupuesto de cómputo
-efectivo no es comparable con el de los experimentos en GPU.
+La validación de la Sección~\ref{sec:nb03_resultados_z1} se sitúa en
+$z=1\lambda$, que según la Sección~\ref{sec:nb03_piso} es la distancia más
+desfavorable del rango considerado: allí el piso evanescente alcanza el
+$3.818\%$ y el patrón aún no ha madurado. Se ensayó por tanto extender la
+validación a $2\lambda$, donde el piso cae al $0.456\%$.
+
+El procedimiento parte del punto de control ya validado de cada pantalla en
+$1\lambda$, reinstancia el mismo modelo de Cauchy dura con la distancia
+ampliada y reentrena únicamente sobre el residuo modal normalizado, con un
+presupuesto uniforme de $120$~s por pantalla. No se emplean etiquetas
+interiores ni se usa el campo de referencia para seleccionar el punto de
+control.
 
 \begin{table}[htbp]
 \centering
 \begin{threeparttable}
-\caption{Ensayo de extensión a $z=2\lambda$ con presupuesto uniforme.}
+\caption{Validación de \textit{speckle} con pantalla aleatoria en $z=2\lambda$.}
 \label{tab:nb03_z2}
-\begin{tabular}{lcccc}
+\begin{tabular}{lcccccc}
 \toprule
-Pantalla & $L^2$ propagante & $L^2$ complejo & Máximo propagante & Piso evan. \\
+Pantalla & $L^2$ complejo & $L^2$ propagante & Máximo sobre $z$ & Coherencia & $C_\text{ref}$ & $C_\text{PINN}$ \\
 \midrule
-42   & 1.690\% & 1.750\% & 2.499\% & 0.456\% \\
-123  & 6.144\% & \textbf{6.151\%} & 7.373\% & 0.292\% \\
-321  & 8.069\% & \textbf{8.082\%} & 10.010\% & 0.462\% \\
-777  & 4.178\% & 4.192\% & \textbf{5.651\%} & 0.340\% \\
-2026 & 1.047\% & 1.111\% & 1.722\% & 0.371\% \\
+42   & 1.038\% & 0.932\% & 1.165\% & 0.999951 & 1.1595 & 1.1621 \\
+123  & 0.941\% & 0.894\% & 1.081\% & 0.999961 & 1.0684 & 1.0689 \\
+321  & 1.006\% & 0.893\% & 1.078\% & 0.999951 & 0.9391 & 0.9377 \\
+777  & \textbf{0.864\%} & 0.794\% & 0.999\% & 0.999965 & 1.0116 & 1.0123 \\
+2026 & 1.117\% & 1.054\% & 1.054\% & 0.999960 & 0.8374 & 0.8369 \\
 \midrule
-Media & 4.226\% & 4.257\% & \textbf{5.451\%} & 0.384\% \\
+Media & \textbf{0.993\%} & 0.914\% & 1.075\% & 0.999958 & --- & --- \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
-    \item Presupuesto idéntico de $180$~s para las cinco pantallas. Dos de
-    ellas superan el umbral del $5\%$ en el error final y tres lo superan en el
-    máximo sobre los planos evaluados; la media del máximo propagante queda
-    también por encima. Ejecutado en CPU con cuatro hilos
-    (\texttt{"device": "cpu"} en el archivo fuente), no en la GPU empleada en el
-    resto del capítulo. Fuente:
-    \texttt{results/nb03\_distance\_pilot/z2\_cinco\_uniforme\_180s/}.
+    \item Las cinco pantallas superan los seis criterios de aceptación: $L^2$
+    complejo por debajo del $5\%$, coherencia y correlación de intensidad por
+    encima de $0.99$, diferencia de contraste frente a su propia referencia
+    menor que $0.05$, error propagante por debajo del $5\%$ en los $201$ planos
+    evaluados, y condición de Cauchy dura satisfecha por debajo de $10^{-6}$.
+    La diferencia de contraste media es de $0.0012$ y la máxima de $0.0027$; el
+    residuo modal normalizado, de $5.02\times10^{-3}$ en media. Presupuesto
+    uniforme de $120$~s por pantalla en GPU. Fuente:
+    \texttt{results/nb03\_distance\_pilot/z2\_omega1\_five\_120s/}, generado por
+    \texttt{notebooks/03b\_validacion\_speckle\_2d\_z2lambda.ipynb}.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-\textbf{La extensión a $2\lambda$ no supera el criterio de aceptación} y se
-reporta aquí como resultado negativo. Un segundo hecho agrava el diagnóstico:
-el error no decrece de forma monótona con el presupuesto de cómputo. Con
-$120$~s en lugar de $180$~s, la pantalla 321 había registrado $3.108\%$ y la
-123, $4.457\%$; al aumentar el tiempo empeoran a $8.069\%$ y $6.144\%$. Un
-refinamiento que se degrada al recibir más iteraciones indica que el
-procedimiento no converge de forma estable en ese régimen, no que le falte
+El error medio es de $0.993\%$, tres veces menor que el de $1\lambda$. La mejora
+no procede del modelo sino de la distancia: el $L^2$ complejo está dominado por
+el piso evanescente (Sección~\ref{sec:nb03_piso}), que a $2\lambda$ es ocho
+veces más pequeño. La componente propagante, que es la que mide el ajuste, pasa
+de $0.042\%$ a $0.914\%$ --es decir, empeora al duplicar el recorrido, lo cual
+es esperable-- pero se mantiene un orden de magnitud por debajo del umbral.
+
+\textbf{Un ensayo anterior a esta misma distancia no superaba el criterio, y
+conviene explicar por qué.} Con un presupuesto mayor ($180$~s por pantalla) se
+había obtenido un error medio del $4.226\%$, con dos de las cinco pantallas por
+encima del $5\%$, y con un comportamiento no monótono: aumentar el tiempo de
+cómputo empeoraba el resultado en tres de ellas. Aquel ensayo partía de puntos
+de control de la familia $\omega_0=30$ --anterior a la calibración descrita en
+la Sección~\ref{sec:nb03_omega}-- y se ejecutó en CPU. El ensayo que recoge la
+Tabla~\ref{tab:nb03_z2} parte en cambio de los modelos calibrados con
+$\omega_0=1$, y obtiene un error cuatro veces menor con dos tercios del
 presupuesto.
 
-La validación analítica de §\ref{sec:nb02b_extension} permite acotar el
-diagnóstico. Con la misma arquitectura, el mismo $\omega_0$ y el mismo
-presupuesto, pero con un campo de solución exacta, el error a $2\lambda$ es de
-$0.195\%$; con pantallas aleatorias, de $4.226\%$ en media y con dos de cinco
-por encima del umbral. \textbf{La distancia por sí sola no es el obstáculo}: la
-representación modal y la condición de Cauchy dura sostienen $2\lambda$ cuando
-el campo es propagante puro y de amplitudes conocidas. Lo que no se sostiene es
-el procedimiento de refinamiento sobre una realización aleatoria, cuyo espectro
-de amplitudes es mucho más disparejo y cuya optimización, como muestra el
-comportamiento no monótono descrito arriba, no converge de forma estable en ese
-régimen.
+La diferencia entre ambos no es por tanto la distancia sino la calibración de
+partida, y constituye la tercera comprobación independiente de la regla
+$\omega_0\approx k/2\pi$, tras el barrido sobre \textit{speckle}
+(Tabla~\ref{tab:nb03_omega0}) y la validación analítica
+(§\ref{sec:nb02b_extension}). Es también la de mayor consecuencia, porque
+amplía el alcance validado del trabajo.
 
-En consecuencia, el alcance validado de este trabajo para la simulación de
-speckle es $z=1\lambda$. Cualquier afirmación sobre distancias mayores
-exigiría un procedimiento de optimización distinto y su propia campaña de
-validación; lo que el resultado analítico añade es que esa campaña no tendría
-que rediseñar la arquitectura, sino la estrategia de entrenamiento.
+\textbf{Qué queda establecido y qué no.} Queda establecido que la formulación
+modal propaga \textit{speckle} aleatorio hasta $z=2\lambda$ sobre cinco
+realizaciones de fase independientes, cumpliendo Helmholtz por el residuo
+modal, satisfaciendo la condición de Cauchy de forma exacta y concordando con
+el espectro angular en los $201$ planos evaluados. No queda establecido el
+funcionamiento a una distancia arbitraria: cada extensión exige su propia
+campaña de validación, y el alcance de este trabajo es el intervalo
+$z\in[0,2\lambda]$.
 
 \subsection{Tiempo de inferencia frente a la referencia de propagación}
 \label{sec:nb03_inferencia}
@@ -1309,11 +1329,13 @@ conviene declarar de forma explícita:
     y no acuerdo con un método numérico independiente.
 
     \item \textbf{Alcance en distancia.} La simulación de speckle está
-    validada en $z=1\lambda$; el ensayo con pantallas aleatorias a
-    $2\lambda$ de §\ref{sec:nb03_extension} no supera el criterio. La
-    arquitectura sí se valida hasta $2\lambda$ contra solución analítica
-    (§\ref{sec:nb02b_extension}), pero eso acota la causa del fallo, no
-    extiende el alcance del resultado de speckle.
+    validada en $z=1\lambda$ y en $z=2\lambda$, con cinco realizaciones de fase
+    en cada distancia (§\ref{sec:nb03_resultados_z1} y
+    §\ref{sec:nb03_extension}), y la arquitectura se valida hasta $2\lambda$
+    contra solución analítica (§\ref{sec:nb02b_extension}). Nada de ello
+    autoriza a afirmar el funcionamiento a una distancia arbitraria: cada
+    extensión parte del punto de control de la anterior y exige su propia
+    campaña de validación.
 \end{itemize}
 
 % ──────────────────────────────────────────────────────────────────────────────
@@ -1403,7 +1425,7 @@ NB02B-$2\lambda$ & Extensión analítica (campo propagante puro) & Completo & $L
 NB03-A & Speckle, referencia por espectro angular & Completo & $C=0.9661$ (conjunto, 64 real.) \\
 NB03-B & PINN-SIREN modal en $z=1\lambda$ & Completo & $L^2 = 3.161\%$ (5 pantallas) \\
 NB03-C & Inferencia frente al espectro angular & Completo & Sin ganancia de tiempo \\
-NB03-D & Speckle con pantalla aleatoria en $z=2\lambda$ & No supera el criterio & $L^2 = 4.226\%$ (2/5 $>5\%$) \\
+NB03-D & Speckle con pantalla aleatoria en $z=2\lambda$ & Completo & $L^2 = 0.993\%$ (5 pantallas) \\
 NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
@@ -1417,12 +1439,17 @@ NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\
 \end{threeparttable}
 \end{table}
 
-Los tres experimentos completados verifican la hipótesis de precisión. NB01 y
-NB02 cumplen el umbral $L^2 < 5\%$ con amplitud frente a soluciones analíticas.
-NB03 cumple el umbral en las cinco pantallas de fase independientes frente a
-la referencia por espectro angular, con la precisión adicional de que el error
-residual está dominado por la fracción evanescente del espectro y no por el
-ajuste de la red (Sección~\ref{sec:nb03_resultados_z1}). Debe señalarse, no
+Los experimentos completados verifican la hipótesis de precisión. NB01 y NB02
+cumplen el umbral $L^2 < 5\%$ con amplitud frente a soluciones analíticas, y
+NB02B confirma que la arquitectura modal adoptada lo cumple también contra
+solución exacta, tanto en $z=1\lambda$ como en $z=2\lambda$
+(§\ref{sec:nb02b_arquitectura} y §\ref{sec:nb02b_extension}). NB03 cumple el
+umbral sobre cinco pantallas de fase independientes frente a la referencia por
+espectro angular en las dos distancias validadas: $3.161\%$ en $z=1\lambda$ y
+$0.993\%$ en $z=2\lambda$ (§\ref{sec:nb03_resultados_z1} y
+§\ref{sec:nb03_extension}), con la precisión adicional de que el error residual
+está dominado por la fracción evanescente del espectro y no por el ajuste de la
+red. Debe señalarse, no
 obstante, que la hipótesis (i) exige para NB03 una referencia \emph{numérica
 independiente}, y la empleada aquí es semianalítica
 (Sección~\ref{sec:nb03_referencia}): la verificación de esa hipótesis en su
@@ -1437,7 +1464,7 @@ independiente del método (Sección~\ref{sec:nb03_referencia}). Sí se midió, e
 cambio, el tiempo frente a la referencia de propagación comprometido en los
 alcances, y el resultado es negativo: el espectro angular resulta un orden de
 magnitud más rápido para un plano, la ventaja de la red en evaluación por lotes
-es de un factor $1.63$, y el costo de entrenamiento por realización exigiría del
+es de un factor $1.76$, y el costo de entrenamiento por realización exigiría del
 orden de $10^{5}$ evaluaciones de la misma pantalla para amortizarse
 (Sección~\ref{sec:nb03_inferencia}). La contribución de este trabajo reside por
 tanto en el planteamiento y la precisión, no en el tiempo de cómputo.
