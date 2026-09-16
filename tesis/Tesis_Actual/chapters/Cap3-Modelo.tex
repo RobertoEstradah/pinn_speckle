@@ -18,7 +18,12 @@ $\Omega_{03}=[-10,10]\times[0,20]$ en coordenadas $(x/\lambda,z/\lambda)$,
 manteniendo $k=2\pi$. Ese es el dominio declarado como objetivo; la validación
 reportada en el Capítulo~\ref{cap4:resultados} se realiza sobre el subdominio
 $[-10,10]\times[0,1]$, y la extensión a distancias mayores se documenta con su
-propio alcance.
+propio alcance. Conviene separar desde ahora dos alcances que no coinciden: la
+\emph{arquitectura} se valida contra solución analítica hasta
+$\tilde z=2\lambda$ (§\ref{sec:nb02b_extension}), mientras que la
+\emph{simulación de speckle} con pantalla aleatoria permanece validada en
+$\tilde z=1\lambda$ (§\ref{sec:nb03_extension}). Lo primero no implica lo
+segundo.
 
 Se plantean tres experimentos sucesivos de complejidad creciente:
 
@@ -72,15 +77,22 @@ correlación evita que la condición de entrada quede dominada por componentes
 evanescentes no observables en la región de propagación:
 %
 \begin{equation}
-    E(x, 0) = \mathcal{P}_{|k_x|\leq k}
-    \left\{e^{i\psi(x)}\right\}, \quad
+    E(x, 0) = e^{i\psi(x)}, \quad
     \psi(x)=\mathcal{G}_{\ell_\phi}[\xi(x)],
     \quad \xi(x)\sim\mathcal{N}(0,1),
     \label{eq:frontera_rugosa}
 \end{equation}
 %
-donde $\mathcal{P}_{|k_x|\leq k}$ conserva los modos propagantes del espectro
-angular. La derivada de entrada se fija mediante la condición saliente:
+Conviene distinguir aquí dos cosas que no coinciden. La
+ecuación~\eqref{eq:frontera_rugosa} es la condición del \emph{problema}, sin
+proyectar, y es la que recibe la referencia por espectro angular: su espectro
+conserva las componentes evanescentes, cuyo decaimiento es la continuación
+exacta del propio espectro angular. La \emph{red}, en cambio, recibe la
+proyección $\mathcal{P}_{|k_x|\leq k}$ de esa condición al cono propagante,
+porque su base modal sólo contiene esos modos. De esa asimetría --referencia sin
+proyectar frente a modelo proyectado-- nace el piso evanescente que se cuantifica
+en §\ref{sec:nb03_piso}; si la condición del problema fuera la proyectada, ese
+piso sería idénticamente cero. La derivada de entrada se fija mediante la condición saliente:
 %
 \begin{equation}
     \partial_z E(x,0)=
@@ -99,7 +111,7 @@ forma exacta,
 %
 \begin{equation}
     u(\tilde x,\tilde z)=\sum_{m} a_m(\tilde z)\,e^{i k_{x,m}\tilde x},
-    \qquad k_{x,m}=2\pi m ,
+    \qquad k_{x,m}=\frac{2\pi m}{W},\quad W=20 ,
     \label{eq:desarrollo_modal}
 \end{equation}
 %
@@ -111,7 +123,10 @@ diferenciales ordinarias desacopladas,
     \label{eq:edo_modal_cap3}
 \end{equation}
 %
-La base se trunca a los $41$ modos propagantes ($k_{x,m}^2<k^2$). Los modos
+La base se trunca a los $41$ modos propagantes, los que cumplen
+$k_{x,m}^2\leq k^2$, es decir $|m|\leq20$; la desigualdad es no estricta, de
+modo que los dos modos de corte rasante $m=\pm20$ --para los que $k_{x,m}=k$ y
+por tanto $k_{z,m}=0$-- quedan incluidos. Los modos
 evanescentes se descartan porque su rama creciente $e^{+|\kappa_m|\tilde z}$
 hace que la solución no dependa de forma continua de los datos; el truncamiento
 espectral es la regularización de este problema de Cauchy analizada por
@@ -144,11 +159,19 @@ $s_m=k^2\max\!\left(|a_m(0)|,\,|a_m'(0)|/k,\,\epsilon\right)$, con $\epsilon$ un
 piso que evita divisiones por cero, de modo que los modos de amplitud pequeña
 contribuyen al residuo en la misma escala que los dominantes.
 
-La extensión a distancias mayores que $1\lambda$ sí emplea una división del
-dominio longitudinal en bloques, en la que cada bloque recibe el campo y la
-derivada de la interfaz anterior por la misma construcción de la
-ecuación~\eqref{eq:cauchy_dura_cap3}; esa extensión se reporta por separado y
-con su propio alcance de validación.
+Para distancias mayores que $1\lambda$ se ensayaron tres estrategias, y
+conviene no confundirlas. La reportada sobre pantallas aleatorias
+(§\ref{sec:nb03_extension}) \textbf{no divide el dominio}: parte del punto de
+control ya validado en $1\lambda$ para cada pantalla, reinstancia el mismo
+modelo de Cauchy dura con la distancia ampliada y reentrena únicamente sobre el
+residuo normalizado. La reportada en la validación analítica
+(§\ref{sec:nb02b_extension}) tampoco divide nada: es una sola red sobre
+$\tilde z\in[0,2]$ con la condición impuesta sólo en $\tilde z=0$, entrenada
+desde el principio. El encadenamiento por bloques --en el que cada bloque
+recibe el campo y la derivada de la interfaz anterior por la misma construcción
+de la ecuación~\eqref{eq:cauchy_dura_cap3}-- también se implementó y se ensayó,
+pero \textbf{no es el procedimiento de ninguno de los dos resultados que este
+trabajo reporta}.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Arquitectura SIREN}

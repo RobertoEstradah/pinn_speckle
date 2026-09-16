@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Verifica cada cifra de la seccion NB03 de Cap4 contra su archivo fuente."""
 import json
+import pathlib
 import sys
 import numpy as np
 
@@ -13,8 +14,11 @@ ok = fallo = 0
 
 def chk(etiqueta, en_tesis, real, tol=5e-4):
     global ok, fallo
-    bien = abs(en_tesis - real) <= tol * max(1.0, abs(real))
-    print(f"  {'OK   ' if bien else 'FALLA'} {etiqueta:<46} tesis={en_tesis:<12} real={real}")
+    if isinstance(en_tesis, str) or isinstance(real, str):
+        bien = en_tesis == real
+    else:
+        bien = abs(en_tesis - real) <= tol * max(1.0, abs(real))
+    print(f"  {'OK   ' if bien else 'FALLA'} {etiqueta:<46} tesis={str(en_tesis):<12} real={real}")
     ok, fallo = ok + bien, fallo + (not bien)
 
 
@@ -105,5 +109,143 @@ for modos, l2g, l2t, res, cau in ((1, 0.0149, 0.0030, 1.74e-3, 1.7e-7),
     chk(f"{modos} modos: coherencia", 1.000000,
         round(m["target_complex_coherence"], 6))
     chk(f"{modos} modos: pasos", 8580, casos[modos]["cumulative_recorded_epochs"])
+
+# ── extension analitica a 2 lambda (tab:nb02b_z2) ─────────────────────────
+print("\nExtension analitica a z=2 lambda:")
+z2 = json.load(open(rf"{R}\results\nb02b_modal_bridge\z_2lambda\summary.json", encoding="utf-8"))
+casos2 = {c["n_complex_modes"]: c for c in z2["cases"]}
+chk("z2: omega_0 de la corrida", 1.0, z2["architecture"]["first_omega"])
+chk("z2: dominio z", 2.0, float(z2["physics"]["domain_z_lambda"][1]))
+chk("z2: los tres aceptados", True, z2["all_cases_accepted"])
+for modos, l2g, l2t, mx, coh, res in ((1, 0.210, 0.150, 0.455, 1.000000, 7.68e-3),
+                                      (5, 0.334, 0.180, 0.560, 1.000000, 6.63e-3),
+                                      (41, 0.195, 0.184, 0.264, 0.999999, 4.13e-3)):
+    m = casos2[modos]["metrics"]
+    chk(f"z2 {modos} modos: L2 global", l2g,
+        round(100 * m["global_complex_relative_l2"], 3), tol=2e-2)
+    chk(f"z2 {modos} modos: L2 en z=2", l2t,
+        round(100 * m["target_complex_relative_l2"], 3), tol=2e-2)
+    chk(f"z2 {modos} modos: maximo sobre z", mx,
+        round(100 * m["max_l2_over_z"], 3), tol=2e-2)
+    chk(f"z2 {modos} modos: coherencia", coh,
+        round(m["target_complex_coherence"], 6))
+    chk(f"z2 {modos} modos: residuo", res,
+        float(f'{m["helmholtz_field_residual_normalized_rmse"]:.2e}'), tol=2e-2)
+
+# ── epocas de la extension analitica (tab:nb02b_z2, nota) ──────────────────
+chk("z2: pasos de L-BFGS de la etapa final", 90, z2["training"]["epochs_per_case"])
+for modos in (1, 5, 41):
+    chk(f"z2 {modos} modos: pasos acumulados", 8590,
+        casos2[modos]["cumulative_recorded_epochs"])
+
+# ── benchmark de inferencia (tab:nb03_inferencia) ──────────────────────────
+print("\nBenchmark de inferencia:")
+bm = json.load(open(rf"{R}\results\nb03_benchmark_inferencia.json", encoding="utf-8"))
+tm = bm["timings_ms"]
+for clave, media, desv, minimo in (
+        ("asm_un_plano", 0.044, 0.014, 0.039),
+        ("pinn_un_plano", 0.819, 0.340, 0.552),
+        ("asm_101_planos", 3.246, 0.087, 3.164),
+        ("pinn_101_planos", 1.845, 0.184, 1.660)):
+    chk(f"{clave}: media", media, round(tm[clave]["mean"], 3), tol=2e-2)
+    chk(f"{clave}: desv", desv, round(tm[clave]["std"], 3), tol=5e-2)
+    chk(f"{clave}: minimo", minimo, round(tm[clave]["min"], 3), tol=2e-2)
+chk("razon un plano (ASM sobre PINN)", 18.5,
+    round(tm["pinn_un_plano"]["mean"] / tm["asm_un_plano"]["mean"], 1), tol=2e-2)
+chk("razon 101 planos (PINN sobre ASM)", 1.76,
+    round(tm["asm_101_planos"]["mean"] / tm["pinn_101_planos"]["mean"], 2), tol=2e-2)
+chk("costo de entrenamiento (s)", 351.9, round(bm["training_cost_seconds"], 1))
+am = bm["amortization"]["101_planos"]
+chk("ahorro por evaluacion (ms)", 1.40, round(am["ahorro_ms_por_evaluacion"], 2), tol=2e-2)
+chk("evaluaciones para amortizar (x1e5)", 2.5,
+    round(am["evaluaciones_para_amortizar"] / 1e5, 1), tol=5e-2)
+
+# ── ensayo de extension a 2 lambda con speckle (tab:nb03_z2) ───────────────
+print("\nEnsayo de speckle a z=2 lambda:")
+pil = json.load(open(rf"{R}\results\nb03_distance_pilot\z2_cinco_uniforme_180s"
+                     rf"\summary.json", encoding="utf-8"))
+por_semilla = {c["seed"]: c["distances"]["z2"]["metrics"] for c in pil["cases"]}
+chk("piloto z2: dispositivo", "cpu", pil["runtime"]["device"])
+chk("piloto z2: presupuesto (s)", 180.0, float(pil["configuration"]["seconds"]))
+esperado = ((42, 1.690, 1.750, 2.499, 0.456), (123, 6.144, 6.151, 7.373, 0.292),
+            (321, 8.069, 8.082, 10.010, 0.462), (777, 4.178, 4.192, 5.651, 0.340),
+            (2026, 1.047, 1.111, 1.722, 0.371))
+acum = [0.0, 0.0, 0.0, 0.0]
+for semilla, prop, full, mx, piso in esperado:
+    m = por_semilla[semilla]
+    chk(f"z2 pantalla {semilla}: L2 propagante", prop,
+        round(100 * m["l2_propagating_final"], 3), tol=2e-2)
+    chk(f"z2 pantalla {semilla}: L2 complejo", full,
+        round(100 * m["l2_full_final"], 3), tol=2e-2)
+    chk(f"z2 pantalla {semilla}: maximo propagante", mx,
+        round(100 * m["l2_propagating_max"], 3), tol=2e-2)
+    chk(f"z2 pantalla {semilla}: piso evanescente", piso,
+        round(100 * m["evanescent_floor_final"], 3), tol=2e-2)
+    for i, k in enumerate(("l2_propagating_final", "l2_full_final",
+                           "l2_propagating_max", "evanescent_floor_final")):
+        acum[i] += 100 * m[k] / 5
+for etiqueta, valor, real in (("L2 propagante", 4.226, acum[0]),
+                              ("L2 complejo", 4.257, acum[1]),
+                              ("maximo propagante", 5.451, acum[2]),
+                              ("piso evanescente", 0.384, acum[3])):
+    chk(f"z2 media: {etiqueta}", valor, round(real, 3), tol=2e-2)
+
+# ── multisemilla de NB02 (tab:multiseed) ───────────────────────────────────
+print("\nMultisemilla NB02:")
+ms = json.load(open(rf"{R}\results\multiseed_results.json", encoding="utf-8"))
+for semilla, l2, epocas in ((42, 0.1707, 8737), (123, 0.0949, 9441), (777, 0.3100, 10443)):
+    chk(f"multiseed {semilla}: L2", l2, ms[str(semilla)]["l2_avg"], tol=2e-2)
+    chk(f"multiseed {semilla}: epocas Adam", epocas, ms[str(semilla)]["adam_epochs"])
+vals = [ms[str(x)]["l2_avg"] for x in (42, 123, 777)]
+media = sum(vals) / 3
+desv = (sum((v - media) ** 2 for v in vals) / 3) ** 0.5
+chk("multiseed: media", 0.192, round(media, 3), tol=2e-2)
+chk("multiseed: desv. poblacional", 0.089, round(desv, 3), tol=2e-2)
+
+# ── ablacion de lambda (tab:ablacion_lambda) ───────────────────────────────
+print("\nAblacion de lambda:")
+ab = json.load(open(rf"{R}\results\ablation_lambda.json", encoding="utf-8"))
+chk("ablacion 0.01: L2", 0.163, ab["0.01"]["l2_avg"], tol=2e-2)
+chk("ablacion 0.1: L2", 0.171, ab["0.1"]["l2_avg"], tol=2e-2)
+chk("ablacion 1.0: no converge", False, ab["1.0"]["converged"])
+
+# ── barrido de omega_0 de NB01 (tab:omega0_sweep) ──────────────────────────
+print("\nBarrido de omega_0 (NB01):")
+sw = json.load(open(rf"{R}\explorations\ntk_spectral_bias_diagnostics\output"
+                    rf"\omega0_sweep.json", encoding="utf-8"))
+for w, perdida in (("1.0", 0.2656), ("5.0", 0.5355), ("15.0", 0.4375), ("30.0", 0.6030)):
+    chk(f"omega_0={w}: perdida final", perdida, round(sw[w]["loss_final"], 4), tol=2e-2)
+
+# ── fraccion I>2<I> por pantalla (Cap4, seccion de Goodman) ────────────────
+print("\nFraccion de pixeles con I>2<I>:")
+ec = json.load(open(rf"{R}\results\nb03_estadistica_conjunto.json", encoding="utf-8"))
+fp = [f["fraction_above_2mean_pinn"] for f in ec["per_screen"]]
+fr = [f["fraction_above_2mean_reference"] for f in ec["per_screen"]]
+chk("PINN: minimo por pantalla", 0.1309, round(min(fp), 4), tol=2e-2)
+chk("PINN: maximo por pantalla", 0.1514, round(max(fp), 4), tol=2e-2)
+chk("referencia: minimo por pantalla", 0.1299, round(min(fr), 4), tol=2e-2)
+chk("referencia: maximo por pantalla", 0.1543, round(max(fr), 4), tol=2e-2)
+chk("conjunto PINN", 0.1467, round(ec["ensemble"]["fraction_above_2mean_pinn"], 4), tol=2e-2)
+chk("conjunto referencia", 0.1475,
+    round(ec["ensemble"]["fraction_above_2mean_reference"], 4), tol=2e-2)
+chk("valor teorico exp(-2)", 0.1353,
+    round(ec["ensemble"]["expected_fraction_above_2mean"], 4), tol=2e-2)
+
+# ── guardas de honestidad sobre citas sin copia local ──────────────────────
+# Zhang et al. (2025) es la unica cifra externa cuya fuente primaria no esta en
+# disco. Mientras siga asi, su nota de alcance debe permanecer en la tabla.
+print("\nGuardas de citas sin copia local:")
+CAP4 = pathlib.Path(rf"{R}\tesis\Tesis_Actual\chapters\Cap4-Resultados.tex").read_text(
+    encoding="utf-8")
+zhang_local = any(
+    "zhang" in q.name.lower()
+    for q in pathlib.Path(rf"{R}\master_supporting_docs\supporting_papers\referencias").rglob("*.pdf")
+)
+chk("Zhang: hay copia local?", False, zhang_local)
+if not zhang_local:
+    chk("Zhang: la fila lleva marca de nota", True,
+        r"1.40--5.82\tnote{c}" in CAP4)
+    chk("Zhang: la nota declara el alcance", True,
+        "Alcance de la verificación" in CAP4 and "no se dispuso del texto completo" in CAP4)
 
 print(f"\n==== {ok} verificadas, {fallo} discrepancias ====")

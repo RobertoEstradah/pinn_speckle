@@ -97,8 +97,20 @@ Al conseguir cada una, guardarla en
   | Ficha en NASA ADS | `https://ui.adsabs.harvard.edu/abs/2025JCoPh.52713798Z/abstract` |
   | Acceso institucional UJAT a Elsevier | — |
 
-  **No existe preprint.** Se buscó en arXiv y en repositorios institucionales
-  el 2026-09-15 y no hay versión de autor depositada.
+  **No existe preprint. Confirmado dos veces**, el 2026-09-15 y el 2026-09-16,
+  en arXiv y en buscadores académicos. El antecedente PIRBN sí está abierto
+  (arXiv:2304.06234), pero es otro artículo y no contiene la cifra que la tesis
+  cita.
+
+  **Lo que sí se pudo verificar del resumen publicado (2026-09-16):** el rango
+  1.40–5.82 % corresponde a dispersión electromagnética de **uno y dos
+  cilindros** a escala sub-longitud de onda, contrastada con simulación
+  numérica. Ese contexto ya se incorporó a la nota (c) de `tab:comparativa` en
+  Cap4, junto con la declaración explícita de que es la única cifra de esa tabla
+  cuya fuente primaria no se tuvo a la vista.
+
+  **Sigue siendo la prioridad número uno de esta lista**, porque es la única
+  referencia sin copia local que sostiene un número dentro de la tesis.
 
   **La vía más efectiva es escribir a los autores**, que pueden compartir su
   propio trabajo legítimamente. Los correos están en la primera página del
@@ -221,7 +233,9 @@ el 2026-09-15.
 | Media | 3 | Moseley y Wang (NTK): **acceso abierto en arXiv**. Karniadakis: de pago |
 | Baja, acceso institucional | 5 | Jin, McKay, Lagaris, Hornik, Nocedal |
 
-Quedan **9** sin copia local: 2 de prioridad alta, 3 de media --dos de ellas descargables de arXiv-- y 4 de baja. A esas se suman 2 con copia parcial (Goodman y Born y Wolf).
+**Actualizado el 2026-09-16: quedan 6 sin copia local.** Se obtuvieron Moseley (arXiv:2006.11894) y Wang, Yu y Perdikaris (arXiv:2007.14527), y ambas atribuciones se verificaron contra el texto. De las 6 restantes, **sólo Zhang sostiene una cifra de la tesis**; las otras cinco --Jin, McKay, Lagaris, Hornik y Nocedal-- son de contexto. A ellas se suman 2 con copia parcial (Goodman y Born y Wolf).
+
+De las 28 claves citadas, **22 tienen copia local verificable**.
 
 
 ---

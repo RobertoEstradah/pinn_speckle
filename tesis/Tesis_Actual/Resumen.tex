@@ -22,11 +22,15 @@ que la base modal no puede representar; medido sobre el subespacio
 propagante, el error es de $0.042\%$. El contraste del conjunto es
 $C=0.9489$. El contraste de referencia promedio de los conjuntos de 64
 realizaciones es $C=0.9661$.
-Una estrategia de optimización bifásica Adam~+~L-BFGS y el muestreo por
-hipercubo latino (LHS) se emplean en el protocolo de entrenamiento.
-La reproducibilidad del método fue verificada con tres semillas independientes,
+En las validaciones 1D y 2D se emplea una estrategia de optimización bifásica
+Adam~+~L-BFGS con muestreo por hipercubo latino (LHS); la formulación modal del
+speckle usa un protocolo distinto, sólo con Adam y sin LHS, porque su pérdida
+contiene únicamente el residuo modal. La reproducibilidad frente a la
+inicialización se verificó en el caso 2D con tres semillas independientes,
 obteniendo un promedio componente a componente de error $L^2$ de
-$0.192 \pm 0.089\%$ (desviación estándar poblacional).
+$0.192 \pm 0.089\%$ (desviación estándar poblacional); en la formulación modal
+las cinco realizaciones varían la pantalla física y no la semilla de la red, de
+modo que esa robustez no queda caracterizada.
 
 \bigskip
 

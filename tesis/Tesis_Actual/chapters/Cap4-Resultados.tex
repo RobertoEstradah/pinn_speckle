@@ -644,10 +644,13 @@ Modos & $L^2$ global & $L^2$ en $\tilde z=1\lambda$ & Residuo de Helmholtz & Cau
 \end{threeparttable}
 \end{table}
 
-Los tres casos superan los criterios por más de dos órdenes de magnitud, y el
-error \emph{disminuye} al ampliar la base, de $0.0149\%$ con un modo a
-$0.0078\%$ con $41$. Esto último es lo que se espera de una representación que
-converge: añadir modos añade capacidad sin degradar el ajuste. Conviene
+Los tres casos superan los criterios por más de dos órdenes de magnitud. El
+error global disminuye al ampliar la base, de $0.0149\%$ con un modo a
+$0.0078\%$ con $41$, mientras que el error en el plano objetivo recorre el
+camino contrario, de $0.0030\%$ a $0.0073\%$. Ambas cifras permanecen en el
+mismo orden de magnitud, $10^{-3}$ por ciento, de modo que lo que cabe afirmar
+es que ampliar la base no degrada el ajuste de forma apreciable, no que lo
+mejore de forma monótona. Conviene
 subrayar qué se mide aquí y qué no. Estas cifras no son comparables con el
 $3.161\%$ de la Sección~\ref{sec:nb03_resultados_z1}: allí el $L^2$ total está
 dominado por el piso evanescente de la pantalla aleatoria, que la base modal no
@@ -671,6 +674,97 @@ queda respaldada en tres regímenes distintos: la solución analítica $\cos(kx)
 de NB01 (Tabla~\ref{tab:omega0_sweep}), el speckle de NB03
 (Tabla~\ref{tab:nb03_omega0}) y la superposición de ondas planas de esta
 sección.
+
+\subsection{Extensión analítica de la distancia a
+\texorpdfstring{$\tilde z=2\lambda$}{z=2 lambda}}
+\label{sec:nb02b_extension}
+
+La sección anterior valida la arquitectura sobre $\tilde z\in[0,1]$, que es el
+alcance en el que se reporta el speckle. Como el ensayo con pantallas
+aleatorias a $2\lambda$ no supera el criterio (§\ref{sec:nb03_extension}),
+interesa separar dos causas posibles de ese fracaso: que la arquitectura no
+sostenga la distancia, o que el obstáculo esté en la realización aleatoria y en
+la optimización. El experimento analítico de
+§\ref{sec:nb02b_arquitectura} permite decidirlo, porque su campo de referencia
+tiene expresión cerrada y puede evaluarse exactamente también en
+$\tilde z=2\lambda$.
+
+Se repitió por tanto la prueba con el dominio extendido a
+$\tilde z\in[0,2]$, sin cambiar nada más: misma clase \texttt{ModalSiren},
+mismos $\omega_0=1$ en la primera capa y $1$ en las internas, misma semilla y
+un presupuesto de optimización equivalente --las dos primeras etapas son
+idénticas y la final usa $90$ pasos de L-BFGS en lugar de $80$, un $12.5\%$
+más--. La condición de Cauchy se sigue imponiendo
+sólo en $\tilde z=0$; no hay división en bloques ni reinyección de datos en
+interfaces intermedias, de modo que la red debe sostener el doble de recorrido
+con la misma información inicial.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Validación analítica de extensión de distancia: arquitectura modal
+sobre $\tilde z\in[0,2]$.}
+\label{tab:nb02b_z2}
+\begin{tabular}{lcccc}
+\toprule
+Modos & $L^2$ global & $L^2$ en $\tilde z=2\lambda$ & Máximo sobre $\tilde z$ & Coherencia \\
+\midrule
+1  & 0.210\% & 0.150\% & 0.455\% & 1.000000 \\
+5  & 0.334\% & 0.180\% & 0.560\% & 1.000000 \\
+41 & \textbf{0.195\%} & 0.184\% & \textbf{0.264\%} & 0.999999 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Los tres casos superan los criterios de aceptación. Arquitectura
+    idéntica a la de la Tabla~\ref{tab:nb02b_arquitectura} y mismo protocolo en
+    las dos primeras etapas, con el dominio longitudinal extendido al doble; la
+    etapa final de L-BFGS emplea $90$ pasos frente a los $80$ de $1\lambda$
+    ($8{,}590$ frente a $8{,}580$ acumulados). Cada etapa reanuda desde el punto
+    de control de la anterior, dentro de esta misma corrida. El residuo de Helmholtz
+    normalizado es de $7.68\times10^{-3}$, $6.63\times10^{-3}$ y
+    $4.13\times10^{-3}$ respectivamente, y la condición de Cauchy dura se
+    mantiene en el orden de $10^{-8}$ en la derivada, igual que en
+    $1\lambda$: imponerla por construcción no se degrada con la distancia.
+    Fuente: \texttt{results/nb02b\_modal\_bridge/z\_2lambda/summary.json}.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/nb02b_extension_analitica_z2lambda.png}
+\caption[Validación analítica de extensión de distancia a $2\lambda$]{Validación
+analítica de extensión de distancia. Error $L^2$ y métricas asociadas frente al
+número de modos de la base, para la arquitectura modal de NB03 evaluada sobre
+$\tilde z\in[0,2]$ contra la solución exacta de la
+ecuación~\eqref{eq:campo_nb02b_arq}. Se trata de un campo propagante puro, no
+de una pantalla de fase aleatoria. Fuente:
+\texttt{results/nb02b\_modal\_bridge/z\_2lambda/figures/summary\_modes.png}.}
+\label{fig:nb02b_z2}
+\end{figure}
+
+La Tabla~\ref{tab:nb02b_z2} recoge las métricas y la
+Figura~\ref{fig:nb02b_z2} muestra su dependencia con el tamaño de la base. El
+error se mantiene por debajo del $0.35\%$ en los tres tamaños y el máximo a lo
+largo de la propagación no llega al $0.6\%$, sin dependencia monótona con el
+tamaño de la base. Comparado con
+$1\lambda$ (Tabla~\ref{tab:nb02b_arquitectura}) el error crece en torno a un
+orden de magnitud --de $0.0078\%$ a $0.195\%$ con $41$ modos--, lo cual es
+esperable al duplicar el recorrido con la misma información inicial, pero se
+mantiene dos órdenes de magnitud por debajo del umbral del $5\%$.
+
+\textbf{Qué autoriza a concluir este resultado y qué no.} Autoriza a afirmar
+que la arquitectura modal, la imposición dura de la condición de Cauchy y el
+residuo de Helmholtz se sostienen hasta $\tilde z=2\lambda$ en un problema con
+solución exacta. \textbf{No} autoriza a afirmar que la simulación de speckle
+esté validada a esa distancia: el campo de la
+ecuación~\eqref{eq:campo_nb02b_arq} es una superposición de unas pocas ondas
+planas de amplitud conocida, mientras que una pantalla de fase aleatoria
+produce un espectro de amplitudes dispares y una componente evanescente que la
+base no representa. La validación de speckle sigue siendo la de
+$\tilde z=1\lambda$ de la Sección~\ref{sec:nb03_resultados_z1}. Aplicar NB03 a
+pantallas aleatorias en $2\lambda$ es el experimento siguiente, todavía no
+realizado.
 
 \subsection{Formulación modal adoptada}
 \label{sec:nb03_config}
@@ -704,9 +798,8 @@ verificación numérica registrada da $1.28\times10^{-8}$ en RMSE, residuo de la
 aritmética en \texttt{float32} y no del ajuste. Una ecuación diferencial de segundo orden con valor y
 derivada fijados en un punto tiene solución única, por lo que la
 ecuación~\eqref{eq:cauchy_dura} restaura la unicidad perdida en
-§\ref{sec:nb03_diagnostico}. Esta estrategia de imponer la frontera dentro de la
-imponer la frontera dentro de la función de prueba, en lugar de penalizarla en
-la pérdida, sigue el mismo principio que \textcite{sukumar2022exact}, quienes
+§\ref{sec:nb03_diagnostico}. Esta estrategia de imponer la frontera dentro de
+la función de prueba, en lugar de penalizarla en la pérdida, sigue el mismo principio que \textcite{sukumar2022exact}, quienes
 lo aplican mediante funciones de distancia aproximadas para condiciones de
 Dirichlet, Neumann y Robin sobre fronteras geométricas; aquí el mecanismo es
 distinto --una prolongación polinómica que fija valor y derivada en un punto--
@@ -859,7 +952,30 @@ Media & \textbf{3.161\%} & 3.160\% & 0.999488 & --- & --- & 0.0055 \\
 \end{threeparttable}
 \end{table}
 
-La columna del piso evanescente permite interpretar correctamente la métrica, y la Figura~\ref{fig:nb03_modal} la resume.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/nb03_speckle_campo_z1.png}
+\caption[Patrón de speckle: PINN-SIREN modal frente a la referencia]{Patrón de
+\textit{speckle} simulado, pantalla $42$. Arriba, mapas de intensidad
+$|E|^2$ sobre el plano de propagación $(\tilde x,\tilde z)$ para la referencia
+por espectro angular (izquierda) y para la PINN-SIREN modal (derecha), en la
+misma escala de color; la línea discontinua marca el plano de validación
+$\tilde z=1\lambda$. Abajo, perfil transversal de intensidad en ese plano para
+ambas. La diferencia visible se concentra en las proximidades de
+$\tilde z=0$, donde la referencia presenta una estructura transversal fina que
+el modelo no reproduce y que se atenúa al propagar: es la contribución
+evanescente cuantificada en §\ref{sec:nb03_piso}, irrepresentable por una base
+truncada al cono propagante. En el plano de validación los dos perfiles se
+superponen, con $L^2=3.819\%$ de campo complejo y contrastes de $0.9063$ y
+$0.9012$. Generada por
+\texttt{scripts/experiments/nb03\_figura\_speckle.py} a partir del modelo
+\texttt{results/models/nb03\_modal\_pinn\_siren\_z1\_screen42\_omega1\_finetune.pt}
+y de la referencia
+\texttt{results/nb03\_angular\_spectrum\_reference\_z1\_corr0.10.npz}.}
+\label{fig:nb03_speckle_campo}
+\end{figure}
+
+La Figura~\ref{fig:nb03_speckle_campo} muestra el campo obtenido. La columna del piso evanescente permite interpretar correctamente la métrica, y la Figura~\ref{fig:nb03_modal} la resume.
 Pantalla por pantalla, el error total del modelo coincide con el piso hasta la
 tercera cifra decimal ($3.819$ frente a $3.818$; $2.402$ frente a $2.401$;
 $3.573$ frente a $3.573$), y la desviación de ambas columnas es la misma
@@ -997,9 +1113,12 @@ el trabajo no incluye un contraste con número efectivo de muestras corregido ni
 un remuestreo por bloques que la verifique formalmente.
 
 La fracción de píxeles con $I>2\langle I\rangle$, que no depende de esa
-hipótesis, se sitúa entre $0.1299$ y $0.1543$ por pantalla frente al valor
-teórico $e^{-2}=0.1353$, y sobre el conjunto da $0.1467$ para la PINN y
-$0.1475$ para la referencia. Fuente:
+hipótesis, queda por pantalla entre $0.1309$ y $0.1514$ para la PINN y entre
+$0.1299$ y $0.1543$ para la referencia, frente al valor teórico
+$e^{-2}=0.1353$. Sobre el conjunto da $0.1467$ para la PINN y
+$0.1475$ para la referencia. Los dos rangos se solapan y
+encierran el valor teórico, de modo que la discrepancia frente a $e^{-2}$ es
+una propiedad de las realizaciones a esta distancia y no del ajuste. Fuente:
 \texttt{results/nb03\_estadistica\_conjunto.json}, generado por
 \texttt{scripts/experiments/nb03\_estadistica\_conjunto.py}.
 
@@ -1009,7 +1128,9 @@ $0.1475$ para la referencia. Fuente:
 La validación reportada se limita a $\tilde z=1\lambda$. Se ensayó extenderla a
 $2\lambda$ partiendo del punto de control validado de cada pantalla y
 reentrenando únicamente sobre el residuo, con un presupuesto uniforme de
-$180$~s por pantalla.
+$180$~s por pantalla. A diferencia del resto del capítulo, \textbf{este ensayo
+se ejecutó en CPU} con cuatro hilos, de modo que su presupuesto de cómputo
+efectivo no es comparable con el de los experimentos en GPU.
 
 \begin{table}[htbp]
 \centering
@@ -1033,7 +1154,9 @@ Media & 4.226\% & 4.257\% & \textbf{5.451\%} & 0.384\% \\
     \item Presupuesto idéntico de $180$~s para las cinco pantallas. Dos de
     ellas superan el umbral del $5\%$ en el error final y tres lo superan en el
     máximo sobre los planos evaluados; la media del máximo propagante queda
-    también por encima. Fuente:
+    también por encima. Ejecutado en CPU con cuatro hilos
+    (\texttt{"device": "cpu"} en el archivo fuente), no en la GPU empleada en el
+    resto del capítulo. Fuente:
     \texttt{results/nb03\_distance\_pilot/z2\_cinco\_uniforme\_180s/}.
 \end{tablenotes}
 \end{threeparttable}
@@ -1048,9 +1171,23 @@ refinamiento que se degrada al recibir más iteraciones indica que el
 procedimiento no converge de forma estable en ese régimen, no que le falte
 presupuesto.
 
-En consecuencia, el alcance validado de este trabajo es $\tilde z=1\lambda$.
-Cualquier afirmación sobre distancias mayores exigiría un procedimiento de
-optimización distinto y su propia campaña de validación.
+La validación analítica de §\ref{sec:nb02b_extension} permite acotar el
+diagnóstico. Con la misma arquitectura, el mismo $\omega_0$ y el mismo
+presupuesto, pero con un campo de solución exacta, el error a $2\lambda$ es de
+$0.195\%$; con pantallas aleatorias, de $4.226\%$ en media y con dos de cinco
+por encima del umbral. \textbf{La distancia por sí sola no es el obstáculo}: la
+representación modal y la condición de Cauchy dura sostienen $2\lambda$ cuando
+el campo es propagante puro y de amplitudes conocidas. Lo que no se sostiene es
+el procedimiento de refinamiento sobre una realización aleatoria, cuyo espectro
+de amplitudes es mucho más disparejo y cuya optimización, como muestra el
+comportamiento no monótono descrito arriba, no converge de forma estable en ese
+régimen.
+
+En consecuencia, el alcance validado de este trabajo para la simulación de
+speckle es $\tilde z=1\lambda$. Cualquier afirmación sobre distancias mayores
+exigiría un procedimiento de optimización distinto y su propia campaña de
+validación; lo que el resultado analítico añade es que esa campaña no tendría
+que rediseñar la arquitectura, sino la estrategia de entrenamiento.
 
 \subsection{Tiempo de inferencia frente a la referencia de propagación}
 \label{sec:nb03_inferencia}
@@ -1078,18 +1215,21 @@ reconstruye el campo por suma modal.
 \toprule
 Tarea & Espectro angular & PINN modal & Razón \\
 \midrule
-Un plano ($\tilde z = 1\lambda$)      & \textbf{0.070} ms & 0.905 ms & $12.9\times$ a favor del ASM \\
-$101$ planos simultáneos              & 3.718 ms & \textbf{2.276} ms & $1.63\times$ a favor de la PINN \\
+Un plano ($\tilde z = 1\lambda$)      & \textbf{0.044} ms & 0.819 ms & $18.5\times$ a favor del ASM \\
+$101$ planos simultáneos              & 3.246 ms & \textbf{1.845} ms & $1.76\times$ a favor de la PINN \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\small
     \item Medias de $50$ repeticiones (un plano) y $20$ (múltiples planos),
     tras $10$ iteraciones de calentamiento y con sincronización explícita de
-    CUDA. Desviaciones estándar: $0.103$ y $0.320$~ms en el caso de un plano;
-    $0.272$ y $0.493$~ms en el de $101$. Para operaciones de esta duración el
-    mínimo observado es más representativo que la media, porque la dispersión
-    la domina la planificación del sistema operativo: los mínimos son
-    $0.039$ y $0.560$~ms (un plano) y $3.365$ y $1.766$~ms ($101$ planos).
+    CUDA. Desviaciones estándar: $0.014$ y $0.340$~ms en el caso de un
+    plano; $0.087$ y $0.184$~ms en el de $101$. Para operaciones de esta
+    duración el mínimo observado es más representativo que la media, porque la
+    dispersión la domina la planificación del sistema operativo: los mínimos
+    son $0.039$ y $0.552$~ms (un plano) y $3.164$ y $1.660$~ms
+    ($101$ planos). El espectro angular se cronometra en NumPy sobre CPU y la
+    red en CUDA incluyendo la transferencia del resultado a CPU, de modo que la
+    comparación no es entre dos implementaciones sobre el mismo dispositivo.
     GPU NVIDIA RTX~5050, PyTorch 2.11, CUDA 12.8. Fuente:
     \texttt{results/nb03\_benchmark\_inferencia.json}, generado por
     \texttt{scripts/experiments/nb03\_benchmark\_inferencia.py}.
@@ -1103,15 +1243,16 @@ rápida de Fourier sobre $1{,}024$ puntos, difícil de superar. La PINN sólo
 aventaja al método de referencia cuando se evalúan muchos planos a la vez,
 porque resuelve los $101$ valores de $\tilde z$ en un único paso por lotes
 mientras el espectro angular requiere una antitransformada por plano; incluso
-entonces la ventaja es de un factor $1.63$.
+entonces la ventaja es de un factor $1.76$.
 
 \textbf{El costo de entrenamiento invierte cualquier lectura favorable.} Como se
 señala en §\ref{sec:nb03_limitaciones}, el modelo es específico de su
 realización: los datos de Cauchy están incorporados a la arquitectura, de modo
 que cada pantalla nueva exige entrenar una red desde cero, lo que en este equipo
-requiere $351.9$~s. Con un ahorro de $1.44$~ms por evaluación de $101$ planos,
-serían necesarias unas $2.4\times10^{5}$ evaluaciones \emph{sobre la misma
-pantalla} para amortizar ese entrenamiento. Ningún uso realista del método
+requiere $351.9$~s. Con un ahorro de
+$1.40$~ms por evaluación de $101$ planos, serían necesarias unas
+$2.5\times10^{5}$ evaluaciones \emph{sobre la misma pantalla} para amortizar
+ese entrenamiento. Ningún uso realista del método
 alcanza esa cifra.
 
 Se sigue de aquí que, frente a la referencia de propagación y con la
@@ -1167,8 +1308,12 @@ conviene declarar de forma explícita:
     modal y la ecuación diferencial, por lo que mide exactitud del solucionador
     y no acuerdo con un método numérico independiente.
 
-    \item \textbf{Alcance en distancia.} Validado en $\tilde z=1\lambda$; el
-    ensayo a $2\lambda$ de §\ref{sec:nb03_extension} no supera el criterio.
+    \item \textbf{Alcance en distancia.} La simulación de speckle está
+    validada en $\tilde z=1\lambda$; el ensayo con pantallas aleatorias a
+    $2\lambda$ de §\ref{sec:nb03_extension} no supera el criterio. La
+    arquitectura sí se valida hasta $2\lambda$ contra solución analítica
+    (§\ref{sec:nb02b_extension}), pero eso acota la causa del fallo, no
+    extiende el alcance del resultado de speckle.
 \end{itemize}
 
 % ──────────────────────────────────────────────────────────────────────────────
@@ -1187,7 +1332,7 @@ PINN-SIREN propuesta junto al antecedente más cercano en la literatura.
 Método & Dimensión & Comparación & Error $L^2$ (\%) \\
 \midrule
 \textcite{schoder2024helmholtz} & 3D (acústica) & PINN vs.\ FEM (malla fina) & 2.49\tnote{b} \\
-\textcite{zhang2025fepirbn} & 2D (EM) & PINN vs.\ simulación numérica & 1.40--5.82 \\
+\textcite{zhang2025fepirbn} & 2D (EM) & PINN vs.\ simulación numérica & 1.40--5.82\tnote{c} \\
 \textbf{PINN-SIREN (este trabajo)} & \textbf{1D (óptica)} & PINN vs.\ solución analítica & \textbf{0.006} \\
 \textbf{PINN-SIREN (este trabajo)} & \textbf{2D (óptica)} & PINN vs.\ solución analítica & \textbf{0.171} \\
 \textbf{PINN-SIREN modal (este trabajo)} & \textbf{2D (óptica)} & PINN vs.\ espectro angular & \textbf{3.161}\tnote{a} \\
@@ -1212,6 +1357,13 @@ Método & Dimensión & Comparación & Error $L^2$ (\%) \\
     externos de esta tabla es además de distinta naturaleza, porque ambos
     contrastan contra un método numérico independiente y aquí la referencia es
     semianalítica (Sección~\ref{sec:nb03_referencia}).
+    \item[c] \textbf{Alcance de la verificación.} Este rango se comprobó contra
+    el resumen publicado del artículo; no se dispuso del texto completo, y no
+    existe versión de autor depositada en repositorio abierto --se verificó en
+    \textit{arXiv} y en buscadores académicos--. Según ese resumen, el rango
+    corresponde a dispersión electromagnética de \emph{uno y dos cilindros} a
+    escala sub-longitud de onda, contrastada con simulación numérica. Es la
+    única cifra de esta tabla cuya fuente primaria no se tuvo a la vista.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -1247,9 +1399,11 @@ Experimento & Descripción & Estado & Métrica principal \\
 NB01 & Helmholtz 1D, validación analítica & Completo & $L^2 = 0.006\%$ \\
 NB02 & Helmholtz 2D, campo complejo       & Completo & $L^2 = 0.171\%$ \\
 NB02B & Arquitectura modal contra solución exacta & Completo & $L^2 = 0.0078\%$ (41 modos) \\
+NB02B-$2\lambda$ & Extensión analítica (campo propagante puro) & Completo & $L^2 = 0.195\%$ (41 modos) \\
 NB03-A & Speckle, referencia por espectro angular & Completo & $C=0.9661$ (conjunto, 64 real.) \\
 NB03-B & PINN-SIREN modal en $\tilde z=1\lambda$ & Completo & $L^2 = 3.161\%$ (5 pantallas) \\
 NB03-C & Inferencia frente al espectro angular & Completo & Sin ganancia de tiempo \\
+NB03-D & Speckle con pantalla aleatoria en $\tilde z=2\lambda$ & No supera el criterio & $L^2 = 4.226\%$ (2/5 $>5\%$) \\
 NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
