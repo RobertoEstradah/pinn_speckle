@@ -223,15 +223,25 @@ continuidad del campo y de su derivada en las cuatro interfaces es exacta, no
 aproximada.
 
 \paragraph{Una diferencia adicional de arquitectura.} Las redes de la cadena no
-usan el $\omega_0$ fijo de la
-Sección~\ref{sec:arquitectura_siren}: la escala de la activación sinusoidal es
-un \textbf{parámetro aprendido en cada bloque}, inicializado de modo que la
-función coincida al principio con la red de escala fija. El comportamiento
-observado es consistente con la regla de calibración: el primer bloque conserva
-una escala cercana a la unidad y los siguientes la reducen hasta valores en
-torno a $0.3$, lo que corresponde a coeficientes modales que oscilan más
-despacio conforme avanza la propagación. Se documenta aquí porque implica que
-el resultado de $5\lambda$ no proviene únicamente de trocear el dominio.
+usan la activación de frecuencia fija de la
+Sección~\ref{sec:arquitectura_siren}. Emplean una implementación
+\emph{adaptativa} cuyas frecuencias base son $30$ en la primera capa y $1$ en
+las internas --no el $\omega_0=1$ de NB03 y NB03B--, multiplicadas todas por una
+misma \textbf{escala aprendida en cada bloque}, de modo que la frecuencia
+efectiva de una capa es el producto de su frecuencia base por esa escala.
+
+Las escalas ajustadas descienden de $1.00$ en el primer bloque a valores en
+torno a $0.30$ en los siguientes, lo que sitúa la frecuencia efectiva de la
+primera capa en torno a $9$ en esos bloques. \textbf{Este descenso no debe
+interpretarse como una disminución física de la frecuencia de los modos.} En un
+medio homogéneo el número de onda longitudinal $k_{z,m}$ de cada modo es
+constante a lo largo de la propagación, de modo que los coeficientes modales no
+oscilan más despacio al avanzar en $z$. Lo que se observa es un comportamiento
+empírico de optimización: la escala que cada red local encuentra favorable para
+representar su tramo, no una propiedad de la solución.
+
+Se documenta aquí porque implica que el resultado de $5\lambda$ no proviene
+únicamente de trocear el dominio: la arquitectura también difiere.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Arquitectura SIREN}
@@ -248,8 +258,12 @@ validación 1D (NB01) y escalados para el caso 2D (NB02):
     \item \textbf{Capas ocultas:} $L = 5$ capas de dimensión $d$ neuronas cada
     una ($d = 64$ en NB01, $d = 128$ en NB02). NB03 emplea $4$ capas de $128$.
     \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$, con
-    $\omega_0=1.0$ en los tres experimentos, conforme a la regla
-    $\omega_0\approx k/2\pi$ verificada en NB01 y en el régimen modal de NB03.
+    $\omega_0=1.0$ en NB01, NB02 y en las validaciones modales de dominio único
+    --NB02B, NB03 y NB03B--, conforme a la regla $\omega_0\approx k/2\pi$
+    verificada en NB01 y en el régimen modal de NB03. \textbf{NB03C es la
+    excepción}: emplea la implementación de escala sinusoidal adaptativa
+    descrita en §\ref{sec:nb03_z5}, con frecuencias base distintas y una escala
+    aprendida por bloque.
     \item \textbf{Salida:} capa lineal de dos neuronas $(E_\text{real}, E_\text{imag})$
     en NB02, una neurona $E$ en NB01, y $82$ neuronas en NB03
     ($41$ coeficientes modales complejos).

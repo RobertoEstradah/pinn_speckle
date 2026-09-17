@@ -77,6 +77,18 @@ for etiqueta_idioma, carpeta in (("ESPAÑOL", PAPER_ES), ("INGLÉS", PAPER_EN)):
     chk("coeficiente de variacion", "46", cv,
         "la tesis dice 46 % (0.089/0.192); ver Cap4")
 
+    # Guarda: la afirmacion obsoleta del 13 % no debe reaparecer en ninguna
+    # version, ni en el cuerpo ni en los resumenes en el otro idioma.
+    obsoleta = bool(re.search(r"13\s*\\%\$?\s*(?:relativo|relative)", t)) or \
+        bool(re.search(r"(?:varianza|variance)[^.]{0,40}13\s*\\%", t, re.I))
+    chk("no reaparece el 13 % obsoleto", False, obsoleta,
+        "cifra retirada: el coeficiente de variacion es 46 %, no 13 %")
+
+    # Y 'variance' no debe usarse para lo que es un coeficiente de variacion.
+    mal_nombrado = bool(re.search(r"(?:variance|varianza)\s+of\s+\$?\d+\s*\\%", t, re.I))
+    chk("no llama 'variance' al coeficiente", False, mal_nombrado,
+        "0.089 es desviacion estandar; 46 % es coeficiente de variacion")
+
     # El paper SI puede mencionar el speckle como trabajo futuro o citar la
     # validacion estadistica de la tesis; lo que no debe es prometerlo en el
     # titulo, que es lo que el lector lee primero.

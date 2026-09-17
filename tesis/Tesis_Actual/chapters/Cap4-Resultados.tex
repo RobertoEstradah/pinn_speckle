@@ -1248,7 +1248,16 @@ Media & \textbf{2.244\%} & 2.407\% & \textbf{0.999772} & --- & --- \\
     continuidad en las interfaces por debajo de $10^{-6}$. La diferencia de
     contraste media es de $0.0044$ y la máxima de $0.0072$; el residuo modal
     por bloque, de $1.37\times10^{-2}$ en media y $1.79\times10^{-2}$ en el peor
-    caso. Fuente:
+    caso.
+    \item \textbf{Los presupuestos no son idénticos entre pantallas.} Las
+    pantallas $42$ y $123$ siguen el protocolo de bloques con pesos
+    transferidos (\textit{v2}), en el que los dos primeros bloques reutilizan
+    una corrida previa ya validada hasta $2\lambda$ y sólo los tres restantes se
+    entrenan. Las pantallas $321$, $777$ y $2026$ emplean el protocolo de
+    refinamiento residual por bloque (\textit{v3}), que parte del punto de
+    control de $1\lambda$ sin reutilizar una corrida intermedia. Las cifras de
+    la tabla no corresponden por tanto a un presupuesto de entrenamiento
+    uniforme y no deben compararse entre pantallas como si lo fueran. Fuente:
     \texttt{results/nb03\_distance\_pilot/nb03c\_z5\_validation/validation\_summary.json},
     generado por
     \texttt{notebooks/03c\_validacion\_speckle\_2d\_z5lambda.ipynb}.
@@ -1266,13 +1275,25 @@ $2.407\%$ en media y $3.507\%$ en el peor caso, y en tres de las cinco pantallas
 se alcanza antes del plano final. Reportar únicamente el valor en $z=5\lambda$
 subestimaría el error del recorrido.
 
-\textbf{Las cuatro interfaces internas son exactas.} El salto máximo del campo
-y de su derivada longitudinal en $z=1\lambda$, $2\lambda$, $3\lambda$ y
-$4\lambda$ es \emph{idénticamente cero} en las cinco pantallas, no una cantidad
-pequeña. Es consecuencia directa de imponer la condición de Cauchy dentro de la
-función de prueba y no como término de penalización: el acoplamiento entre
-bloques no introduce error propio, y todo el error de la
-Tabla~\ref{tab:nb03_z5} procede del ajuste dentro de cada subdominio.
+\textbf{La continuidad entre bloques es algebraicamente exacta.} El salto
+máximo del campo y de su derivada longitudinal en $z=1\lambda$, $2\lambda$,
+$3\lambda$ y $4\lambda$ es \emph{idénticamente cero} en las cinco pantallas, no
+una cantidad pequeña. Es consecuencia directa de imponer la condición de Cauchy
+dentro de la función de prueba y no como término de penalización: la red de cada
+bloque arranca exactamente del valor y la derivada que le entrega la anterior.
+
+Conviene precisar qué garantiza eso y qué no. Garantiza que la \emph{solución
+aproximada} sea continua, con derivada continua, a lo largo de todo el
+intervalo: no aparecen discontinuidades artificiales en las uniones.
+\textbf{No garantiza que los valores transferidos coincidan con la solución
+exacta.} Lo que un bloque entrega al siguiente es su propia aproximación, de
+modo que el error acumulado al final de un bloque se convierte en el dato de
+entrada del siguiente y puede propagarse aguas abajo. El error de la
+Tabla~\ref{tab:nb03_z5} no es por tanto atribuible únicamente al ajuste dentro
+de cada subdominio: incluye también lo que cada bloque hereda de los anteriores.
+El crecimiento del error con la distancia --de $0.993\%$ en $2\lambda$ a
+$2.244\%$ en $5\lambda$-- es consistente con esa acumulación, si bien este
+trabajo no la cuantifica bloque a bloque.
 
 \paragraph{Control: la extensión directa a un solo dominio.} Para acotar lo que
 aporta la descomposición se ensayó extender una única red al intervalo completo
@@ -1281,17 +1302,23 @@ entrenamiento de $180$~s, el resultado fue $L^2=118.47\%$ y una coherencia de
 $0.0502$, muy por debajo del umbral de aceptación. La predicción no guarda
 relación con la referencia.
 
-Este control debe leerse con dos salvedades. La primera es que \textbf{no establece que toda red de dominio único deba fallar a esta
-distancia}: es un único
-ensayo, sobre una pantalla, con una configuración y un presupuesto concretos, y
-no explora arquitecturas ni esquemas de optimización alternativos. La segunda
-es que los presupuestos no son equiparables: el control dispuso de $180$~s para
-todo el dominio y se ejecutó en CPU, mientras que en la cadena cada bloque
-recibe su propio presupuesto de $180$~s --$60$~s de Adam y $120$~s de L-BFGS--
-y los dos primeros bloques reutilizan el trabajo ya validado hasta $2\lambda$.
-Lo que el control permite afirmar es, por tanto, algo más acotado:
-\textbf{bajo la configuración evaluada, la descomposición en subdominios
-resultó necesaria para alcanzar $5\lambda$}.
+\textbf{Este control no es una ablación equivalente}, y conviene decirlo
+antes de extraer conclusión alguna. Las dos alternativas difieren en más de
+una variable a la vez: arquitectura --frecuencia fija frente a escala
+sinusoidal adaptativa--, presupuesto de entrenamiento --$180$~s para todo el
+dominio frente a $180$~s por bloque, de los cuales $60$~s de Adam y $120$~s de
+L-BFGS--, aprovechamiento de trabajo previo --la cadena reutiliza los bloques
+ya validados hasta $2\lambda$-- y hardware. Aislar la contribución de la
+descomposición exigiría variar una sola de esas condiciones por vez, lo que
+este trabajo no hace.
+
+Lo que el control permite afirmar es únicamente lo siguiente: \textbf{bajo los
+protocolos evaluados, la extensión global directa no alcanzó los criterios de
+aceptación, mientras que la estrategia segmentada con escala sinusoidal
+adaptativa sí los alcanzó.} Un solo ensayo, sobre una pantalla, con una
+configuración concreta, \textbf{no demuestra que toda PINN de dominio único
+deba fallar a $5\lambda$}; otras arquitecturas, presupuestos o esquemas de
+optimización quedan sin explorar.
 
 \textbf{Qué queda establecido y qué no.} Queda establecido que una cadena de
 cinco redes modales acopladas por condiciones de Cauchy duras reproduce la

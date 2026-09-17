@@ -43,7 +43,7 @@
 \contentsline {section}{\numberline {3.6}Métricas de validación}{25}{section.3.6}%
 \contentsline {subsection}{\numberline {3.6.1}Métricas de NB03: campo complejo y estadística de speckle}{25}{subsection.3.6.1}%
 \contentsline {subsection}{\numberline {3.6.2}Error $L^2$ relativo (NB01 y NB02)}{26}{subsection.3.6.2}%
-\contentsline {section}{\numberline {3.7}Implementación modular}{26}{section.3.7}%
+\contentsline {section}{\numberline {3.7}Implementación modular}{27}{section.3.7}%
 \contentsline {chapter}{\numberline {4}Experimentos y Resultados}{28}{chapter.4}%
 \contentsline {section}{\numberline {4.1}NB01: Validación 1D, Helmholtz con solución analítica}{28}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Configuración experimental}{28}{subsection.4.1.1}%
@@ -72,8 +72,8 @@
 \contentsline {subsection}{\numberline {4.4.11}Extensión de la validación a $z=2\lambda $}{51}{subsection.4.4.11}%
 \contentsline {subsection}{\numberline {4.4.12}Propagación hasta $z=5\lambda $ por descomposición del dominio}{53}{subsection.4.4.12}%
 \contentsline {paragraph}{Control: la extensión directa a un solo dominio.}{54}{section*.54}%
-\contentsline {subsection}{\numberline {4.4.13}Tiempo de inferencia frente a la referencia de propagación}{54}{subsection.4.4.13}%
+\contentsline {subsection}{\numberline {4.4.13}Tiempo de inferencia frente a la referencia de propagación}{55}{subsection.4.4.13}%
 \contentsline {subsection}{\numberline {4.4.14}Limitaciones del método}{56}{subsection.4.4.14}%
-\contentsline {section}{\numberline {4.5}Contexto en la literatura}{57}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{57}{section.4.6}%
-\contentsline {chapter}{Bibliografía}{60}{table.caption.60}%
+\contentsline {section}{\numberline {4.5}Contexto en la literatura}{58}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{59}{section.4.6}%
+\contentsline {chapter}{Bibliografía}{61}{table.caption.60}%

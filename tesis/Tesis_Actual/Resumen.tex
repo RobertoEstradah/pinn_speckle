@@ -22,15 +22,18 @@ que la base modal no puede representar; medido sobre el subespacio
 propagante, el error es de $0.042\%$. El contraste del conjunto es
 $C=0.9489$. El contraste de referencia promedio de los conjuntos de 64
 realizaciones es $C=0.9661$.
-La validación se extiende a $z=2\lambda$ con la misma red de dominio único
+La validación se extiende a $z=2\lambda$ con una PINN-SIREN de dominio único
+por pantalla
 ($L^2=0.993\%$) y hasta $z=5\lambda$ mediante descomposición del dominio en
 cinco redes locales acopladas por condiciones de Cauchy duras
 ($L^2=2.244\%$ al final del recorrido y un máximo de $3.507\%$ sobre $201$
 planos), en ambos casos sobre cinco realizaciones de fase conocidas.
-En las validaciones 1D y 2D se emplea una estrategia de optimización bifásica
-Adam~+~L-BFGS con muestreo por hipercubo latino (LHS); la formulación modal del
-speckle usa un protocolo distinto, sólo con Adam y sin LHS, porque su pérdida
-contiene únicamente el residuo modal. La reproducibilidad frente a la
+Los protocolos de optimización difieren entre experimentos y no deben
+generalizarse: las validaciones 1D y 2D emplean Adam seguido de L-BFGS con
+muestreo por hipercubo latino (LHS); las formulaciones modales de dominio único
+en $z=1\lambda$ y $z=2\lambda$ usan sólo Adam y sin LHS, porque su pérdida
+contiene únicamente el residuo modal; y la cadena de $z=5\lambda$ entrena o
+refina cada bloque con Adam seguido de L-BFGS. La reproducibilidad frente a la
 inicialización se verificó en el caso 2D con tres semillas independientes,
 obteniendo un promedio componente a componente de error $L^2$ de
 $0.192 \pm 0.089\%$ (desviación estándar poblacional); en la formulación modal
