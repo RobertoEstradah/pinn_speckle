@@ -339,4 +339,27 @@ chk("control z5: L2", 118.47, round(100 * ctrl["l2_full_final"], 2), tol=2e-2)
 chk("control z5: coherencia", 0.0502, round(ctrl["coherence_full_final"], 4), tol=2e-2)
 chk("control z5: no aceptado", False, ctrl["accepted"])
 
+# ── Resumen y Abstract: deben coincidir entre si y con los resultados ─────
+print("\nResumen y Abstract:")
+RES = pathlib.Path(rf"{R}\tesis\Tesis_Actual\Resumen.tex").read_text(encoding="utf-8")
+ABS = pathlib.Path(rf"{R}\tesis\Tesis_Actual\Abstract.tex").read_text(encoding="utf-8")
+for etiqueta, cifra in (("L2 1D", "0.006"), ("L2 2D", "0.171"),
+                        ("L2 z=1", "3.161"), ("L2 propagante z=1", "0.042"),
+                        ("contraste conjunto", "0.9489"),
+                        ("contraste referencia", "0.9661"),
+                        ("L2 z=2", "0.993"), ("L2 z=5", "2.244"),
+                        ("maximo sobre 201 planos", "3.507"),
+                        ("multisemilla", "0.192")):
+    chk(f"Resumen tiene {etiqueta}", True, cifra in RES)
+    chk(f"Abstract tiene {etiqueta}", True, cifra in ABS)
+
+# Ninguno debe prometer generalizacion ni omitir que 5 lambda usa otro metodo.
+for nombre, t in (("Resumen", RES), ("Abstract", ABS)):
+    chk(f"{nombre}: declara la descomposicion", True,
+        ("descomposición del dominio" in t) or ("domain decomposition" in t))
+    chk(f"{nombre}: dice pantallas conocidas", True,
+        ("realizaciones de fase conocidas" in t) or ("known phase realizations" in t))
+    chk(f"{nombre}: acota LHS a 1D y 2D", True,
+        ("validaciones 1D y 2D" in t) or ("1D and 2D validations" in t))
+
 print(f"\n==== {ok} verificadas, {fallo} discrepancias ====")

@@ -19,11 +19,19 @@ $L^2$ error is $3.161\%$, dominated by the evanescent fraction of the spectrum
 that the modal basis cannot represent; measured over the propagating subspace
 the error is $0.042\%$. The ensemble contrast is $C=0.9489$, against a mean
 reference ensemble contrast of $C=0.9661$ over 64 realizations each.
-A two-phase Adam~+~L-BFGS optimization strategy and Latin Hypercube Sampling
-(LHS) are used in the training protocol.
-Reproducibility was verified with three independent random seeds, yielding a
-component-wise mean $L^2$ error of $0.192 \pm 0.089\%$ (population standard
-deviation).
+The validation extends to $z=2\lambda$ with the same single-domain network
+($L^2=0.993\%$) and up to $z=5\lambda$ through domain decomposition into five
+local networks coupled by hard Cauchy conditions ($L^2=2.244\%$ at the end of
+the path and a maximum of $3.507\%$ across $201$ planes), in both cases over
+five known phase realizations.
+The 1D and 2D validations use a two-phase Adam~+~L-BFGS optimization strategy
+with Latin Hypercube Sampling (LHS); the modal formulation of the speckle uses a
+different protocol, with Adam only and no LHS, because its loss contains the
+modal residual alone. Robustness to initialization was verified in the 2D case
+with three independent seeds, yielding a component-wise mean $L^2$ error of
+$0.192 \pm 0.089\%$ (population standard deviation); in the modal formulation the
+five realizations vary the physical screen and not the network seed, so that
+robustness is not characterized there.
 
 \bigskip
 
