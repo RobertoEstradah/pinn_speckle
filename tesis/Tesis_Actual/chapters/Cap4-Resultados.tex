@@ -1480,7 +1480,7 @@ PINN-SIREN propuesta junto al antecedente más cercano en la literatura.
 \label{tab:comparativa}
 \begin{tabular}{lccc}
 \toprule
-Método & Dimensión & Comparación & Error $L^2$ (\%) \\
+Método & Dimensión & Comparación & Error relativo (\%) \\
 \midrule
 \textcite{schoder2024helmholtz} & 3D (acústica) & PINN vs.\ FEM (malla fina) & 2.49\tnote{b} \\
 \textcite{zhang2025fepirbn} & 2D (EM) & PINN vs.\ simulación numérica & 1.40--5.82\tnote{c} \\
@@ -1508,13 +1508,18 @@ Método & Dimensión & Comparación & Error $L^2$ (\%) \\
     externos de esta tabla es además de distinta naturaleza, porque ambos
     contrastan contra un método numérico independiente y aquí la referencia es
     semianalítica (Sección~\ref{sec:nb03_referencia}).
-    \item[c] \textbf{Alcance de la verificación.} Este rango se comprobó contra
-    el resumen publicado del artículo; no se dispuso del texto completo, y no
-    existe versión de autor depositada en repositorio abierto --se verificó en
-    \textit{arXiv} y en buscadores académicos--. Según ese resumen, el rango
-    corresponde a dispersión electromagnética de \emph{uno y dos cilindros} a
-    escala sub-longitud de onda, contrastada con simulación numérica. Es la
-    única cifra de esta tabla cuya fuente primaria no se tuvo a la vista.
+    \item[c] \textbf{La métrica de esta fila no es el error $L^2$.} Verificado
+    contra el texto completo del artículo: su ecuación~(16) define el error como
+    $\sum_i|y_i-y_i^{\text{ana}}|\,/\sum_i y_i^{\text{ana}}$, es decir un error
+    relativo en norma $L^1$, no en $L^2$. El extremo inferior del rango,
+    $1.40\%$, es el mínimo de FE-PIRBN en el caso de un cilindro (su Tabla~3,
+    $k=10$); el superior, $5.82\%$, es el máximo en el caso de dos cilindros (su
+    Tabla~5, $k=8$). Las demás filas de esta tabla sí emplean error relativo en
+    norma $L^2$: \textcite{schoder2024helmholtz} lo define como
+    $\sqrt{\sum_i(p_i^{\text{ref}}-p_i)^2/\sum_i(p_i^{\text{ref}})^2}$, y los
+    resultados propios siguen esa misma definición. La comparación entre filas
+    es por tanto todavía menos directa de lo que la dimensionalidad y el dominio
+    físico ya sugerían.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}

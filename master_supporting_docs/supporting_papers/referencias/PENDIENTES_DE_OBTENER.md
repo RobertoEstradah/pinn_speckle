@@ -76,58 +76,23 @@ Al conseguir cada una, guardarla en
 
   Sigue haciendo falta el **texto completo** para cerrar §3.2 y el umbral.
 
-### 2. Zhang et al. (2025) — FE-PIRBN
+### ~~2. Zhang et al. (2025) — FE-PIRBN~~ OBTENIDA Y VERIFICADA
 
-- **Autores:** Huajian Zhang, Chao Li, Rui Xia, Xinhai Chen, Tiaojie Xiao,
-  Xiao-Wei Guo, Jie Liu
-- **Publicación:** *Journal of Computational Physics* **527**, 113798 (2025)
-- **DOI:** `10.1016/j.jcp.2025.113798`
-- **Usos:** 2 (Cap2 y Cap4)
-- **Por qué importa:** Cap4 le atribuye en la tabla comparativa un error `L²`
-  **entre 1.40 % y 5.82 %**. Ese rango **ya se verificó contra el resumen
-  publicado**, pero no es reproducible desde el repositorio.
-- **Qué hay que verificar:** que el rango corresponda a la métrica y al tipo de
-  referencia que la tabla comparativa declara.
-- **Dónde conseguirlo (enlaces verificados el 2026-09-15):**
-
-  | Vía | Enlace |
-  |---|---|
-  | Artículo en ScienceDirect (de pago) | `https://www.sciencedirect.com/science/article/abs/pii/S0021999125000816` |
-  | Resolutor DOI | `https://doi.org/10.1016/j.jcp.2025.113798` |
-  | Ficha en NASA ADS | `https://ui.adsabs.harvard.edu/abs/2025JCoPh.52713798Z/abstract` |
-  | Acceso institucional UJAT a Elsevier | — |
-
-  **No existe preprint. Confirmado dos veces**, el 2026-09-15 y el 2026-09-16,
-  en arXiv y en buscadores académicos. El antecedente PIRBN sí está abierto
-  (arXiv:2304.06234), pero es otro artículo y no contiene la cifra que la tesis
-  cita.
-
-  **Lo que sí se pudo verificar del resumen publicado (2026-09-16):** el rango
-  1.40–5.82 % corresponde a dispersión electromagnética de **uno y dos
-  cilindros** a escala sub-longitud de onda, contrastada con simulación
-  numérica. Ese contexto ya se incorporó a la nota (c) de `tab:comparativa` en
-  Cap4, junto con la declaración explícita de que es la única cifra de esa tabla
-  cuya fuente primaria no se tuvo a la vista.
-
-  **Sigue siendo la prioridad número uno de esta lista**, porque es la única
-  referencia sin copia local que sostiene un número dentro de la tesis.
-
-  **La vía más efectiva es escribir a los autores**, que pueden compartir su
-  propio trabajo legítimamente. Los correos están en la primera página del
-  artículo; la afiliación se ve en la ficha de ADS. Borrador:
-
-  > Asunto: Request for a copy of your JCP paper on FE-PIRBN
-  >
-  > Dear Dr. Zhang,
-  >
-  > I am a master's student at Universidad Juárez Autónoma de Tabasco, working
-  > on physics-informed neural networks for the Helmholtz equation. I would like
-  > to cite your paper *FE-PIRBN* (J. Comput. Phys. 527, 113798) in my thesis,
-  > in particular the reported L² error range of 1.40–5.82%. Unfortunately I do
-  > not have institutional access to ScienceDirect. Would you be willing to
-  > share a copy?
-  >
-  > Thank you for your time.
+- *Journal of Computational Physics* **527**, 113798 (2025) · DOI `10.1016/j.jcp.2025.113798`
+- **OBTENIDA** el 2026-09-17 en
+  `referencias/Zhang_etal_2025_FEPIRBN_HighFrequencyEMScattering.pdf`, 19 paginas,
+  version publicada de Elsevier.
+- **La cifra se confirma, pero la metrica NO era la que la tesis declaraba.**
+  El rango 1.40-5.82 % es correcto, y ahora se sabe de donde sale: 1.40 % es el
+  minimo de FE-PIRBN en el caso de un cilindro (su Tabla 3, k=10) y 5.82 % el
+  maximo en el de dos cilindros (su Tabla 5, k=8).
+- **Su ecuacion (16) define el error como suma de diferencias absolutas sobre
+  suma de valores de referencia**, es decir un error relativo en norma L1, no en
+  L2. La tabla comparativa de Cap4 lo colocaba bajo una columna titulada
+  "Error L2 (%)". Corregido el 2026-09-17: la columna pasa a "Error relativo (%)"
+  y la nota (c) declara la diferencia de metrica.
+- Se comprobo ademas que Schoder y Kraxberger (2024), que si empleaba error
+  relativo en norma L2, sigue siendo compatible con esa columna.
 
 ---
 

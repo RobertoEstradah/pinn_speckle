@@ -244,22 +244,27 @@ chk("conjunto referencia", 0.1475,
 chk("valor teorico exp(-2)", 0.1353,
     round(ec["ensemble"]["expected_fraction_above_2mean"], 4), tol=2e-2)
 
-# ── guardas de honestidad sobre citas sin copia local ──────────────────────
-# Zhang et al. (2025) es la unica cifra externa cuya fuente primaria no esta en
-# disco. Mientras siga asi, su nota de alcance debe permanecer en la tabla.
-print("\nGuardas de citas sin copia local:")
+# ── Zhang et al. (2025): verificado contra el texto completo ──────────────
+# La copia local existe desde el 2026-09-17. Lo que hay que proteger ya no es
+# la declaracion de alcance sino la advertencia de metrica: su ecuacion (16)
+# define un error relativo en norma L1, no L2, de modo que la columna de la
+# tabla comparativa no puede titularse "Error L2".
+print("\nZhang et al. (2025), metrica declarada:")
 CAP4 = pathlib.Path(rf"{R}\tesis\Tesis_Actual\chapters\Cap4-Resultados.tex").read_text(
     encoding="utf-8")
 zhang_local = any(
     "zhang" in q.name.lower()
     for q in pathlib.Path(rf"{R}\master_supporting_docs\supporting_papers\referencias").rglob("*.pdf")
 )
-chk("Zhang: hay copia local?", False, zhang_local)
-if not zhang_local:
-    chk("Zhang: la fila lleva marca de nota", True,
-        r"1.40--5.82\tnote{c}" in CAP4)
-    chk("Zhang: la nota declara el alcance", True,
-        "Alcance de la verificación" in CAP4 and "no se dispuso del texto completo" in CAP4)
+chk("Zhang: hay copia local", True, zhang_local)
+chk("la fila lleva marca de nota", True, r"1.40--5.82\tnote{c}" in CAP4)
+chk("la nota advierte que no es L2", True,
+    "La métrica de esta fila no es el error $L^2$" in CAP4)
+chk("la nota cita la ecuacion (16)", True, "ecuación~(16)" in CAP4)
+chk("la columna no se titula 'Error L2'", False,
+    r"Comparación & Error $L^2$ (\%)" in CAP4)
+chk("la columna dice 'Error relativo'", True,
+    r"Comparación & Error relativo (\%)" in CAP4)
 
 # ── base modal extendida (Cap3: por que se trunca) ────────────────────────
 print("\nBase modal extendida:")
