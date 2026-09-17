@@ -162,3 +162,37 @@ Al intentar recompilar se descubrieron 2 bugs de entorno LOCAL previos a esta se
 **Verdict:** Verifico independientemente (no solo acepto el reporte del librarian) que los 3 hallazgos de ronda 1 quedaron resueltos con contenido sustantivo, no cosmetico -- incluyendo re-trazar el supuesto contradiction "tanh vs. seno" mencionado en el prompt de esta ronda, que confirmo NO existe en los documentos actuales (consistente en los 3 archivos). Hallazgo NUEVO no pedido en esta ronda, encontrado en auditoria independiente: PE-PINN (Zhang/Ye/Ma 2026) mantiene proximidad 5 y se describe como "fully-verified" en frontier_map.md, pero su propia entrada en annotated_bibliography.md admite que el detalle que la hace "la mas cercana arquitecturalmente" (activacion tipo seno/SIREN) viene de la busqueda original y no se reconfirmo digito por digito contra el PDF -- el mismo defecto evidencial que causo las bajas de Luo/Saba, sin generalizar la regla a este tercer caso estructuralmente identico. -5 por esto, unica deduccion de la ronda.
 **Pendiente, opcional (no bloqueante, gate de 80 ya superado comodamente):** marcar PE-PINN como "provisional" igual que Luo/Saba y suavizar el lenguaje "fully-verified" en frontier_map.md.
 **Report:** Reporte completo en la respuesta del agente; ver detalle en esta entrada.
+
+### 2026-09-16 16:20 — writer-critic
+**Phase:** Execution
+**Target:** `tesis/Tesis_Actual/` completa
+**Score:** 79/100
+**Verdict:** Trazabilidad numerica ejemplar --~30 cifras verificadas a mano sin
+discrepancias-- pero cuatro contradicciones internas introducidas ese mismo dia,
+incluida una fila de tabla resumen que mostraba el exito a 2 lambda y omitia el
+fracaso. Todas verificadas contra los archivos antes de corregir.
+**Report:** En la respuesta del agente; hallazgos aplicados en `05ad032`.
+
+### 2026-09-16 16:22 — domain-referee
+**Phase:** Peer Review
+**Target:** Fisica de Cap1 a Cap4
+**Score:** 67/100
+**Verdict:** Tres hallazgos graves confirmados: `k_{x,m}=2\pi m` incompatible con
+los 41 modos (debia ser `2\pi m/W`); la justificacion del truncamiento anulada
+por la propia ecuacion de entrada de la tesis; y la correlacion 0.10 lambda
+contradicha por el 40.99% de energia propagante que Cap4 mide. Ademas demostro
+que la columna de coherencia es identidad algebraica de `sqrt(1-piso^2)`,
+coincidente a 2e-8 en las cinco pantallas.
+**Report:** En la respuesta del agente; aplicados en `399f6fd`.
+
+### 2026-09-16 16:25 — methods-referee
+**Phase:** Peer Review
+**Target:** Metodologia y trazabilidad texto-datos
+**Score:** 76/100
+**Verdict:** Detecto que 13 de 16 cifras de `tab:nb03_inferencia` no correspondian
+al JSON citado --una corrida posterior habia regenerado el archivo-- y que el
+verificador no cubria esa tabla, de modo que su "0 discrepancias" era cierto pero
+de alcance insuficiente. Tambien senalo que la regla omega_0 ~ k/2pi nunca se
+probo con k distinto de 2pi.
+**Report:** En la respuesta del agente; tabla realineada y verificador extendido
+en `05ad032` y posteriores.
