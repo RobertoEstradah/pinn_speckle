@@ -9,8 +9,12 @@ This work presents an implementation of Physics-Informed Neural Networks with
 sinusoidal activation (PINN-SIREN) for solving the 2D Helmholtz equation with a
 complex field, under a \textit{mesh-free} paradigm
 \cite{Karniadakis2021_review, Cuomo2022_review}.
-The two completed experiments (NB01 and NB02) validate the architecture with high
-accuracy.
+The two completed experiments (NB01 and NB02) validate the architecture with
+errors that fall below the threshold adopted in this work ($<5\%$) by almost
+three orders of magnitude in 1D and by more than one in 2D. As noted in
+Table~\ref{tab:comparison}, those figures are not directly comparable with the
+cited works, which differ in dimensionality, physical domain and type of
+reference solution.
 
 The main conclusions are:
 
