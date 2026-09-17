@@ -55,7 +55,13 @@ def load_first_state(model, model_path):
 
 
 def first_model(reference, model_path, slope_multiplier):
-    shell, field_scale, kx_active = modal_summary.build_model(reference)
+    # ``build_model`` también reconstruye la escala física y los modos activos.
+    # Desde la consolidación multisemilla recibe explícitamente el checkpoint;
+    # el estado se vuelve a convertir abajo a la variante adaptativa, de modo
+    # que esta llamada conserva una única fuente de verdad para la frontera.
+    shell, field_scale, kx_active = modal_summary.build_model(
+        reference, model_path
+    )
     model = adaptive.AdaptiveOmegaModalSiren(
         shell.coefficient0.detach().flatten(),
         shell.derivative0.detach().flatten(),

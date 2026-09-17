@@ -98,6 +98,34 @@ Las cinco pantallas fueron aceptadas. El notebook reproducible es
 está en
 `results/nb03_distance_pilot/z2_omega1_five_120s/validation_summary.json`.
 
+## NB03C: speckle aleatorio hasta 5 lambda
+
+La extensión directa de una única PINN-SIREN con `omega_0=1` sobre
+`z/lambda in [0,5]` falló en la pantalla 42: L2 final de 118.47 % y máximo
+propagante de 150.20 %. Por ello, NB03C divide el dominio longitudinal en
+cinco bloques de una longitud de onda. Cada bloque conserva Helmholtz modal y
+la condición de Cauchy dura; el campo y su derivada al final de un bloque se
+usan como frontera exacta del siguiente. La escala sinusoidal es entrenable y
+los pesos se transfieren entre bloques. No se usan etiquetas interiores ni la
+referencia angular para seleccionar los modelos.
+
+| Pantalla | L2 completo final | Máximo propagante en z | Coherencia | Correlación de I | Error de C |
+|---:|---:|---:|---:|---:|---:|
+| 42 | 3.0827 % | 3.5067 % | 0.999601 | 0.999313 | 0.007153 |
+| 123 | 2.2600 % | 2.2600 % | 0.999779 | 0.999721 | 0.000081 |
+| 321 | 1.8559 % | 1.9073 % | 0.999854 | 0.999794 | 0.005951 |
+| 777 | 2.4425 % | 2.7806 % | 0.999712 | 0.999634 | 0.004211 |
+| 2026 | 1.5807 % | 1.5807 % | 0.999917 | 0.999852 | 0.004433 |
+| **Resumen** | **media 2.2444 %** | **peor 3.5067 %** | **media 0.999772** | **media 0.999663** | **media 0.004366** |
+
+Las cinco pantallas cumplen el umbral en los 201 planos entre 0 y 5 lambda.
+El notebook reproducible es
+`notebooks/03c_validacion_speckle_2d_z5lambda.ipynb`; el resumen verificable
+está en
+`results/nb03_distance_pilot/nb03c_z5_validation/validation_summary.json`.
+Este resultado corresponde a cinco PINN-SIREN locales acopladas, no a una sola
+PINN global.
+
 ## Formulación física
 
 El campo complejo se reconstruye mediante 41 modos propagantes:
@@ -321,8 +349,8 @@ Una reproducción correcta debe verificar:
 
 ## Alcance y limitaciones
 
-- El resultado está validado para cinco pantallas conocidas tanto en
-  `z=1 lambda` como en `z=2 lambda`.
+- El resultado está validado para cinco pantallas conocidas en `z=1 lambda`,
+  `z=2 lambda` y, mediante cinco subdominios acoplados, hasta `z=5 lambda`.
 - Cada pantalla requiere entrenamiento; todavía no es un operador neuronal
   capaz de generalizar sin reentrenamiento.
 - Cuatro pantallas conservaron L2 menor que 5 % en todo el intervalo. La
@@ -334,8 +362,11 @@ Una reproducción correcta debe verificar:
 - En `z=2 lambda`, el L2 completo final medio fue 0.993 % y el peor error
   propagante observado en 201 planos fue 1.165 %, ambos muy por debajo del
   umbral de 5 %.
+- En `z=5 lambda`, el L2 completo final medio fue 2.244 % y el peor error
+  propagante en 201 planos fue 3.507 %. La extensión directa de una sola red
+  falló; el resultado aceptado requiere continuación por bloques.
 - No se ha demostrado generalización sin reentrenamiento a pantallas nuevas ni
-  validez universal a 5, 10 o 20 longitudes de onda.
+  validez universal a 10 o 20 longitudes de onda.
 - Una pantalla y semilla neuronal reservadas no alcanzaron el umbral de 5 %;
   la robustez entre inicializaciones permanece abierta.
 - No se ha medido aún aceleración frente a FEM.

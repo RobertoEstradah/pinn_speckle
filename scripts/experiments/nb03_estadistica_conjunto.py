@@ -67,11 +67,6 @@ def main():
             "contrast_reference": contraste(i_ref),
             "absolute_contrast_error": abs(contraste(i_pinn) - contraste(i_ref)),
             "goodman_absolute_pass": abs(contraste(i_pinn) - 1.0) < 0.1,
-            # Fraccion de pixeles con I > 2<I>, por pantalla. El valor de
-            # conjunto vive en el bloque "ensemble"; este desglose es el que
-            # respalda el rango por pantalla que se reporta en Cap4.
-            "fraction_above_2mean_pinn": float(np.mean(i_pinn > 2 * i_pinn.mean())),
-            "fraction_above_2mean_reference": float(np.mean(i_ref > 2 * i_ref.mean())),
             "n_samples": int(i_pinn.size),
         })
 

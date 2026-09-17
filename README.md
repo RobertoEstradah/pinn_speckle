@@ -72,9 +72,9 @@ Tesis_Maestria/
 │   └── utils.py                                        # Métricas, LHS, viz
 │
 ├── notebooks/                                          # Notebooks Jupyter
-│   ├── 01_pinn_helmholtz_1d_validation.ipynb           # L2=0.006%, validación analítica
-│   ├── 02_pinn_helmholtz_2d_complex_field.ipynb        # L2=0.171%, validación analítica
-│   ├── 03_pinn_optical_speckle_simulation.ipynb        # Speckle, validación en progreso
+│   ├── 01_validacion_helmholtz_1d_normalizada.ipynb    # L2=0.006%, validación analítica
+│   ├── 02_validacion_helmholtz_2d_normalizada.ipynb    # L2=0.171%, validación analítica
+│   ├── 03_simulacion_speckle_2d_pinn_siren_modal.ipynb # Speckle modal, validado en z=1λ
 │   ├── 04_pinn_fem_benchmark.ipynb                     # PINN vs FEniCSx (pendiente)
 │   └── v1_exploracion_cpu/                             # Línea base histórica
 │
@@ -149,7 +149,7 @@ python -c "import torch; print(torch.cuda.get_device_name(0))"
 ### 4. Ejecutar notebooks en orden
 
 ```bash
-jupyter notebook notebooks/01_pinn_helmholtz_1d_validation.ipynb
+jupyter notebook notebooks/01_validacion_helmholtz_1d_normalizada.ipynb
 ```
 
 ---

@@ -1,0 +1,23 @@
+[
+  {
+    "seed": 321,
+    "pid": 23072,
+    "name": "z5_screen321_net42_adaptive_slabs_v3_refine",
+    "stdout": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_distance_pilot\\batch_z5_nb03c_refine_logs\\screen321.out.log",
+    "stderr": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_distance_pilot\\batch_z5_nb03c_refine_logs\\screen321.err.log"
+  },
+  {
+    "seed": 777,
+    "pid": 18556,
+    "name": "z5_screen777_net42_adaptive_slabs_v3_refine",
+    "stdout": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_distance_pilot\\batch_z5_nb03c_refine_logs\\screen777.out.log",
+    "stderr": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_distance_pilot\\batch_z5_nb03c_refine_logs\\screen777.err.log"
+  },
+  {
+    "seed": 2026,
+    "pid": 25884,
+    "name": "z5_screen2026_net42_adaptive_slabs_v3_refine",
+    "stdout": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_distance_pilot\\batch_z5_nb03c_refine_logs\\screen2026.out.log",
+    "stderr": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb03_distance_pilot\\batch_z5_nb03c_refine_logs\\screen2026.err.log"
+  }
+]

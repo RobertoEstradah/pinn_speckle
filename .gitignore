@@ -133,3 +133,21 @@ results/nb02b_modal_bridge/*.npz
 # Cache de bytecode: nunca debe versionarse
 __pycache__/
 *.py[cod]
+
+# La sincronizacion desde la copia tecnica reintroduce campos crudos de
+# formulaciones ya abandonadas (retirados en e669708, ver results/README.md).
+# Se conservan en disco como evidencia; no vuelven al repositorio.
+results/nb03_pinn_reference_comparison_*.npz
+results/nb03_pinn_slabs_comparison_*.npz
+results/nb03_frequency_curriculum*.npz
+results/nb03_angular_spectrum_reference_z1_corr0.2*.npz
+results/nb03_angular_spectrum_reference_z1_corr0.3*.npz
+results/nb03_angular_spectrum_reference_z1_corr0.4*.npz
+results/nb03_angular_spectrum_reference_z1_corr0.5*.npz
+results/nb03_angular_spectrum_reference_z1_*_verif.npz
+results/nb03_modal_pinn_siren_*scaled*.npz
+results/nb03_modal_pinn_siren_smoke.npz
+
+# Metadatos del espejo de sincronizacion: no son evidencia del proyecto.
+.codex-sync/
+results/nb03_modal_pinn_siren_z1_modal1.npz

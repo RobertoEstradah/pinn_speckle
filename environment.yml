@@ -16,6 +16,7 @@ dependencies:
   # ── Ciencia y matemáticas ─────────────────────────────────────────────────
   - numpy>=1.26
   - scipy>=1.13
+  - sympy>=1.14
   - matplotlib>=3.9
   - scikit-learn>=1.5
 
