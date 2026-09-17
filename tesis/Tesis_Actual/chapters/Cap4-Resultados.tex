@@ -1209,6 +1209,99 @@ funcionamiento a una distancia arbitraria: cada extensión exige su propia
 campaña de validación, y el alcance de este trabajo es el intervalo
 $z\in[0,2\lambda]$.
 
+\subsection{Propagación hasta \texorpdfstring{$z=5\lambda$}{z=5 lambda} por descomposición del dominio}
+\label{sec:nb03_z5}
+
+Las dos validaciones anteriores emplean una red de dominio único por pantalla.
+Extenderla a $5\lambda$ con ese mismo procedimiento no resulta viable en la
+configuración evaluada, como se documenta más abajo, de modo que la propagación
+a esa distancia se aborda con el procedimiento de descomposición descrito en el
+Capítulo~\ref{cap3:modelo}: el intervalo $[0,5\lambda]$ se divide en cinco
+bloques consecutivos de longitud $1\lambda$, cada uno con su propia red, y en
+las cuatro interfaces internas se transfieren el campo complejo y su derivada
+longitudinal mediante la condición de Cauchy dura.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Propagación de \textit{speckle} hasta $z=5\lambda$ por descomposición
+en cinco subdominios.}
+\label{tab:nb03_z5}
+\begin{tabular}{lccccc}
+\toprule
+Pantalla & $L^2$ complejo final & Máximo $L^2$ propagante & Coherencia & $C_\text{ref}$ & $C_\text{PINN}$ \\
+\midrule
+42   & 3.083\% & 3.507\%\tnote{a} & 0.999601 & 1.0476 & 1.0547 \\
+123  & 2.260\% & 2.260\%          & 0.999779 & 1.1210 & 1.1209 \\
+321  & 1.856\% & 1.907\%          & 0.999854 & 1.0745 & 1.0685 \\
+777  & 2.443\% & 2.781\%          & 0.999712 & 1.0148 & 1.0190 \\
+2026 & \textbf{1.581\%} & 1.581\% & 0.999917 & 0.9950 & 0.9994 \\
+\midrule
+Media & \textbf{2.244\%} & 2.407\% & \textbf{0.999772} & --- & --- \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Las cinco pantallas superan los seis criterios de aceptación: $L^2$
+    complejo final y $L^2$ propagante en los $201$ planos evaluados por debajo
+    del $5\%$, coherencia y correlación de intensidad por encima de $0.99$,
+    diferencia de contraste frente a su propia referencia menor que $0.05$, y
+    continuidad en las interfaces por debajo de $10^{-6}$. La diferencia de
+    contraste media es de $0.0044$ y la máxima de $0.0072$; el residuo modal
+    por bloque, de $1.37\times10^{-2}$ en media y $1.79\times10^{-2}$ en el peor
+    caso. Fuente:
+    \texttt{results/nb03\_distance\_pilot/nb03c\_z5\_validation/validation\_summary.json},
+    generado por
+    \texttt{notebooks/03c\_validacion\_speckle\_2d\_z5lambda.ipynb}.
+    \item[a] El error no es monótono en $z$: el máximo de la pantalla $42$ se
+    alcanza en $z=4.85\lambda$ y no en el plano final. Los máximos de las demás
+    ocurren en $z=5.00$, $4.95$, $4.30$ y $5.00$ respectivamente.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+El error complejo final medio es del $2.244\%$ y la coherencia media de
+$0.999772$. La cifra que conviene vigilar, sin embargo, no es el error en el
+plano final sino \textbf{el máximo sobre los $201$ planos evaluados}: vale
+$2.407\%$ en media y $3.507\%$ en el peor caso, y en tres de las cinco pantallas
+se alcanza antes del plano final. Reportar únicamente el valor en $z=5\lambda$
+subestimaría el error del recorrido.
+
+\textbf{Las cuatro interfaces internas son exactas.} El salto máximo del campo
+y de su derivada longitudinal en $z=1\lambda$, $2\lambda$, $3\lambda$ y
+$4\lambda$ es \emph{idénticamente cero} en las cinco pantallas, no una cantidad
+pequeña. Es consecuencia directa de imponer la condición de Cauchy dentro de la
+función de prueba y no como término de penalización: el acoplamiento entre
+bloques no introduce error propio, y todo el error de la
+Tabla~\ref{tab:nb03_z5} procede del ajuste dentro de cada subdominio.
+
+\paragraph{Control: la extensión directa a un solo dominio.} Para acotar lo que
+aporta la descomposición se ensayó extender una única red al intervalo completo
+$[0,5\lambda]$. Sobre la pantalla $42$, con $\omega_0=1$ y un presupuesto de
+entrenamiento de $180$~s, el resultado fue $L^2=118.47\%$ y una coherencia de
+$0.0502$, muy por debajo del umbral de aceptación. La predicción no guarda
+relación con la referencia.
+
+Este control debe leerse con dos salvedades. La primera es que \textbf{no establece que toda red de dominio único deba fallar a esta
+distancia}: es un único
+ensayo, sobre una pantalla, con una configuración y un presupuesto concretos, y
+no explora arquitecturas ni esquemas de optimización alternativos. La segunda
+es que los presupuestos no son equiparables: el control dispuso de $180$~s para
+todo el dominio y se ejecutó en CPU, mientras que en la cadena cada bloque
+recibe su propio presupuesto de $180$~s --$60$~s de Adam y $120$~s de L-BFGS--
+y los dos primeros bloques reutilizan el trabajo ya validado hasta $2\lambda$.
+Lo que el control permite afirmar es, por tanto, algo más acotado:
+\textbf{bajo la configuración evaluada, la descomposición en subdominios
+resultó necesaria para alcanzar $5\lambda$}.
+
+\textbf{Qué queda establecido y qué no.} Queda establecido que una cadena de
+cinco redes modales acopladas por condiciones de Cauchy duras reproduce la
+propagación de las cinco realizaciones de fase evaluadas en todo el intervalo
+$0\leq z\leq 5\lambda$, con error inferior al $5\%$ en los $201$ planos y
+acuerdo de contraste con su referencia por debajo de $0.0072$. No queda
+establecido que una red \emph{global única} funcione a esa distancia, ni que el
+modelo generalice a una pantalla no vista sin entrenamiento, ni nada sobre
+distancias mayores.
+
 \subsection{Tiempo de inferencia frente a la referencia de propagación}
 \label{sec:nb03_inferencia}
 
@@ -1328,14 +1421,23 @@ conviene declarar de forma explícita:
     modal y la ecuación diferencial, por lo que mide exactitud del solucionador
     y no acuerdo con un método numérico independiente.
 
-    \item \textbf{Alcance en distancia.} La simulación de speckle está
-    validada en $z=1\lambda$ y en $z=2\lambda$, con cinco realizaciones de fase
-    en cada distancia (§\ref{sec:nb03_resultados_z1} y
-    §\ref{sec:nb03_extension}), y la arquitectura se valida hasta $2\lambda$
-    contra solución analítica (§\ref{sec:nb02b_extension}). Nada de ello
-    autoriza a afirmar el funcionamiento a una distancia arbitraria: cada
-    extensión parte del punto de control de la anterior y exige su propia
-    campaña de validación.
+    \item \textbf{Alcance en distancia, y con qué procedimiento.} La
+    PINN-SIREN modal de \emph{dominio único} fue validada hasta $2\lambda$
+    (§\ref{sec:nb03_resultados_z1} y §\ref{sec:nb03_extension}). La propagación
+    hasta $5\lambda$ fue validada mediante descomposición del dominio en cinco
+    PINN-SIREN locales de longitud $1\lambda$, acopladas mediante condiciones de
+    Cauchy duras (§\ref{sec:nb03_z5}); esas redes emplean además una escala
+    sinusoidal aprendida por bloque, no el $\omega_0$ fijo del resto del
+    trabajo. Son resultados de naturaleza distinta y no deben enunciarse como
+    uno solo.
+
+    \item \textbf{Alcance de la validación en $5\lambda$.} NB03C valida
+    \emph{cinco pantallas conocidas}. No demuestra generalización a una pantalla
+    no vista sin reentrenar, no autoriza a afirmar funcionamiento a una
+    distancia arbitraria ni a $20\lambda$, y no equivale a una PINN global
+    única. El control de §\ref{sec:nb03_z5} acota la necesidad de la
+    descomposición a la configuración evaluada, no a toda configuración
+    posible.
 \end{itemize}
 
 % ──────────────────────────────────────────────────────────────────────────────
@@ -1426,6 +1528,7 @@ NB03-A & Speckle, referencia por espectro angular & Completo & $C=0.9661$ (conju
 NB03-B & PINN-SIREN modal en $z=1\lambda$ & Completo & $L^2 = 3.161\%$ (5 pantallas) \\
 NB03-C & Inferencia frente al espectro angular & Completo & Sin ganancia de tiempo \\
 NB03-D & Speckle con pantalla aleatoria en $z=2\lambda$ & Completo & $L^2 = 0.993\%$ (5 pantallas) \\
+NB03-E & Speckle hasta $z=5\lambda$ por descomposición & Completo & $L^2 = 2.244\%$ (5 pantallas)\tnote{c} \\
 NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\text{PINN}$ \\
 \bottomrule
 \end{tabular}
@@ -1435,6 +1538,10 @@ NB04 & Benchmark FEM, factor de aceleración & Pendiente & $S = T_\text{FEM}/T_\
     pantallas, cada uno sobre $64$ realizaciones en $z=1\lambda$. NB04
     permanece abierto para trabajo posterior y es el único objetivo específico
     sin evidencia asociada.
+    \item[c] NB03-E no emplea una red de dominio único, sino cinco redes
+    locales de longitud $1\lambda$ acopladas por condiciones de Cauchy duras, y
+    con escala sinusoidal aprendida por bloque. No es comparable sin más con
+    NB03-B y NB03-D; ver §\ref{sec:nb03_z5}.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -1445,11 +1552,16 @@ NB02B confirma que la arquitectura modal adoptada lo cumple también contra
 solución exacta, tanto en $z=1\lambda$ como en $z=2\lambda$
 (§\ref{sec:nb02b_arquitectura} y §\ref{sec:nb02b_extension}). NB03 cumple el
 umbral sobre cinco pantallas de fase independientes frente a la referencia por
-espectro angular en las dos distancias validadas: $3.161\%$ en $z=1\lambda$ y
-$0.993\%$ en $z=2\lambda$ (§\ref{sec:nb03_resultados_z1} y
-§\ref{sec:nb03_extension}), con la precisión adicional de que el error residual
-está dominado por la fracción evanescente del espectro y no por el ajuste de la
-red. Debe señalarse, no
+espectro angular en las tres distancias validadas, si bien no todas con el
+mismo procedimiento. Con una red de \textbf{dominio único} por pantalla:
+$3.161\%$ en $z=1\lambda$ y $0.993\%$ en $z=2\lambda$
+(§\ref{sec:nb03_resultados_z1} y §\ref{sec:nb03_extension}), con la precisión
+adicional de que en $z=1\lambda$ el error residual está dominado por la
+fracción evanescente del espectro y no por el ajuste de la red. Mediante
+\textbf{descomposición del dominio} en cinco redes locales acopladas por
+condiciones de Cauchy duras: $2.244\%$ al final del recorrido y un máximo de
+$3.507\%$ sobre los $201$ planos hasta $z=5\lambda$ (§\ref{sec:nb03_z5}). Esta
+última no es el mismo resultado que las anteriores y se reporta como tal. Debe señalarse, no
 obstante, que la hipótesis (i) exige para NB03 una referencia \emph{numérica
 independiente}, y la empleada aquí es semianalítica
 (Sección~\ref{sec:nb03_referencia}): la verificación de esa hipótesis en su

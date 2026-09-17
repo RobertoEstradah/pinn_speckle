@@ -18,13 +18,23 @@ $\Omega_{03}=[-10,10]\times[0,20]$ en coordenadas $(x/\lambda,z/\lambda)$,
 manteniendo $k=2\pi$. Ese es el dominio declarado como objetivo; la validación
 reportada en el Capítulo~\ref{cap4:resultados} se realiza sobre el subdominio
 $[-10,10]\times[0,1]$, y la extensión a distancias mayores se documenta con su
-propio alcance. Conviene separar desde ahora dos alcances que no coinciden: la
-\emph{arquitectura} se valida contra solución analítica hasta
-$z=2\lambda$ (§\ref{sec:nb02b_extension}), mientras que la
-\emph{simulación de speckle} con pantalla aleatoria se valida en
-$z=1\lambda$ (§\ref{sec:nb03_resultados_z1}) y en $z=2\lambda$
-(§\ref{sec:nb03_extension}). Lo primero no implica lo segundo: son
-comprobaciones distintas, y cada distancia exige la suya.
+propio alcance. Conviene separar desde ahora tres alcances que no coinciden:
+
+\begin{itemize}
+    \item La \emph{arquitectura} se valida contra solución analítica hasta
+    $z=2\lambda$ (§\ref{sec:nb02b_extension}).
+    \item La \emph{simulación de speckle} con pantalla aleatoria y una red de
+    \textbf{dominio único} se valida en $z=1\lambda$
+    (§\ref{sec:nb03_resultados_z1}) y en $z=2\lambda$
+    (§\ref{sec:nb03_extension}).
+    \item La propagación hasta $z=5\lambda$ se valida con un procedimiento
+    distinto: \textbf{descomposición del dominio} en cinco redes locales
+    acopladas (§\ref{sec:nb03_z5}). No es el mismo resultado que los
+    anteriores y no debe leerse como tal.
+\end{itemize}
+
+Ninguno de los tres implica a los otros: son comprobaciones distintas, y cada
+distancia exige la suya.
 
 Se plantean tres experimentos sucesivos de complejidad creciente:
 
@@ -189,22 +199,43 @@ $s_m=k^2\max\!\left(|a_m(0)|,\,|a_m'(0)|/k,\,\epsilon\right)$, con $\epsilon$ un
 piso que evita divisiones por cero, de modo que los modos de amplitud pequeña
 contribuyen al residuo en la misma escala que los dominantes.
 
-Para distancias mayores que $1\lambda$ se ensayaron tres estrategias, y
-conviene no confundirlas. La reportada sobre pantallas aleatorias
-(§\ref{sec:nb03_extension}) \textbf{no divide el dominio}: parte del punto de
-control ya validado en $1\lambda$ para cada pantalla, reinstancia el mismo
-modelo de Cauchy dura con la distancia ampliada y reentrena únicamente sobre el
-residuo normalizado. La reportada en la validación analítica
-(§\ref{sec:nb02b_extension}) tampoco divide nada: es una sola red sobre
-$\tilde z\in[0,2]$ con la condición impuesta sólo en $\tilde z=0$, entrenada
-desde el principio. El encadenamiento por bloques --en el que cada bloque
-recibe el campo y la derivada de la interfaz anterior por la misma construcción
-de la ecuación~\eqref{eq:cauchy_dura_cap3}-- también se implementó y se ensayó,
-pero \textbf{no es el procedimiento de ninguno de los dos resultados que este
-trabajo reporta}.
+Para distancias mayores que $1\lambda$ el trabajo emplea \textbf{dos
+procedimientos distintos}, y conviene no confundirlos.
+
+\paragraph{Dominio único.} Es el de los resultados en $z=1\lambda$ y
+$z=2\lambda$ (§\ref{sec:nb03_resultados_z1} y §\ref{sec:nb03_extension}). Una
+sola red por pantalla cubre todo el intervalo de propagación, con la condición
+de Cauchy impuesta únicamente en $z=0$. Para llegar a $2\lambda$ se parte del
+punto de control ya validado en $1\lambda$, se reinstancia el mismo modelo con
+la distancia ampliada y se reentrena sobre el residuo modal normalizado. No hay
+división del dominio. La validación analítica de §\ref{sec:nb02b_extension}
+sigue el mismo esquema: una sola red sobre $\tilde z\in[0,2]$.
+
+\paragraph{Descomposición en subdominios.} Es el procedimiento de la validación
+en $z=5\lambda$ (§\ref{sec:nb03_z5}). El intervalo $[0,5\lambda]$ se divide en
+\textbf{cinco bloques consecutivos de longitud $1\lambda$}, y cada bloque recibe
+su propia red. Cinco bloques generan \textbf{cuatro interfaces internas}, en
+$z=1\lambda$, $2\lambda$, $3\lambda$ y $4\lambda$. En cada una se transfieren al
+bloque siguiente el campo complejo y su derivada longitudinal, que pasan a ser
+los datos $a_m(0)$ y $a_m'(0)$ de la ecuación~\eqref{eq:cauchy_dura_cap3} de esa
+red. Como esa condición se impone por construcción y no por penalización, la
+continuidad del campo y de su derivada en las cuatro interfaces es exacta, no
+aproximada.
+
+\paragraph{Una diferencia adicional de arquitectura.} Las redes de la cadena no
+usan el $\omega_0$ fijo de la
+Sección~\ref{sec:arquitectura_siren}: la escala de la activación sinusoidal es
+un \textbf{parámetro aprendido en cada bloque}, inicializado de modo que la
+función coincida al principio con la red de escala fija. El comportamiento
+observado es consistente con la regla de calibración: el primer bloque conserva
+una escala cercana a la unidad y los siguientes la reducen hasta valores en
+torno a $0.3$, lo que corresponde a coeficientes modales que oscilan más
+despacio conforme avanza la propagación. Se documenta aquí porque implica que
+el resultado de $5\lambda$ no proviene únicamente de trocear el dominio.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Arquitectura SIREN}
+\label{sec:arquitectura_siren}
 
 Se emplea una arquitectura SIREN con los parámetros consolidados a partir de la
 validación 1D (NB01) y escalados para el caso 2D (NB02):

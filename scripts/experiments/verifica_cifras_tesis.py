@@ -276,4 +276,67 @@ chk("razon de error total", 5.7,
     round(be[35]["l2_total"] / be[20]["l2_total"], 1), tol=2e-2)
 chk("extendida: omega_0", 1.0, be[35]["omega_0_primera"])
 
+# ── NB03C: propagacion hasta z=5 lambda por descomposicion (tab:nb03_z5) ──
+print("\nPropagacion hasta z=5 lambda (NB03C):")
+z5 = json.load(open(rf"{R}\results\nb03_distance_pilot\nb03c_z5_validation"
+                    rf"\validation_summary.json", encoding="utf-8"))
+p5 = {c["screen_seed"]: c for c in z5["per_screen"]}
+
+# El metodo que la tesis describe debe ser el que el JSON declara.
+met = z5["method"]
+chk("z5: descomposicion en bloques", "five consecutive one-lambda slabs",
+    met["domain_decomposition"])
+chk("z5: Cauchy dura en cada interfaz", True, met["hard_cauchy_at_every_interface"])
+chk("z5: modos propagantes", 41, met["complex_propagating_modes"])
+chk("z5: sin etiquetas de entrenamiento", False, met["training_labels"])
+chk("z5: planos evaluados", 201, met["field_test_planes"])
+chk("z5: las cinco aceptadas", True, z5["all_screens_accepted"])
+
+esperado = ((42, 3.083, 3.507, 4.85, 0.999601, 1.0476, 1.0547),
+            (123, 2.260, 2.260, 5.00, 0.999779, 1.1210, 1.1209),
+            (321, 1.856, 1.907, 4.95, 0.999854, 1.0745, 1.0685),
+            (777, 2.443, 2.781, 4.30, 0.999712, 1.0148, 1.0190),
+            (2026, 1.581, 1.581, 5.00, 0.999917, 0.9950, 0.9994))
+for semilla, full, mx, zmx, coh, cref, cp in esperado:
+    c = p5[semilla]
+    chk(f"z5 pantalla {semilla}: L2 final", full,
+        round(100 * c["l2_full_final"], 3), tol=2e-2)
+    chk(f"z5 pantalla {semilla}: maximo propagante", mx,
+        round(100 * c["l2_propagating_max"], 3), tol=2e-2)
+    chk(f"z5 pantalla {semilla}: z del maximo", zmx,
+        round(c["l2_propagating_max_z"], 2), tol=2e-2)
+    chk(f"z5 pantalla {semilla}: coherencia", coh,
+        round(c["coherence_full_final"], 6))
+    chk(f"z5 pantalla {semilla}: C_ref", cref, round(c["contrast_reference"], 4))
+    chk(f"z5 pantalla {semilla}: C_pinn", cp, round(c["contrast_pinn"], 4))
+    chk(f"z5 pantalla {semilla}: seis criterios", True, all(c["acceptance"].values()))
+    # Las interfaces deben ser CERO EXACTO, no una cantidad pequena.
+    chk(f"z5 pantalla {semilla}: salto de campo", 0.0, c["interface_field_max_abs"])
+    chk(f"z5 pantalla {semilla}: salto de derivada", 0.0,
+        c["interface_derivative_max_abs"])
+
+a5 = z5["aggregate"]
+chk("z5 media: L2 final", 2.244, round(100 * a5["l2_full_final"]["mean"], 3), tol=2e-2)
+chk("z5 media: maximo propagante", 2.407,
+    round(100 * a5["l2_propagating_max"]["mean"], 3), tol=2e-2)
+chk("z5 peor: maximo propagante", 3.507,
+    round(100 * a5["l2_propagating_max"]["maximum"], 3), tol=2e-2)
+chk("z5 media: coherencia", 0.999772,
+    round(a5["coherence_full_final"]["mean"], 6))
+chk("z5 media: |dC|", 0.0044, round(a5["contrast_difference"]["mean"], 4), tol=5e-2)
+chk("z5 maximo: |dC|", 0.0072, round(a5["contrast_difference"]["maximum"], 4), tol=5e-2)
+chk("z5 media: residuo por bloque", 1.37e-2,
+    round(a5["max_slab_residual_rmse"]["mean"], 5), tol=2e-2)
+chk("z5 peor: residuo por bloque", 1.79e-2,
+    round(a5["max_slab_residual_rmse"]["maximum"], 5), tol=2e-2)
+
+# Control negativo: la extension directa de un solo dominio.
+ctrl = z5["direct_single_domain_control"]
+chk("control z5: pantalla", 42, ctrl["screen_seed"])
+chk("control z5: omega_0", 1.0, ctrl["first_omega"])
+chk("control z5: segundos", 180.0, float(ctrl["training_seconds"]))
+chk("control z5: L2", 118.47, round(100 * ctrl["l2_full_final"], 2), tol=2e-2)
+chk("control z5: coherencia", 0.0502, round(ctrl["coherence_full_final"], 4), tol=2e-2)
+chk("control z5: no aceptado", False, ctrl["accepted"])
+
 print(f"\n==== {ok} verificadas, {fallo} discrepancias ====")
