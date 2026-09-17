@@ -68,8 +68,12 @@ for etiqueta_idioma, carpeta in (("ESPAÑOL", PAPER_ES), ("INGLÉS", PAPER_EN)):
         chk(f"{nombre} presente y coincide", True, presente)
 
     # ── el coeficiente de variacion: la tesis dice 46 % ────────────────────
-    # El "\%" de LaTeX puede ir seguido de "$" antes de la palabra.
-    cv = busca(t, r"(\d+)\s*\\%\$?\s*(?:relativo|relative)")
+    # Acepta las formas "del $46\%$ respecto a la media" y "of $46\%$ about
+    # the mean", ademas de la antigua "N\% relativo".
+    cv = busca(t, r"(?:coeficiente de variación|coefficient of variation)"
+                  r"[^.]{0,40}?(\d+)\s*\\%")
+    if cv is None:
+        cv = busca(t, r"(\d+)\s*\\%\$?\s*(?:relativo|relative)")
     chk("coeficiente de variacion", "46", cv,
         "la tesis dice 46 % (0.089/0.192); ver Cap4")
 

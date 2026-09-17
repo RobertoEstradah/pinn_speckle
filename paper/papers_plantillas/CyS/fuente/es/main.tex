@@ -15,8 +15,9 @@
   \renewcommand{\figurename}{Fig.}%
 }
 
-\title{Simulación acelerada de speckle óptico mediante Redes
-       Neuronales Informadas por Física con activación sinusoidal}
+\title{Validación de Redes Neuronales Informadas por Física con
+       activación sinusoidal para la ecuación de Helmholtz 1D y 2D
+       con campo complejo}
 
 \author{Roberto Hernández Estrada$^1$, José Adán Hernández Nolasco$^{1,*}$}
 
@@ -43,8 +44,11 @@ respecto a soluciones analíticas, varios órdenes de magnitud por debajo del
 umbral ingenieril de $5\%$ adoptado en este trabajo.
 Una estrategia de optimización bifásica Adam + L-BFGS y el muestreo por hipercubo
 latino resultan determinantes para la convergencia y la precisión.
-La validación multi-semilla (SEED $\in \{42, 123, 777\}$) confirma la robustez
-estadística del método con varianza inter-semilla del 13\% relativo.
+La validación multi-semilla (SEED $\in \{42, 123, 777\}$) arroja un error
+$L^2$ promedio de $0.192 \pm 0.089\%$, es decir un coeficiente de variación del
+$46\%$ respecto a la media: la dispersión frente a la inicialización es
+considerable y debe tenerse en cuenta al interpretar cualquier valor
+individual.
 La generación de patrones de speckle óptico con condición de frontera de fase
 aleatoria constituye el siguiente paso planificado de esta investigación.
 \end{resumen}
@@ -54,8 +58,8 @@ Redes Neuronales Informadas por Física, SIREN, ecuación de Helmholtz, speckle
 óptico, activación sinusoidal, muestreo por hipercubo latino.
 \end{palabrasclave}
 
-\othertitle{Accelerated Optical Speckle Simulation via Physics-Informed Neural
-Networks with Sinusoidal Activation}
+\othertitle{Validation of Physics-Informed Neural Networks with Sinusoidal
+Activation for the 1D and 2D Helmholtz Equation with Complex Field}
 
 \begin{abstract}
 Physics-Informed Neural Networks with sinusoidal activation functions (SIREN-PINNs)

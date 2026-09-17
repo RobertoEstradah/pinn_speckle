@@ -16,8 +16,8 @@
   \renewcommand{\figurename}{Fig.}%
 }
 
-\title{Accelerated Optical Speckle Simulation via Physics-Informed Neural
-       Networks with Sinusoidal Activation}
+\title{Validation of Physics-Informed Neural Networks with Sinusoidal
+       Activation for the 1D and 2D Helmholtz Equation with Complex Field}
 
 \author{Roberto Hernández Estrada$^1$, José Adán Hernández Nolasco$^{1,*}$}
 
@@ -43,8 +43,10 @@ several orders of magnitude below the $5\%$ engineering threshold adopted in thi
 work.
 A two-phase Adam + L-BFGS optimization strategy and Latin Hypercube Sampling (LHS)
 are key to convergence and accuracy.
-Multi-seed validation (SEED $\in \{42, 123, 777\}$) confirms statistical robustness
-with $L^2$ variance of $13\%$ relative.
+Multi-seed validation (SEED $\in \{42, 123, 777\}$) yields a mean $L^2$ error of
+$0.192 \pm 0.089\%$, that is, a coefficient of variation of $46\%$ about the
+mean: dispersion with respect to initialization is considerable and must be
+taken into account when interpreting any individual value.
 These results establish SIREN-PINNs as a precise and stable solver for the Helmholtz
 equation, laying the foundation for physically accurate speckle pattern generation.
 \end{abstract}
