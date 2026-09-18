@@ -31,19 +31,20 @@
 \contentsline {subsection}{\numberline {3.1.1}Experimento 1 (NB01): Validación 1D}{18}{subsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.1.2}Experimento 2 (NB02): Validación 2D con campo complejo}{18}{subsection.3.1.2}%
 \contentsline {subsection}{\numberline {3.1.3}Experimento 3 (NB03): Simulación de speckle óptico}{18}{subsection.3.1.3}%
-\contentsline {paragraph}{Dominio único.}{21}{section*.10}%
-\contentsline {paragraph}{Descomposición en subdominios.}{21}{section*.11}%
-\contentsline {paragraph}{Una diferencia adicional de arquitectura.}{22}{section*.12}%
-\contentsline {section}{\numberline {3.2}Arquitectura SIREN}{22}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{23}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{24}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{24}{subsection.3.4.1}%
+\contentsline {paragraph}{La formulación no es paraxial.}{19}{section*.9}%
+\contentsline {paragraph}{Dominio único.}{22}{section*.11}%
+\contentsline {paragraph}{Descomposición en subdominios.}{22}{section*.12}%
+\contentsline {paragraph}{Una diferencia adicional de arquitectura.}{22}{section*.13}%
+\contentsline {section}{\numberline {3.2}Arquitectura SIREN}{23}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{24}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{25}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{25}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Puntos de frontera}{25}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Estrategia de optimización}{25}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Estrategia de optimización}{26}{section.3.5}%
 \contentsline {section}{\numberline {3.6}Métricas de validación}{26}{section.3.6}%
 \contentsline {subsection}{\numberline {3.6.1}Métricas de NB03: campo complejo y estadística de speckle}{26}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}Error $L^2$ relativo (NB01 y NB02)}{26}{subsection.3.6.2}%
-\contentsline {section}{\numberline {3.7}Implementación modular}{27}{section.3.7}%
+\contentsline {subsection}{\numberline {3.6.2}Error $L^2$ relativo (NB01 y NB02)}{27}{subsection.3.6.2}%
+\contentsline {section}{\numberline {3.7}Implementación modular}{28}{section.3.7}%
 \contentsline {chapter}{\numberline {4}Experimentos y Resultados}{29}{chapter.4}%
 \contentsline {section}{\numberline {4.1}NB01: Validación 1D, Helmholtz con solución analítica}{29}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Configuración experimental}{29}{subsection.4.1.1}%
@@ -71,11 +72,11 @@
 \contentsline {subsection}{\numberline {4.4.10}Criterio estadístico: conjunto frente a realización individual}{51}{subsection.4.4.10}%
 \contentsline {subsection}{\numberline {4.4.11}Extensión de la validación a $z=2\lambda $}{52}{subsection.4.4.11}%
 \contentsline {subsection}{\numberline {4.4.12}Propagación hasta $z=5\lambda $ por descomposición del dominio}{54}{subsection.4.4.12}%
-\contentsline {paragraph}{Control: la extensión directa a un solo dominio.}{55}{section*.54}%
+\contentsline {paragraph}{Control: la extensión directa a un solo dominio.}{55}{section*.55}%
 \contentsline {subsection}{\numberline {4.4.13}Extensión de la cadena a $z=10\lambda $}{56}{subsection.4.4.13}%
-\contentsline {paragraph}{El límite superior observado.}{57}{section*.57}%
+\contentsline {paragraph}{El límite superior observado.}{57}{section*.58}%
 \contentsline {subsection}{\numberline {4.4.14}Tiempo de inferencia frente a la referencia de propagación}{58}{subsection.4.4.14}%
 \contentsline {subsection}{\numberline {4.4.15}Limitaciones del método}{59}{subsection.4.4.15}%
 \contentsline {section}{\numberline {4.5}Contexto en la literatura}{60}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{62}{section.4.6}%
-\contentsline {chapter}{Bibliografía}{64}{table.caption.63}%
+\contentsline {chapter}{Bibliografía}{64}{table.caption.64}%

@@ -335,6 +335,58 @@ chk("z5 media: residuo por bloque", 1.37e-2,
 chk("z5 peor: residuo por bloque", 1.79e-2,
     round(a5["max_slab_residual_rmse"]["maximum"], 5), tol=2e-2)
 
+# ── Cap3: el parrafo que declara la formulacion no paraxial ────────────────
+# Las cifras no salen de un .json sino que se recalculan aqui desde la base
+# modal y la pantalla, que es la unica forma de que no se separen del dato.
+_kx_todos = np.fft.fftfreq(1024, d=20.0 / 1024) * 2 * np.pi
+_k = 2 * np.pi
+_act = np.abs(_kx_todos) <= _k + 1e-10
+_kx = _kx_todos[_act]
+_kz_exacto = np.sqrt(np.maximum(_k ** 2 - _kx ** 2, 0.0))
+_kz_parax = _k - _kx ** 2 / (2 * _k)
+_theta = np.degrees(np.arcsin(np.clip(np.abs(_kx) / _k, 0, 1)))
+
+chk("Cap3 no paraxial: modos de la base", 41, int(_act.sum()))
+chk("Cap3 no paraxial: angulo maximo", 90.0, round(float(_theta.max()), 1))
+
+# Desfase que introduce la paraxial por lambda, en tres angulos que cita el texto.
+for grados, esperado in ((30.0, 0.056), (48.6, 0.360), (90.0, 3.142)):
+    i = int(np.argmin(np.abs(_theta - grados)))
+    chk(f"Cap3 no paraxial: desfase a {grados} grados", esperado,
+        round(float(abs(_kz_exacto[i] - _kz_parax[i])), 3), tol=2e-2)
+
+# El modo rasante acumula cinco vueltas de fase sobre los 10 lambda validados.
+_i90 = int(np.argmax(np.abs(_kz_exacto - _kz_parax)))
+chk("Cap3 no paraxial: desfase acumulado a 10 lambda", 31.4,
+    round(float(abs(_kz_exacto[_i90] - _kz_parax[_i90]) * 10), 1), tol=2e-2)
+
+# Reparto de energia de la pantalla por rango angular.
+_ref = np.load(rf"{R}\results\nb03_angular_spectrum_reference_z1_corr0.10.npz")
+_esp = np.fft.fft(np.exp(1j * _ref["phase"]))
+_ener = np.abs(_esp[_ref["propagating_mask"].astype(bool)]) ** 2
+_ener = _ener / _ener.sum()
+_th = np.degrees(np.arcsin(
+    np.clip(np.abs(_ref["kx"][_ref["propagating_mask"].astype(bool)]) / _k, 0, 1)))
+
+for lo, hi, esperado in ((0, 15, 25.06), (15, 30, 16.80), (30, 45, 26.77),
+                         (45, 60, 12.42), (60, 90, 12.56)):
+    frac = 100 * float(((_th >= lo) & (_th < hi)).astype(float) @ _ener)
+    chk(f"Cap3 energia {lo}-{hi} grados", esperado, round(frac, 2), tol=2e-2)
+
+# Las dos cifras que sostienen el argumento.
+for umbral, esperado in ((15, 74.94), (45, 31.37)):
+    frac = 100 * float((_th >= umbral).astype(float) @ _ener)
+    chk(f"Cap3 energia mas alla de {umbral} grados", esperado, round(frac, 2),
+        tol=2e-2)
+
+# Guarda: el texto debe seguir declarando que la formulacion NO es paraxial.
+_cap3 = open(rf"{R}\tesis\Tesis_Actual\chapters\Cap3-Modelo.tex",
+             encoding="utf-8").read()
+chk("Cap3 declara que no es paraxial", True,
+    "La formulación no es paraxial" in _cap3)
+chk("Cap3 nombra el espectro angular", True,
+    "carbajal2010espectro" in _cap3)
+
 # ── NB03D: la cadena de diez bloques hasta z=10 lambda ─────────────────────
 z10 = json.load(open(rf"{R}\results\nb03_distance_pilot\nb03d_z10_validation"
                      rf"\validation_summary.json", encoding="utf-8"))

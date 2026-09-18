@@ -134,6 +134,48 @@ diferenciales ordinarias desacopladas,
     \label{eq:edo_modal_cap3}
 \end{equation}
 %
+\paragraph{La formulación no es paraxial.} El número de onda longitudinal que
+recoge la ecuación~\eqref{eq:edo_modal_cap3} es el exacto,
+$k_{z,m}=\sqrt{k^2-k_{x,m}^2}$, sin desarrollo ni truncamiento de la raíz. Es la
+misma relación de dispersión del método de espectro angular
+\parencite{carbajal2010espectro}, y la distingue de la aproximación de Fresnel o
+paraxial, que retiene los dos primeros términos del desarrollo binomial,
+$k_{z}\approx k-k_x^2/2k$, y es válida sólo para ángulos pequeños.
+
+\textbf{La distinción no es formal en este problema.} Con $W=20\lambda$ la base
+abarca ángulos de propagación $\theta_m=\arcsin(k_{x,m}/k)$ desde $0^\circ$ hasta
+$90^\circ$, y la aproximación paraxial se degrada rápidamente dentro de ese
+rango: el desfase que introduce por cada $\lambda$ recorrido vale $0.056$~rad a
+$30^\circ$, $0.360$~rad a $48.6^\circ$ y $\pi$~rad en el corte rasante. Sobre el
+recorrido de $10\lambda$ validado en el Capítulo~\ref{cap4:resultados}, ese
+último modo acumularía $31.4$~rad, es decir cinco vueltas completas de fase.
+
+Lo que decide si esa degradación importa no es el rango de la base sino el
+reparto de energía dentro de ella. Sobre la pantalla de fase aleatoria empleada
+en NB03, con longitud de correlación $\ell_\phi=0.10\lambda$, la energía
+propagante se distribuye así:
+
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+Rango angular & Fracción de la energía propagante \\
+\midrule
+$0^\circ$--$15^\circ$  & $25.06\%$ \\
+$15^\circ$--$30^\circ$ & $16.80\%$ \\
+$30^\circ$--$45^\circ$ & $26.77\%$ \\
+$45^\circ$--$60^\circ$ & $12.42\%$ \\
+$60^\circ$--$90^\circ$ & $12.56\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El $74.94\%$ de la energía propagante está por encima de $15^\circ$ y el
+$31.37\%$ por encima de $45^\circ$. \textbf{La mayor parte del campo queda por
+tanto fuera del régimen en que la aproximación paraxial es defendible}, lo que
+hace de la formulación exacta un requisito y no una preferencia. Es también la
+diferencia con los trabajos de recuperación de fase basados en PINN que emplean
+propagación de Fresnel.
+
 La base se trunca a los $41$ modos propagantes, los que cumplen
 $k_{x,m}^2\leq k^2$, es decir $|m|\leq20$; la desigualdad es no estricta, de
 modo que los dos modos de corte rasante $m=\pm20$ (para los que $k_{x,m}=k$ y

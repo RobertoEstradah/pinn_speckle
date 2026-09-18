@@ -2,25 +2,25 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Hiperparámetros de entrenamiento consolidados.}}{25}{table.caption.14}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Hiperparámetros de entrenamiento consolidados.}}{26}{table.caption.15}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas de precisión: PINN-SIREN 1D ($k = 2\pi $).}}{31}{table.caption.16}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Barrido de $\omega _0$ sobre el problema de NB01 (3{,}000 épocas Adam).}}{32}{table.caption.20}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Métricas de precisión: PINN-SIREN 2D ($k = 2\pi $, $k_x = k_y = k/\sqrt {2}$).}}{34}{table.caption.22}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Reproducibilidad multi-semilla: NB02 ($\lambda _\text {fís} = 0.1$).}}{35}{table.caption.26}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Ablación de profundidad en NB01 y NB02.}}{37}{table.caption.28}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Ablación del peso de física $\lambda _\text {fís}$: NB02.}}{38}{table.caption.30}%
-\contentsline {table}{\numberline {4.7}{\ignorespaces Espectro NTK: término de datos vs. término de física (NB02).}}{39}{table.caption.32}%
-\contentsline {table}{\numberline {4.8}{\ignorespaces Experimento puente: misma solución analítica, tres planteamientos.}}{41}{table.caption.34}%
-\contentsline {table}{\numberline {4.9}{\ignorespaces Arquitectura modal de NB03 frente a una solución analítica exacta.}}{42}{table.caption.36}%
-\contentsline {table}{\numberline {4.10}{\ignorespaces Validación analítica de extensión de distancia: arquitectura modal sobre $\tilde z\in [0,2]$.}}{43}{table.caption.38}%
-\contentsline {table}{\numberline {4.11}{\ignorespaces Configuración de NB03 frente a NB01 y NB02.}}{46}{table.caption.41}%
-\contentsline {table}{\numberline {4.12}{\ignorespaces Barrido de $\omega _0$ en la formulación modal (pantalla 42, $5{,}000$ épocas Adam).}}{47}{table.caption.43}%
-\contentsline {table}{\numberline {4.13}{\ignorespaces NB03 modal con $\omega _0$ calibrado: cinco pantallas de fase independientes en $z=1\lambda $.}}{48}{table.caption.45}%
-\contentsline {table}{\numberline {4.14}{\ignorespaces Piso evanescente y contraste de la referencia en función de la distancia.}}{50}{table.caption.48}%
-\contentsline {table}{\numberline {4.15}{\ignorespaces Validación de \textit {speckle} con pantalla aleatoria en $z=2\lambda $.}}{53}{table.caption.51}%
-\contentsline {table}{\numberline {4.16}{\ignorespaces Propagación de \textit {speckle} hasta $z=5\lambda $ por descomposición en cinco subdominios.}}{54}{table.caption.53}%
-\contentsline {table}{\numberline {4.17}{\ignorespaces Propagación de \textit {speckle} hasta $z=10\lambda $ por descomposición en diez subdominios.}}{56}{table.caption.56}%
-\contentsline {table}{\numberline {4.18}{\ignorespaces Tiempo de evaluación: PINN-SIREN modal frente al espectro angular.}}{58}{table.caption.59}%
-\contentsline {table}{\numberline {4.19}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{61}{table.caption.61}%
-\contentsline {table}{\numberline {4.20}{\ignorespaces Estado de los experimentos planificados.}}{62}{table.caption.63}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas de precisión: PINN-SIREN 1D ($k = 2\pi $).}}{31}{table.caption.17}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Barrido de $\omega _0$ sobre el problema de NB01 (3{,}000 épocas Adam).}}{32}{table.caption.21}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Métricas de precisión: PINN-SIREN 2D ($k = 2\pi $, $k_x = k_y = k/\sqrt {2}$).}}{34}{table.caption.23}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Reproducibilidad multi-semilla: NB02 ($\lambda _\text {fís} = 0.1$).}}{35}{table.caption.27}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Ablación de profundidad en NB01 y NB02.}}{37}{table.caption.29}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Ablación del peso de física $\lambda _\text {fís}$: NB02.}}{38}{table.caption.31}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Espectro NTK: término de datos vs. término de física (NB02).}}{39}{table.caption.33}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Experimento puente: misma solución analítica, tres planteamientos.}}{41}{table.caption.35}%
+\contentsline {table}{\numberline {4.9}{\ignorespaces Arquitectura modal de NB03 frente a una solución analítica exacta.}}{42}{table.caption.37}%
+\contentsline {table}{\numberline {4.10}{\ignorespaces Validación analítica de extensión de distancia: arquitectura modal sobre $\tilde z\in [0,2]$.}}{43}{table.caption.39}%
+\contentsline {table}{\numberline {4.11}{\ignorespaces Configuración de NB03 frente a NB01 y NB02.}}{46}{table.caption.42}%
+\contentsline {table}{\numberline {4.12}{\ignorespaces Barrido de $\omega _0$ en la formulación modal (pantalla 42, $5{,}000$ épocas Adam).}}{47}{table.caption.44}%
+\contentsline {table}{\numberline {4.13}{\ignorespaces NB03 modal con $\omega _0$ calibrado: cinco pantallas de fase independientes en $z=1\lambda $.}}{48}{table.caption.46}%
+\contentsline {table}{\numberline {4.14}{\ignorespaces Piso evanescente y contraste de la referencia en función de la distancia.}}{50}{table.caption.49}%
+\contentsline {table}{\numberline {4.15}{\ignorespaces Validación de \textit {speckle} con pantalla aleatoria en $z=2\lambda $.}}{53}{table.caption.52}%
+\contentsline {table}{\numberline {4.16}{\ignorespaces Propagación de \textit {speckle} hasta $z=5\lambda $ por descomposición en cinco subdominios.}}{54}{table.caption.54}%
+\contentsline {table}{\numberline {4.17}{\ignorespaces Propagación de \textit {speckle} hasta $z=10\lambda $ por descomposición en diez subdominios.}}{56}{table.caption.57}%
+\contentsline {table}{\numberline {4.18}{\ignorespaces Tiempo de evaluación: PINN-SIREN modal frente al espectro angular.}}{58}{table.caption.60}%
+\contentsline {table}{\numberline {4.19}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{61}{table.caption.62}%
+\contentsline {table}{\numberline {4.20}{\ignorespaces Estado de los experimentos planificados.}}{62}{table.caption.64}%
