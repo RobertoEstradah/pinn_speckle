@@ -2,10 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-**Título:** Simulación acelerada de speckle óptico mediante Redes Neuronales Informadas por
-Física con activación sinusoidal
+**Título:** Simulación del speckle óptico mediante Redes Neuronales Informadas por
+Física: formulación modal de Helmholtz
+*(aprobado por el director el 2026-09-18; antes decía «Simulación acelerada… con
+activación sinusoidal». Se retiró «acelerada» porque NB04 sigue pendiente, y se
+añadió la formulación modal, que es lo que distingue el trabajo entregado del que
+prometía el protocolo.)*
 **Grado:** Maestro en Ciencias de la Computación — UJAT (matrícula 252H21004)
 **Director:** Dr. José Adán Hernández Nolasco
+**Coasesor:** Dr. Noel Zacarías Morales (añadido el 2026-09-18)
 **Comité coloquio:** Dr. Pablo Pancardo García (Sin. 1) | Dr. Óscar Alberto Chávez Bosquez (Sin. 2) | Dr. Miguel Antonio Wister Ovando (Sin. 3) | Moderador: Otoniel Sánchez Marín
 **Pregunta de investigación:** ¿Puede una PINN-SIREN simular speckle óptico con L² < 5% y contraste C ≈ 1?
 **Rama:** main
