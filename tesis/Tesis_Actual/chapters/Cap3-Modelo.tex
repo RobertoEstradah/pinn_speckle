@@ -211,16 +211,21 @@ la distancia ampliada y se reentrena sobre el residuo modal normalizado. No hay
 división del dominio. La validación analítica de §\ref{sec:nb02b_extension}
 sigue el mismo esquema: una sola red sobre $\tilde z\in[0,2]$.
 
-\paragraph{Descomposición en subdominios.} Es el procedimiento de la validación
-en $z=5\lambda$ (§\ref{sec:nb03_z5}). El intervalo $[0,5\lambda]$ se divide en
-\textbf{cinco bloques consecutivos de longitud $1\lambda$}, y cada bloque recibe
-su propia red. Cinco bloques generan \textbf{cuatro interfaces internas}, en
-$z=1\lambda$, $2\lambda$, $3\lambda$ y $4\lambda$. En cada una se transfieren al
-bloque siguiente el campo complejo y su derivada longitudinal, que pasan a ser
-los datos $a_m(0)$ y $a_m'(0)$ de la ecuación~\eqref{eq:cauchy_dura_cap3} de esa
-red. Como esa condición se impone por construcción y no por penalización, la
-continuidad del campo y de su derivada en las cuatro interfaces es exacta, no
-aproximada.
+\paragraph{Descomposición en subdominios.} Es el procedimiento de las
+validaciones en $z=5\lambda$ (§\ref{sec:nb03_z5}) y $z=10\lambda$
+(§\ref{sec:nb03_z10}). El intervalo $[0,N\lambda]$ se divide en \textbf{$N$
+bloques consecutivos de longitud $1\lambda$}, y cada bloque recibe su propia
+red; $N$ bloques generan $N-1$ \textbf{interfaces internas}. En cada una se
+transfieren al bloque siguiente el campo complejo y su derivada longitudinal,
+que pasan a ser los datos $a_m(0)$ y $a_m'(0)$ de la
+ecuación~\eqref{eq:cauchy_dura_cap3} de esa red. Como esa condición se impone
+por construcción y no por penalización, la continuidad del campo y de su
+derivada en todas las interfaces es exacta, no aproximada.
+
+La cadena es \textbf{prolongable}: un tramo ya validado puede reconstruirse sin
+reentrenarlo y servir de punto de partida para bloques nuevos. Así se obtuvo la
+validación a $10\lambda$, que reutiliza el tramo $0\leq z\leq 5\lambda$ y
+entrena únicamente los cinco bloques restantes.
 
 \paragraph{Una diferencia adicional de arquitectura.} Las redes de la cadena no
 usan la activación de frecuencia fija de la

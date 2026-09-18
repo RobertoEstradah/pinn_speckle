@@ -335,6 +335,94 @@ chk("z5 media: residuo por bloque", 1.37e-2,
 chk("z5 peor: residuo por bloque", 1.79e-2,
     round(a5["max_slab_residual_rmse"]["maximum"], 5), tol=2e-2)
 
+# ── NB03D: la cadena de diez bloques hasta z=10 lambda ─────────────────────
+z10 = json.load(open(rf"{R}\results\nb03_distance_pilot\nb03d_z10_validation"
+                     rf"\validation_summary.json", encoding="utf-8"))
+p10 = {c["screen_seed"]: c for c in z10["per_screen"]}
+
+met10 = z10["method"]
+chk("z10: descomposicion en bloques", "ten consecutive one-lambda slabs",
+    met10["domain_decomposition"])
+chk("z10: reutiliza el tramo validado", "0<=z<=5 lambda from NB03C",
+    met10["validated_prefix_reused"])
+chk("z10: bloques entrenados de nuevo", "5<=z<=10 lambda",
+    met10["newly_trained_slabs"])
+chk("z10: Cauchy dura en cada interfaz", True,
+    met10["hard_cauchy_at_every_interface"])
+chk("z10: modos propagantes", 41, met10["complex_propagating_modes"])
+chk("z10: sin etiquetas de entrenamiento", False, met10["training_labels"])
+chk("z10: planos evaluados", 201, met10["field_test_planes"])
+chk("z10: las cinco aceptadas", True, z10["all_screens_accepted"])
+chk("z10: pantallas refinadas", 2, z10["aggregate"]["refined_screens"])
+
+esperado10 = ((42, 3.288, 3.726, 6.40, 0.999485, 1.2204, 1.2189),
+              (123, 2.779, 3.483, 9.70, 0.999696, 1.0105, 1.0133),
+              (321, 2.312, 2.393, 9.45, 0.999852, 0.9412, 0.9316),
+              (777, 2.752, 3.619, 9.75, 0.999634, 0.9080, 0.9035),
+              (2026, 1.956, 1.968, 9.15, 0.999917, 0.7067, 0.7064))
+for semilla, full, mx, zmx, coh, cref, cp in esperado10:
+    c = p10[semilla]
+    chk(f"z10 pantalla {semilla}: L2 final", full,
+        round(100 * c["l2_full_final"], 3), tol=2e-2)
+    chk(f"z10 pantalla {semilla}: maximo propagante", mx,
+        round(100 * c["l2_propagating_max"], 3), tol=2e-2)
+    chk(f"z10 pantalla {semilla}: z del maximo", zmx,
+        round(c["l2_propagating_max_z"], 2), tol=2e-2)
+    chk(f"z10 pantalla {semilla}: coherencia", coh,
+        round(c["coherence_full_final"], 6))
+    chk(f"z10 pantalla {semilla}: C_ref", cref, round(c["contrast_reference"], 4))
+    chk(f"z10 pantalla {semilla}: C_pinn", cp, round(c["contrast_pinn"], 4))
+    chk(f"z10 pantalla {semilla}: seis criterios", True,
+        all(c["acceptance"].values()))
+    # Nueve interfaces, y el salto debe ser CERO EXACTO en todas.
+    chk(f"z10 pantalla {semilla}: salto de campo", 0.0,
+        c["interface_field_max_abs"])
+    chk(f"z10 pantalla {semilla}: salto de derivada", 0.0,
+        c["interface_derivative_max_abs"])
+
+a10 = z10["aggregate"]
+chk("z10 media: L2 final", 2.617, round(100 * a10["l2_full_final"]["mean"], 3),
+    tol=2e-2)
+chk("z10 media: maximo propagante", 3.038,
+    round(100 * a10["l2_propagating_max"]["mean"], 3), tol=2e-2)
+chk("z10 peor: maximo propagante", 3.726,
+    round(100 * a10["l2_propagating_max"]["maximum"], 3), tol=2e-2)
+chk("z10 media: coherencia", 0.999716,
+    round(a10["coherence_full_final"]["mean"], 6))
+chk("z10 media: |dC|", 0.0037, round(a10["contrast_difference"]["mean"], 4),
+    tol=5e-2)
+chk("z10 maximo: |dC|", 0.0096, round(a10["contrast_difference"]["maximum"], 4),
+    tol=5e-2)
+chk("z10 media: residuo por bloque", 1.37e-2,
+    round(a10["max_slab_residual_rmse"]["mean"], 5), tol=2e-2)
+chk("z10 peor: residuo por bloque", 1.79e-2,
+    round(a10["max_slab_residual_rmse"]["maximum"], 5), tol=2e-2)
+
+# Guarda: NINGUN maximo debe caer en el plano final. La tesis lo afirma, y si
+# una corrida futura lo cambiara, la nota al pie quedaria falsa.
+chk("z10: ningun maximo en el plano final", True,
+    all(c["l2_propagating_max_z"] < 9.99 for c in z10["per_screen"]))
+
+# Guarda: el error NO se dispara al duplicar la distancia. La tesis dice que el
+# incremento de 5 a 10 lambda es de 0.373 puntos porcentuales.
+inc = 100 * (a10["l2_full_final"]["mean"] - a5["l2_full_final"]["mean"])
+chk("z10: incremento frente a z5 (puntos)", 0.373, round(inc, 3), tol=5e-2)
+
+# ── El ensayo de 20 lambda: NO cumple, y la tesis debe seguir diciendolo ────
+z20 = json.load(open(rf"{R}\results\nb03_distance_pilot"
+                     rf"\z20_screen42_net42_adaptive_slabs_v1\summary.json",
+                     encoding="utf-8"))
+m20 = z20["metrics"] if "metrics" in z20 else z20
+chk("z20: distancia", 20.0, float(m20["distance_lambda"]))
+chk("z20: L2 final", 8.743, round(100 * m20["l2_full_final"], 3), tol=2e-2)
+chk("z20: maximo propagante", 11.292,
+    round(100 * m20["l2_propagating_max"], 3), tol=2e-2)
+chk("z20: z del maximo", 19.8, round(m20["l2_propagating_max_z"], 2), tol=2e-2)
+chk("z20: coherencia", 0.996907, round(m20["coherence_full_final"], 6))
+chk("z20: |dC|", 0.0178, round(m20["contrast_difference"], 4), tol=5e-2)
+# Lo importante de esta corrida es que NO alcanza el criterio del 5 %.
+chk("z20: excede el umbral del 5 %", True, m20["l2_full_final"] > 0.05)
+
 # Control negativo: la extension directa de un solo dominio.
 ctrl = z5["direct_single_domain_control"]
 chk("control z5: pantalla", 42, ctrl["screen_seed"])
@@ -354,6 +442,9 @@ for etiqueta, cifra in (("L2 1D", "0.006"), ("L2 2D", "0.171"),
                         ("contraste referencia", "0.9661"),
                         ("L2 z=2", "0.993"), ("L2 z=5", "2.244"),
                         ("maximo sobre 201 planos", "3.507"),
+                        ("L2 z=10", "2.617"),
+                        ("maximo en z=10", "3.726"),
+                        ("el ensayo de z=20 no cumple", "8.743"),
                         ("multisemilla", "0.192")):
     chk(f"Resumen tiene {etiqueta}", True, cifra in RES)
     chk(f"Abstract tiene {etiqueta}", True, cifra in ABS)

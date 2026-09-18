@@ -24,10 +24,13 @@ $C=0.9489$. El contraste de referencia promedio de los conjuntos de 64
 realizaciones es $C=0.9661$.
 La validación se extiende a $z=2\lambda$ con una PINN-SIREN de dominio único
 por pantalla
-($L^2=0.993\%$) y hasta $z=5\lambda$ mediante descomposición del dominio en
-cinco redes locales acopladas por condiciones de Cauchy duras
+($L^2=0.993\%$) y, mediante descomposición del dominio en redes locales de
+$1\lambda$ acopladas por condiciones de Cauchy duras, hasta $z=5\lambda$
 ($L^2=2.244\%$ al final del recorrido y un máximo de $3.507\%$ sobre $201$
-planos), en ambos casos sobre cinco realizaciones de fase conocidas.
+planos) y hasta $z=10\lambda$ con diez redes ($L^2=2.617\%$ y un máximo de
+$3.726\%$), en todos los casos sobre cinco realizaciones de fase conocidas.
+Una cadena de veinte bloques hasta $z=20\lambda$, ensayada sobre una única
+pantalla y sin refinamiento, no alcanza el criterio ($L^2=8.743\%$).
 Los protocolos de optimización difieren entre experimentos y no deben
 generalizarse: las validaciones 1D y 2D emplean Adam seguido de L-BFGS con
 muestreo por hipercubo latino (LHS); las formulaciones modales de dominio único

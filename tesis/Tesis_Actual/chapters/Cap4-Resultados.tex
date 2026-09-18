@@ -1326,8 +1326,110 @@ propagación de las cinco realizaciones de fase evaluadas en todo el intervalo
 $0\leq z\leq 5\lambda$, con error inferior al $5\%$ en los $201$ planos y
 acuerdo de contraste con su referencia por debajo de $0.0072$. No queda
 establecido que una red \emph{global única} funcione a esa distancia, ni que el
-modelo generalice a una pantalla no vista sin entrenamiento, ni nada sobre
-distancias mayores.
+modelo generalice a una pantalla no vista sin entrenamiento. Sobre distancias
+mayores, la Sección~\ref{sec:nb03_z10} extiende la cadena hasta $10\lambda$
+reutilizando este tramo ya validado.
+
+\subsection{Extensión de la cadena a \texorpdfstring{$z=10\lambda$}{z=10 lambda}}
+\label{sec:nb03_z10}
+
+La descomposición de la Sección~\ref{sec:nb03_z5} admite continuarse. El
+intervalo $[0,10\lambda]$ se cubre con diez bloques consecutivos de longitud
+$1\lambda$ y nueve interfaces internas, con la misma condición de Cauchy dura.
+El procedimiento no reentrena la cadena completa: \textbf{el tramo
+$0\leq z\leq 5\lambda$ ya validado en la Sección~\ref{sec:nb03_z5} se
+reconstruye sin optimizarlo}, y sólo se entrenan los cinco bloques nuevos.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Propagación de \textit{speckle} hasta $z=10\lambda$ por descomposición
+en diez subdominios.}
+\label{tab:nb03_z10}
+\begin{tabular}{lccccc}
+\toprule
+Pantalla & $L^2$ complejo final & Máximo $L^2$ propagante & Coherencia & $C_\text{ref}$ & $C_\text{PINN}$ \\
+\midrule
+42   & 3.288\% & 3.726\%\tnote{a} & 0.999485 & 1.2204 & 1.2189 \\
+123  & 2.779\% & 3.483\%          & 0.999696 & 1.0105 & 1.0133 \\
+321  & 2.312\% & 2.393\%          & 0.999852 & 0.9412 & 0.9316 \\
+777  & 2.752\% & 3.619\%          & 0.999634 & 0.9080 & 0.9035 \\
+2026 & \textbf{1.956\%} & 1.968\% & 0.999917 & 0.7067 & 0.7064 \\
+\midrule
+Media & \textbf{2.617\%} & 3.038\% & \textbf{0.999716} & --- & --- \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\small
+    \item Las cinco pantallas superan los seis criterios de aceptación, con los
+    mismos umbrales de la Tabla~\ref{tab:nb03_z5}. La diferencia de contraste
+    media es de $0.0037$ y la máxima de $0.0096$; el residuo modal por bloque,
+    de $1.37\times10^{-2}$ en media y $1.79\times10^{-2}$ en el peor caso. El
+    salto de campo y de derivada en las nueve interfaces es idénticamente cero
+    en las cinco pantallas.
+    \item \textbf{Los presupuestos no son idénticos entre pantallas}, igual que
+    en la Tabla~\ref{tab:nb03_z5}. Las pantallas $42$, $123$ y $777$ siguen el
+    protocolo de bloques con pesos transferidos; las pantallas $321$ y $2026$
+    requirieron una segunda optimización de los bloques $5$ a $9$ mediante
+    refinamiento residual. Las cifras no corresponden por tanto a un
+    presupuesto de entrenamiento uniforme. Fuente:
+    \texttt{results/nb03\_distance\_pilot/nb03d\_z10\_validation/validation\_summary.json},
+    generado por
+    \texttt{notebooks/03d\_validacion\_speckle\_2d\_z10lambda.ipynb}.
+    \item[a] \textbf{Ninguno de los cinco máximos se alcanza en el plano
+    final.} Ocurren en $z=6.40$, $9.70$, $9.45$, $9.75$ y $9.15\lambda$
+    respectivamente. El de la pantalla $42$ aparece a poco más de la mitad del
+    recorrido.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+El error complejo final medio es del $2.617\%$ y el máximo sobre los $201$
+planos evaluados, del $3.038\%$ en media y $3.726\%$ en el peor caso. Las cinco
+pantallas permanecen por debajo del umbral del $5\%$ en todo el recorrido.
+
+\textbf{El error no se dispara al duplicar la distancia.} Pasar de $5\lambda$ a
+$10\lambda$ eleva el error final medio de $2.244\%$ a $2.617\%$, un incremento
+de $0.373$ puntos porcentuales para cinco bloques adicionales. La cadena no
+diverge en el rango evaluado, y ese comportamiento es lo que distingue este
+resultado de una simple repetición del anterior: la acumulación de error entre
+interfaces, descrita en la Sección~\ref{sec:nb03_z5}, resulta manejable cuando
+los bloques que la sufren se someten a refinamiento residual, como ocurrió en
+dos de las cinco pantallas.
+
+\textbf{El contraste se dispersa con la distancia.} Los valores de referencia
+recorren el intervalo $[0.7067, 1.2204]$ frente al $[0.9950, 1.1210]$ de
+$5\lambda$. La PINN sigue a su referencia en las cinco pantallas --la
+diferencia máxima es de $0.0096$--, pero el conjunto de realizaciones deja de
+concentrarse en torno a $C\approx1$. Esa dispersión es una propiedad de las
+realizaciones a esta distancia y no del ajuste, y conviene no leerla como un
+deterioro del modelo.
+
+\paragraph{El límite superior observado.} Se ensayó además una cadena de veinte
+bloques hasta $z=20\lambda$ sobre la pantalla $42$, con el protocolo de pesos
+transferidos y sin refinamiento posterior. El resultado \textbf{no alcanza el
+criterio de aceptación}: $L^2$ final del $8.743\%$ y máximo del $11.292\%$,
+alcanzado en $z=19.8\lambda$, con coherencia de $0.996907$ y diferencia de
+contraste de $0.0178$. Fuente:
+\texttt{results/nb03\_distance\_pilot/z20\_screen42\_net42\_adaptive\_slabs\_v1/summary.json}.
+
+\textbf{Este ensayo no es comparable con la Tabla~\ref{tab:nb03_z10}}, y
+conviene decirlo antes de extraer conclusión alguna. Se trata de \emph{una sola
+pantalla}, con \emph{un solo protocolo} y \emph{sin el refinamiento residual}
+que dos de las cinco pantallas necesitaron para alcanzar los $10\lambda$. Lo
+que acota es el alcance del procedimiento tal como se aplicó: \textbf{bajo el
+protocolo sin refinamiento, y en la única realización evaluada, la cadena deja
+de cumplir el criterio en algún punto entre $10\lambda$ y $20\lambda$}. No
+establece que $20\lambda$ sea inalcanzable con refinamiento, ni sitúa el límite
+en ninguna distancia concreta.
+
+\textbf{Qué queda establecido y qué no.} Queda establecido que una cadena de
+diez redes modales acopladas por condiciones de Cauchy duras reproduce la
+propagación de las cinco realizaciones evaluadas en todo el intervalo
+$0\leq z\leq 10\lambda$, con error inferior al $5\%$ en los $201$ planos y
+acuerdo de contraste con su referencia por debajo de $0.0096$. No queda
+establecido que el modelo generalice a pantallas no vistas, ni que una red
+global única alcance esa distancia, ni dónde está exactamente el límite del
+procedimiento.
 
 \subsection{Tiempo de inferencia frente a la referencia de propagación}
 \label{sec:nb03_inferencia}

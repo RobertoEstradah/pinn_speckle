@@ -21,10 +21,13 @@ the error is $0.042\%$. The ensemble contrast is $C=0.9489$, against a mean
 reference ensemble contrast of $C=0.9661$ over 64 realizations each.
 The validation extends to $z=2\lambda$ with a single-domain PINN-SIREN per
 screen
-($L^2=0.993\%$) and up to $z=5\lambda$ through domain decomposition into five
-local networks coupled by hard Cauchy conditions ($L^2=2.244\%$ at the end of
-the path and a maximum of $3.507\%$ across $201$ planes), in both cases over
-five known phase realizations.
+($L^2=0.993\%$) and, through domain decomposition into $1\lambda$ local
+networks coupled by hard Cauchy conditions, up to $z=5\lambda$ ($L^2=2.244\%$
+at the end of the path and a maximum of $3.507\%$ across $201$ planes) and up
+to $z=10\lambda$ with ten networks ($L^2=2.617\%$ and a maximum of $3.726\%$),
+in all cases over five known phase realizations. A twenty-block chain to
+$z=20\lambda$, tried on a single screen and without refinement, does not meet
+the criterion ($L^2=8.743\%$).
 Optimization protocols differ across experiments and should not be
 generalized: the 1D and 2D validations use Adam followed by L-BFGS with Latin
 Hypercube Sampling (LHS); the single-domain modal formulations at $z=1\lambda$
