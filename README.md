@@ -228,10 +228,10 @@ Entrada (x,y) → [sin(ω₀·Wx+b)] → [128] → [sin(ω₀·Wx+b)] → [128] 
 | Optimizador | Adam + L-BFGS | Adam + L-BFGS | Adam + L-BFGS |
 | Parada anticipada | Umbral fijo L < 1×10⁻⁴ | Paciencia 800 épocas | Paciencia 800 épocas |
 
-**NB03 está en progreso** — ver `CLAUDE.md` para el estado técnico actual. Existe además
-una validación estadística de respaldo, fuera de la numeración del proyecto, en
-`notebooks/validacion_estadistica/` (no usa PINN, genera el campo con ruido gaussiano
-filtrado según Goodman) que confirma que el speckle buscado es alcanzable.
+**NB03 está validado en tres alcances:** dominio único en `z=1λ` y `z=2λ`, y
+descomposición en cinco bloques locales para llegar hasta `z=5λ`. Los resultados
+corresponden a cinco pantallas conocidas y no demuestran generalización a pantallas
+nuevas ni a distancias arbitrarias.
 
 ---
 
