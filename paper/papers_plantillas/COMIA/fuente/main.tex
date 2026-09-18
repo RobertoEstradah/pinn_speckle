@@ -1,5 +1,5 @@
 % ============================================================
-%  Simulacion acelerada de speckle optico — Version COMIA/LNCS
+%  Validacion de PINN-SIREN para Helmholtz 1D y 2D — Version COMIA/LNCS
 %  Roberto Hernandez Estrada | UJAT — DACYTI | Jun 2026
 %
 %  Compilar en Overleaf: compilador pdfLaTeX.
@@ -48,9 +48,9 @@
 \begin{document}
 % ============================================================
 
-\title{Simulaci\'{o}n acelerada de speckle \'{o}ptico mediante
-       Redes Neuronales Informadas por F\'{i}sica con activaci\'{o}n
-       sinusoidal%
+\title{Validaci\'{o}n de Redes Neuronales Informadas por F\'{i}sica con
+       activaci\'{o}n sinusoidal para la ecuaci\'{o}n de Helmholtz 1D y 2D
+       con campo complejo%
        \thanks{Este trabajo forma parte de la tesis de maestr\'{i}a
                del primer autor, desarrollada en el programa de
                Maestr\'{i}a en Ciencias de la Computaci\'{o}n de la
@@ -58,7 +58,7 @@
                bajo la direcci\'{o}n del
                Dr.~Jos\'{e} Ad\'{a}n Hern\'{a}ndez Nolasco.}}
 
-\titlerunning{PINN-SIREN para simulaci\'{o}n de speckle \'{o}ptico}
+\titlerunning{PINN-SIREN para la ecuaci\'{o}n de Helmholtz 1D y 2D}
 
 \author{Roberto Hern\'{a}ndez Estrada\inst{1}\orcidID{0009-0009-5965-4686} \and
         Jos\'{e} Ad\'{a}n Hern\'{a}ndez Nolasco\inst{1}\orcidID{0000-0003-4671-0350}}
@@ -87,9 +87,11 @@ analytical solutions, several orders of magnitude below the $5\%$
 engineering threshold adopted in this work.
 A two-phase Adam\,+\,L-BFGS optimization strategy and Latin Hypercube
 Sampling (LHS) are key to convergence and accuracy.
-Multi-seed validation ($\mathrm{SEED}\in\{42,123,777\}$) confirms
-statistical robustness with an inter-seed $L^2$ variance of $13\%$
-(relative).
+Multi-seed validation ($\mathrm{SEED}\in\{42,123,777\}$) yields a mean
+$L^2$ error of $0.192\%$ with a population standard deviation of
+$0.089\%$, that is, a coefficient of variation of approximately $46\%$
+about the mean: the spread across initialisations is considerable and
+must be taken into account when reading any individual value.
 These results establish SIREN-PINNs as a precise and stable solver for
 the scalar Helmholtz equation, laying the foundation for physically
 accurate optical speckle generation.
@@ -97,9 +99,9 @@ Unlike standard ReLU and tanh activations, SIREN preserves second-order
 derivative stability throughout training, which is essential for
 Helmholtz-type wave equations.
 Mesh-free field evaluation at a $100\times100$ grid requires
-$\approx\!1.3\,\mathrm{ms}$ on a GPU NVIDIA RTX~5050, positioning
-the model as a viable real-time surrogate for classical numerical
-solvers such as FEM.
+$\approx\!1.3\,\mathrm{ms}$ on an NVIDIA RTX~5050 GPU. No comparison
+against a finite-element solver is reported here, so no speed-up factor
+is claimed: that benchmark is left as future work.
 
 \keywords{Physics-Informed Neural Networks \and SIREN \and
           Helmholtz equation \and optical speckle \and
@@ -113,7 +115,7 @@ Se presenta una implementaci\'{o}n de Redes Neuronales Informadas por
 F\'{i}sica con activaci\'{o}n sinusoidal (PINN-SIREN) para la
 resoluci\'{o}n de la ecuaci\'{o}n de Helmholtz bidimensional con campo
 el\'{e}ctrico complejo, en un paradigma libre de malla
-(\textit{mesh-free}) orientado a la simulaci\'{o}n acelerada de
+(\textit{mesh-free}) orientado a la simulaci\'{o}n de
 fen\'{o}menos \'{o}pticos.
 La arquitectura SIREN propuesta ($5\times128$ neuronas, $\omega_0=1.0$)
 alcanza errores $L^2$ de $0.006\%$ en el caso 1D y $0.171\%$ en el
@@ -121,7 +123,10 @@ caso 2D respecto a soluciones anal\'{i}ticas, varios \'{o}rdenes de
 magnitud por debajo del umbral ingenieril de $5\%$ adoptado en este
 trabajo.
 La validaci\'{o}n multi-semilla ($\mathrm{SEED}\in\{42,123,777\}$)
-confirma la robustez estad\'{i}stica del m\'{e}todo.
+arroja un error $L^2$ promedio de $0.192 \pm 0.089\%$, es decir un
+coeficiente de variaci\'{o}n del $46\%$ respecto a la media: la
+dispersi\'{o}n frente a la inicializaci\'{o}n es considerable y debe
+tenerse en cuenta al interpretar cualquier valor individual.
 La generaci\'{o}n de patrones de speckle con condici\'{o}n de frontera
 de fase aleatoria $\phi(x)\sim\mathcal{U}(0,2\pi)$ constituye el
 siguiente paso planificado de esta investigaci\'{o}n.

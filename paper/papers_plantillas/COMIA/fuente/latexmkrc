@@ -1,0 +1,7 @@
+# Sin esto, latexmk arranca en modo DVI y falla en la primera figura:
+#   ! LaTeX Error: Cannot determine size of graphic ... (no BoundingBox)
+# DVI no puede incrustar PNG. Modo 1 = pdflatex.
+$pdf_mode = 1;
+
+# llncs usa BibTeX clasico (\bibliographystyle{splncs04}), no biber.
+$bibtex_use = 2;
