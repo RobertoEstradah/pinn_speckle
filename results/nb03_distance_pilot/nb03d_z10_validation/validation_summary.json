@@ -1,0 +1,213 @@
+{
+  "experiment": "NB03D random-speckle validation through z=10 lambda",
+  "coordinate_system": "Cartesian (x,z)",
+  "equation": "Normalized homogeneous Helmholtz equation",
+  "method": {
+    "model": "modal PINN-SIREN with adaptive sinusoidal scale",
+    "domain_decomposition": "ten consecutive one-lambda slabs",
+    "validated_prefix_reused": "0<=z<=5 lambda from NB03C",
+    "newly_trained_slabs": "5<=z<=10 lambda",
+    "hard_cauchy_at_every_interface": true,
+    "complex_propagating_modes": 41,
+    "training_labels": false,
+    "selection_uses_reference_field": false,
+    "independent_reference": "angular spectrum after training",
+    "field_test_planes": 201
+  },
+  "per_screen": [
+    {
+      "screen_seed": 42,
+      "run_directory": "results/nb03_distance_pilot/z10_screen42_net42_adaptive_slabs_v1",
+      "summary_path": "results/nb03_distance_pilot/z10_screen42_net42_adaptive_slabs_v1/summary.json",
+      "arrays_path": "results/nb03_distance_pilot/z10_screen42_net42_adaptive_slabs_v1/adaptive_slabs_z10.npz",
+      "method": "NB03 adaptive-frequency transferred-weight slabs",
+      "refinement_used": false,
+      "l2_full_final": 0.032877826182441394,
+      "l2_propagating_final": 0.03287782618244139,
+      "l2_propagating_max": 0.0372648206800287,
+      "l2_propagating_max_z": 6.4,
+      "coherence_full_final": 0.9994753828456504,
+      "intensity_correlation_full_final": 0.9993022976296995,
+      "contrast_reference": 1.220370268450522,
+      "contrast_pinn": 1.2188930475010153,
+      "contrast_difference": 0.0014772209495066413,
+      "max_slab_residual_rmse": 0.015551380813121796,
+      "interface_field_max_abs": 0.0,
+      "interface_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "hard_interface_continuity_below_1e_6": true
+      },
+      "accepted": true
+    },
+    {
+      "screen_seed": 123,
+      "run_directory": "results/nb03_distance_pilot/z10_screen123_net42_adaptive_slabs_v1",
+      "summary_path": "results/nb03_distance_pilot/z10_screen123_net42_adaptive_slabs_v1/summary.json",
+      "arrays_path": "results/nb03_distance_pilot/z10_screen123_net42_adaptive_slabs_v1/adaptive_slabs_z10.npz",
+      "method": "NB03 adaptive-frequency transferred-weight slabs",
+      "refinement_used": false,
+      "l2_full_final": 0.027790723386736604,
+      "l2_propagating_final": 0.02779072338673661,
+      "l2_propagating_max": 0.03483262565079868,
+      "l2_propagating_max_z": 9.700000000000001,
+      "coherence_full_final": 0.9997040227502126,
+      "intensity_correlation_full_final": 0.9996313882700706,
+      "contrast_reference": 1.0104748182667098,
+      "contrast_pinn": 1.0132724590487894,
+      "contrast_difference": 0.002797640782079558,
+      "max_slab_residual_rmse": 0.010333353653550148,
+      "interface_field_max_abs": 0.0,
+      "interface_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "hard_interface_continuity_below_1e_6": true
+      },
+      "accepted": true
+    },
+    {
+      "screen_seed": 321,
+      "run_directory": "results/nb03_distance_pilot/z10_screen321_net42_adaptive_slabs_v2_refine",
+      "summary_path": "results/nb03_distance_pilot/z10_screen321_net42_adaptive_slabs_v2_refine/summary.json",
+      "arrays_path": "results/nb03_distance_pilot/z10_screen321_net42_adaptive_slabs_v2_refine/adaptive_slabs_z10.npz",
+      "method": "NB03 adaptive-frequency slab residual refinement",
+      "refinement_used": true,
+      "l2_full_final": 0.02311613623040473,
+      "l2_propagating_final": 0.023116136230404722,
+      "l2_propagating_max": 0.02393125499740096,
+      "l2_propagating_max_z": 9.450000000000001,
+      "coherence_full_final": 0.9998494004635997,
+      "intensity_correlation_full_final": 0.9997107140435997,
+      "contrast_reference": 0.9412289716278105,
+      "contrast_pinn": 0.9316420986044248,
+      "contrast_difference": 0.009586873023385678,
+      "max_slab_residual_rmse": 0.013677987270057201,
+      "interface_field_max_abs": 0.0,
+      "interface_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "hard_interface_continuity_below_1e_6": true
+      },
+      "accepted": true
+    },
+    {
+      "screen_seed": 777,
+      "run_directory": "results/nb03_distance_pilot/z10_screen777_net42_adaptive_slabs_v1",
+      "summary_path": "results/nb03_distance_pilot/z10_screen777_net42_adaptive_slabs_v1/summary.json",
+      "arrays_path": "results/nb03_distance_pilot/z10_screen777_net42_adaptive_slabs_v1/adaptive_slabs_z10.npz",
+      "method": "NB03 adaptive-frequency transferred-weight slabs",
+      "refinement_used": false,
+      "l2_full_final": 0.027522272512987587,
+      "l2_propagating_final": 0.027522272512987583,
+      "l2_propagating_max": 0.03619280371216738,
+      "l2_propagating_max_z": 9.75,
+      "coherence_full_final": 0.9996316440688426,
+      "intensity_correlation_full_final": 0.9991574827061986,
+      "contrast_reference": 0.9080107771158987,
+      "contrast_pinn": 0.9035241406375057,
+      "contrast_difference": 0.00448663647839298,
+      "max_slab_residual_rmse": 0.0178980752825737,
+      "interface_field_max_abs": 0.0,
+      "interface_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "hard_interface_continuity_below_1e_6": true
+      },
+      "accepted": true
+    },
+    {
+      "screen_seed": 2026,
+      "run_directory": "results/nb03_distance_pilot/z10_screen2026_net42_adaptive_slabs_v2_refine",
+      "summary_path": "results/nb03_distance_pilot/z10_screen2026_net42_adaptive_slabs_v2_refine/summary.json",
+      "arrays_path": "results/nb03_distance_pilot/z10_screen2026_net42_adaptive_slabs_v2_refine/adaptive_slabs_z10.npz",
+      "method": "NB03 adaptive-frequency slab residual refinement",
+      "refinement_used": true,
+      "l2_full_final": 0.01955796540661369,
+      "l2_propagating_final": 0.019557965406613687,
+      "l2_propagating_max": 0.019677716262500148,
+      "l2_propagating_max_z": 9.15,
+      "coherence_full_final": 0.99991714290019,
+      "intensity_correlation_full_final": 0.9995715678056464,
+      "contrast_reference": 0.7067180587561316,
+      "contrast_pinn": 0.7064089743015982,
+      "contrast_difference": 0.0003090844545333704,
+      "max_slab_residual_rmse": 0.011030688881874084,
+      "interface_field_max_abs": 0.0,
+      "interface_derivative_max_abs": 0.0,
+      "acceptance": {
+        "l2_full_final_below_5pct": true,
+        "l2_propagating_all_planes_below_5pct": true,
+        "coherence_above_0_99": true,
+        "intensity_correlation_above_0_99": true,
+        "contrast_difference_below_0_05": true,
+        "hard_interface_continuity_below_1e_6": true
+      },
+      "accepted": true
+    }
+  ],
+  "aggregate": {
+    "l2_full_final": {
+      "mean": 0.0261729847438368,
+      "std_population": 0.004527590047330877,
+      "minimum": 0.01955796540661369,
+      "maximum": 0.032877826182441394
+    },
+    "l2_propagating_final": {
+      "mean": 0.026172984743836798,
+      "std_population": 0.004527590047330877,
+      "minimum": 0.019557965406613687,
+      "maximum": 0.03287782618244139
+    },
+    "l2_propagating_max": {
+      "mean": 0.03037984426057917,
+      "std_population": 0.007171338887037959,
+      "minimum": 0.019677716262500148,
+      "maximum": 0.0372648206800287
+    },
+    "coherence_full_final": {
+      "mean": 0.9997155186056992,
+      "std_population": 0.00015710441361354037,
+      "minimum": 0.9994753828456504,
+      "maximum": 0.99991714290019
+    },
+    "intensity_correlation_full_final": {
+      "mean": 0.999474690091043,
+      "std_population": 0.0002097553826750066,
+      "minimum": 0.9991574827061986,
+      "maximum": 0.9997107140435997
+    },
+    "contrast_difference": {
+      "mean": 0.0037314911375796456,
+      "std_population": 0.0032410621587942324,
+      "minimum": 0.0003090844545333704,
+      "maximum": 0.009586873023385678
+    },
+    "max_slab_residual_rmse": {
+      "mean": 0.013698297180235386,
+      "std_population": 0.0028111010840263396,
+      "minimum": 0.010333353653550148,
+      "maximum": 0.0178980752825737
+    },
+    "accepted_screens": 5,
+    "total_screens": 5,
+    "refined_screens": 2
+  },
+  "all_screens_accepted": true,
+  "scope_limitation": "Valida cinco pantallas conocidas en 0<=z<=10 lambda mediante diez PINN-SIREN locales; no demuestra generalizacion a una pantalla no vista ni equivale a una sola PINN global."
+}

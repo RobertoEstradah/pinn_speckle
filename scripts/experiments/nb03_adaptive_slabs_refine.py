@@ -52,6 +52,12 @@ def main() -> None:
     parser.add_argument("--lbfgs-seconds", type=float, default=120.0)
     parser.add_argument("--n-train", type=int, default=1024)
     parser.add_argument("--threads", type=int, default=2)
+    parser.add_argument(
+        "--start-block",
+        type=int,
+        default=1,
+        help="Primer bloque que se reentrena; los anteriores se reconstruyen sin optimizar.",
+    )
     args = parser.parse_args()
     if min(args.adam_seconds, args.lbfgs_seconds, args.n_train, args.threads) <= 0:
         parser.error("Los presupuestos, puntos y threads deben ser positivos.")
@@ -64,8 +70,10 @@ def main() -> None:
     )
     config = source_summary["configuration"]
     target_distance = int(config["target_distance"])
-    if target_distance != 5:
-        raise ValueError("Esta afinacion controlada espera una corrida a 5 lambda.")
+    if not 1 <= args.start_block < target_distance:
+        raise ValueError(
+            "start-block debe estar entre 1 y target_distance-1."
+        )
 
     output_dir = ROOT / "results" / "nb03_distance_pilot" / args.name
     output_dir.mkdir(parents=True, exist_ok=False)
@@ -108,22 +116,26 @@ def main() -> None:
         model = slabs.next_model(models[-1], slope_multiplier)
         load_trainable_state(model, source_dir / f"slab{index}.pt")
         interface_before = slabs.interface_errors(models[-1], model)
-        kz2, adam_training = refinement.train(
-            model,
-            reference,
-            "adam32",
-            args.adam_seconds,
-            args.n_train,
-            learning_rate=5e-5,
-            selection_interval=50,
-        )
-        kz2, lbfgs_training = refinement.train(
-            model,
-            reference,
-            "lbfgs32",
-            args.lbfgs_seconds,
-            args.n_train,
-        )
+        if index >= args.start_block:
+            kz2, adam_training = refinement.train(
+                model,
+                reference,
+                "adam32",
+                args.adam_seconds,
+                args.n_train,
+                learning_rate=5e-5,
+                selection_interval=50,
+            )
+            kz2, lbfgs_training = refinement.train(
+                model,
+                reference,
+                "lbfgs32",
+                args.lbfgs_seconds,
+                args.n_train,
+            )
+        else:
+            adam_training = {"skipped": True}
+            lbfgs_training = {"skipped": True}
         interface_after = slabs.interface_errors(models[-1], model)
         if max(interface_after.values()) > 1e-6:
             raise RuntimeError(f"Fallo de continuidad en interfaz {index}.")
@@ -137,14 +149,18 @@ def main() -> None:
             "interface_before_training": interface_before,
             "interface_after_training": interface_after,
             "adaptive_scale": float(model.adaptive_scale.detach()),
+            "refinement_skipped": index < args.start_block,
             "adam": adam_training,
             "lbfgs": lbfgs_training,
         })
-        print(
-            f"Bloque {index}: escala={float(model.adaptive_scale.detach()):.5f} "
-            f"res_sel={lbfgs_training['selection_best_mse']**0.5:.3e}",
-            flush=True,
-        )
+        if index >= args.start_block:
+            print(
+                f"Bloque {index}: escala={float(model.adaptive_scale.detach()):.5f} "
+                f"res_sel={lbfgs_training['selection_best_mse']**0.5:.3e}",
+                flush=True,
+            )
+        else:
+            print(f"Bloque {index}: reconstruido sin reentrenar", flush=True)
 
     metrics, arrays = slab_tools.evaluate(
         models,
@@ -155,7 +171,7 @@ def main() -> None:
         kz2,
     )
     np.savez_compressed(
-        output_dir / "adaptive_slabs_z5.npz", **arrays
+        output_dir / f"adaptive_slabs_z{target_distance}.npz", **arrays
     )
     acceptance = {
         "full_final_below_5pct": metrics["l2_full_final"] < 0.05,
@@ -202,7 +218,8 @@ def main() -> None:
         json.dumps(output, indent=2), encoding="utf-8"
     )
     print(
-        f"z=5 lambda: prop={100*metrics['l2_propagating_final']:.4f}% "
+        f"z={target_distance} lambda: "
+        f"prop={100*metrics['l2_propagating_final']:.4f}% "
         f"max_prop={100*metrics['l2_propagating_max']:.4f}% "
         f"full={100*metrics['l2_full_final']:.4f}% "
         f"accepted={output['accepted']}",

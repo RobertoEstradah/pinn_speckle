@@ -54,6 +54,29 @@ def load_first_state(model, model_path):
     return "fixed_siren_exact_conversion"
 
 
+def load_trainable_state_preserving_boundary(model, model_path):
+    """Carga los pesos aprendidos sin sobrescribir la nueva frontera dura.
+
+    Los buffers de Cauchy dependen del bloque precedente reconstruido en el
+    entorno actual. Preservarlos evita que pequeñas diferencias de redondeo
+    entre versiones de PyTorch rompan artificialmente la continuidad al
+    reanudar una cadena validada.
+    """
+    source = torch.load(model_path, map_location="cpu", weights_only=True)
+    destination = model.state_dict()
+    missing = []
+    for name in destination:
+        if name in BUFFER_NAMES:
+            continue
+        if name not in source:
+            missing.append(name)
+            continue
+        destination[name] = source[name].detach().clone()
+    if missing:
+        raise ValueError(f"Faltan parametros entrenables al reanudar: {missing}")
+    model.load_state_dict(destination)
+
+
 def first_model(reference, model_path, slope_multiplier):
     # ``build_model`` también reconstruye la escala física y los modos activos.
     # Desde la consolidación multisemilla recibe explícitamente el checkpoint;
@@ -191,11 +214,9 @@ def main() -> None:
         blocks[0]["resumed_from"] = str(resume_dir)
         for index in range(1, previous_distance):
             model = next_model(models[-1], args.slope_multiplier)
-            model.load_state_dict(torch.load(
-                resume_dir / f"slab{index}.pt",
-                map_location="cpu",
-                weights_only=True,
-            ))
+            load_trainable_state_preserving_boundary(
+                model, resume_dir / f"slab{index}.pt"
+            )
             continuity = interface_errors(models[-1], model)
             if max(continuity.values()) > 1e-6:
                 raise RuntimeError(
