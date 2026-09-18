@@ -176,6 +176,17 @@ hace de la formulación exacta un requisito y no una preferencia. Es también la
 diferencia con los trabajos de recuperación de fase basados en PINN que emplean
 propagación de Fresnel.
 
+Conviene precisar el alcance de esa observación. \textbf{Resolver la ecuación de
+Helmholtz completa no distingue a este trabajo del estado del arte de las PINN
+aplicadas a ondas}, donde es lo habitual: ni
+\textcite{schoder2024helmholtz}, ni \textcite{panagiotakopoulos2026helmholtz},
+ni \textcite{alkhalifah2021wavefield}, ni \textcite{zhang2025fepirbn} recurren a
+aproximación paraxial alguna. La aproximación de Fresnel pertenece a una
+tradición distinta, la de la recuperación de fase en imagen por rayos X. Lo que
+sí distingue a esta formulación dentro del primer grupo no es el orden de
+aproximación sino la \emph{estructura}: la descomposición modal y la condición
+de Cauchy impuesta por construcción, que son las que restauran la unicidad.
+
 La base se trunca a los $41$ modos propagantes, los que cumplen
 $k_{x,m}^2\leq k^2$, es decir $|m|\leq20$; la desigualdad es no estricta, de
 modo que los dos modos de corte rasante $m=\pm20$ (para los que $k_{x,m}=k$ y

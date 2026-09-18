@@ -94,9 +94,29 @@ Es la revisión de referencia del campo, de enero de 2025, de Synchrotron SOLEIL
 **El nicho de PINN + rayos X ya está ocupado y se mueve rápido:** cuatro
 trabajos relevantes entre 2022 y 2026, dos de ellos de 2025-2026.
 
-**Pero todos usan propagación de Fresnel**, la aproximación paraxial. La tesis
-resuelve **Helmholtz completo** con descomposición modal y condición de Cauchy
-dura. Esa diferencia es real y conviene no perderla de vista.
+**La rama de rayos X trabaja en paraxial, pero el resto del campo no.** Conviene
+no confundirlas, porque la distinción cambia cuál es el aporte de la tesis.
+
+Rastreando «paraxial» y «Fresnel» sobre los PDF de `referencias/`, el reparto es
+nítido:
+
+| Grupo | Ecuación | Ejemplos |
+|---|---|---|
+| **PINN para ondas** | Helmholtz completo, **sin paraxial** | Schoder y Kraxberger 2024 · Panagiotakopoulos 2026 · Alkhalifah 2021 · Veerababu y Ghosh 2025 · Zhang 2025 · Saba 2022 · Chen, Lu, Karniadakis y Dal Negro 2020 |
+| **Recuperación de fase con rayos X** | Fresnel, **paraxial** | Yang et al. 2025 (37 menciones de Fresnel) · la revisión de Celestre et al. 2025 (6 de paraxial) |
+
+Los siete del primer grupo no mencionan «paraxial» ni «Fresnel» **ni una vez**.
+
+**Consecuencia para la tesis:** resolver Helmholtz completo **no la distingue**
+del estado del arte de PINN en ondas, donde es lo habitual. Sólo la distingue
+frente a la rama de rayos X. Lo que sí la distingue del primer grupo es la
+**formulación**: descomposición modal con condición de Cauchy impuesta por
+construcción, que es lo que restaura la unicidad. Los demás resuelven Helmholtz
+con la red sobre $(x,z)$ y el residuo como penalización, y no abordan el buen
+planteamiento porque sus geometrías no lo ponen en cuestión.
+
+No decir, por tanto, «los demás usan Fresnel y nosotros no»: es cierto sólo de
+los cuatro de esta carpeta.
 
 **El camino corto no es rayos X, es rugosidad.** El régimen de la tesis --5λ
 son 3.19 µm-- es el de la metrología de superficies, no el del banco óptico ni
