@@ -17,7 +17,7 @@ la tesis es el documento base, el artículo deriva de ella, y la plantilla deriv
 del artículo. Una cifra que cambia arriba invalida lo de abajo.
 
 ```
-[1] TESIS ──► compila ──► verifica 292 cifras ──► PDF + ZIP
+[1] TESIS ──► compila ──► verifica 369 cifras ──► PDF + ZIP
      │                         └── ¿falla? PARA
      ▼
 [2] ARTÍCULO ──► compila ──► PDF        (no tiene verificador propio)
@@ -76,12 +76,22 @@ Preguntar con `AskUserQuestion`, cabecera `Tesis`:
 
 | # | Opción | Ruta |
 |---|---|---|
-| 1 | **Completa** — Cap1 a Cap4, speckle en 1λ, 2λ y 5λ | `tesis/Tesis_Actual/` |
-| 2 | **Hasta 2D** — sin la sección de speckle | `tesis/fuente_base/` |
+| 1 | **Completa** — Cap1 a Cap4, speckle en 1λ, 2λ, 5λ y 10λ | `tesis/Tesis_Actual/` |
+| 2 | **Hasta 2D** — sin resultados de speckle | `tesis/fuente_base/` |
 | 3 | **Otra / saltar esta etapa** | preguntar cuál |
 
-Las dos primeras ya existen como ediciones separadas en disco. No hay que
-construir nada nuevo para la opción 2.
+Las dos existen ya en disco; no hay que construir nada para la opción 2.
+
+**Las dos ediciones llevan títulos distintos, y es correcto que así sea.**
+`Tesis_Actual` valida speckle y se titula «Simulación del speckle óptico
+mediante Redes Neuronales Informadas por Física: formulación modal de
+Helmholtz». `fuente_base` **no tiene resultados de speckle** --su Cap4 lista
+NB03 como pendiente-- y se titula por el alcance que sí entrega: «Validación de
+Redes Neuronales Informadas por Física con activación sinusoidal para la
+ecuación de Helmholtz 1D y 2D con campo complejo», el mismo del paper. No
+unificarlos: cada uno promete lo que cumple.
+
+`fuente_base` son **42 páginas** y no genera ZIP.
 
 ### Qué ejecutar
 
@@ -105,8 +115,14 @@ Luego el verificador, que es el que manda:
 python scripts/experiments/verifica_cifras_tesis.py
 ```
 
-Debe terminar en `292 verificadas, 0 discrepancias`. Si no, **parar** y decir qué
+Debe terminar en `369 verificadas, 0 discrepancias`. Si no, **parar** y decir qué
 cifra falló, en qué archivo y contra qué `.json` se comparó.
+
+El verificador lleva además **guardas de afirmación**, que no comparan cifras
+sino comprueban que el texto siga diciendo lo que el dato sostiene: que ningún
+máximo de $10\lambda$ caiga en el plano final, que el incremento de $5$ a
+$10\lambda$ siga siendo $0.373$ puntos, y que la corrida de $20\lambda$ siga
+excediendo el $5\%$. Si una falla, el problema está en el texto, no en la cifra.
 
 ### Entregables
 
@@ -259,9 +275,9 @@ Una tabla, no prosa:
 
 | Etapa | Edición | Páginas | Verificador | Entregable |
 |---|---|---|---|---|
-| Tesis | Tesis_Actual | 78 | 292/292 | PDF + ZIP |
-| Artículo | fuente_validacion1D2D | 9 | 24/24 | PDF |
-| Plantilla | CyS es + en | 9 + 9 | (mismo) | 2 PDF |
+| Tesis | Tesis_Actual | 81 | 369/369 | PDF + ZIP |
+| Artículo | fuente_validacion1D2D | 20 | (no tiene) | PDF + ZIP |
+| Plantilla | CyS es + en | 9 + 9 | 39/39 | 2 PDF + 2 ZIP |
 
 Después:
 
