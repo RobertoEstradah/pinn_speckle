@@ -1,16 +1,29 @@
-"""
-Genera paper/paper_comia_roberto_hernandez_estrada.zip
-Adapta el paper original (biblatex/XeLaTeX) al formato LNCS/COMIA
-(pdfLaTeX + BibTeX + splncs04).
+"""ANDAMIAJE HISTORICO — NO EJECUTAR. Ver scripts/build/build_paper_zips.py.
 
-Uso:
-    python scripts/build_comia_paper.py
+Este script creo por primera vez 'paper/papers_plantillas/COMIA/fuente/' a
+partir del paper base, adaptandolo de biblatex/XeLaTeX al formato LNCS
+(pdfLaTeX + BibTeX + splncs04). Se conserva como registro de esa conversion.
 
-Requisitos:
-    paper/paper_maestria_roberto_hernandez_estrada.zip
-    master_supporting_docs/supporting_papers/LaTeX2e+Proceedings+Templates+download.zip
+NO regenera el ZIP de COMIA, y ejecutarlo hoy DESTRUIRIA trabajo:
+
+1. Escribe 'main.tex' desde la plantilla embebida MAIN_TEX de este archivo,
+   que quedo congelada en septiembre de 2026. Sobrescribiria las correcciones
+   hechas a mano sobre COMIA -- entre ellas el titulo, que el director pidio
+   cambiar, y la cifra de dispersion del 46 %.
+2. Sus cuatro rutas apuntan a 'D:\\Tesis_Maestria\\...', de otra maquina, asi
+   que en cualquier caso falla con FileNotFoundError.
+3. Lee el paper base desde un .zip que ya no vive en esa ruta.
+
+Para regenerar el ZIP de cualquier edicion del paper:
+
+    python scripts/build/build_paper_zips.py          # las cuatro
+    python scripts/build/build_paper_zips.py COMIA    # solo una
 """
-import zipfile, re, os, shutil
+import sys
+
+raise SystemExit(__doc__)
+
+import zipfile, re, os, shutil  # noqa: E402  (inalcanzable: ver arriba)
 
 # ── Rutas ──────────────────────────────────────────────────────────────────
 PAPER_ZIP = r'D:\Tesis_Maestria\paper\paper_maestria_roberto_hernandez_estrada.zip'
