@@ -129,9 +129,9 @@ del error y las métricas de ajuste adicionales.
 
 La regla de calibración $\omega_0 \approx k/(2\pi)$ (Tabla~\ref{tab:hiperparametros})
 se documentó originalmente a partir de un único caso puntual: $\omega_0 = 30$
---el valor que \textcite{sitzmann2020siren} reportan como adecuado para
+(el valor que \textcite{sitzmann2020siren} reportan como adecuado para
 \emph{todas} las aplicaciones de su trabajo, incluida la resolución de la
-propia ecuación de Helmholtz-- desestabiliza el entrenamiento con
+propia ecuación de Helmholtz) desestabiliza el entrenamiento con
 $k \approx 2\pi$. Para verificar esta regla
 más allá de un solo punto, se entrenó el mismo problema de NB01 con
 $\omega_0 \in \{1.0,\ 5.0,\ 15.0,\ 30.0\}$ durante 3{,}000 épocas Adam
@@ -504,8 +504,8 @@ analíticamente el valor óptimo de $\lambda_\text{fís}$.
 \label{sec:nb03_diagnostico}
 
 La extensión directa de la arquitectura de NB02 al problema de \textit{speckle}
---una red que recibe $(\tilde x,\tilde z)$ y devuelve el campo complejo, con la
-pantalla de fase impuesta como término de datos-- no converge, y la causa no es
+(una red que recibe $(\tilde x,\tilde z)$ y devuelve el campo complejo, con la
+pantalla de fase impuesta como término de datos) no converge, y la causa no es
 la capacidad de la red. En la prueba de control correspondiente, el campo
 aprendido reproduce la condición de frontera con un error máximo de
 $9\times10^{-8}$ y alcanza un residuo de Helmholtz varios órdenes de magnitud
@@ -544,8 +544,8 @@ mantienen fijos y sólo cambia la condición de frontera. El campo de prueba es
 que satisface Helmholtz de forma exacta con $k=2\pi\sqrt{q}$, es periódico en
 $\tilde x$ sobre $[0,1]$ y tiene sus tres modos propagantes. El valor
 $k^2=6.5\pi^2$ se eligió de modo que no coincida con ningún autovalor del
-laplaciano de Dirichlet en $[0,1]^2$ --que son $\pi^2(m^2+n^2)$ con $m,n$
-enteros positivos--, condición necesaria para que el caso de control tenga
+laplaciano de Dirichlet en $[0,1]^2$ (que son $\pi^2(m^2+n^2)$ con $m,n$
+enteros positivos), condición necesaria para que el caso de control tenga
 solución única.
 
 \begin{table}[htbp]
@@ -578,9 +578,9 @@ C & Cauchy idéntico a B, formulación modal        & \textbf{0.155\%} & $0\%$ \
 Con información idéntica, la formulación modal es unos dos órdenes de magnitud
 más precisa que la directa. La diferencia no procede de los datos disponibles:
 los casos B y C reciben exactamente el mismo valor y la misma derivada en la
-frontera. Procede de la formulación completa --base modal truncada al cono
+frontera. Procede de la formulación completa (base modal truncada al cono
 propagante, imposición dura de la condición de Cauchy y ausencia de término de
-datos--, que además emplea $4$ capas y otro presupuesto de optimización. El
+datos), que además emplea $4$ capas y otro presupuesto de optimización. El
 diseño aísla el planteamiento del problema (contraste A frente a B), pero no
 separa la contribución del truncamiento espectral de la de la imposición dura
 (contraste B frente a C).
@@ -590,8 +590,8 @@ separa la contribución del truncamiento espectral de la de la imposición dura
 
 El experimento anterior aísla el planteamiento del problema, pero lo hace con
 una red distinta de la que se emplea en NB03. Queda por comprobar que la
-arquitectura concreta que se usará --con su condición de Cauchy dura, su base
-truncada y su ausencia de término de datos-- reproduce una solución conocida
+arquitectura concreta que se usará (con su condición de Cauchy dura, su base
+truncada y su ausencia de término de datos) reproduce una solución conocida
 antes de exponerla a una pantalla aleatoria, donde ya no hay solución exacta
 contra la cual medir.
 
@@ -609,7 +609,7 @@ Cauchy dura impone $a_m'(0)=i\,k_{z,m}\,a_m(0)$, que es la condición de onda
 saliente, de modo que la solución de referencia contiene únicamente
 propagación hacia $+\tilde z$. No se emplean etiquetas interiores: la solución
 analítica se reserva por completo para la evaluación posterior. Se recorren
-tres tamaños de base --$1$, $5$ y $41$ modos-- para comprobar que el
+tres tamaños de base ($1$, $5$ y $41$ modos) para comprobar que el
 comportamiento no depende de haber ajustado la red a un número concreto de
 salidas.
 
@@ -663,8 +663,8 @@ speckle ($0.042\%$).
 
 La prueba aporta además una tercera verificación de la regla de calibración
 $\omega_0\approx k/2\pi$, ahora contra solución exacta. Una ejecución preliminar
-de este mismo experimento con $\omega_0=30$ --el valor por defecto que
-\textcite{sitzmann2020siren} proponen-- obtuvo $1.637\%$ de error global con
+de este mismo experimento con $\omega_0=30$ (el valor por defecto que
+\textcite{sitzmann2020siren} proponen) obtuvo $1.637\%$ de error global con
 $41$ modos, frente al $0.0078\%$ de la Tabla~\ref{tab:nb02b_arquitectura}, e
 invertía la tendencia: el error crecía al añadir modos. Debe señalarse que esa
 ejecución preliminar no siguió el mismo presupuesto de optimización, de modo
@@ -691,9 +691,7 @@ $z=2\lambda$.
 Se repitió por tanto la prueba con el dominio extendido a
 $\tilde z\in[0,2]$, sin cambiar nada más: misma clase \texttt{ModalSiren},
 mismos $\omega_0=1$ en la primera capa y $1$ en las internas, misma semilla y
-un presupuesto de optimización equivalente --las dos primeras etapas son
-idénticas y la final usa $90$ pasos de L-BFGS en lugar de $80$, un $12.5\%$
-más--. La condición de Cauchy se sigue imponiendo
+un presupuesto de optimización equivalente. Las dos primeras etapas son idénticas; la final usa $90$ pasos de L-BFGS en lugar de $80$, un $12.5\%$ más. La condición de Cauchy se sigue imponiendo
 sólo en $\tilde z=0$; no hay división en bloques ni reinyección de datos en
 interfaces intermedias, de modo que la red debe sostener el doble de recorrido
 con la misma información inicial.
@@ -748,7 +746,7 @@ error se mantiene por debajo del $0.35\%$ en los tres tamaños y el máximo a lo
 largo de la propagación no llega al $0.6\%$, sin dependencia monótona con el
 tamaño de la base. Comparado con
 $1\lambda$ (Tabla~\ref{tab:nb02b_arquitectura}) el error crece en torno a un
-orden de magnitud --de $0.0078\%$ a $0.195\%$ con $41$ modos--, lo cual es
+orden de magnitud (de $0.0078\%$ a $0.195\%$ con $41$ modos), lo cual es
 esperable al duplicar el recorrido con la misma información inicial, pero se
 mantiene dos órdenes de magnitud por debajo del umbral del $5\%$.
 
@@ -785,8 +783,8 @@ Cauchy para Helmholtz analizada por \textcite{nguyen2016truncation}, quienes
 acotan la frecuencia mediante un parámetro de regularización y demuestran
 estabilidad y convergencia con estimaciones de error en norma $L^2$. Como se
 argumenta en el Capítulo~\ref{cap3:modelo}, en esta formulación el truncamiento
-no cumple ese papel --la condición de radiación ya liga $a_m(0)$ con
-$a_m'(0)$ y descarta la rama creciente--, sino el de mantener el ajuste
+no cumple ese papel (la condición de radiación ya liga $a_m(0)$ con
+$a_m'(0)$ y descarta la rama creciente), sino el de mantener el ajuste
 numéricamente tratable. La diferencia importa para interpretar el piso
 evanescente de §\ref{sec:nb03_piso}: es el costo de una elección de método, no
 una barrera matemática.
@@ -806,7 +804,7 @@ ecuación~\eqref{eq:cauchy_dura} restaura la unicidad perdida en
 la función de prueba, en lugar de penalizarla en la pérdida, sigue el mismo principio que \textcite{sukumar2022exact}, quienes
 lo aplican mediante funciones de distancia aproximadas para condiciones de
 Dirichlet, Neumann y Robin sobre fronteras geométricas; aquí el mecanismo es
-distinto --una prolongación polinómica que fija valor y derivada en un punto--
+distinto (una prolongación polinómica que fija valor y derivada en un punto)
 aunque la consecuencia sobre la pérdida es la misma.
 
 Dos consecuencias metodológicas se siguen de la ecuación~\eqref{eq:cauchy_dura}.
@@ -896,8 +894,8 @@ $\omega_0$ & $L^2$ total & $L^2$ propagante & Residuo de la EDO \\
     valor $\omega_0=30$ es el que \textcite{sitzmann2020siren} proponen para el
     conjunto de sus aplicaciones, entre ellas la ecuación de Helmholtz, de modo
     que el contraste se establece frente al valor por defecto de la literatura
-    en este mismo dominio. El error propagante --la componente que la
-    representación puede expresar-- se degrada en un factor de $35$ entre
+    en este mismo dominio. El error propagante (la componente que la
+    representación puede expresar) se degrada en un factor de $35$ entre
     $\omega_0 = 1$ y $\omega_0 = 30$, y el residuo de la ecuación en un factor
     de $15$. El comportamiento es el esperado del sesgo espectral descrito por
     \textcite{rahaman2019spectral} y replica, en un problema con entrada,
@@ -913,10 +911,7 @@ Consolidado sobre las cinco pantallas, el cambio de $\omega_0=30$ a
 $\omega_0=1$ reduce el error propagante medio a lo largo de la propagación de
 $2.983\%$ a $0.042\%$, y el máximo de $4.791\%$ a $0.084\%$.
 
-El barrido reproduce el patrón observado en NB01: $\omega_0 = 1$ y
-$\omega_0 = 5$ quedan próximos entre sí --de hecho $\omega_0 = 5$ registra un
-error propagante marginalmente menor, $0.081\%$ frente a $0.090\%$-- y ambos
-separados por más de un orden de magnitud de los valores altos. Lo que el
+El barrido reproduce el patrón observado en NB01: $\omega_0 = 1$ y $\omega_0 = 5$ quedan próximos entre sí. De hecho $\omega_0 = 5$ registra un error propagante marginalmente menor, $0.081\%$ frente a $0.090\%$. Ambos quedan separados por más de un orden de magnitud de los valores altos. Lo que el
 barrido establece, por tanto, es que calibrar $\omega_0$ al orden de
 $k/2\pi$ es condición relevante del desempeño de la formulación modal, no que
 la regla acierte el valor óptimo dentro del rango bajo. En ese sentido acotado,
@@ -1020,7 +1015,7 @@ $z/\lambda$ & Piso evanescente & $C$ de la referencia \\
     campo completo, porque casi el $4\%$ de la energía es irrepresentable por
     la base propagante y el patrón aún no ha madurado estadísticamente. El
     contraste de la referencia parte de $C=0$ exactamente en $\tilde z=0$
-    --donde la pantalla es de fase pura y la intensidad es uniforme--, crece
+    (donde la pantalla es de fase pura y la intensidad es uniforme), crece
     hasta superar la unidad alrededor de $z=2\lambda$ y después fluctúa,
     sin comportamiento monótono: cae de $1.2069$ en $3\lambda$ a $1.0476$ en
     $5\lambda$. Estos son valores de una realización individual, para la que el
@@ -1039,7 +1034,7 @@ $z/\lambda$ & Piso evanescente & $C$ de la referencia \\
     $\omega_0=1$ (azul); las curvas tenues son las pantallas individuales y las
     gruesas su promedio. La separación es de aproximadamente dos órdenes de
     magnitud en todo el intervalo. \textbf{(b)} Fracción de energía
-    irrepresentable por la base modal --el piso evanescente-- frente a la
+    irrepresentable por la base modal (el piso evanescente) frente a la
     distancia de propagación, en escala logarítmica, junto al error medio del
     modelo calibrado. Cómo leerla: en $z=1\lambda$ el piso es
     $92$ veces mayor que el error del modelo, de modo que la métrica de campo
@@ -1101,8 +1096,8 @@ realización individual \emph{de la referencia por espectro angular}, sólo
 alcanza $p>0.05$ en una de las cinco pantallas (valores de $p$: $0.1423$, $0.0266$, $0.0048$, $0.0000$ y
 $0.0000$). El motivo es que la prueba supone muestras independientes, mientras
 que los valores de intensidad de un corte espacial de \textit{speckle} están
-correlacionados dentro de cada grano --de tamaño transversal $0.378\lambda$ en
-$z=1\lambda$, es decir unas $19$ muestras por grano en esta malla--, lo
+correlacionados dentro de cada grano (de tamaño transversal $0.378\lambda$ en
+$z=1\lambda$, es decir unas $19$ muestras por grano en esta malla), lo
 que reduce drásticamente el número efectivo de muestras independientes y sesga
 el $p$-valor hacia el rechazo. Por ello el test se reporta aquí como estadístico
 descriptivo y no como criterio de aceptación.
@@ -1178,17 +1173,15 @@ Media & \textbf{0.993\%} & 0.914\% & 1.075\% & 0.999958 & --- & --- \\
 El error medio es de $0.993\%$, tres veces menor que el de $1\lambda$. La mejora
 no procede del modelo sino de la distancia: el $L^2$ complejo está dominado por
 el piso evanescente (Sección~\ref{sec:nb03_piso}), que a $2\lambda$ es ocho
-veces más pequeño. La componente propagante, que es la que mide el ajuste, pasa
-de $0.042\%$ a $0.914\%$ --es decir, empeora al duplicar el recorrido, lo cual
-es esperable-- pero se mantiene un orden de magnitud por debajo del umbral.
+veces más pequeño. La componente propagante, que es la que mide el ajuste, pasa de $0.042\%$ a $0.914\%$. Empeora, por tanto, al duplicar el recorrido, lo cual es esperable, pero se mantiene un orden de magnitud por debajo del umbral.
 
 \textbf{Un ensayo anterior a esta misma distancia no superaba el criterio, y
 conviene explicar por qué.} Con un presupuesto mayor ($180$~s por pantalla) se
 había obtenido un error medio del $4.226\%$, con dos de las cinco pantallas por
 encima del $5\%$, y con un comportamiento no monótono: aumentar el tiempo de
 cómputo empeoraba el resultado en tres de ellas. Aquel ensayo partía de puntos
-de control de la familia $\omega_0=30$ --anterior a la calibración descrita en
-la Sección~\ref{sec:nb03_omega}-- y se ejecutó en CPU. El ensayo que recoge la
+de control de la familia $\omega_0=30$ (anterior a la calibración descrita en
+la Sección~\ref{sec:nb03_omega}) y se ejecutó en CPU. El ensayo que recoge la
 Tabla~\ref{tab:nb03_z2} parte en cambio de los modelos calibrados con
 $\omega_0=1$, y obtiene un error cuatro veces menor con dos tercios del
 presupuesto.
@@ -1291,8 +1284,8 @@ modo que el error acumulado al final de un bloque se convierte en el dato de
 entrada del siguiente y puede propagarse aguas abajo. El error de la
 Tabla~\ref{tab:nb03_z5} no es por tanto atribuible únicamente al ajuste dentro
 de cada subdominio: incluye también lo que cada bloque hereda de los anteriores.
-El crecimiento del error con la distancia --de $0.993\%$ en $2\lambda$ a
-$2.244\%$ en $5\lambda$-- es consistente con esa acumulación, si bien este
+El crecimiento del error con la distancia (de $0.993\%$ en $2\lambda$ a
+$2.244\%$ en $5\lambda$) es consistente con esa acumulación, si bien este
 trabajo no la cuantifica bloque a bloque.
 
 \paragraph{Control: la extensión directa a un solo dominio.} Para acotar lo que
@@ -1304,11 +1297,11 @@ relación con la referencia.
 
 \textbf{Este control no es una ablación equivalente}, y conviene decirlo
 antes de extraer conclusión alguna. Las dos alternativas difieren en más de
-una variable a la vez: arquitectura --frecuencia fija frente a escala
-sinusoidal adaptativa--, presupuesto de entrenamiento --$180$~s para todo el
+una variable a la vez: arquitectura (frecuencia fija frente a escala
+sinusoidal adaptativa), presupuesto de entrenamiento ($180$~s para todo el
 dominio frente a $180$~s por bloque, de los cuales $60$~s de Adam y $120$~s de
-L-BFGS--, aprovechamiento de trabajo previo --la cadena reutiliza los bloques
-ya validados hasta $2\lambda$-- y hardware. Aislar la contribución de la
+L-BFGS), aprovechamiento de trabajo previo (la cadena reutiliza los bloques
+ya validados hasta $2\lambda$) y hardware. Aislar la contribución de la
 descomposición exigiría variar una sola de esas condiciones por vez, lo que
 este trabajo no hace.
 
@@ -1398,8 +1391,8 @@ dos de las cinco pantallas.
 
 \textbf{El contraste se dispersa con la distancia.} Los valores de referencia
 recorren el intervalo $[0.7067, 1.2204]$ frente al $[0.9950, 1.1210]$ de
-$5\lambda$. La PINN sigue a su referencia en las cinco pantallas --la
-diferencia máxima es de $0.0096$--, pero el conjunto de realizaciones deja de
+$5\lambda$. La PINN sigue a su referencia en las cinco pantallas (la
+diferencia máxima es de $0.0096$), pero el conjunto de realizaciones deja de
 concentrarse en torno a $C\approx1$. Esa dispersión es una propiedad de las
 realizaciones a esta distancia y no del ajuste, y conviene no leerla como un
 deterioro del modelo.
@@ -1507,7 +1500,7 @@ compare, y condicionará igualmente esa medición.
 
 La aportación de la formulación modal debe valorarse por tanto en términos de
 precisión y de correcto planteamiento del problema
---§\ref{sec:nb03_diagnostico} y §\ref{sec:nb02b_puente}--, no de velocidad.
+(§\ref{sec:nb03_diagnostico} y §\ref{sec:nb02b_puente}), no de velocidad.
 
 \subsection{Limitaciones del método}
 \label{sec:nb03_limitaciones}

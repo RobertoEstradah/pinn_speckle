@@ -100,8 +100,8 @@ proyectar, y es la que recibe la referencia por espectro angular: su espectro
 conserva las componentes evanescentes, cuyo decaimiento es la continuación
 exacta del propio espectro angular. La \emph{red}, en cambio, recibe la
 proyección $\mathcal{P}_{|k_x|\leq k}$ de esa condición al cono propagante,
-porque su base modal sólo contiene esos modos. De esa asimetría --referencia sin
-proyectar frente a modelo proyectado-- nace el piso evanescente que se cuantifica
+porque su base modal sólo contiene esos modos. De esa asimetría (referencia sin
+proyectar frente a modelo proyectado) nace el piso evanescente que se cuantifica
 en §\ref{sec:nb03_piso}; si la condición del problema fuera la proyectada, ese
 piso sería idénticamente cero. La derivada de entrada se fija mediante la condición saliente:
 %
@@ -136,8 +136,8 @@ diferenciales ordinarias desacopladas,
 %
 La base se trunca a los $41$ modos propagantes, los que cumplen
 $k_{x,m}^2\leq k^2$, es decir $|m|\leq20$; la desigualdad es no estricta, de
-modo que los dos modos de corte rasante $m=\pm20$ --para los que $k_{x,m}=k$ y
-por tanto $k_{z,m}=0$-- quedan incluidos. Los modos evanescentes se descartan, y conviene precisar por qué.
+modo que los dos modos de corte rasante $m=\pm20$ (para los que $k_{x,m}=k$ y
+por tanto $k_{z,m}=0$) quedan incluidos. Los modos evanescentes se descartan, y conviene precisar por qué.
 
 Para $k_{x,m}^2>k^2$ la ecuación~\eqref{eq:edo_modal_cap3} admite dos ramas,
 $e^{-|\kappa_m|\tilde z}$ y $e^{+|\kappa_m|\tilde z}$, y es la segunda la que
@@ -157,8 +157,8 @@ primera es de representación en precisión simple: el modo transversal más fin
 de la malla tiene $|\kappa|\approx160.7$, y $e^{-160.7}$ desborda por abajo en
 \texttt{float32}. La segunda, comprobada experimentalmente, es que incluir los
 modos evanescentes que sí son representables degrada el ajuste en lugar de
-mejorarlo. Ampliando la base a $|m|\leq35$ --$71$ modos, con
-$|\kappa|\leq9.02$ y por tanto $e^{-|\kappa|}\geq1.2\times10^{-4}$-- la energía
+mejorarlo. Ampliando la base a $|m|\leq35$ ($71$ modos, con
+$|\kappa|\leq9.02$ y por tanto $e^{-|\kappa|}\geq1.2\times10^{-4}$) la energía
 de la referencia que queda fuera de la base cae del $3.818\%$ al $0.002\%$,
 pero el error dentro de la base crece de $1.98\%$ a $24.70\%$: la red debe
 representar simultáneamente $e^{-\kappa\tilde z}$ para $\kappa$ entre $0$ y
@@ -167,7 +167,7 @@ El error total resulta $5.7$ veces mayor. El experimento está documentado en
 \texttt{explorations/nb03\_base\_extendida/} de la copia de trabajo técnica.
 
 La consecuencia es que el error residual atribuible al truncamiento
---el piso evanescente de §\ref{sec:nb03_piso}-- no es una barrera
+(el piso evanescente de §\ref{sec:nb03_piso}) no es una barrera
 matemática sino el costo de una elección de método, y que reducirlo exigiría
 una arquitectura capaz de representar varias escalas de decaimiento a la vez,
 no simplemente ampliar la base.
@@ -231,7 +231,7 @@ entrena únicamente los cinco bloques restantes.
 usan la activación de frecuencia fija de la
 Sección~\ref{sec:arquitectura_siren}. Emplean una implementación
 \emph{adaptativa} cuyas frecuencias base son $30$ en la primera capa y $1$ en
-las internas --no el $\omega_0=1$ de NB03 y NB03B--, multiplicadas todas por una
+las internas (no el $\omega_0=1$ de NB03 y NB03B), multiplicadas todas por una
 misma \textbf{escala aprendida en cada bloque}, de modo que la frecuencia
 efectiva de una capa es el producto de su frecuencia base por esa escala.
 
@@ -264,7 +264,7 @@ validación 1D (NB01) y escalados para el caso 2D (NB02):
     una ($d = 64$ en NB01, $d = 128$ en NB02). NB03 emplea $4$ capas de $128$.
     \item \textbf{Activación:} $\phi(z) = \sin(\omega_0 z)$, con
     $\omega_0=1.0$ en NB01, NB02 y en las validaciones modales de dominio único
-    --NB02B, NB03 y NB03B--, conforme a la regla $\omega_0\approx k/2\pi$
+    (NB02B, NB03 y NB03B), conforme a la regla $\omega_0\approx k/2\pi$
     verificada en NB01 y en el régimen modal de NB03. \textbf{NB03C es la
     excepción}: emplea la implementación de escala sinusoidal adaptativa
     descrita en §\ref{sec:nb03_z5}, con frecuencias base distintas y una escala
@@ -329,9 +329,7 @@ multiplicar por el tensor de la red, para evitar conflictos de tipo entre
 
 En NB03 la función de pérdida es estructuralmente distinta. El valor y la
 derivada en la interfaz de entrada, y la periodicidad lateral, dejan de ser
-términos de la pérdida: los tres se satisfacen exactamente por construcción --el
-desarrollo modal impone la periodicidad y la ecuación~\eqref{eq:cauchy_dura_cap3}
-impone los datos de Cauchy--. La pérdida se reduce al residuo modal normalizado
+términos de la pérdida: los tres se satisfacen exactamente por construcción: el desarrollo modal impone la periodicidad y la ecuación~\eqref{eq:cauchy_dura_cap3} impone los datos de Cauchy. La pérdida se reduce al residuo modal normalizado
 por la escala de cada modo:
 %
 \begin{equation}
@@ -441,7 +439,7 @@ espectro angular, que no se utiliza en ningún momento del entrenamiento:
     descompone de forma exacta como
     $\varepsilon_{L^2}^2=\varepsilon_\text{prop}^2+\varepsilon_\text{evan}^2$,
     donde $\varepsilon_\text{evan}$ es la fracción evanescente de la referencia
-    --irrepresentable por construcción-- y $\varepsilon_\text{prop}$ el error
+    (irrepresentable por construcción) y $\varepsilon_\text{prop}$ el error
     sobre el subespacio que el modelo sí puede expresar. Ambos se reportan.
 
     \item \textbf{Residuo físico.} RMSE del residuo de la
