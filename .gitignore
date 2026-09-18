@@ -84,8 +84,11 @@ temp/
 paper/main.log
 
 # ── Carpetas internas / scaffold AI ──────────────────────────────────────────
-.claude/
-CLAUDE.md
+# CLAUDE.md y las skills SI se versionan: describen el flujo del proyecto y
+# deben viajar con el repositorio. Lo demas de .claude/ es configuracion local.
+# settings.local.json en particular lleva rutas absolutas de esta maquina.
+.claude/*
+!.claude/skills/
 MEMORY.md
 SESSION_REPORT.md
 explorations/
