@@ -1,0 +1,274 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noquoting]{babel}
+\usepackage[left=2.3cm,right=2.3cm,top=2.3cm,bottom=2.3cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\definecolor{gris}{gray}{0.35}
+\usepackage[hidelinks]{hyperref}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+\titlespacing*{\subsection}{0pt}{1em}{0.35em}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlist[itemize]{topsep=3pt,itemsep=2pt,leftmargin=1.3em}
+\setlist[enumerate]{topsep=3pt,itemsep=2pt,leftmargin=1.6em}
+\renewcommand{\arraystretch}{1.2}
+
+% babel-spanish redefine \% para insertar un espacio fino antes, y para decidirlo
+% compara \lastskip (que dentro de tabularx viene en em) contra cero (en pt).
+% Eso lanza "Incompatible glue units" y aborta. Se restaura el \% de LaTeX.
+\AtBeginDocument{%
+  \renewcommand{\%}{\char`\%\relax}%  \relax evita que TeX coma el espacio
+  \decimalpoint                          % punto decimal, como en la tesis
+}
+
+\newcommand{\cita}[1]{%
+  \begin{quote}\itshape\color{gris}#1\end{quote}}
+
+\pagestyle{plain}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Puntos abiertos del Capítulo 1}\\[0.3em]
+  {\large para revisión con el Dr. José Adán Hernández Nolasco}\\[0.9em]
+  \begin{tabular}{rl}
+    \textbf{Autor:} & Roberto Hernández Estrada \\
+    \textbf{Fecha:} & 18 de septiembre de 2026 \\
+  \end{tabular}
+\end{center}
+
+\vspace{0.6em}
+\noindent\rule{\textwidth}{0.4pt}
+\vspace{0.4em}
+
+\noindent
+El Capítulo 1 (Generalidades) conserva el planteamiento del protocolo de octubre
+de 2025. El trabajo realizado desde entonces cambió el método, y hay cuatro
+afirmaciones del capítulo que el código ya no respalda.
+
+\noindent
+\textbf{Ninguna se ha modificado.} Este documento presenta cada una con su texto
+actual, lo que muestran los resultados, y la decisión concreta que hay que tomar.
+
+\section*{Dónde está el trabajo hoy}
+
+\begin{tabularx}{\textwidth}{Yll}
+\toprule
+\textbf{Experimento} & \textbf{Resultado} & \textbf{Estado} \\
+\midrule
+NB01 --- Helmholtz 1D                & $L^2 = 0.006\,\%$ & Cerrado \\
+NB02 --- Helmholtz 2D, campo complejo & $L^2 = 0.171\,\%$ & Cerrado \\
+NB02B --- puente de arquitectura      & $L^2 = 0.0078\,\%$ & Cerrado \\
+NB03 --- speckle en $z=1\lambda$      & $L^2 = 3.161\,\%$, 5/5 & Cerrado \\
+NB03B --- speckle en $z=2\lambda$     & $L^2 = 0.993\,\%$, 5/5 & Cerrado \\
+NB03C --- speckle hasta $z=5\lambda$  & $L^2 = 2.244\,\%$, 5/5 & Cerrado \\
+\textbf{NB04 --- benchmark contra FEM} & --- & \textbf{No iniciado} \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.7em}
+\noindent
+La tesis está en 78 páginas, sin errores de compilación, y 292 cifras del texto
+se verifican automáticamente contra los archivos de resultados que las generaron.
+
+\vspace{0.4em}
+\noindent
+\textbf{El hallazgo que condiciona todo lo demás:} la formulación directa que
+planteaba el protocolo resultó estar \textbf{mal planteada}. Cumplía la ecuación
+de Helmholtz a $10^{-14}$ y la frontera exactamente, y aun así daba
+\textbf{92.75\,\% de error}: sin condición de radiación el problema admite
+infinitas soluciones. Se sustituyó por una formulación modal con condición de
+Cauchy dura, que es la regularización canónica de este problema
+(Nguyen et al., 2014).
+
+\section{El título}
+
+\subsection{Texto actual}
+\cita{Simulación \textbf{acelerada} de speckle óptico: \textbf{Un enfoque
+basado} redes neuronales físicamente informadas (PINN's)}
+
+\subsection{Qué dice el trabajo}
+\begin{itemize}
+  \item \textbf{«Acelerada» no tiene respaldo.} El factor de aceleración se
+  define contra FEM, y ese benchmark no se ha hecho. Lo que sí está medido es la
+  comparación contra el espectro angular: \textbf{18.5$\times$ a favor del
+  espectro angular} para un plano, y \textbf{1.76$\times$ a favor de la PINN}
+  para 101 planos simultáneos. Es un resultado condicional, y un título no
+  admite condiciones.
+  \item El \textbf{8 de septiembre} usted pidió quitar «acelerada» y «un enfoque
+  basado».
+  \item «(PINN's)» lleva un apóstrofo que no corresponde al plural.
+\end{itemize}
+
+\subsection{Decisión}
+Propuesta, 14 palabras:
+
+\begin{quote}
+\bfseries
+Simulación del speckle óptico mediante Redes Neuronales Informadas por Física:
+formulación modal de Helmholtz
+\end{quote}
+
+\noindent
+La parte anterior a los dos puntos es la que quedó acordada en esa llamada. El
+añadido es propuesta mía: \textbf{la formulación modal es precisamente lo que
+distingue el trabajo entregado del que prometía el protocolo}, y es lo que lo
+separa de Panagiotakopoulos et al. (2026), que valida cualitativamente sin dar
+cifras.
+
+\vspace{0.3em}
+\noindent
+\textbf{¿Se acepta el subtítulo, o se deja sólo la parte corta?}
+
+\section{El objetivo general dice «resolución directa»}
+
+\subsection{Texto actual (Cap. 1, \textit{Objetivo general})}
+\cita{\ldots para la simulación acelerada y físicamente precisa de patrones de
+speckle óptico, mediante la \textbf{resolución directa} de la ecuación de
+Helmholtz bidimensional con campo eléctrico complejo.}
+
+\subsection{Qué dice el trabajo}
+La resolución directa es exactamente el enfoque que \textbf{se abandonó}. El
+método vigente expande el campo en serie de Fourier ---exacta, por las fronteras
+laterales periódicas--- y resuelve 41 ecuaciones diferenciales ordinarias
+desacopladas, una por modo propagante.
+
+El objetivo general, tal como está, describe un método que la tesis ya no usa.
+
+\subsection{Decisión}
+Propuesta:
+
+\cita{\ldots mediante una \textbf{formulación modal} de la ecuación de Helmholtz
+bidimensional con campo eléctrico complejo, con la condición de Cauchy impuesta
+por construcción.}
+
+\noindent
+\textbf{¿Se corrige, o se prefiere otra redacción?}
+
+\section{La hipótesis (ii) no tiene respuesta}
+
+\subsection{Texto actual}
+\cita{(ii) obtener un factor de aceleración $S = T_{\mathrm{FEM}} /
+T_{\mathrm{PINN}} > 1$ en la fase de inferencia}
+
+\subsection{Qué dice el trabajo}
+NB04 no se ha hecho, así que \textbf{la hipótesis (ii) queda sin contestar}.
+Tres obstáculos concretos:
+
+\begin{enumerate}
+  \item \textbf{FEniCSx no corre en Windows nativo.} Requiere WSL2 o Docker, no
+  instalados.
+  \item \textbf{La comparación está condicionada} por el propio Capítulo 1 a que
+  el problema se formule con fronteras absorbentes (ver punto 4).
+  \item \textbf{El resultado sería probablemente desfavorable.} El entrenamiento
+  cuesta 351.9 s por pantalla, y el espectro angular ya resultó más rápido en
+  evaluación de un solo plano.
+\end{enumerate}
+
+\noindent
+Conviene señalar que el protocolo de octubre pedía \textbf{una aceleración de al
+menos 10$\times$}; el texto actual de la tesis la relajó a «mayor que 1». Esa
+rebaja está en el documento y conviene decidirla explícitamente.
+
+\subsection{Decisión --- tres opciones}
+
+\begin{tabularx}{\textwidth}{lY}
+\toprule
+\textbf{Opción} & \textbf{Qué implica} \\
+\midrule
+\textbf{A.} Hacer NB04 & Instalar WSL2 o Docker. Cierra la hipótesis, sea cual
+sea el resultado. Requiere resolver antes el punto 4 \\
+\textbf{B.} Reformular & Cambiarla por el benchmark que sí está hecho:
+evaluación libre de malla frente a una referencia de propagación. Honesto, y ya
+está medido \\
+\textbf{C.} Trabajo futuro & Dejarla enunciada y explicar en Cap. 5 por qué no
+se resolvió \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.5em}
+\noindent
+Mi lectura: la contribución de la tesis quedó en \textbf{precisión y buen
+planteamiento}, no en velocidad. El Capítulo 4 ya está escrito en esos términos.
+
+\vspace{0.3em}
+\noindent
+\textbf{¿Qué opción se toma?}
+
+\section{Fronteras absorbentes frente a periódicas}
+
+\subsection{Texto actual (Cap. 1, \textit{Alcances})}
+\cita{Se realizará una evaluación comparativa del tiempo de inferencia contra
+una referencia numérica de propagación y, \textbf{cuando el problema se formule
+con fronteras absorbentes}, contra una implementación FEM.}
+
+\subsection{Qué dice el trabajo}
+NB03 usa \textbf{fronteras laterales periódicas}, y no por comodidad: la
+periodicidad es lo que hace que la serie de Fourier sea \textbf{exacta} y que
+los 41 modos queden desacoplados. Cambiarlas a absorbentes destruiría la
+formulación modal entera.
+
+Es decir: \textbf{la condición que el Capítulo 1 pone para comparar contra FEM
+es incompatible con el método que la tesis usa.}
+
+\subsection{Decisión}
+\begin{itemize}
+  \item \textbf{A.} Retirar la condición, y comparar contra FEM con fronteras
+  periódicas
+  \item \textbf{B.} Mantenerla, aceptando que NB04 exige reformular el problema
+  \item \textbf{C.} Retirar la mención a FEM del alcance, coherente con el
+  punto 3
+\end{itemize}
+
+\noindent
+\textbf{¿Cuál?}
+
+\section*{Una oportunidad, no un problema}
+
+El protocolo incluía una tercera pregunta de investigación que la tesis ya no
+plantea:
+
+\cita{¿Cómo impacta la complejidad del medio difusor (rugosidad de la
+superficie) en la precisión y el tiempo de entrenamiento del modelo PINN?}
+
+\noindent
+\textbf{Hay material para contestarla.} Existen en disco referencias generadas
+con cinco longitudes de correlación distintas ---0.10, 0.20, 0.30, 0.40 y
+0.50\,$\lambda$---, y la tesis sólo reporta la de 0.10\,$\lambda$.
+
+\noindent
+Recuperar esa pregunta costaría un barrido comparativo, sin formulación nueva ni
+arquitectura nueva. \textbf{¿Vale la pena, o se deja fuera del alcance?}
+
+\section*{Resumen de decisiones}
+
+\begin{tabularx}{\textwidth}{clY}
+\toprule
+\textbf{\#} & \textbf{Punto} & \textbf{Decisión pedida} \\
+\midrule
+1 & Título & ¿Se acepta el subtítulo «formulación modal de Helmholtz»? \\
+2 & Objetivo general & ¿Se corrige «resolución directa» $\rightarrow$
+«formulación modal»? \\
+3 & Hipótesis (ii) & ¿Hacer NB04, reformular, o declarar trabajo futuro? \\
+4 & Fronteras absorbentes & ¿Retirar la condición, mantenerla, o quitar FEM del
+alcance? \\
+5 & Rugosidad & ¿Se recupera la pregunta del protocolo? \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.6em}
+\noindent
+Los puntos \textbf{2 y 3 están ligados}: si la hipótesis (ii) se reformula, el
+objetivo general debe decir lo mismo. Y el \textbf{4 condiciona al 3}: no se
+puede decidir sobre NB04 sin resolver antes la cuestión de las fronteras.
+
+\end{document}
