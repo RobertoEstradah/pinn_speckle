@@ -20,6 +20,7 @@ R = pathlib.Path(r"C:\roberto\Tesis_Maestria")
 TESIS = R / "tesis" / "Tesis_Actual"
 PAPER_ES = R / "paper" / "papers_plantillas" / "CyS" / "fuente" / "es"
 PAPER_EN = R / "paper" / "papers_plantillas" / "CyS" / "fuente" / "en"
+PAPER_COMIA = R / "paper" / "papers_plantillas" / "COMIA" / "fuente"
 
 ok = fallo = 0
 
@@ -46,11 +47,35 @@ def busca(t, patron):
     return m.group(1) if m else None
 
 
+def titulo_de(t):
+    """Extrae el contenido de \\title{...} en texto plano, o None.
+
+    No basta con un [^}]* : COMIA escribe los acentos como \\'{o}, y un
+    patron asi se detendria en la primera llave interna, devolviendo doce
+    caracteres. Las guardas del titulo pasarian entonces en vacio, sin mirar
+    nada. Hay que equilibrar llaves y luego quitar los escapes.
+    """
+    i = t.find(r"\title{")
+    if i < 0:
+        return None
+    j, nivel = i + len(r"\title{"), 1
+    while j < len(t) and nivel:
+        nivel += (t[j] == "{") - (t[j] == "}")
+        j += 1
+    crudo = t[i + len(r"\title{"):j - 1]
+    crudo = crudo.split(r"\thanks")[0]          # el agradecimiento no es titulo
+    crudo = re.sub(r"\\[`'^\"~=.]\{(\w)\}", r"\1", crudo)   # \'{o} -> o
+    crudo = re.sub(r"\\[`'^\"~=.](\w)", r"\1", crudo)       # \'o   -> o
+    return re.sub(r"[%\s]+", " ", crudo).strip()
+
+
 t_tesis = texto(TESIS) + "\n".join(
     f.read_text(encoding="utf-8", errors="replace")
     for f in (TESIS / "chapters").glob("*.tex"))
 
-for etiqueta_idioma, carpeta in (("ESPAÑOL", PAPER_ES), ("INGLÉS", PAPER_EN)):
+for etiqueta_idioma, carpeta in (("CyS ESPAÑOL", PAPER_ES),
+                                 ("CyS INGLÉS", PAPER_EN),
+                                 ("COMIA", PAPER_COMIA)):
     print(f"\n=== {etiqueta_idioma} ===")
     t = texto(carpeta)
 
@@ -92,7 +117,14 @@ for etiqueta_idioma, carpeta in (("ESPAÑOL", PAPER_ES), ("INGLÉS", PAPER_EN)):
     # El paper SI puede mencionar el speckle como trabajo futuro o citar la
     # validacion estadistica de la tesis; lo que no debe es prometerlo en el
     # titulo, que es lo que el lector lee primero.
-    titulo = busca(t, r"\\title\{([^}]{0,60})")
+    titulo = titulo_de(t)
+
+    # Meta-guarda: si el titulo no se lee entero, las dos comprobaciones de
+    # abajo pasan en vacio y no vigilan nada. Esto ocurrio de verdad con los
+    # acentos escapados de COMIA: se leian doce caracteres y parecia correcto.
+    chk("el titulo se pudo leer entero", True, bool(titulo) and len(titulo) > 30,
+        f"leido: {titulo!r}")
+
     dice_acelerada = bool(titulo and re.search(r"acelerad|accelerat", titulo, re.I))
     chk("el titulo no promete aceleracion", False, dice_acelerada,
         "no se mide ningun factor de aceleracion en este paper")
