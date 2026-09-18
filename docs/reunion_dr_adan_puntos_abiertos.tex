@@ -52,12 +52,14 @@
 
 \noindent
 El Capítulo 1 (Generalidades) conserva el planteamiento del protocolo de octubre
-de 2025. El trabajo realizado desde entonces cambió el método, y hay cuatro
+de 2025. El trabajo realizado desde entonces cambió el método, y hay
 afirmaciones del capítulo que el código ya no respalda.
 
 \noindent
-\textbf{Ninguna se ha modificado.} Este documento presenta cada una con su texto
-actual, lo que muestran los resultados, y la decisión concreta que hay que tomar.
+\textbf{El punto 1 ---el título--- ya se resolvió} en la conversación del 18 de
+septiembre y está aplicado. Los cuatro restantes siguen abiertos y se presentan
+aquí con su texto actual, lo que muestran los resultados, y la decisión concreta
+que hay que tomar. \textbf{Ninguno se ha modificado.}
 
 \section*{Dónde está el trabajo hoy}
 
@@ -71,14 +73,26 @@ NB02B --- puente de arquitectura      & $L^2 = 0.0078\,\%$ & Cerrado \\
 NB03 --- speckle en $z=1\lambda$      & $L^2 = 3.161\,\%$, 5/5 & Cerrado \\
 NB03B --- speckle en $z=2\lambda$     & $L^2 = 0.993\,\%$, 5/5 & Cerrado \\
 NB03C --- speckle hasta $z=5\lambda$  & $L^2 = 2.244\,\%$, 5/5 & Cerrado \\
+NB03D --- speckle hasta $z=10\lambda$ & $L^2 = 2.617\,\%$, 5/5 & Cerrado \\
 \textbf{NB04 --- benchmark contra FEM} & --- & \textbf{No iniciado} \\
 \bottomrule
 \end{tabularx}
 
 \vspace{0.7em}
 \noindent
-La tesis está en 78 páginas, sin errores de compilación, y 292 cifras del texto
-se verifican automáticamente contra los archivos de resultados que las generaron.
+La tesis está en 81 páginas, sin errores de compilación, y 369 cifras del texto
+se verifican automáticamente contra los archivos de resultados que las
+generaron.
+
+\vspace{0.4em}
+\noindent
+\textbf{Novedad desde la última versión de este documento:} la cadena de
+subdominios se extendió a $z=10\lambda$ con diez bloques, reutilizando sin
+reentrenar el tramo $0$--$5\lambda$ ya validado. Duplicar la distancia eleva el
+error de $2.244\,\%$ a $2.617\,\%$ ---un incremento de $0.373$ puntos por cinco
+bloques adicionales---, con las cinco pantallas aceptadas. Una cadena de veinte
+bloques hasta $20\lambda$, ensayada sobre una sola pantalla y sin refinamiento,
+\emph{no} alcanza el criterio ($8.743\,\%$).
 
 \vspace{0.4em}
 \noindent
@@ -90,9 +104,9 @@ infinitas soluciones. Se sustituyó por una formulación modal con condición de
 Cauchy dura, que es la regularización canónica de este problema
 (Nguyen et al., 2014).
 
-\section{El título}
+\section{El título \normalfont\textit{(resuelto el 18/09)}}
 
-\subsection{Texto actual}
+\subsection{Texto anterior}
 \cita{Simulación \textbf{acelerada} de speckle óptico: \textbf{Un enfoque
 basado} redes neuronales físicamente informadas (PINN's)}
 
@@ -127,7 +141,9 @@ cifras.
 
 \vspace{0.3em}
 \noindent
-\textbf{¿Se acepta el subtítulo, o se deja sólo la parte corta?}
+\textbf{Aprobado y aplicado.} El título figura ya en la portada, y se añadió al
+Dr.~Noel Zacarías Morales como coasesor. Se conserva aquí el razonamiento
+porque sostiene los puntos 2 y 3.
 
 \section{El objetivo general dice «resolución directa»}
 
@@ -200,6 +216,33 @@ se resolvió \\
 Mi lectura: la contribución de la tesis quedó en \textbf{precisión y buen
 planteamiento}, no en velocidad. El Capítulo 4 ya está escrito en esos términos.
 
+\subsection{Existe un precedente, y es de esta misma dirección}
+
+La tesis de Gabriel Omar Domínguez Ruiz, aprobada el 9 de julio de 2026 bajo su
+dirección, se topó con esta misma cuestión y la resolvió. Su Sección~3.4
+compara contra métodos clásicos y \textbf{el resultado le es desfavorable}:
+Runge--Kutta alcanza errores de $10^{-9}$ en milisegundos y las diferencias
+finitas llegan a $10^{-6}$, frente al $0.2\,\%$ de sus PINN. Su redacción:
+
+\cita{…la aportación de las PINN \textbf{no debe entenderse como una
+superioridad en exactitud puntual o en velocidad de cálculo}, sino en la
+\emph{naturaleza} de la solución que cada enfoque produce.}
+
+\cita{La comparación \textbf{no es una competencia por la menor cifra de
+error} ---en una sola corrida, los métodos numéricos son rápidos y muy
+precisos---, sino el reconocimiento de \textbf{dos objetos distintos}.}
+
+Desplazó la afirmación de velocidad a diferenciabilidad y ausencia de malla, y
+lo acompañó de una tabla comparativa cualitativa. Ese planteamiento ya pasó por
+el comité.
+
+\vspace{0.4em}
+\noindent
+Este trabajo está además en mejor posición que aquél en un punto: \textbf{el
+benchmark contra la referencia de propagación ya está hecho}, y arroja
+$1.76\times$ a favor de la PINN en evaluación de $101$ planos simultáneos. No se
+partiría de cero.
+
 \vspace{0.3em}
 \noindent
 \textbf{¿Qué opción se toma?}
@@ -255,7 +298,7 @@ arquitectura nueva. \textbf{¿Vale la pena, o se deja fuera del alcance?}
 \toprule
 \textbf{\#} & \textbf{Punto} & \textbf{Decisión pedida} \\
 \midrule
-1 & Título & ¿Se acepta el subtítulo «formulación modal de Helmholtz»? \\
+1 & Título & \textit{Resuelto el 18/09: aprobado y aplicado} \\
 2 & Objetivo general & ¿Se corrige «resolución directa» $\rightarrow$
 «formulación modal»? \\
 3 & Hipótesis (ii) & ¿Hacer NB04, reformular, o declarar trabajo futuro? \\
