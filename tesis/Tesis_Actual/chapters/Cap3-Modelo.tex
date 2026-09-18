@@ -27,14 +27,14 @@ propio alcance. Conviene separar desde ahora tres alcances que no coinciden:
     \textbf{dominio único} se valida en $z=1\lambda$
     (§\ref{sec:nb03_resultados_z1}) y en $z=2\lambda$
     (§\ref{sec:nb03_extension}).
-    \item La propagación hasta $z=5\lambda$ se valida con un procedimiento
-    distinto: \textbf{descomposición del dominio} en cinco redes locales
-    acopladas (§\ref{sec:nb03_z5}). No es el mismo resultado que los
-    anteriores y no debe leerse como tal.
+    \item La propagación hasta $z=5\lambda$ y $z=10\lambda$ se valida con un
+    procedimiento distinto: \textbf{descomposición del dominio} en cinco y diez
+    redes locales acopladas (§\ref{sec:nb03_z5} y §\ref{sec:nb03_z10}). No es
+    el mismo resultado que los anteriores y no debe leerse como tal.
 \end{itemize}
 
-Ninguno de los tres implica a los otros: son comprobaciones distintas, y cada
-distancia exige la suya.
+Ninguno implica a los otros: son comprobaciones distintas, y cada distancia
+exige la suya.
 
 Se plantean tres experimentos sucesivos de complejidad creciente:
 
@@ -264,7 +264,15 @@ la distancia ampliada y se reentrena sobre el residuo modal normalizado. No hay
 división del dominio. La validación analítica de §\ref{sec:nb02b_extension}
 sigue el mismo esquema: una sola red sobre $\tilde z\in[0,2]$.
 
-\paragraph{Descomposición en subdominios.} Es el procedimiento de las
+\paragraph{Descomposición en subdominios.} Repartir un dominio entre varias
+redes locales es una estrategia establecida para problemas que una sola red no
+cubre bien; \textcite{moseley2023fbpinns} la desarrollan como base finita de
+subdominios con solapamiento. El esquema empleado aquí difiere en dos puntos:
+los bloques \emph{no} se solapan, y el acoplamiento entre ellos no es una
+partición de la unidad sino la propia condición de Cauchy, que transfiere valor
+y derivada de un bloque al siguiente de forma exacta.
+
+Es el procedimiento de las
 validaciones en $z=5\lambda$ (§\ref{sec:nb03_z5}) y $z=10\lambda$
 (§\ref{sec:nb03_z10}). El intervalo $[0,N\lambda]$ se divide en \textbf{$N$
 bloques consecutivos de longitud $1\lambda$}, y cada bloque recibe su propia

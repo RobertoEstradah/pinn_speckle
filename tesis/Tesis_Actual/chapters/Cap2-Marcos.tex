@@ -292,6 +292,22 @@ frontera es una fuente puntual gaussiana con condición de radiación de
 Sommerfeld, distinta de la frontera de fase aleatoria que da lugar al patrón
 de \textit{speckle} en esta investigación.
 
+\textbf{Conviene precisar cómo imponen esa condición de radiación}, porque es
+la diferencia de fondo entre ambos trabajos y no un detalle de implementación.
+\textcite{panagiotakopoulos2026helmholtz} la formulan como un residuo más de la
+función de pérdida, $R_{bc}=\partial E_z/\partial n + ikE_z$, evaluado sobre los
+cuatro bordes del dominio: es una \emph{restricción blanda}, que el optimizador
+puede sacrificar para reducir otros términos. En esta investigación la condición
+de Cauchy se impone \emph{por construcción}, dentro de la función de prueba
+(ecuación~\eqref{eq:cauchy_dura_cap3}), de modo que se satisface exactamente en
+todo momento del entrenamiento y no compite con el residuo físico.
+
+Esa distinción entre restricción blanda y dura es un eje reconocido de la
+literatura: \textcite{sukumar2022exact} la abordan mediante funciones de
+distancia que absorben condiciones de Dirichlet, Neumann y Robin sobre fronteras
+geométricas. El mecanismo empleado aquí es distinto --una prolongación
+polinómica que fija valor y derivada en un plano-- pero persigue el mismo fin.
+
 La brecha en el conocimiento identificada es la siguiente: ningún trabajo
 previo, incluyendo el antecedente arquitectónico más cercano
 \parencite{panagiotakopoulos2026helmholtz}, ha aplicado sistemáticamente la
@@ -299,10 +315,11 @@ arquitectura SIREN \parencite{sitzmann2020siren} (con su ventaja intrínseca
 para representar funciones de alta frecuencia) a la simulación del
 \textit{speckle} óptico como fenómeno estadístico complejo, validado
 mediante los criterios de contraste y bondad de ajuste de
-\textcite{goodman2007speckle}. Esta investigación se propone cerrar dicha
-brecha; los Capítulos~\ref{cap3:modelo} y \ref{cap4:resultados} documentan
-el avance metodológico logrado en la validación 1D/2D del enfoque y el
-estado en progreso de su aplicación al \textit{speckle} óptico.
+\textcite{goodman2007speckle}. Esta investigación cierra dicha brecha; los
+Capítulos~\ref{cap3:modelo} y \ref{cap4:resultados} documentan la validación
+1D/2D del enfoque y su aplicación al \textit{speckle} óptico, verificada sobre
+cinco realizaciones de fase conocidas en cuatro distancias,
+$z=1\lambda$, $2\lambda$, $5\lambda$ y $10\lambda$.
 
 % ──────────────────────────────────────────────────────────────────────────────
 \section{Marco tecnológico}

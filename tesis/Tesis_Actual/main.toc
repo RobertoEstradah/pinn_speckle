@@ -23,8 +23,8 @@
 \contentsline {subsection}{\numberline {2.1.6}Muestreo Latino Hipercúbico (LHS)}{13}{subsection.2.1.6}%
 \contentsline {subsection}{\numberline {2.1.7}Optimización híbrida Adam + L-BFGS}{13}{subsection.2.1.7}%
 \contentsline {section}{\numberline {2.2}Literatura relacionada}{14}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Marco tecnológico}{15}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Infraestructura de hardware}{15}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.3}Marco tecnológico}{16}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Infraestructura de hardware}{16}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Ecosistema de software}{16}{subsection.2.3.2}%
 \contentsline {chapter}{\numberline {3}Modelo e implementación}{17}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Formulación del problema}{17}{section.3.1}%
@@ -35,14 +35,14 @@
 \contentsline {paragraph}{Dominio único.}{22}{section*.11}%
 \contentsline {paragraph}{Descomposición en subdominios.}{22}{section*.12}%
 \contentsline {paragraph}{Una diferencia adicional de arquitectura.}{23}{section*.13}%
-\contentsline {section}{\numberline {3.2}Arquitectura SIREN}{23}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{24}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{25}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{25}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.2}Arquitectura SIREN}{24}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Función de pérdida y calibración de pesos}{25}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Estrategia de muestreo}{26}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Puntos interiores (colocación)}{26}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Puntos de frontera}{26}{subsection.3.4.2}%
 \contentsline {section}{\numberline {3.5}Estrategia de optimización}{26}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Métricas de validación}{26}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Métricas de NB03: campo complejo y estadística de speckle}{26}{subsection.3.6.1}%
+\contentsline {section}{\numberline {3.6}Métricas de validación}{27}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Métricas de NB03: campo complejo y estadística de speckle}{27}{subsection.3.6.1}%
 \contentsline {subsection}{\numberline {3.6.2}Error $L^2$ relativo (NB01 y NB02)}{28}{subsection.3.6.2}%
 \contentsline {section}{\numberline {3.7}Implementación modular}{28}{section.3.7}%
 \contentsline {chapter}{\numberline {4}Experimentos y Resultados}{30}{chapter.4}%
