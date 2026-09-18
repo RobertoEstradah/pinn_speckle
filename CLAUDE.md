@@ -141,7 +141,7 @@ from src.utils import l2_rel, get_figures_dir, save_model
 
 ### Notebooks
 
-Los **seis** notebooks activos viven en `notebooks/`. Los tres anteriores
+Los **siete** notebooks activos viven en `notebooks/`. Los tres anteriores
 (`01_pinn_helmholtz_1d_validation`, `02_pinn_helmholtz_2d_complex_field`,
 `03_pinn_optical_speckle_simulation`) se reemplazaron el 2026-09-15 y quedan
 recuperables desde el commit `972bde6`.
@@ -154,19 +154,33 @@ recuperables desde el commit `972bde6`.
 | `notebooks/03_simulacion_speckle_2d_pinn_siren_modal.ipynb` | Speckle por PINN-SIREN modal de **dominio único**, 5 pantallas, ω₀=1, en z=1λ | L²=3.161%, propagante 0.042%, 5/5 aceptadas |
 | `notebooks/03b_validacion_speckle_2d_z2lambda.ipynb` | Speckle en **z=2λ**, mismo dominio único, partiendo del punto de control de 1λ | L² medio **0.993 %**, 5/5 aceptadas. Cap4 §`sec:nb03_extension` |
 | `notebooks/03c_validacion_speckle_2d_z5lambda.ipynb` | Speckle hasta **z=5λ** por **descomposición** en cinco bloques de 1λ, con escala sinusoidal adaptativa | L² final medio **2.244 %**, máximo 3.507 % sobre 201 planos, 5/5 aceptadas. Cap4 §`sec:nb03_z5` |
+| `notebooks/03d_validacion_speckle_2d_z10lambda.ipynb` | Speckle hasta **z=10λ** con diez bloques, **reutilizando sin reentrenar** el tramo 0–5λ ya validado | L² final medio **2.617 %**, máximo 3.726 %, 5/5 aceptadas (dos con refinamiento). Cap4 §`sec:nb03_z10` |
 | `notebooks/v1_exploracion_cpu/` | Línea base CPU pre-GPU (archivados — solo referencia histórica) | NB01 v1: L²≈0.009%, NB02 v1: L²≈0.222%, ×4.3 más lento |
 
 **Ejecutar el `03`, `03b` y `03c` sólo carga y analiza** (`RUN_TRAINING = False`). Para
 entrenar una réplica hay que ponerlo en `True`; usa sufijos `_z1_nuevo_*` para no
 sobrescribir los modelos validados.
 
-**Tres distancias, DOS procedimientos distintos.** No deben enunciarse como uno solo:
+**Cuatro distancias, DOS procedimientos distintos.** No deben enunciarse como uno solo:
 
 | Distancia | Procedimiento | L² | Notebook |
 |---|---|---|---|
 | z=1λ | Dominio único, una red por pantalla | 3.161 % | `03` |
 | z=2λ | Dominio único, reanudando desde 1λ | 0.993 % | `03b` |
 | z=5λ | **Cinco redes locales de 1λ** acopladas por Cauchy dura, con **escala sinusoidal aprendida por bloque** | 2.244 % | `03c` |
+| z=10λ | **Diez redes**, reutilizando el tramo 0–5λ sin reentrenarlo | 2.617 % | `03d` |
+
+**El error no se dispara al duplicar la distancia:** de 2.244 % a 2.617 %, un
+incremento de **0.373 puntos** por cinco bloques más. Lo hace manejable el
+refinamiento residual, que dos de las cinco pantallas necesitaron. Y **ninguno
+de los cinco máximos de 10λ cae en el plano final**: el de la pantalla 42 está
+en z=6.40λ.
+
+**El límite observado está entre 10λ y 20λ.** Una cadena de veinte bloques sobre
+la pantalla 42, sin refinamiento, da L²=8.743 % y máximo 11.292 %: **no cumple**.
+Es una sola pantalla y un solo protocolo, así que acota el procedimiento tal como
+se aplicó, no sitúa el límite en una distancia concreta.
+(`results/nb03_distance_pilot/z20_screen42_net42_adaptive_slabs_v1/`)
 
 NB03C **no usa ω₀=1**: su implementación adaptativa tiene frecuencias base de
 **30 en la primera capa y 1 en las internas**, multiplicadas por una escala
@@ -287,9 +301,20 @@ compilar con `latexmk`, y copiar el PDF resultante a
 `tesis/compilado/Actual/tesis_maestria_roberto_hernandez_estrada.pdf`,
 sobrescribiendo siempre la versión anterior, sin conservar historial.
 
-**Estado al 2026-09-17:** 78 páginas, 0 errores de LaTeX, 0 referencias sin
-resolver, 28 de 28 citas usadas. Capítulos 1 a 4; **no hay Cap5**, que depende de
-NB04.
+**Estado al 2026-09-18:** 81 páginas, 0 errores de LaTeX, 0 referencias sin
+resolver. Capítulos 1 a 4; **no hay Cap5**, que depende de NB04.
+
+**Las dos ediciones llevan títulos distintos, y es correcto.** `Tesis_Actual`
+valida speckle y se titula «Simulación del speckle óptico mediante Redes
+Neuronales Informadas por Física: formulación modal de Helmholtz».
+`fuente_base` **no tiene resultados de speckle** --su Cap4 lista NB03 como
+pendiente-- y lleva el título del paper. No unificarlos.
+
+**Sin incisos con raya.** El 18/09 se retiraron los 34 que había en Cap2, Cap3 y
+Cap4: el inciso con raya en mitad de la frase es un tell de texto generado.
+Treinta pasaron a paréntesis y cuatro se reescribieron. **No usar `--` ni `---`
+para incisos** en texto nuevo; el `---` queda reservado a las celdas vacías de
+las tablas.
 
 **Antes de dar por buena cualquier cifra de la tesis, correr:**
 
@@ -297,14 +322,16 @@ NB04.
 python scripts/experiments/verifica_cifras_tesis.py
 ```
 
-Compara **292 cifras** del texto contra los `.json` y `.npz` que las generaron y
+Compara **369 cifras** del texto contra los `.json` y `.npz` que las generaron y
 debe terminar en `0 discrepancias`. **Al añadir una cifra nueva a la tesis,
 añadirla también ahí**: es lo único que impide que el texto y los resultados se
 separen.
 
 Lleva además guardas que no son cifras sino afirmaciones que deben permanecer:
-que la corrida de NB02B usara ω₀=1, que los saltos de interfaz de NB03C sean
-cero exacto, y que la nota de Zhang siga advirtiendo que su métrica no es $L^2$.
+que la corrida de NB02B usara ω₀=1, que los saltos de interfaz de NB03C y NB03D
+sean cero exacto, que la nota de Zhang siga advirtiendo que su métrica no es
+$L^2$, que ningún máximo de 10λ caiga en el plano final, que el incremento de 5λ
+a 10λ siga siendo 0.373 puntos, y que la corrida de 20λ siga excediendo el 5 %.
 
 Y hay un **segundo verificador**, un nivel más arriba en la cadena:
 
@@ -414,7 +441,7 @@ python scripts/experiments/run_multiseed.py
 python scripts/experiments/run_seed777.py
 python scripts/experiments/measure_inference.py
 
-# Verificar que las cifras de la tesis coinciden con los resultados (292 checks)
+# Verificar que las cifras de la tesis coinciden con los resultados (369 checks)
 python scripts/experiments/verifica_cifras_tesis.py
 
 # Verificar que el paper no contradiga a la tesis: CyS es, CyS en y COMIA (39 checks)
