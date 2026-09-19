@@ -117,11 +117,56 @@ def curva_erp(datos):
     return ruta
 
 
+def paneles(seed, d, distancias=(0.0, 1.0, 5.0, 10.0)):
+    """Cuatro planos transversales, referencia contra PINN.
+
+    Es la adaptacion de la figura 5.2 del director. El suyo son superficies
+    sobre (x,y) porque simula en 3D; aqui el dominio tiene una sola dimension
+    transversal, asi que cada plano es un perfil y los dos campos se superponen
+    en el mismo eje, al modo de las figuras 3 y 4 de Andres-Zarate et al.
+    """
+    z = d["z_lambda"]
+    x = np.linspace(-10.0, 10.0, d["field_pred"].shape[1], endpoint=False)
+
+    fig, ejes = plt.subplots(2, 2, figsize=(7.2, 4.6), sharex=True,
+                             constrained_layout=True)
+    filas = []
+    for ax, zd, etiqueta in zip(ejes.ravel(), distancias, "abcd"):
+        i = int(np.argmin(np.abs(z - zd)))
+        ref = np.abs(d["field_propagating"][i]) ** 2
+        pin = np.abs(d["field_pred"][i]) ** 2
+        l2 = 100 * (np.linalg.norm(d["field_propagating"][i] - d["field_pred"][i])
+                    / np.linalg.norm(d["field_propagating"][i]))
+
+        ax.plot(x, ref, color="0.25", lw=1.4, label="Referencia")
+        ax.plot(x, pin, color="#c1440e", lw=0.9, linestyle="--", label="PINN")
+        titulo = ("(a) Plano inicial" if zd == 0 else
+                  f"({etiqueta}) $z={zd:g}\\lambda$")
+        ax.set_title(f"{titulo}   $L^2={l2:.3f}$ %", fontsize=8.5)
+        ax.set_ylim(bottom=0)
+        filas.append((zd, l2))
+    ejes[0, 0].legend(fontsize=7.5, frameon=False)
+    for ax in ejes[1]:
+        ax.set_xlabel(r"$x/\lambda$")
+    for ax in ejes[:, 0]:
+        ax.set_ylabel(r"$|E|^2$")
+
+    ruta = SALIDA / "nb03d_z10_paneles.png"
+    fig.savefig(ruta, bbox_inches="tight")
+    plt.close(fig)
+    return ruta, filas
+
+
 def main():
     datos = carga()
     SALIDA.mkdir(parents=True, exist_ok=True)
 
     seed, d, meta = datos[0]
+    ruta_paneles, filas = paneles(seed, d)
+    print(f"  {ruta_paneles.name}  (pantalla {seed})")
+    for zd, l2 in filas:
+        print(f"    z={zd:5.1f} lambda   L2 = {l2:.3f} %")
+
     ruta_mapas, dmax, vmax = mapas(seed, d, meta)
     print(f"  {ruta_mapas.name}  (pantalla {seed})")
     print(f"    diferencia maxima {dmax:.3e} frente a intensidad maxima {vmax:.3e}"

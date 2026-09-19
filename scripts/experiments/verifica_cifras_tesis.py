@@ -523,6 +523,26 @@ chk("Cap4 ERP referencia propagante < 1e-13", True, bool(max(_erp_ref) < 1e-13))
 chk("Cap4 ERP campo total: minimo del rango", 58.7, round(min(_erp_full), 1), tol=2e-3)
 chk("Cap4 ERP campo total: maximo del rango", 65.5, round(max(_erp_full), 1), tol=2e-3)
 
+# Los cuatro planos de la figura de perfiles transversales (pantalla 42).
+_dp = np.load(
+    rf"{R}\results\nb03_distance_pilot\z10_screen42_net42_adaptive_slabs_v1\adaptive_slabs_z10.npz")
+for _zd, _esperado in ((0.0, 0.000), (1.0, 0.514), (5.0, 3.091), (10.0, 3.288)):
+    _i = int(np.argmin(np.abs(_dp["z_lambda"] - _zd)))
+    _l2 = 100 * (np.linalg.norm(_dp["field_propagating"][_i] - _dp["field_pred"][_i])
+                 / np.linalg.norm(_dp["field_propagating"][_i]))
+    chk(f"Cap4 perfiles: L2 en z={_zd:g} lambda", _esperado, round(float(_l2), 3))
+
+# El plano inicial debe dar cero exacto: es la condicion de Cauchy dura, no un
+# ajuste. Si dejara de serlo, la formulacion habria cambiado sin avisar.
+_i0 = int(np.argmin(np.abs(_dp["z_lambda"])))
+chk("Cap4 perfiles: el plano inicial es exacto", True,
+    bool(np.allclose(_dp["field_propagating"][_i0], _dp["field_pred"][_i0], atol=1e-12)))
+
+chk("Cap4 cita a Andres-Zarate et al.", True,
+    "andres2019difraccion" in open(
+        rf"{R}\tesis\Tesis_Actual\chapters\Cap4-Resultados.tex",
+        encoding="utf-8").read())
+
 # Pico de la diferencia frente al pico de intensidad, en la figura de mapas.
 _d42 = np.load(
     rf"{R}\results\nb03_distance_pilot\z10_screen42_net42_adaptive_slabs_v1\adaptive_slabs_z10.npz")

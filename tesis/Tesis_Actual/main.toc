@@ -75,9 +75,9 @@
 \contentsline {paragraph}{Control: la extensión directa a un solo dominio.}{56}{section*.55}%
 \contentsline {subsection}{\numberline {4.4.13}Extensión de la cadena a $z=10\lambda $}{57}{subsection.4.4.13}%
 \contentsline {paragraph}{El límite superior observado.}{58}{section*.58}%
-\contentsline {paragraph}{Una comprobación que no depende de la referencia.}{60}{section*.60}%
-\contentsline {subsection}{\numberline {4.4.14}Tiempo de inferencia frente a la referencia de propagación}{61}{subsection.4.4.14}%
-\contentsline {subsection}{\numberline {4.4.15}Limitaciones del método}{62}{subsection.4.4.15}%
-\contentsline {section}{\numberline {4.5}Contexto en la literatura}{64}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{65}{section.4.6}%
-\contentsline {chapter}{Bibliografía}{67}{table.caption.67}%
+\contentsline {paragraph}{Una comprobación que no depende de la referencia.}{61}{section*.61}%
+\contentsline {subsection}{\numberline {4.4.14}Tiempo de inferencia frente a la referencia de propagación}{62}{subsection.4.4.14}%
+\contentsline {subsection}{\numberline {4.4.15}Limitaciones del método}{63}{subsection.4.4.15}%
+\contentsline {section}{\numberline {4.5}Contexto en la literatura}{65}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Resumen de experimentos completados}{66}{section.4.6}%
+\contentsline {chapter}{Bibliografía}{68}{table.caption.68}%

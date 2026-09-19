@@ -1426,6 +1426,29 @@ procedimiento.
 
 \begin{figure}[htbp]
 \centering
+\includegraphics[width=\textwidth]{figures/nb03d_z10_paneles.png}
+\caption[Perfiles transversales a cuatro distancias]{Perfiles transversales de
+intensidad $|E|^2$ de la pantalla $42$ en cuatro planos del recorrido, con la
+referencia restringida al subespacio propagante en trazo continuo y la
+PINN-SIREN modal en trazo discontinuo. La disposición reproduce la de la
+figura~5.2 de \textcite{hernandez2003propagacion}, con una diferencia obligada:
+aquel trabajo simula en tres dimensiones y puede representar cada plano como
+una superficie sobre $(x,y)$, mientras que el dominio de esta formulación tiene
+una única dimensión transversal, de modo que cada plano es un perfil. Los dos
+campos se superponen en el mismo eje, al modo de las figuras~3 y 4 de
+\textcite{andres2019difraccion}, para que la comparación sea directa. El panel
+(a) exhibe la condición de Cauchy dura: el error es \emph{idénticamente nulo}
+en $z=0$ porque el plano inicial no se aprende sino que se impone por
+construcción. Los tres restantes muestran la maduración del \textit{speckle},
+con una estructura transversal fina que evoluciona hacia granos más escasos y
+de mayor amplitud. El valor de $3.288\%$ del panel (d) coincide con el de la
+pantalla $42$ en la Tabla~\ref{tab:nb03_z10}, como debe. Generada por
+\texttt{scripts/build/figuras\_nb03d\_z10.py}.}
+\label{fig:nb03d_z10_paneles}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
 \includegraphics[width=\textwidth]{figures/nb03d_z10_mapas.png}
 \caption[Propagación hasta $10\lambda$: referencia, PINN y diferencia]{Mapas de
 intensidad $|E|^2$ sobre el plano de propagación completo $(\tilde x,\tilde z)$
