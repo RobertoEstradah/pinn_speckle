@@ -272,6 +272,15 @@ NB03_SUMMARY_VARIANT=_omega1 python scripts/experiments/nb03_modal_multiseed_sum
 - `quality_reports/reviews/` — reportes de revisión con scores
 - `master_supporting_docs/` — NO modificar; documentos de referencia para el coloquio
 - `docs/` — documentos de referencia sueltos (propuestas, ruta de tesis, lista de revistas)
+  - `NB03_extension_3d_y_figuras.md` — **propuesta no ejecutada** (18/09/2026).
+    Aclara que el dominio es 2D `(x,z)` y que lo 1D es sólo la *entrada* de la
+    red: la formulación convierte una EDP 2D en 41 EDO 1D, no reduce la física.
+    Documenta cómo generan sus figuras la tesis del director (3D, figuras 5.2 a
+    5.5) y Andrés-Zárate et al. 2019 (3D, figuras 3 y 4, vistas de frente), y
+    qué costaría pasar a dos dimensiones transversales: **41 → 1 257 modos**,
+    30.7×, sin tocar la condición de Cauchy ni el truncamiento. La
+    recomendación escrita es **no** meterlo en esta tesis y dejarlo en trabajo
+    futuro
 - `slides/` — presentaciones PPTX (`segundo coloquio/` para el coloquio, `smf/` para el cartel del congreso SMF)
 - `paper/papers_plantillas/` — plantillas de revistas/congresos candidatos para adaptar el contenido de `paper/fuente_validacion1D2D/`, organizadas por venue, cada una con `fuente/` (LaTeX/Word editable). Flujo: se toma el contenido de `fuente_validacion1D2D/`, se ajusta a la plantilla del venue elegido, y el resultado compilado va a `paper/compilado/`. **`CyS/` y `COMIA/` ya están adaptadas y activas.** `CyS/fuente/{es,en}/` es la
 edición vigente --la revista que se decidió con el director-- con el paper completo
