@@ -21,6 +21,6 @@
 \contentsline {table}{\numberline {4.15}{\ignorespaces Validación de \textit {speckle} con pantalla aleatoria en $z=2\lambda $.}}{54}{table.caption.52}%
 \contentsline {table}{\numberline {4.16}{\ignorespaces Propagación de \textit {speckle} hasta $z=5\lambda $ por descomposición en cinco subdominios.}}{55}{table.caption.54}%
 \contentsline {table}{\numberline {4.17}{\ignorespaces Propagación de \textit {speckle} hasta $z=10\lambda $ por descomposición en diez subdominios.}}{57}{table.caption.57}%
-\contentsline {table}{\numberline {4.18}{\ignorespaces Tiempo de evaluación: PINN-SIREN modal frente al espectro angular.}}{59}{table.caption.60}%
-\contentsline {table}{\numberline {4.19}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{62}{table.caption.62}%
-\contentsline {table}{\numberline {4.20}{\ignorespaces Estado de los experimentos planificados.}}{63}{table.caption.64}%
+\contentsline {table}{\numberline {4.18}{\ignorespaces Tiempo de evaluación: PINN-SIREN modal frente al espectro angular.}}{62}{table.caption.63}%
+\contentsline {table}{\numberline {4.19}{\ignorespaces Error $L^2$ relativo: PINN-SIREN y antecedente de la literatura.}}{64}{table.caption.65}%
+\contentsline {table}{\numberline {4.20}{\ignorespaces Estado de los experimentos planificados.}}{65}{table.caption.67}%

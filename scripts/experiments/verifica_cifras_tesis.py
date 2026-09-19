@@ -484,6 +484,63 @@ chk("control z5: L2", 118.47, round(100 * ctrl["l2_full_final"], 2), tol=2e-2)
 chk("control z5: coherencia", 0.0502, round(ctrl["coherence_full_final"], 4), tol=2e-2)
 chk("control z5: no aceptado", False, ctrl["accepted"])
 
+print("\nCap4: ERP de la energia (NB03D)")
+# ── Cap4: ERP de la energia y figura de mapas de 10 lambda ────────────────
+# Las cifras se recalculan desde los .npz con la formula del director, que es
+# la unica forma de que el texto no se separe del dato.
+_z10 = json.load(open(
+    rf"{R}\results\nb03_distance_pilot\nb03d_z10_validation\validation_summary.json",
+    encoding="utf-8"))
+
+
+def _erp(campo):
+    e = (np.abs(campo) ** 2).sum(axis=1)
+    return 100.0 * np.abs(e[0] - e) / e[0]
+
+
+_erp_max, _erp_fin, _erp_ref, _erp_full = [], [], [], []
+for _e in _z10["per_screen"]:
+    _d = np.load(rf"{R}\{_e['arrays_path']}".replace("/", "\\"))
+    _p = _erp(_d["field_pred"])
+    _erp_max.append(_p.max())
+    _erp_fin.append(_p[-1])
+    _erp_ref.append(_erp(_d["field_propagating"]).max())
+    _erp_full.append(_erp(_d["field_full"]).max())
+
+# Los cinco maximos por pantalla, en el orden en que los lista el texto.
+for _seed, _esperado, _real in zip((42, 123, 321, 777, 2026),
+                                   (3.347, 2.354, 2.627, 3.410, 1.666), _erp_max):
+    chk(f"Cap4 ERP maximo pantalla {_seed}", _esperado, round(float(_real), 3))
+
+chk("Cap4 ERP final medio", 1.364, round(float(np.mean(_erp_fin)), 3))
+
+# La referencia propagante conserva a precision de maquina: es la linea base
+# que hace interpretable todo lo anterior. Si dejara de cumplirse, la metrica
+# no mediria al PINN sino al calculo de la referencia.
+chk("Cap4 ERP referencia propagante < 1e-13", True, bool(max(_erp_ref) < 1e-13))
+
+# El campo total NO conserva, y el texto da el rango.
+chk("Cap4 ERP campo total: minimo del rango", 58.7, round(min(_erp_full), 1), tol=2e-3)
+chk("Cap4 ERP campo total: maximo del rango", 65.5, round(max(_erp_full), 1), tol=2e-3)
+
+# Pico de la diferencia frente al pico de intensidad, en la figura de mapas.
+_d42 = np.load(
+    rf"{R}\results\nb03_distance_pilot\z10_screen42_net42_adaptive_slabs_v1\adaptive_slabs_z10.npz")
+_dif = (np.abs(_d42["field_propagating"] - _d42["field_pred"]) ** 2).max()
+_pico = max((np.abs(_d42["field_propagating"]) ** 2).max(),
+            (np.abs(_d42["field_pred"]) ** 2).max())
+chk("Cap4 figura mapas: pico de la diferencia", 2.77, round(float(_dif) * 1e3, 2))
+chk("Cap4 figura mapas: pico de intensidad", 3.88, round(float(_pico), 2))
+chk("Cap4 figura mapas: diferencia como % del pico", 0.07,
+    round(100 * float(_dif) / float(_pico), 2))
+
+# Guarda: el ERP no debe presentarse como comprobacion de estabilidad.
+_cap4 = open(rf"{R}\tesis\Tesis_Actual\chapters\Cap4-Resultados.tex",
+             encoding="utf-8").read()
+chk("Cap4 advierte que el ERP no compara con un esquema conservativo", True,
+    "no debe compararse con la de un esquema conservativo" in _cap4)
+chk("Cap4 cita la tesis del director", True, "hernandez2003propagacion" in _cap4)
+
 # ── Resumen y Abstract: deben coincidir entre si y con los resultados ─────
 print("\nResumen y Abstract:")
 RES = pathlib.Path(rf"{R}\tesis\Tesis_Actual\Resumen.tex").read_text(encoding="utf-8")

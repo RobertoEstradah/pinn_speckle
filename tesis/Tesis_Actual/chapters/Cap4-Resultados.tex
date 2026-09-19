@@ -1424,6 +1424,90 @@ establecido que el modelo generalice a pantallas no vistas, ni que una red
 global única alcance esa distancia, ni dónde está exactamente el límite del
 procedimiento.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/nb03d_z10_mapas.png}
+\caption[Propagación hasta $10\lambda$: referencia, PINN y diferencia]{Mapas de
+intensidad $|E|^2$ sobre el plano de propagación completo $(\tilde x,\tilde z)$
+para la pantalla $42$, con $0\leq z\leq 10\lambda$ y $-10\leq\tilde
+x\leq10$. Izquierda, la referencia por espectro angular restringida al
+subespacio propagante; centro, la PINN-SIREN modal, en la misma escala de
+color; derecha, el módulo al cuadrado de su diferencia, en escala propia. Las
+líneas horizontales tenues marcan las nueve interfaces entre los diez bloques
+de $1\lambda$. Los dos primeros paneles son indistinguibles a simple vista: el
+pico de la diferencia vale $2.77\times10^{-3}$ frente a una intensidad máxima
+de $3.88$, esto es, el $0.07\%$ del pico. El tercer panel muestra dónde reside
+ese error, y es su información propia: la discrepancia es despreciable por
+debajo de $z\approx3\lambda$ y crece de forma visible a partir del quinto
+bloque, que es justamente donde empiezan las redes entrenadas en esta extensión
+y donde se acumula lo transferido por las anteriores. La presentación sigue el
+formato de sección transversal a lo largo de la propagación empleado por
+\textcite{hernandez2003propagacion}. Generada por
+\texttt{scripts/build/figuras\_nb03d\_z10.py} a partir de
+\texttt{results/nb03\_distance\_pilot/z10\_screen42\_net42\_adaptive\_slabs\_v1/adaptive\_slabs\_z10.npz}.}
+\label{fig:nb03d_z10_mapas}
+\end{figure}
+
+\paragraph{Una comprobación que no depende de la referencia.} Todas las
+métricas anteriores comparan la predicción con el espectro angular, que es
+semianalítico y comparte con la red la ecuación diferencial que ésta minimiza.
+Conviene por ello añadir una verificación de naturaleza distinta, que examine
+una propiedad interna de la solución sin contrastarla con nada. El seguimiento
+de una cantidad conservada es el procedimiento habitual, y
+\textcite{hernandez2003propagacion} lo emplea con esa finalidad mediante el
+error relativo porcentual de la energía del frente de onda,
+%
+\begin{equation}
+    E(\tilde z) = \sum_i |E(\tilde x_i,\tilde z)|^2,
+    \qquad
+    \mathrm{ERP}(\tilde z)
+    = 100\,\frac{|E(0)-E(\tilde z)|}{E(0)} .
+    \label{eq:erp_energia}
+\end{equation}
+
+Medirlo exige una precisión previa. El campo \emph{total} de la referencia
+\textbf{no} conserva la energía, y no debe conservarla: la fracción evanescente
+se extingue al propagar, de modo que la ecuación~\eqref{eq:erp_energia} aplicada
+al campo completo arroja entre el $58.7\%$ y el $65.5\%$ según la pantalla, lo
+cual es física y no error numérico. La magnitud que sí se conserva es la energía
+del subespacio propagante, que es además el único que la base modal puede
+representar. Evaluada sobre la referencia restringida a ese subespacio, la
+ecuación~\eqref{eq:erp_energia} da un máximo de $3\times10^{-14}$, es decir,
+precisión de máquina: la métrica está bien planteada y cualquier desviación
+apreciable es atribuible al modelo.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/nb03d_z10_erp.png}
+\caption[Error relativo porcentual de la energía hasta $10\lambda$]{Error
+relativo porcentual de la energía, ecuación~\eqref{eq:erp_energia}, evaluado
+sobre la predicción de la PINN en las cinco pantallas a lo largo de los
+$201$ planos. La línea gris es la referencia restringida al subespacio
+propagante, que conserva la energía a precisión de máquina y sirve de línea
+base. Las líneas verticales tenues marcan las nueve interfaces. Generada por
+\texttt{scripts/build/figuras\_nb03d\_z10.py}.}
+\label{fig:nb03d_z10_erp}
+\end{figure}
+
+El resultado se recoge en la Figura~\ref{fig:nb03d_z10_erp}. El ERP de la PINN
+oscila con la distancia y su envolvente crece: los máximos por pantalla son del
+$3.347\%$, $2.354\%$, $2.627\%$, $3.410\%$ y $1.666\%$, y el valor en el plano
+final promedia $1.364\%$. Es una magnitud comparable al error $L^2$ de la
+Tabla~\ref{tab:nb03_z10}, como cabía esperar de dos medidas del mismo desajuste.
+
+\textbf{Esta cifra no debe compararse con la de un esquema conservativo.} En un
+método de diferencias finitas la conservación de la energía es una propiedad del
+operador de avance, de modo que el ERP acaba midiendo la aritmética de punto
+flotante: \textcite{hernandez2003propagacion} obtiene $3\times10^{-11}$ sobre
+seis metros de propagación. Una PINN no ofrece garantía análoga. Sus coeficientes modales
+son la salida de una red, y su módulo permanece constante sólo en la medida en
+que la solución aprendida sea correcta. El ERP funciona aquí, por tanto, como
+una \emph{medida de error independiente de la referencia}, no como una
+comprobación de estabilidad del integrador: su valor acota lo que la solución se
+aparta de una propiedad exacta del problema, y el hecho de que coincida en orden
+de magnitud con el error $L^2$ refuerza que ese error está correctamente
+cuantificado y no oculto por la elección de la referencia.
+
 \subsection{Tiempo de inferencia frente a la referencia de propagación}
 \label{sec:nb03_inferencia}
 
