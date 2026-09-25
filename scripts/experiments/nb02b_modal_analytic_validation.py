@@ -443,7 +443,11 @@ def save_case(count: int, arrays: dict[str, np.ndarray], state_dict: dict) -> No
 def make_figures(reports: list[dict], arrays_by_count: dict[int, dict]) -> None:
     import matplotlib.pyplot as plt
 
-    figures_dir = OUTPUT_DIR / "figures"
+    # La corrida canonica deja sus figuras con las de los demas notebooks.
+    if OUTPUT_DIR == _RESULTS_ROOT.resolve():
+        figures_dir = PROJECT_ROOT / "results" / "figures"
+    else:
+        figures_dir = OUTPUT_DIR / "figures"
     figures_dir.mkdir(parents=True, exist_ok=True)
     for report in reports:
         count = report["n_complex_modes"]
@@ -495,7 +499,7 @@ def make_figures(reports: list[dict], arrays_by_count: dict[int, dict]) -> None:
             f"NB02B - validacion analitica con {count} modo(s) complejos"
         )
         fig.savefig(
-            figures_dir / f"case_{count:02d}_modes.png",
+            figures_dir / f"nb02b_bridge_modes_{count:02d}.png",
             dpi=160,
             bbox_inches="tight",
         )
@@ -527,7 +531,7 @@ def make_figures(reports: list[dict], arrays_by_count: dict[int, dict]) -> None:
     axis.grid(alpha=0.25)
     axis.legend()
     fig.savefig(
-        figures_dir / "summary_modes.png", dpi=160, bbox_inches="tight"
+        figures_dir / "nb02b_bridge_summary.png", dpi=160, bbox_inches="tight"
     )
     plt.close(fig)
 

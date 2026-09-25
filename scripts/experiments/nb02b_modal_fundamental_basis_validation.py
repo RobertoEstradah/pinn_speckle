@@ -353,7 +353,11 @@ def save_case(
 def make_figures(reports: list[dict], arrays_by_case: dict[str, dict]) -> None:
     import matplotlib.pyplot as plt
 
-    figures_dir = OUTPUT_DIR / "figures"
+    # La corrida canonica deja sus figuras con las de los demas notebooks.
+    if OUTPUT_DIR == (PROJECT_ROOT / "results" / "nb02b_modal_basis").resolve():
+        figures_dir = PROJECT_ROOT / "results" / "figures"
+    else:
+        figures_dir = OUTPUT_DIR / "figures"
     figures_dir.mkdir(parents=True, exist_ok=True)
     for report in reports:
         case_name = report["case"]
@@ -392,7 +396,7 @@ def make_figures(reports: list[dict], arrays_by_case: dict[str, dict]) -> None:
         axes[1, 1].grid(alpha=0.25)
         figure.suptitle(f"NB02B: {report['label']}")
         figure.savefig(
-            figures_dir / f"{case_name}.png", dpi=160, bbox_inches="tight"
+            figures_dir / f"nb02b_basis_{case_name}.png", dpi=160, bbox_inches="tight"
         )
         plt.close(figure)
 
@@ -421,7 +425,7 @@ def make_figures(reports: list[dict], arrays_by_case: dict[str, dict]) -> None:
     axis.legend()
     axis.grid(axis="y", alpha=0.25)
     figure.savefig(
-        figures_dir / "summary_basis.png", dpi=160, bbox_inches="tight"
+        figures_dir / "nb02b_basis_summary.png", dpi=160, bbox_inches="tight"
     )
     plt.close(figure)
 

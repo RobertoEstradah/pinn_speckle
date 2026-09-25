@@ -13,7 +13,7 @@ de `scripts/experiments/` o una celda de su notebook.
 | `multiseed_results.json`, `seed777_result.json` | Dispersión frente a la semilla | `run_multiseed.py`, `run_seed777.py` |
 | `ntk_spectral_bias_diagnostics/` | Barrido de ω₀ y traza NTK de NB02 | `omega0_spectral_sweep.py`, `ntk_analysis_nb02.py` |
 | `architecture_ablation_4layers/` | 4 capas frente a 5 en 1D y 2D | `ablation_4layers_nb01.py`, `ablation_4layers_nb02.py` |
-| `figures/` | Figuras de los notebooks | notebooks `01`, `02` y guiones |
+| `figures/` | Todas las figuras; las de NB02B llevan el prefijo `nb02b_` | notebooks `01`, `02` y guiones |
 
 Los pesos entrenados (`.pt`) y los campos grandes (`.npz` de NB02B) no están
 en el repositorio por tamaño; se regeneran al ejecutar los notebooks.
