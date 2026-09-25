@@ -76,6 +76,40 @@ una base completa de las soluciones 2D; así lo declara el propio
 punto de control canónico de NB02 en vez de entrenarse en frío: sólo las otras
 tres son corridas independientes.
 
+### Figuras de NB02B
+
+Las ocho están en `results/figures/`, con el prefijo `nb02b_`.
+
+![NB02B con 41 modos complejos](results/figures/nb02b_bridge_modes_41.png)
+
+*Caso de 41 modos complejos.* Arriba a la izquierda, la intensidad en
+$\tilde z = 1$: la curva de la red queda superpuesta a la analítica. Arriba a
+la derecha, el error relativo a lo largo de $\tilde z$: parte de cero en
+$\tilde z = 0$, donde la condición de Cauchy se cumple por construcción, y su
+máximo es 0.0115 %, lejos del umbral de 5 % marcado con la línea punteada.
+Abajo, la intensidad predicha en todo el dominio y la pérdida física durante el
+entrenamiento. Los casos de
+[1 modo](results/figures/nb02b_bridge_modes_01.png) y de
+[5 modos](results/figures/nb02b_bridge_modes_05.png) tienen la misma
+estructura.
+
+![Métricas de NB02B de 1 a 41 modos](results/figures/nb02b_bridge_summary.png)
+
+*Métricas al enriquecer la base.* El error global baja de 0.0149 % con 1 modo
+a 0.0078 % con 41. El error en $\tilde z = 1$, en cambio, sube de 0.0030 % a
+0.0070 % al pasar de 1 a 5 modos y casi no cambia hasta 41 (0.0073 %). Todo
+queda por debajo del umbral, y los errores $L^2$ por más de dos órdenes de
+magnitud. El título de la figura menciona NB03 porque la red validada es la
+misma `ModalSiren` que ese notebook emplea.
+
+La base fundamental tiene una figura por caso
+([coseno](results/figures/nb02b_basis_cosine.png),
+[seno](results/figures/nb02b_basis_sine.png) y
+[combinación compleja general](results/figures/nb02b_basis_general.png)) y un
+[resumen](results/figures/nb02b_basis_summary.png). En el resumen, las barras
+del error $L^2$ (entre 0.0050 y 0.0083 %) son demasiado pequeñas para verse a
+esa escala; las que se ven son el residuo normalizado, entre 0.15 y 0.33 %.
+
 ### Dispersión frente a la semilla
 
 Tres semillas $\{42, 123, 777\}$, medidas en la misma sesión:
