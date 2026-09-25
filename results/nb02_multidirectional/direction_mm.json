@@ -1,0 +1,27 @@
+{
+  "sign_x": -1,
+  "sign_y": -1,
+  "label": "(-kx,-ky), -135°",
+  "kx_normalized": -4.442882938158366,
+  "ky_normalized": -4.442882938158366,
+  "training": {
+    "training_source": "independent_cold_start",
+    "adam_epochs": 7867,
+    "best_adam_loss": 0.0013285339809954166,
+    "adam_seconds": 277.8414318561554,
+    "lbfgs_evaluations": 1035,
+    "lbfgs_seconds": 63.63571238517761,
+    "training_seconds": 341.477144241333
+  },
+  "metrics": {
+    "l2_real_percent": 0.18646424051240207,
+    "l2_imag_percent": 0.09720428960415058,
+    "l2_complex_percent": 0.14695487612957686,
+    "l2_intensity_percent": 0.22150497138500214,
+    "phase_rmse_rad": 0.0009652806030989733,
+    "residual_rms_complex": 0.00922135729342699,
+    "residual_relative_complex": 0.00023357971804216504,
+    "accepted_l2_below_5_percent": true
+  },
+  "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb02_multidirectional\\models\\nb02_direction_mm.pt"
+}

@@ -1,0 +1,40 @@
+{
+  "equation": "E_xx + (2*pi)^2 E = 0",
+  "domain_normalized": [
+    0.0,
+    1.0
+  ],
+  "device": "cpu",
+  "basis": [
+    "cos(2*pi*x)",
+    "sin(2*pi*x)"
+  ],
+  "cosine": {
+    "l2_relative": 5.5172491556731984e-05,
+    "l2_percent": 0.005517248995602131,
+    "residual_rms": 0.0036302548833191395,
+    "accepted_l2_below_5_percent": true
+  },
+  "sine": {
+    "l2_relative": 3.090077734668739e-05,
+    "l2_percent": 0.003090077778324485,
+    "max_abs_error": 3.375113010406494e-05,
+    "rmse": 2.183922262456962e-05,
+    "mae": 1.976179009943735e-05,
+    "r2": 1.0,
+    "pearson": 1.0,
+    "residual_rms": 0.0026561145205050707,
+    "residual_max": 0.00965478178113699,
+    "residual_relative": 9.519577724859118e-05,
+    "E_at_0_predicted": -2.9659830033779144e-05,
+    "dE_at_0_predicted": 6.283214569091797,
+    "dE_at_0_exact": 6.283185307179586,
+    "dE_at_0_relative_error": 4.657177972644924e-06,
+    "adam_epochs": 15000,
+    "lbfgs_evaluations": 182,
+    "training_time_seconds": 483.5479643344879,
+    "accepted_l2_below_5_percent": true
+  },
+  "basis_complete_accepted": true,
+  "note": "Dos PINN independientes; no es una sola red parametrizada por A y B."
+}

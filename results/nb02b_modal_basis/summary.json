@@ -1,0 +1,172 @@
+{
+  "experiment": "NB02B modal fundamental basis validation",
+  "equation": "a_m''(z) + kz_m^2 a_m(z) = 0",
+  "training_uses_interior_labels": false,
+  "normalization": {
+    "x_tilde": "x/lambda",
+    "z_tilde": "z/lambda",
+    "k_tilde": "2*pi"
+  },
+  "dispersion": {
+    "k": 6.283185307179586,
+    "kx": 3.7699111843077517,
+    "kz": 5.026548245743669,
+    "kx_squared_plus_kz_squared": 39.47841760435743
+  },
+  "architecture": {
+    "class": "ModalSiren",
+    "first_omega": 1.0,
+    "hidden_omega": 1.0,
+    "hidden_dim": 128,
+    "num_layers": 4,
+    "hard_cauchy": "a(0)+z*a'(0)+z^2*N_theta(z)"
+  },
+  "training": {
+    "optimizer": "L-BFGS",
+    "stages": 80,
+    "inner_iterations": 20,
+    "n_z_train": 512,
+    "device": "cuda"
+  },
+  "cases": [
+    {
+      "case": "cosine",
+      "label": "Base coseno",
+      "C": {
+        "real": 1.0,
+        "imag": 0.0
+      },
+      "D": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "initial_coefficient": {
+        "real": 1.0,
+        "imag": 0.0
+      },
+      "initial_derivative": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "training_seconds": 41.20868706703186,
+      "best_training_loss": 5.838772381139279e-07,
+      "metrics": {
+        "coefficient_relative_l2": 4.964663264921034e-05,
+        "global_complex_relative_l2": 4.964663264921015e-05,
+        "target_complex_relative_l2": 4.7037302112709114e-05,
+        "global_complex_coherence": 0.9999999987683217,
+        "target_complex_coherence": 1.0000000000000002,
+        "global_intensity_relative_l2": 7.748522010837062e-05,
+        "target_intensity_relative_l2": 9.407239171759243e-05,
+        "global_phase_mae_rad": 2.5742618365410156e-17,
+        "target_phase_mae_rad": 2.6653399293647977e-17,
+        "helmholtz_modal_residual_normalized_rmse": 0.0015874608652666211,
+        "helmholtz_modal_residual_normalized_max_abs": 0.00877128355205059,
+        "hard_cauchy_coefficient_abs_error": 0.0,
+        "hard_cauchy_derivative_abs_error": 0.0
+      },
+      "acceptance": {
+        "coefficient_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "global_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "hard_cauchy_coefficient_below_1e_5": true,
+        "hard_cauchy_derivative_below_1e_5": true,
+        "accepted": true
+      }
+    },
+    {
+      "case": "sine",
+      "label": "Base seno",
+      "C": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "D": {
+        "real": 1.0,
+        "imag": 0.0
+      },
+      "initial_coefficient": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "initial_derivative": {
+        "real": 5.026548245743669,
+        "imag": 0.0
+      },
+      "training_seconds": 52.15496873855591,
+      "best_training_loss": 2.8550762181112077e-06,
+      "metrics": {
+        "coefficient_relative_l2": 7.913823077180855e-05,
+        "global_complex_relative_l2": 7.913823077180814e-05,
+        "target_complex_relative_l2": 3.062168608301057e-05,
+        "global_complex_coherence": 0.9999999969137098,
+        "target_complex_coherence": 1.0,
+        "global_intensity_relative_l2": 0.00012962667171179118,
+        "target_intensity_relative_l2": 6.12424344783347e-05,
+        "global_phase_mae_rad": 2.545714066266119e-17,
+        "target_phase_mae_rad": 2.6354977846796446e-17,
+        "helmholtz_modal_residual_normalized_rmse": 0.003310735337436199,
+        "helmholtz_modal_residual_normalized_max_abs": 0.015461757779121399,
+        "hard_cauchy_coefficient_abs_error": 0.0,
+        "hard_cauchy_derivative_abs_error": 0.0
+      },
+      "acceptance": {
+        "coefficient_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "global_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "hard_cauchy_coefficient_below_1e_5": true,
+        "hard_cauchy_derivative_below_1e_5": true,
+        "accepted": true
+      }
+    },
+    {
+      "case": "general",
+      "label": "Combinación compleja general",
+      "C": {
+        "real": 0.6,
+        "imag": 0.2
+      },
+      "D": {
+        "real": -0.3,
+        "imag": 0.7
+      },
+      "initial_coefficient": {
+        "real": 0.6,
+        "imag": 0.2
+      },
+      "initial_derivative": {
+        "real": -1.5079644737231006,
+        "imag": 3.518583772020568
+      },
+      "training_seconds": 76.39030051231384,
+      "best_training_loss": 5.213580038798682e-07,
+      "metrics": {
+        "coefficient_relative_l2": 8.286574773274536e-05,
+        "global_complex_relative_l2": 8.286574773274551e-05,
+        "target_complex_relative_l2": 7.891958091366177e-05,
+        "global_complex_coherence": 0.9999999977592717,
+        "target_complex_coherence": 1.0,
+        "global_intensity_relative_l2": 8.721005680291917e-05,
+        "target_intensity_relative_l2": 5.81856793414804e-05,
+        "global_phase_mae_rad": 5.466578921318842e-05,
+        "target_phase_mae_rad": 7.336238061898465e-05,
+        "helmholtz_modal_residual_normalized_rmse": 0.0014764792285859585,
+        "helmholtz_modal_residual_normalized_max_abs": 0.008130805566906929,
+        "hard_cauchy_coefficient_abs_error": 0.0,
+        "hard_cauchy_derivative_abs_error": 0.0
+      },
+      "acceptance": {
+        "coefficient_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "global_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "hard_cauchy_coefficient_below_1e_5": true,
+        "hard_cauchy_derivative_below_1e_5": true,
+        "accepted": true
+      }
+    }
+  ],
+  "all_cases_accepted": true
+}

@@ -1,0 +1,23 @@
+{
+  "sign_x": 1,
+  "sign_y": 1,
+  "label": "(+kx,+ky), 45°",
+  "kx_normalized": 4.442882938158366,
+  "ky_normalized": 4.442882938158366,
+  "training": {
+    "training_source": "canonical_nb02_checkpoint",
+    "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\models\\nb02_helmholtz2d_gpu.pt",
+    "training_seconds": null
+  },
+  "metrics": {
+    "l2_real_percent": 0.21406720557079914,
+    "l2_imag_percent": 0.1272677716981519,
+    "l2_complex_percent": 0.1743863199594415,
+    "l2_intensity_percent": 0.2475762665271759,
+    "phase_rmse_rad": 0.0012283746177057277,
+    "residual_rms_complex": 0.007750614080578089,
+    "residual_relative_complex": 0.00019632535986602306,
+    "accepted_l2_below_5_percent": true
+  },
+  "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb02_multidirectional\\models\\nb02_direction_pp.pt"
+}

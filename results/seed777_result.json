@@ -1,0 +1,9 @@
+{
+  "seed": 777,
+  "l2_avg": 0.1675,
+  "l2_real": 0.2477,
+  "l2_imag": 0.0872,
+  "adam_epochs": 13560,
+  "lbfgs_iters": 1023,
+  "time_s": 346.0
+}

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Pesos entrenados y campos grandes: se regeneran al ejecutar los notebooks
+results/models/
+*.pt
+results/nb02b_modal_basis/*.npz
+results/nb02b_modal_bridge/*.npz

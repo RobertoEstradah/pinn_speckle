@@ -1,0 +1,130 @@
+{
+  "problem": "Helmholtz 2D normalized multidirectional validation",
+  "equation": "E_xx + E_yy + (2*pi)^2 E = 0",
+  "domain": "[0,1]^2",
+  "device": "cuda",
+  "configuration": {
+    "k": 6.283185307179586,
+    "N_colloc": 3000,
+    "N_boundary_per_edge": 300,
+    "hidden_dim": 128,
+    "num_layers": 5,
+    "omega_0": 1.0,
+    "n_epochs": 15000,
+    "lr": 0.001,
+    "physics_weight": 0.1,
+    "patience": 800,
+    "lbfgs_max_iter": 1000,
+    "lbfgs_history": 100,
+    "seed": 42,
+    "l2_threshold": 0.05,
+    "N_eval": 100
+  },
+  "directions": {
+    "pp": {
+      "sign_x": 1,
+      "sign_y": 1,
+      "label": "(+kx,+ky), 45°",
+      "kx_normalized": 4.442882938158366,
+      "ky_normalized": 4.442882938158366,
+      "training": {
+        "training_source": "canonical_nb02_checkpoint",
+        "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\models\\nb02_helmholtz2d_gpu.pt",
+        "training_seconds": null
+      },
+      "metrics": {
+        "l2_real_percent": 0.21406720557079914,
+        "l2_imag_percent": 0.1272677716981519,
+        "l2_complex_percent": 0.1743863199594415,
+        "l2_intensity_percent": 0.2475762665271759,
+        "phase_rmse_rad": 0.0012283746177057277,
+        "residual_rms_complex": 0.007750614080578089,
+        "residual_relative_complex": 0.00019632535986602306,
+        "accepted_l2_below_5_percent": true
+      },
+      "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb02_multidirectional\\models\\nb02_direction_pp.pt"
+    },
+    "pm": {
+      "sign_x": 1,
+      "sign_y": -1,
+      "label": "(+kx,-ky), -45°",
+      "kx_normalized": 4.442882938158366,
+      "ky_normalized": -4.442882938158366,
+      "training": {
+        "training_source": "independent_cold_start",
+        "adam_epochs": 7117,
+        "best_adam_loss": 0.001242000493220985,
+        "adam_seconds": 498.10664105415344,
+        "lbfgs_evaluations": 1033,
+        "lbfgs_seconds": 45.19390940666199,
+        "training_seconds": 543.3005504608154
+      },
+      "metrics": {
+        "l2_real_percent": 0.22760634827588727,
+        "l2_imag_percent": 0.09595612047118014,
+        "l2_complex_percent": 0.17751575652342988,
+        "l2_intensity_percent": 0.24675177037715912,
+        "phase_rmse_rad": 0.001276504306654679,
+        "residual_rms_complex": 0.010240830481052399,
+        "residual_relative_complex": 0.00025940328487195075,
+        "accepted_l2_below_5_percent": true
+      },
+      "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb02_multidirectional\\models\\nb02_direction_pm.pt"
+    },
+    "mp": {
+      "sign_x": -1,
+      "sign_y": 1,
+      "label": "(-kx,+ky), 135°",
+      "kx_normalized": -4.442882938158366,
+      "ky_normalized": 4.442882938158366,
+      "training": {
+        "training_source": "independent_cold_start",
+        "adam_epochs": 6789,
+        "best_adam_loss": 0.0011489765020087361,
+        "adam_seconds": 203.75323390960693,
+        "lbfgs_evaluations": 1033,
+        "lbfgs_seconds": 61.960901975631714,
+        "training_seconds": 265.71413588523865
+      },
+      "metrics": {
+        "l2_real_percent": 0.0759389637886478,
+        "l2_imag_percent": 0.16485248978208003,
+        "l2_complex_percent": 0.12635682392356432,
+        "l2_intensity_percent": 0.1771351397037506,
+        "phase_rmse_rad": 0.000901260603312429,
+        "residual_rms_complex": 0.009886248968541622,
+        "residual_relative_complex": 0.00025042160996235907,
+        "accepted_l2_below_5_percent": true
+      },
+      "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb02_multidirectional\\models\\nb02_direction_mp.pt"
+    },
+    "mm": {
+      "sign_x": -1,
+      "sign_y": -1,
+      "label": "(-kx,-ky), -135°",
+      "kx_normalized": -4.442882938158366,
+      "ky_normalized": -4.442882938158366,
+      "training": {
+        "training_source": "independent_cold_start",
+        "adam_epochs": 7867,
+        "best_adam_loss": 0.0013285339809954166,
+        "adam_seconds": 277.8414318561554,
+        "lbfgs_evaluations": 1035,
+        "lbfgs_seconds": 63.63571238517761,
+        "training_seconds": 341.477144241333
+      },
+      "metrics": {
+        "l2_real_percent": 0.18646424051240207,
+        "l2_imag_percent": 0.09720428960415058,
+        "l2_complex_percent": 0.14695487612957686,
+        "l2_intensity_percent": 0.22150497138500214,
+        "phase_rmse_rad": 0.0009652806030989733,
+        "residual_rms_complex": 0.00922135729342699,
+        "residual_relative_complex": 0.00023357971804216504,
+        "accepted_l2_below_5_percent": true
+      },
+      "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb02_multidirectional\\models\\nb02_direction_mm.pt"
+    }
+  },
+  "scope_note": "Four controlled plane-wave directions for one fixed magnitude |kx|=|ky|=k/sqrt(2); not a complete basis of all 2D solutions."
+}
