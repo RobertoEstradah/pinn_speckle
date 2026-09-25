@@ -94,10 +94,11 @@ def save_model(model, name, notebook_dir=None):
         # guarda en: results/models/nb02_helmholtz2d.pt
     """
     models_dir = get_models_dir(notebook_dir)
-    path = str(models_dir / f'{name}.pt')
-    torch.save(model.state_dict(), path)
-    print(f'Modelo guardado en: {path}')
-    return path
+    path = models_dir / f'{name}.pt'
+    torch.save(model.state_dict(), str(path))
+    # Se imprime relativa a la raiz: la absoluta delata la maquina local.
+    print(f'Modelo guardado en: {path.relative_to(models_dir.parents[1]).as_posix()}')
+    return str(path)
 
 
 def load_model(model, name, notebook_dir=None, device=None):
