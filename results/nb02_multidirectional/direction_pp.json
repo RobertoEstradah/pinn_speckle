@@ -6,7 +6,7 @@
   "ky_normalized": 4.442882938158366,
   "training": {
     "training_source": "canonical_nb02_checkpoint",
-    "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\models\\nb02_helmholtz2d_gpu.pt",
+    "checkpoint": "results/models/nb02_helmholtz2d_gpu.pt",
     "training_seconds": null
   },
   "metrics": {
@@ -19,5 +19,5 @@
     "residual_relative_complex": 0.00019632535986602306,
     "accepted_l2_below_5_percent": true
   },
-  "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb02_multidirectional\\models\\nb02_direction_pp.pt"
+  "checkpoint": "results/nb02_multidirectional/models/nb02_direction_pp.pt"
 }

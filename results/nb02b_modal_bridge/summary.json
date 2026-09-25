@@ -47,7 +47,7 @@
       "training_seconds": 29.81494927406311,
       "stage_epochs": 80,
       "cumulative_recorded_epochs": 8580,
-      "resumed_from": "C:\\roberto\\Tesis_Maestria\\results\\nb02b_modal_bridge\\models\\case_01_modes.pt",
+      "resumed_from": "results/nb02b_modal_bridge/models/case_01_modes.pt",
       "optimizer": "lbfgs",
       "best_training_loss": 1.3962031744085834e-06,
       "metrics": {
@@ -85,7 +85,7 @@
       "training_seconds": 39.553114891052246,
       "stage_epochs": 80,
       "cumulative_recorded_epochs": 8580,
-      "resumed_from": "C:\\roberto\\Tesis_Maestria\\results\\nb02b_modal_bridge\\models\\case_05_modes.pt",
+      "resumed_from": "results/nb02b_modal_bridge/models/case_05_modes.pt",
       "optimizer": "lbfgs",
       "best_training_loss": 1.2277996574994177e-06,
       "metrics": {
@@ -159,7 +159,7 @@
       "training_seconds": 57.04371619224548,
       "stage_epochs": 80,
       "cumulative_recorded_epochs": 8580,
-      "resumed_from": "C:\\roberto\\Tesis_Maestria\\results\\nb02b_modal_bridge\\models\\case_41_modes.pt",
+      "resumed_from": "results/nb02b_modal_bridge/models/case_41_modes.pt",
       "optimizer": "lbfgs",
       "best_training_loss": 6.050353249520413e-07,
       "metrics": {

@@ -23,5 +23,5 @@
     "residual_relative_complex": 0.00025042160996235907,
     "accepted_l2_below_5_percent": true
   },
-  "checkpoint": "C:\\roberto\\Tesis_Maestria - codex\\results\\nb02_multidirectional\\models\\nb02_direction_mp.pt"
+  "checkpoint": "results/nb02_multidirectional/models/nb02_direction_mp.pt"
 }
