@@ -1,0 +1,42 @@
+name: pinn_speckle
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.14
+  - pip
+
+  # ── PyTorch con CUDA 12.8: runtime de los resultados registrados ───────────
+  - pytorch=2.11
+  - pytorch-cuda=12.8
+
+  # ── Ciencia y matemáticas ─────────────────────────────────────────────────
+  - numpy>=1.26
+  - scipy>=1.13
+  - sympy>=1.14
+  - matplotlib>=3.9
+  - scikit-learn>=1.5
+
+  # ── Análisis y visualización ──────────────────────────────────────────────
+  - pandas>=2.2
+  - seaborn>=0.13
+
+  # ── Jupyter ───────────────────────────────────────────────────────────────
+  - jupyter
+  - jupyterlab>=4.2
+  - ipykernel
+  - ipywidgets
+
+  # ── Utilidades ────────────────────────────────────────────────────────────
+  - tqdm>=4.66
+  - pyyaml>=6.0
+
+  # ── FEM benchmark (NB04) ──────────────────────────────────────────────────
+  # FEniCSx no está disponible en Windows vía pip ni conda-forge nativo.
+  # Opciones recomendadas:
+  #   A) WSL2 (Ubuntu):  conda install -c conda-forge fenics-dolfinx
+  #   B) Docker:         docker pull dolfinx/dolfinx:stable
+  # El notebook NB04 asume entorno Linux/Docker con FEniCSx instalado.
