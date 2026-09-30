@@ -20,9 +20,9 @@ interruptor que por defecto esta en `False`.
 | Ruta | Qué contiene | Lo genera |
 |---|---|---|
 | `validation_summary.json` | Resumen canónico de la validación 2D | notebook `02` |
-| `multiseed_results.json`, `seed777_result.json` | Dispersión frente a la semilla | notebook `02`, `RUN_NB02_MULTISEED` |
+| `multiseed_results.json` | Dispersión frente a la semilla, con las tres en un solo archivo | notebook `02`, `RUN_NB02_MULTISEED` |
 | `ablation_lambda.json` | Peso de la física: λ = 0.01, 0.1 y 1.0 | notebook `02`, `RUN_NB02_LAMBDA_ABLATION` |
-| `multidirectional/` | Onda plana en cuatro direcciones | notebook `02`, `RUN_NB02_MULTIDIRECTIONAL` |
+| `multidirectional/` | Onda plana en cuatro direcciones, en un `validation_summary.json` con las cuatro | notebook `02`, `RUN_NB02_MULTIDIRECTIONAL` |
 | `diagnostico_ntk/` | Traza NTK de física frente a datos | notebook `02`, `RUN_NB02_NTK` |
 | `ablacion_4capas/` | 4 capas frente a 5 en 2D | notebook `02`, `RUN_NB02_4LAYER_ABLATION` |
 | `figures/` | Solución, métricas y validación multidireccional | notebook `02` |
