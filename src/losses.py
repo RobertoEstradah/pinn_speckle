@@ -1,18 +1,18 @@
 """
-losses.py — Funciones de perdida extraidas de NB01 y NB02
+losses.py: Funciones de perdida extraidas de NB01 y NB02
 ==========================================================
-Proyecto : Simulacion Acelerada de Speckle Optico mediante PINNs
+Proyecto : Simulacion del speckle optico mediante PINN-SIREN (formulacion modal)
 Autor    : Roberto Hernandez Estrada
-Director : Dr. Jose Adan Hernandez Nolasco — UJAT
+Director : Dr. Jose Adan Hernandez Nolasco, UJAT
 
 Funciones:
-    helmholtz_residual_1d — residuo EDP Helmholtz 1D
-    pinn_loss_1d          — perdida total PINN para NB01
-    helmholtz_residual_2d — laplaciano 2D + residuo EDP
-    pinn_loss_2d          — perdida total PINN para NB02, NB03
-    helmholtz_residual_3d — laplaciano 3D complejo para NB_3D_01
-    pinn_loss_3d          — perdida total PINN para NB_3D_01
-    helmholtz_envelope_transfer_residual_3d — Helmholtz fisica en envolvente
+    helmholtz_residual_1d: residuo EDP Helmholtz 1D
+    pinn_loss_1d: perdida total PINN para NB01
+    helmholtz_residual_2d: laplaciano 2D + residuo EDP
+    pinn_loss_2d: perdida total PINN para NB02, NB03
+    helmholtz_residual_3d: laplaciano 3D complejo para NB_3D_01
+    pinn_loss_3d: perdida total PINN para NB_3D_01
+    helmholtz_envelope_transfer_residual_3d: Helmholtz fisica en envolvente
 
 Uso:
     from src.losses import pinn_loss_1d, pinn_loss_2d

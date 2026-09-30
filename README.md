@@ -165,8 +165,8 @@ publica.
 ## Estructura
 
 ```
-notebooks/     01, 02 y 02b — los tres experimentos, autocontenidos
-src/           models, losses, training, utils — la arquitectura SIREN
+notebooks/     01, 02 y 02b: los tres experimentos, autocontenidos
+src/           models, losses, training, utils: la arquitectura SIREN
 src/modal/     la ModalSiren y sus constantes, que el 02b importa y valida
 results/nb01/  \
 results/nb02/   > una carpeta por notebook: metricas, figures/, models/

@@ -2,13 +2,13 @@
 > Script en `scripts/experiments/`, datos en esta carpeta. Las rutas que
 > cita el texto de abajo son las originales, en `explorations/`.
 
-# NB02b — Bien puesto vs. mal puesto, con solución analítica
+# NB02b: bien puesto frente a mal puesto, con solución analítica
 
 **Estado:** completado (2026-09-12) · **Script:** `nb02b_bvp_vs_cauchy.py` · **Salida:** `output/nb02b_bvp_vs_cauchy.json`
 
 ## Objetivo
 
-Aislar **una sola variable** —el planteamiento del problema de contorno— para
+Aislar **una sola variable**, el planteamiento del problema de contorno, para
 sostener con evidencia por qué NB03 necesitó abandonar la formulación colocada
 directa de NB02. Hasta ahora ese cambio se justificaba señalando que NB03 no
 convergía, lo que no distingue entre «el método no alcanza» y «el problema no
@@ -69,8 +69,8 @@ atribuible únicamente a la representación.
    aproximadamente de forma exponencial con y (cuatro órdenes de magnitud entre
    y=0 y el pico). La tasa ajustada, `d(ln E_ev)/dy ≈ 6.3`, queda por debajo de
    la teórica `2κ ≈ 19.4` del primer modo evanescente (m=2) por dos razones:
-   la fracción está normalizada por la energía total, que también crece —por eso
-   satura y decae tras el pico—, y la SIREN con ω₀=1.27 tiene contenido de alta
+   la fracción está normalizada por la energía total, que también crece: por eso
+   satura y decae tras el pico: , y la SIREN con ω₀=1.27 tiene contenido de alta
    frecuencia limitado, de modo que el κ efectivo realizado es menor.
 
 4. **A y C tienen energía evanescente nula** (1e-7% y 0%). En C es nula *por
@@ -89,7 +89,7 @@ Sostiene tres afirmaciones que hasta ahora no tenían evidencia controlada:
 - El truncamiento a modos propagantes es la regularización canónica del
   problema de Cauchy para Helmholtz, no una simplificación de conveniencia.
 - Valida la maquinaria modal **contra una solución analítica**, no sólo contra
-  el espectro angular — lo que atiende la objeción de que la referencia de NB03
+  el espectro angular: lo que atiende la objeción de que la referencia de NB03
   no es independiente del método.
 
 ## Verificaciones incluidas en el script

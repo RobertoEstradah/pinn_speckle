@@ -1,17 +1,17 @@
 """
-models.py — Arquitecturas de red extraídas de NB01 y NB02
+models.py: Arquitecturas de red extraídas de NB01 y NB02
 ==========================================================
-Proyecto : Simulación Acelerada de Speckle Óptico mediante PINNs
+Proyecto : Simulación del speckle óptico mediante PINN-SIREN (formulación modal)
 Autor    : Roberto Hernández Estrada
-Director : Dr. José Adán Hernández Nolasco — UJAT
+Director : Dr. José Adán Hernández Nolasco, UJAT
 
 Clases:
-    Sine          — activación sinusoidal SIREN
-    PINN_1D_SIREN — red para Helmholtz 1D  (NB01)
-    PINN_2D_SIREN — red para Helmholtz 2D  (NB02, NB03)
-    PINN_3D_SIREN — red directa para Helmholtz 3D (NB_3D_01)
-    PINN_3D_MODAL_SIREN — coeficientes transversales para NB_3D_01B
-    PINN_3D_ENVELOPE_TRANSFER_SIREN — propagador modal fisico (NB_3D_03)
+    Sine: activación sinusoidal SIREN
+    PINN_1D_SIREN: red para Helmholtz 1D  (NB01)
+    PINN_2D_SIREN: red para Helmholtz 2D  (NB02, NB03)
+    PINN_3D_SIREN: red directa para Helmholtz 3D (NB_3D_01)
+    PINN_3D_MODAL_SIREN: coeficientes transversales para NB_3D_01B
+    PINN_3D_ENVELOPE_TRANSFER_SIREN: propagador modal fisico (NB_3D_03)
 
 Uso:
     from src.models import PINN_1D_SIREN, PINN_2D_SIREN
@@ -38,8 +38,8 @@ class Sine(nn.Module):
 class PINN_1D_SIREN(nn.Module):
     """
     Red Neuronal de Representación Sinusoidal (SIREN) para Helmholtz 1D.
-    Entrada : x  — coordenada espacial escalar
-    Salida  : E  — campo eléctrico real E(x)
+    Entrada : x, coordenada espacial escalar
+    Salida  : E, campo eléctrico real E(x)
     Usado en NB01 para validar las soluciones fundamentales cos(kx) y sin(kx).
     """
 
@@ -78,8 +78,8 @@ class PINN_1D_SIREN(nn.Module):
 class PINN_2D_SIREN(nn.Module):
     """
     SIREN para resolver Helmholtz 2D: nabla^2 E + k^2 E = 0
-    Entrada : (x, y) — coordenadas espaciales 2D
-    Salida  : (E_real, E_imag) — partes real e imaginaria del campo complejo
+    Entrada : (x, y), coordenadas espaciales 2D
+    Salida  : (E_real, E_imag), partes real e imaginaria del campo complejo
     Usado en NB02, NB03.
     """
 
@@ -97,7 +97,7 @@ class PINN_2D_SIREN(nn.Module):
         self._init_weights()
 
     def _init_weights(self):
-        """Inicializacion de Sitzmann et al. (2020) — necesaria para SIREN."""
+        """Inicializacion de Sitzmann et al. (2020): necesaria para SIREN."""
         with torch.no_grad():
             for i, layer in enumerate(self.net):
                 if isinstance(layer, nn.Linear):
@@ -129,8 +129,8 @@ class PINN_3D_SIREN(nn.Module):
     """
     SIREN directa para Helmholtz escalar 3D: nabla^2 E + k^2 E = 0.
 
-    Entrada : (x, y, z) — coordenadas espaciales cartesianas normalizadas.
-    Salida  : (E_real, E_imag) — partes real e imaginaria del campo complejo.
+    Entrada : (x, y, z), coordenadas espaciales cartesianas normalizadas.
+    Salida  : (E_real, E_imag), partes real e imaginaria del campo complejo.
     Usado en NB_3D_01 como validación analítica previa a la formulación modal.
     """
 

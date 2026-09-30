@@ -1,16 +1,16 @@
 """
-utils.py — Metricas, muestreo LHS y utilidades
+utils.py: Metricas, muestreo LHS y utilidades
 ===============================================
-Proyecto : Simulacion Acelerada de Speckle Optico mediante PINNs
+Proyecto : Simulacion del speckle optico mediante PINN-SIREN (formulacion modal)
 Autor    : Roberto Hernandez Estrada
-Director : Dr. Jose Adan Hernandez Nolasco — UJAT
+Director : Dr. Jose Adan Hernandez Nolasco, UJAT
 
 Funciones:
-    l2_rel         — error L2 relativo (metrica principal de tesis)
-    get_figures_dir — ruta a results/<notebook>/figures/ (la crea si no existe)
-    get_models_dir  — ruta a results/<notebook>/models/ (la crea si no existe)
-    save_model      — guarda pesos del modelo en results/<notebook>/models/
-    load_model      — carga pesos guardados para reusar en otro NB
+    l2_rel: error L2 relativo (metrica principal de tesis)
+    get_figures_dir: ruta a results/<notebook>/figures/ (la crea si no existe)
+    get_models_dir: ruta a results/<notebook>/models/ (la crea si no existe)
+    save_model: guarda pesos del modelo en results/<notebook>/models/
+    load_model: carga pesos guardados para reusar en otro NB
 
 Uso:
     from src.utils import get_figures_dir, save_model, load_model
@@ -49,7 +49,7 @@ def _resolve_project_root(notebook_dir=None):
 # ─────────────────────────────────────────────────────────────────────────────
 def l2_rel(pred, exact):
     """
-    Error L2 relativo — metrica principal de la tesis.
+    Error L2 relativo: metrica principal de la tesis.
         L2 = ||pred - exact||_2 / ||exact||_2
     """
     return np.linalg.norm(pred.ravel() - exact.ravel()) / \

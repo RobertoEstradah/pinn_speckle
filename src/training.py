@@ -1,16 +1,16 @@
 """
-training.py — Loop de entrenamiento Adam + L-BFGS
+training.py: Loop de entrenamiento Adam + L-BFGS
 ==================================================
-Proyecto : Simulacion Acelerada de Speckle Optico mediante PINNs
+Proyecto : Simulacion del speckle optico mediante PINN-SIREN (formulacion modal)
 Autor    : Roberto Hernandez Estrada
-Director : Dr. Jose Adan Hernandez Nolasco — UJAT
+Director : Dr. Jose Adan Hernandez Nolasco, UJAT
 
 Nota: training.py es una referencia documentada del loop de entrenamiento.
 Los notebooks NB01 y NB02 tienen el loop inline por legibilidad pedagogica.
 Este archivo puede usarse en NB03+ para simplificar el codigo.
 
 Funcion principal:
-    train_adam_lbfgs — entrena con Adam (early stopping) + L-BFGS
+    train_adam_lbfgs: entrena con Adam (early stopping) + L-BFGS
 
 Uso (opcional, desde NB03+):
     from src.training import train_adam_lbfgs

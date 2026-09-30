@@ -5,7 +5,7 @@ Hasta septiembre de 2026 los escribian guiones aparte en `scripts/experiments/`;
 hoy esas rutinas viven dentro del notebook que las explica, cada una tras un
 interruptor que por defecto esta en `False`.
 
-## `nb01/` — Helmholtz 1D
+## `nb01/`: Helmholtz 1D
 
 | Ruta | Qué contiene | Lo genera |
 |---|---|---|
@@ -15,7 +15,7 @@ interruptor que por defecto esta en `False`.
 | `ablacion_4capas/` | 4 capas frente a 5 en 1D | notebook `01`, `RUN_NB01_4LAYER_ABLATION` |
 | `models/` | Los pesos de las dos redes, coseno y seno | notebook `01`, `RUN_TRAINING` |
 
-## `nb02/` — Helmholtz 2D con campo complejo
+## `nb02/`: Helmholtz 2D con campo complejo
 
 | Ruta | Qué contiene | Lo genera |
 |---|---|---|
@@ -28,7 +28,7 @@ interruptor que por defecto esta en `False`.
 | `figures/` | Solución, métricas y validación multidireccional | notebook `02` |
 | `models/` | Los pesos de la red 2D | notebook `02`, `RUN_TRAINING` |
 
-## `nb02b/` — Reducción modal
+## `nb02b/`: Reducción modal
 
 | Ruta | Qué contiene | Lo genera |
 |---|---|---|
