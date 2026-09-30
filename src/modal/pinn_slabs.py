@@ -348,7 +348,8 @@ def load_reference():
     )
     if not path.exists():
         raise FileNotFoundError(
-            "Ejecuta primero scripts/experiments/nb03_angular_spectrum_reference.py."
+            "Genera primero la referencia con RUN_NB03_REFERENCIA = True en el "
+            "notebook 03."
         )
     return dict(np.load(path))
 

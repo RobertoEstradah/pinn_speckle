@@ -27,7 +27,7 @@ import torch
 import torch.nn as nn
 from torch.func import jvp
 
-from scripts.experiments import nb03_pinn_slabs as base
+from src.modal import pinn_slabs as base
 
 
 EPOCHS = int(os.environ.get("NB03_MODAL_EPOCHS", 2500))

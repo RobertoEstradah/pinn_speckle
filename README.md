@@ -130,9 +130,9 @@ lo que hace perder tiempo.
 
 **$\omega_0 = 1$, no 30.** El valor de Sitzmann et al. para señales de imagen
 hace explotar los gradientes cuando $k \approx 2\pi$. La regla que funciona es
-$\omega_0 \approx k/(2\pi)$. El barrido lo genera
-`scripts/experiments/omega0_spectral_sweep.py`, con datos en
-`results/nb01/barrido_omega0/`.
+$\omega_0 \approx k/(2\pi)$. El barrido lo genera la
+sección final del notebook `01`, con `RUN_NB01_OMEGA0_SWEEP = True`, y sus datos
+están en `results/nb01/barrido_omega0/`.
 
 **$\omega_0$ no vive en el `state_dict`.** Es un atributo fijado al construir
 la capa. Reconstruir una red con $\omega_0=30$ y cargarle pesos entrenados con
@@ -167,10 +167,10 @@ publica.
 ```
 notebooks/     01, 02 y 02b — los tres experimentos, autocontenidos
 src/           models, losses, training, utils — la arquitectura SIREN
-scripts/       los guiones que generan cada .json de results/
+src/modal/     la ModalSiren y sus constantes, que el 02b importa y valida
 results/nb01/  \
-results/nb02/   > una carpeta por notebook: metricas, figures/ y diagnosticos
-results/nb02b/ /
+results/nb02/   > una carpeta por notebook: metricas, figures/, models/
+results/nb02b/ /   y diagnosticos
 ```
 
 **Cada notebook escribe solo en su carpeta.** Los diagnosticos viven con el
@@ -178,10 +178,17 @@ notebook que explican: el barrido de omega_0 en `results/nb01/barrido_omega0/`,
 la traza NTK en `results/nb02/diagnostico_ntk/`, y la ablacion de 4 capas en
 `results/nb01/ablacion_4capas/` y `results/nb02/ablacion_4capas/`.
 
-**`scripts/experiments/nb03_modal_pinn_siren.py` lleva «nb03» en el nombre pero
-hace falta aquí:** es donde vive la `ModalSiren` que el notebook `02b` importa
-y valida. Ese módulo importa a su vez `nb03_pinn_slabs.py`, del que toma
-constantes y utilidades. Sin esos dos archivos el `02b` no corre.
+**No hay directorio `scripts/`.** Hasta septiembre de 2026 cada `.json` de
+`results/` lo escribía un guion aparte; hoy esas rutinas viven dentro del
+notebook que las explica, cada una tras un interruptor que por defecto está en
+`False`. Ejecutar un notebook no reescribe nada de lo validado.
+
+**`src/modal/` hace falta aunque su contenido apunte a un experimento posterior:**
+ahí vive la `ModalSiren` que el notebook `02b` importa y valida, en
+`modal_pinn_siren.py`, que a su vez toma constantes y utilidades de
+`pinn_slabs.py`. Sin esos dos archivos el `02b` no corre. Los demás módulos de esa
+biblioteca pertenecen a la simulación de speckle, que no forma parte de este
+repositorio.
 
 ---
 
@@ -192,14 +199,27 @@ conda env create -f environment.yml
 conda activate pinn_speckle
 
 jupyter lab notebooks/                              # los tres notebooks
-
-python scripts/experiments/run_multiseed.py          # dispersión entre semillas
-python scripts/experiments/run_ablation_lambda.py    # ablación del peso físico
-python scripts/experiments/nb02_multidirectional_validation.py
-python scripts/experiments/nb02b_modal_analytic_validation.py
-python scripts/experiments/nb02b_modal_fundamental_basis_validation.py
-python scripts/experiments/nb02b_bvp_vs_cauchy.py       # Dirichlet frente a Cauchy
 ```
+
+**Los tres corren tal como están**, sin GPU obligatoria y sin reentrenar: cargan
+los puntos de control publicados y reproducen las métricas de la tabla de arriba.
+
+Cada validación adicional se reactiva poniendo su interruptor en `True` dentro
+del notebook que la documenta, y entonces sí reentrena:
+
+| Interruptor | Qué rehace | Notebook |
+|---|---|---|
+| `RUN_TRAINING` | El entrenamiento principal | `01`, `02` |
+| `RUN_NB01_OMEGA0_SWEEP` | El barrido de $\omega_0$ | `01` |
+| `RUN_NB01_4LAYER_ABLATION` | 4 capas frente a 5 en 1D | `01` |
+| `RUN_NB02_MULTISEED` | Dispersión entre semillas | `02` |
+| `RUN_NB02_LAMBDA_ABLATION` | Ablación del peso físico | `02` |
+| `RUN_NB02_MULTIDIRECTIONAL` | Onda plana en cuatro direcciones | `02` |
+| `RUN_NB02_NTK` | La traza NTK de física frente a datos | `02` |
+| `RUN_NB02_4LAYER_ABLATION` | 4 capas frente a 5 en 2D | `02` |
+| `FORCE_RETRAIN` | El puente modal con 1, 5 y 41 modos | `02b` |
+| `FORCE_RETRAIN_BASIS` | Las bases modales seno, coseno y general | `02b` |
+| `FORCE_RETRAIN_BVP` | Dirichlet frente a Cauchy | `02b` |
 
 Medido en GPU NVIDIA RTX 5050 de 8 GB. NB01 tarda unos 131 s y NB02 unos 210 s
 con el equipo conectado a corriente y sin procesos concurrentes; en régimen
@@ -209,12 +229,13 @@ precisión sí.
 
 ### Dos límites de reproducibilidad, declarados
 
-1. **Los pesos entrenados (`.pt`) y los campos grandes (`.npz`) no se
-   publican** por tamaño. Las métricas son verificables y las corridas
-   repetibles desde cero, pero el repositorio no reconstruye esos puntos de
-   control concretos.
-2. **`results/nb01/validation_summary.json` lo escribe el propio notebook `01`**,
-   no un guion aparte. Los demás resultados sí tienen el suyo listado arriba.
+1. **Los tres puntos de control de NB01 y NB02 sí se publican** (412 KB entre
+   ellos), porque los notebooks cargan en vez de reentrenar y sin ellos fallarían
+   al abrirse. Los campos grandes (`.npz`) siguen fuera por tamaño: se regeneran
+   poniendo en `True` el interruptor correspondiente.
+2. **Cada notebook escribe su propio resumen**, y esa es la única fuente de sus
+   cifras. Ninguno depende de un guion externo, y ninguno reescribe nada mientras
+   su interruptor esté en `False`.
 
 ---
 

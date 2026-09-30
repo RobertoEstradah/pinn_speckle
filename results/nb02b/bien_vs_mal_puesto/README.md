@@ -1,6 +1,10 @@
+> **Promovido el 2026-09-24** desde `explorations/nb02b_bien_vs_mal_puesto/`.
+> Script en `scripts/experiments/`, datos en esta carpeta. Las rutas que
+> cita el texto de abajo son las originales, en `explorations/`.
+
 # NB02b — Bien puesto vs. mal puesto, con solución analítica
 
-**Estado:** completado (2026-09-12) · **Script:** `nb02b_bvp_vs_cauchy.py` · **Salida:** `results/nb02b/bien_vs_mal_puesto/nb02b_bvp_vs_cauchy.json`
+**Estado:** completado (2026-09-12) · **Script:** `nb02b_bvp_vs_cauchy.py` · **Salida:** `output/nb02b_bvp_vs_cauchy.json`
 
 ## Objetivo
 

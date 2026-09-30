@@ -29,7 +29,7 @@
       "ky_normalized": 4.442882938158366,
       "training": {
         "training_source": "canonical_nb02_checkpoint",
-        "checkpoint": "results/nb02/models/nb02_helmholtz2d_gpu.pt",
+        "checkpoint": "results/nb02/models/nb02_helmholtz2d_normalizado_gpu.pt",
         "training_seconds": null
       },
       "metrics": {

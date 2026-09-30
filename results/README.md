@@ -1,7 +1,9 @@
 # `results/`
 
-Una carpeta por notebook. Cada `.json` lo escribe el notebook correspondiente o
-un guion de `scripts/experiments/`.
+Una carpeta por notebook, y **cada `.json` lo escribe su propio notebook**.
+Hasta septiembre de 2026 los escribian guiones aparte en `scripts/experiments/`;
+hoy esas rutinas viven dentro del notebook que las explica, cada una tras un
+interruptor que por defecto esta en `False`.
 
 ## `nb01/` — Helmholtz 1D
 
@@ -9,28 +11,33 @@ un guion de `scripts/experiments/`.
 |---|---|---|
 | `validation_summary.json` | Resumen de la validación 1D | notebook `01` |
 | `figures/` | Solución, métricas y el caso del seno | notebook `01` |
-| `barrido_omega0/` | Barrido de ω₀ sobre el problema de NB01 | `omega0_spectral_sweep.py` |
-| `ablacion_4capas/` | 4 capas frente a 5 en 1D | `ablation_4layers_nb01.py` |
+| `barrido_omega0/` | Barrido de ω₀ sobre el problema de NB01 | notebook `01`, `RUN_NB01_OMEGA0_SWEEP` |
+| `ablacion_4capas/` | 4 capas frente a 5 en 1D | notebook `01`, `RUN_NB01_4LAYER_ABLATION` |
+| `models/` | Los pesos de las dos redes, coseno y seno | notebook `01`, `RUN_TRAINING` |
 
 ## `nb02/` — Helmholtz 2D con campo complejo
 
 | Ruta | Qué contiene | Lo genera |
 |---|---|---|
-| `multiseed_results.json`, `seed777_result.json` | Dispersión frente a la semilla | `run_multiseed.py`, `run_seed777.py` |
-| `ablation_lambda.json` | Peso de la física: λ = 0.01, 0.1 y 1.0 | `run_ablation_lambda.py` |
-| `multidirectional/` | Onda plana en cuatro direcciones | `nb02_multidirectional_validation.py` |
-| `diagnostico_ntk/` | Traza NTK de física frente a datos | `ntk_analysis_nb02.py` |
-| `ablacion_4capas/` | 4 capas frente a 5 en 2D | `ablation_4layers_nb02.py` |
-| `figures/` | Solución, métricas y validación multidireccional | notebook `02` y su guion |
+| `validation_summary.json` | Resumen canónico de la validación 2D | notebook `02` |
+| `multiseed_results.json`, `seed777_result.json` | Dispersión frente a la semilla | notebook `02`, `RUN_NB02_MULTISEED` |
+| `ablation_lambda.json` | Peso de la física: λ = 0.01, 0.1 y 1.0 | notebook `02`, `RUN_NB02_LAMBDA_ABLATION` |
+| `multidirectional/` | Onda plana en cuatro direcciones | notebook `02`, `RUN_NB02_MULTIDIRECTIONAL` |
+| `diagnostico_ntk/` | Traza NTK de física frente a datos | notebook `02`, `RUN_NB02_NTK` |
+| `ablacion_4capas/` | 4 capas frente a 5 en 2D | notebook `02`, `RUN_NB02_4LAYER_ABLATION` |
+| `figures/` | Solución, métricas y validación multidireccional | notebook `02` |
+| `models/` | Los pesos de la red 2D | notebook `02`, `RUN_TRAINING` |
 
 ## `nb02b/` — Reducción modal
 
 | Ruta | Qué contiene | Lo genera |
 |---|---|---|
-| `modal_bridge/` | `ModalSiren` con 1, 5 y 41 modos | `nb02b_modal_analytic_validation.py` |
-| `modal_basis/` | Bases modales seno, coseno y general | `nb02b_modal_fundamental_basis_validation.py` |
-| `bien_vs_mal_puesto/` | Dirichlet frente a Cauchy con los mismos datos | `nb02b_bvp_vs_cauchy.py` |
-| `figures/` | Las ocho figuras, con prefijo `nb02b_` | los tres guiones |
+| `modal_bridge/` | `ModalSiren` con 1, 5 y 41 modos | notebook `02b`, `FORCE_RETRAIN` |
+| `modal_basis/` | Bases modales seno, coseno y general | notebook `02b`, `FORCE_RETRAIN_BASIS` |
+| `bien_vs_mal_puesto/` | Dirichlet frente a Cauchy con los mismos datos | notebook `02b`, `FORCE_RETRAIN_BVP` |
+| `figures/` | Las ocho figuras, con prefijo `nb02b_` | notebook `02b` |
 
-Los pesos entrenados (`.pt`) y los campos grandes (`.npz`) no están en el
-repositorio por tamaño; se regeneran al ejecutar los notebooks y los guiones.
+**Los tres puntos de control de NB01 y NB02 sí están** (412 KB entre los tres),
+porque los notebooks cargan en vez de reentrenar y sin ellos fallarían al abrirse.
+Los campos grandes (`.npz`) no viajan por tamaño: se regeneran poniendo en `True`
+el interruptor correspondiente.
