@@ -1,0 +1,222 @@
+{
+  "experiment": "NB02B modal fundamental basis validation",
+  "equation": "a_m''(z) + kz_m^2 a_m(z) = 0",
+  "training_uses_interior_labels": false,
+  "normalization": {
+    "x_tilde": "x/lambda",
+    "z_tilde": "z/lambda",
+    "k_tilde": "2*pi"
+  },
+  "dispersion": {
+    "k": 6.283185307179586,
+    "kx": 3.7699111843077517,
+    "kz": 5.026548245743669,
+    "kx_squared_plus_kz_squared": 39.47841760435743
+  },
+  "architecture": {
+    "class": "ModalSiren",
+    "first_omega": 1.0,
+    "hidden_omega": 1.0,
+    "hidden_dim": 128,
+    "num_layers": 4,
+    "hard_cauchy": "a(0)+z*a'(0)+z^2*N_theta(z)"
+  },
+  "training": {
+    "optimizer": "L-BFGS",
+    "stages": 80,
+    "inner_iterations": 20,
+    "n_z_train": 512,
+    "device": "cuda"
+  },
+  "cases": [
+    {
+      "case": "cosine",
+      "label": "Base coseno",
+      "C": {
+        "real": 1.0,
+        "imag": 0.0
+      },
+      "D": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "initial_coefficient": {
+        "real": 1.0,
+        "imag": 0.0
+      },
+      "initial_derivative": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "training_seconds": 29.359435081481934,
+      "best_training_loss": 5.838772381139279e-07,
+      "metrics": {
+        "coefficient_relative_l2": 4.964663264921034e-05,
+        "global_complex_relative_l2": 4.964663264921015e-05,
+        "target_complex_relative_l2": 4.7037302112709114e-05,
+        "global_complex_coherence": 0.9999999987683217,
+        "target_complex_coherence": 1.0000000000000002,
+        "global_intensity_relative_l2": 7.748522010837062e-05,
+        "target_intensity_relative_l2": 9.407239171759243e-05,
+        "global_phase_mae_rad": 2.5742618365410156e-17,
+        "target_phase_mae_rad": 2.6653399293647977e-17,
+        "helmholtz_modal_residual_normalized_rmse": 0.0015874608652666211,
+        "helmholtz_modal_residual_normalized_max_abs": 0.00877128355205059,
+        "hard_cauchy_coefficient_abs_error": 0.0,
+        "hard_cauchy_derivative_abs_error": 0.0
+      },
+      "acceptance": {
+        "coefficient_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "global_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "hard_cauchy_coefficient_below_1e_5": true,
+        "hard_cauchy_derivative_below_1e_5": true,
+        "accepted": true
+      },
+      "seed": 2026,
+      "checkpoint": "modal_basis/models/cosine.pt",
+      "npz": "modal_basis/cosine.npz",
+      "history": "modal_basis/cosine_training_history.json",
+      "artifact_hashes": {
+        "checkpoint": "e9b5102f7dcb38394f80dc9f54c73b34700f0b60df95c7b4db4aaa0d804bf57c",
+        "npz": "475029f84d269bf9e53034edefe9d8ec2fae106f3bd6af526fc4402a24426ef2",
+        "history": "8771dda8889af0f3c47265623835ff2223863b92d4e0fa79f1808aa3faeb3ebc"
+      }
+    },
+    {
+      "case": "sine",
+      "label": "Base seno",
+      "C": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "D": {
+        "real": 1.0,
+        "imag": 0.0
+      },
+      "initial_coefficient": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "initial_derivative": {
+        "real": 5.026548245743669,
+        "imag": 0.0
+      },
+      "training_seconds": 28.287983179092407,
+      "best_training_loss": 2.8550762181112077e-06,
+      "metrics": {
+        "coefficient_relative_l2": 7.913823077180855e-05,
+        "global_complex_relative_l2": 7.913823077180814e-05,
+        "target_complex_relative_l2": 3.062168608301057e-05,
+        "global_complex_coherence": 0.9999999969137098,
+        "target_complex_coherence": 1.0,
+        "global_intensity_relative_l2": 0.00012962667171179118,
+        "target_intensity_relative_l2": 6.12424344783347e-05,
+        "global_phase_mae_rad": 2.545714066266119e-17,
+        "target_phase_mae_rad": 2.6354977846796446e-17,
+        "helmholtz_modal_residual_normalized_rmse": 0.003310735337436199,
+        "helmholtz_modal_residual_normalized_max_abs": 0.015461757779121399,
+        "hard_cauchy_coefficient_abs_error": 0.0,
+        "hard_cauchy_derivative_abs_error": 0.0
+      },
+      "acceptance": {
+        "coefficient_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "global_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "hard_cauchy_coefficient_below_1e_5": true,
+        "hard_cauchy_derivative_below_1e_5": true,
+        "accepted": true
+      },
+      "seed": 2027,
+      "checkpoint": "modal_basis/models/sine.pt",
+      "npz": "modal_basis/sine.npz",
+      "history": "modal_basis/sine_training_history.json",
+      "artifact_hashes": {
+        "checkpoint": "d6b053eac3d1438f5e6e6aa30fa68e025ec443f9accff7298ed0fed035190755",
+        "npz": "2a1f65d51d6ba243788ce8535ec0b23f3ebc8cdf0d365164210268386b3b1b1f",
+        "history": "322c761fed7294700e72093534895f293c7bb7f462dbeed118bb20600ac04cc3"
+      }
+    },
+    {
+      "case": "general",
+      "label": "Combinación compleja general",
+      "C": {
+        "real": 0.6,
+        "imag": 0.2
+      },
+      "D": {
+        "real": -0.3,
+        "imag": 0.7
+      },
+      "initial_coefficient": {
+        "real": 0.6,
+        "imag": 0.2
+      },
+      "initial_derivative": {
+        "real": -1.5079644737231006,
+        "imag": 3.518583772020568
+      },
+      "training_seconds": 38.34496808052063,
+      "best_training_loss": 5.213580038798682e-07,
+      "metrics": {
+        "coefficient_relative_l2": 8.286574773274536e-05,
+        "global_complex_relative_l2": 8.286574773274551e-05,
+        "target_complex_relative_l2": 7.891958091366177e-05,
+        "global_complex_coherence": 0.9999999977592717,
+        "target_complex_coherence": 1.0,
+        "global_intensity_relative_l2": 8.721005680291917e-05,
+        "target_intensity_relative_l2": 5.81856793414804e-05,
+        "global_phase_mae_rad": 5.466578921318842e-05,
+        "target_phase_mae_rad": 7.336238061898465e-05,
+        "helmholtz_modal_residual_normalized_rmse": 0.0014764792285859585,
+        "helmholtz_modal_residual_normalized_max_abs": 0.008130805566906929,
+        "hard_cauchy_coefficient_abs_error": 0.0,
+        "hard_cauchy_derivative_abs_error": 0.0
+      },
+      "acceptance": {
+        "coefficient_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "global_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "hard_cauchy_coefficient_below_1e_5": true,
+        "hard_cauchy_derivative_below_1e_5": true,
+        "accepted": true
+      },
+      "seed": 2028,
+      "checkpoint": "modal_basis/models/general.pt",
+      "npz": "modal_basis/general.npz",
+      "history": "modal_basis/general_training_history.json",
+      "artifact_hashes": {
+        "checkpoint": "d02346181c488b06a7bd19c382bb342ceae4c5e2a7dd9bd509bf2201edec2a55",
+        "npz": "e4f0b8ac3309cc3012868e7673ce0ddb439ed0379464df5e0cfb32bba541296d",
+        "history": "0351dd10254cc2f72d0b7bf782676a1b96eb28617d4159a92fec3a97871eae5d"
+      }
+    }
+  ],
+  "all_cases_accepted": true,
+  "schema_version": 2,
+  "role": "modal_basis_validation_snapshot",
+  "producer_notebook": "notebooks/02b_validacion_puente_arquitectura_modal_nb03.ipynb",
+  "producer_cell": "nb02b-06-base-bridge-producers",
+  "run_id": "nb02b-20261004T191736Z",
+  "shared_module": {
+    "path": "src/modal/modal_pinn_siren.py",
+    "sha256": "a532733c4374198f8b53501ec2f6d86f82f903e5465aa6cfa0bceab123e02c03"
+  },
+  "configuration": {
+    "k": 6.283185307179586,
+    "kx": 3.7699111843077517,
+    "kz": 5.026548245743669,
+    "distance": 1.0,
+    "seed": 2026,
+    "n_z_train": 512,
+    "n_z_eval": 1001,
+    "n_x_eval": 256,
+    "lbfgs_outer_stages": 80,
+    "lbfgs_inner_max_iter": 20
+  },
+  "time_convention": "exp(-i*omega*t)",
+  "channel_order": "interleaved_real_imag_per_mode"
+}

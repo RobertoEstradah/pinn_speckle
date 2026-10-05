@@ -1,0 +1,706 @@
+{
+  "acceptance": {
+    "all_directions": true,
+    "main": true,
+    "threshold_l2_complex_percent": 5.0
+  },
+  "artifact_hashes": {
+    "ablacion_4capas/nb02_4layers.json": "74be4fcb22b9d259c5f26073d44d119657a2d3dfa147e10975459d6223d0d5a3",
+    "ablation_lambda.json": "daf7469c4c5bbeea459fc6499aa04c476efdab2d721cfa268a2e66f487684cf5",
+    "diagnostico_ntk/ntk_nb02.json": "ff4ce721d660f57334012b3c45de12b6af57d3c1b2176f05acc3d3915577353c",
+    "figures/convergencia_entrenamiento_2d_normalizado.png": "df4cb805fa0caddbb2b63bebcefadc7e0701d742d7e6afdc03bcf0010efcf908",
+    "figures/intensidad_fase_2d_normalizado.png": "1e2b09a258b7861f3ad39620ca421459fa8f406c1f38c0613726730613ec213d",
+    "figures/metricas_adicionales_2d_normalizado.png": "b0bc3261cf8f41f21102633b164976e70a82d1c01d3cf07ae750f7c16d2b11de",
+    "figures/multidireccional_resumen_2d_normalizado.png": "ef842b67b24be97a424878ecb44abb8290829e88bb3e075262f5d3a53f38ff75",
+    "figures/nb02_multidirectional_validation.png": "71e6bd3e6e952ff1c25df91d42ff998f840e7429f901c39e20a75962143e5ab6",
+    "figures/ntk_espectro_2d_normalizado.png": "7606717edf7bbc7d57b9e45c87e8174772bb40eee5982ef68bccf9756bb003ae",
+    "figures/residuo_helmholtz_2d_normalizado.png": "760a99fed50e83dab44e7edb6cbbc2f3b475d2097e7b2f6b700a0407719bce73",
+    "figures/resultados_pinn_2d_normalizado.png": "13b4e655ef58c0a87b3de6cf383767659a8dde0ff43c396a576db089afc5fa01",
+    "figures/robustez_2d_normalizado.png": "a1347947e04efdd4621e05c65c81330ca4ec16dc6e58b215f2894c905e720d99",
+    "models/nb02_helmholtz2d_normalizado_gpu.pt": "085c8b12de6dbc9c2e56c7dbf711d4e89c155bc58058d02458991cd73e38fade",
+    "multidirectional/arrays/direction_mm.npz": "d88c5ab158ea678bade2eab02fbcdd90af4d701c1e1975aedf5bb90c59c98d8e",
+    "multidirectional/arrays/direction_mp.npz": "ae4290a1a6e2c26f268c3697adc4980ce9aa8979986b0bd6e6271c0e17f24853",
+    "multidirectional/arrays/direction_pm.npz": "58fce295e6107bdef2505059017febc1c80db00d0baf5f5bfd4dcf02705c6307",
+    "multidirectional/arrays/direction_pp.npz": "3f64503d7c89b4f78fadacf877240d84070c7fbf0fead3614115d149d7d287fe",
+    "multidirectional/models/nb02_direction_mm.pt": "34e46610cfd0914fa6d6d95edeb90422747f0273dfbf1e803b2aa446a4ee07c8",
+    "multidirectional/models/nb02_direction_mp.pt": "f29217d8549ba13dbdf5e06aeb96969476c758a0222ab8e6d47ff445d29558b2",
+    "multidirectional/models/nb02_direction_pm.pt": "d907cebe9ac8da2c2c1fbfb8be25bfae8baecba70189961f6016f10ec02c792e",
+    "multidirectional/models/nb02_direction_pp.pt": "92fb6414273030e38b3495eb09ae62023a9b3d1596ab52fed442770e09b792ae",
+    "multidirectional/validation_summary.json": "23ff39bbd6ffc71a80745f6d52c996001d791aa961855d8c33df029645f943da",
+    "multiseed_results.json": "f3957aa1fd6afe89db26e6a653469f43879e7ae95b81ba159e001f447bdba48b",
+    "training_history.json": "58fb78e8a4248633ba1e81010699ddfc04b0178d59f33b5dfa5e26d611370f1a"
+  },
+  "configuration": {
+    "N_boundary_per_edge": 300,
+    "N_colloc": 3000,
+    "N_eval": 100,
+    "domain": [
+      0.0,
+      1.0
+    ],
+    "hidden_dim": 128,
+    "k": 6.283185307179586,
+    "l2_threshold_percent": 5.0,
+    "lbfgs_history": 100,
+    "lbfgs_max_iter": 1000,
+    "lr": 0.001,
+    "min_delta": 1e-07,
+    "n_epochs": 15000,
+    "num_layers": 5,
+    "omega_0": 1.0,
+    "patience": 800,
+    "physics_weight": 0.1,
+    "seed": 42
+  },
+  "current_notebook_source_sha256": "f34f2df80c8b65897a8c6ccf2fc4fbf5e60889af8064857de0d4f2b6bc029610",
+  "environment": {
+    "cuda_available": true,
+    "cuda_runtime": "12.8",
+    "cudnn": 91900,
+    "deterministic_algorithms": true,
+    "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+    "numpy": "2.3.4",
+    "python": "3.14.0",
+    "pytorch": "2.11.0+cu128",
+    "scipy": "1.16.2"
+  },
+  "full_rebuild": {
+    "duration_seconds": 2236.558747,
+    "finished_at_utc": "2026-10-02T16:48:17.502894+00:00",
+    "mode": "FULL_REBUILD",
+    "sequential_clean_kernel": true,
+    "started_at_utc": "2026-10-02T16:11:00.944147+00:00"
+  },
+  "full_rebuild_notebook_source_sha256": "fff7556587866e7e804d068072b5e6031c48350549901408e97a5db43cdbfb14",
+  "historical_comparison": {
+    "new_primary": {
+      "l2_complex_percent": 0.18968348122405207,
+      "l2_imag_percent": 0.17927048533277912,
+      "l2_real_percent": 0.20036321955172598
+    },
+    "note": "Differences are reported, never forced to historical values.",
+    "reference": {
+      "depth_4_component_l2_percent": 0.2279,
+      "multidirectional_mean_l2_complex_percent": 0.15630344413400316,
+      "multiseed_mean_component_l2_percent": 0.1919,
+      "ntk_trace_ratio": 858.0570490271713,
+      "primary": {
+        "l2_complex_percent": 0.1743863199594415,
+        "l2_imag_percent": 0.1272677716981519,
+        "l2_real_percent": 0.21406720557079914
+      },
+      "source": "pre-rebuild NB02 artefacts and notebook at HEAD 5a0a9ea"
+    }
+  },
+  "metrics": {
+    "accepted_l2_below_5_percent": true,
+    "l2_complex_percent": 0.18968348122405207,
+    "l2_component_mean_percent": 0.18981685244225255,
+    "l2_imag_percent": 0.17927048533277912,
+    "l2_intensity_percent": 0.2692707013737937,
+    "l2_real_percent": 0.20036321955172598,
+    "mae_imag": 0.0011109584153495278,
+    "mae_real": 0.0011995012127058566,
+    "max_abs_error_imag": 0.0026021706193877225,
+    "max_abs_error_real": 0.0025441566497355073,
+    "pearson_imag": 0.9999983668818155,
+    "pearson_real": 0.999998033936836,
+    "phase_rmse_rad": 0.00133620111321917,
+    "r2_imag": 0.9999966888329046,
+    "r2_real": 0.999995975667042,
+    "residual_relative_complex": 0.00018003906006924808,
+    "residual_rms_complex": 0.007107656914740801,
+    "residual_rms_imag": 0.005503877531737089,
+    "residual_rms_real": 0.004497346002608538,
+    "rmse_imag": 0.0012930001722521942,
+    "rmse_real": 0.0013878518867239857
+  },
+  "n_parameters": 66690,
+  "physics": {
+    "complex_representation": "one network with outputs [E_real,E_imag]",
+    "domain": "[0,1]^2",
+    "equation": "laplacian(E)+k^2 E=0",
+    "main_direction": "(+kx,+ky)",
+    "multidirectional_scope": "controlled directional robustness, not a complete basis"
+  },
+  "post_training_validation": {
+    "boundary_overlap": false,
+    "grid": "100x100 cell centers",
+    "independent": true
+  },
+  "presentation_only_cell_ids": [
+    "nb02-14-figures"
+  ],
+  "producer_cells": {
+    "contract": "nb02-18-audit",
+    "evaluation": "nb02-10-evaluation",
+    "figures": "nb02-14-figures",
+    "main_training": "nb02-08-main-training",
+    "robustness": "nb02-12-robustness",
+    "summary": "nb02-16-summary"
+  },
+  "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+  "provenance_assessment": {
+    "current_run": "demonstrated",
+    "historical_reference": "strongly_supported"
+  },
+  "provenance_migration": {
+    "nonfigure_artifact_equivalence": "demonstrated",
+    "reason": "Revisión visual sin cambios en el cálculo científico.",
+    "scientific_equivalence": "demonstrated",
+    "updated_artifacts": [
+      "figures/convergencia_entrenamiento_2d_normalizado.png",
+      "figures/intensidad_fase_2d_normalizado.png",
+      "figures/metricas_adicionales_2d_normalizado.png",
+      "figures/multidireccional_resumen_2d_normalizado.png",
+      "figures/nb02_multidirectional_validation.png",
+      "figures/ntk_espectro_2d_normalizado.png",
+      "figures/residuo_helmholtz_2d_normalizado.png",
+      "figures/resultados_pinn_2d_normalizado.png",
+      "figures/robustez_2d_normalizado.png"
+    ]
+  },
+  "robustness": {
+    "depth_ablation_4_layers": {
+      "architecture": {
+        "hidden_dim": 128,
+        "n_parameters": 50178,
+        "num_layers": 4
+      },
+      "comparison_main_component_l2_percent": 0.18981685244225255,
+      "metrics": {
+        "accepted_l2_below_5_percent": true,
+        "l2_complex_percent": 0.16351897141283978,
+        "l2_component_mean_percent": 0.16106391436863732,
+        "l2_imag_percent": 0.1255834441138396,
+        "l2_intensity_percent": 0.23623065759909978,
+        "l2_real_percent": 0.19654438462343507,
+        "phase_rmse_rad": 0.0011305036079208774
+      },
+      "producer_cell": "nb02-12-robustness",
+      "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+      "role": "derived_depth_ablation",
+      "run_id": "nb02-20261002T161100Z",
+      "schema_version": 2,
+      "training": {
+        "adam_epochs": 12696,
+        "adam_seconds": 235.52825927734375,
+        "adam_stopped_early": true,
+        "best_adam_loss": 0.000938667100854218,
+        "hidden_dim": 128,
+        "lbfgs_closure_evaluations": 1026,
+        "lbfgs_seconds": 41.22466421127319,
+        "num_layers": 4,
+        "physics_weight": 0.1,
+        "seed": 42,
+        "sign_x": 1,
+        "sign_y": 1,
+        "training_seconds": 276.75292348861694
+      }
+    },
+    "lambda_ablation": {
+      "producer_cell": "nb02-12-robustness",
+      "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+      "results": {
+        "0.01": {
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.15944166607367224,
+            "l2_component_mean_percent": 0.15409294288614594,
+            "l2_imag_percent": 0.10644187658776817,
+            "l2_intensity_percent": 0.23898233421467974,
+            "l2_real_percent": 0.20174400918452373,
+            "phase_rmse_rad": 0.001054770156039254
+          },
+          "source": "independent_cold_start",
+          "status": "completed",
+          "training": {
+            "adam_epochs": 7057,
+            "adam_seconds": 205.35525608062744,
+            "adam_stopped_early": true,
+            "best_adam_loss": 7.557416392955929e-05,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 436,
+            "lbfgs_seconds": 16.903316020965576,
+            "num_layers": 5,
+            "physics_weight": 0.01,
+            "seed": 42,
+            "sign_x": 1,
+            "sign_y": 1,
+            "training_seconds": 222.25857210159302
+          }
+        },
+        "0.1": {
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.18968348122405207,
+            "l2_component_mean_percent": 0.18981685244225255,
+            "l2_imag_percent": 0.17927048533277912,
+            "l2_intensity_percent": 0.2692707013737937,
+            "l2_real_percent": 0.20036321955172598,
+            "phase_rmse_rad": 0.00133620111321917
+          },
+          "source": "principal_current_run",
+          "status": "completed",
+          "training": {
+            "adam_epochs": 10684,
+            "adam_seconds": 244.61128664016724,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.0010653177741914988,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 1038,
+            "lbfgs_seconds": 46.21916961669922,
+            "num_layers": 5,
+            "physics_weight": 0.1,
+            "seed": 42,
+            "sign_x": 1,
+            "sign_y": 1,
+            "training_seconds": 290.83045625686646
+          }
+        },
+        "1.0": {
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 3.2482121748782724,
+            "l2_component_mean_percent": 3.2461541229896445,
+            "l2_imag_percent": 2.9400563769598484,
+            "l2_intensity_percent": 4.45528007164378,
+            "l2_real_percent": 3.5522518690194413,
+            "phase_rmse_rad": 0.023488969472200836
+          },
+          "source": "independent_cold_start",
+          "status": "completed",
+          "training": {
+            "adam_epochs": 8380,
+            "adam_seconds": 193.01501369476318,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.3543289303779602,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 1029,
+            "lbfgs_seconds": 43.487462520599365,
+            "num_layers": 5,
+            "physics_weight": 1.0,
+            "seed": 42,
+            "sign_x": 1,
+            "sign_y": 1,
+            "training_seconds": 236.50247621536255
+          }
+        }
+      },
+      "role": "derived_lambda_ablation",
+      "run_id": "nb02-20261002T161100Z",
+      "schema_version": 2
+    },
+    "multidirectional": {
+      "aggregate": {
+        "accepted_count": 4,
+        "all_directions_accepted": true,
+        "mean_l2_complex_percent": 0.16404750262634854,
+        "total_count": 4,
+        "worst_l2_complex_percent": 0.19150484452851582
+      },
+      "configuration": {
+        "N_boundary_per_edge": 300,
+        "N_colloc": 3000,
+        "N_eval": 100,
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "hidden_dim": 128,
+        "k": 6.283185307179586,
+        "l2_threshold_percent": 5.0,
+        "lbfgs_history": 100,
+        "lbfgs_max_iter": 1000,
+        "lr": 0.001,
+        "min_delta": 1e-07,
+        "n_epochs": 15000,
+        "num_layers": 5,
+        "omega_0": 1.0,
+        "patience": 800,
+        "physics_weight": 0.1,
+        "seed": 42
+      },
+      "directions": {
+        "mm": {
+          "arrays": "results/nb02/multidirectional/arrays/direction_mm.npz",
+          "arrays_sha256": "d88c5ab158ea678bade2eab02fbcdd90af4d701c1e1975aedf5bb90c59c98d8e",
+          "checkpoint": "results/nb02/multidirectional/models/nb02_direction_mm.pt",
+          "checkpoint_sha256": "34e46610cfd0914fa6d6d95edeb90422747f0273dfbf1e803b2aa446a4ee07c8",
+          "kx_normalized": -4.442882938158366,
+          "ky_normalized": -4.442882938158366,
+          "label": "(-kx,-ky), -135°",
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.1584275419005396,
+            "l2_component_mean_percent": 0.15126960320253355,
+            "l2_imag_percent": 0.09767674055687248,
+            "l2_intensity_percent": 0.23031198058677516,
+            "l2_real_percent": 0.20486246584819462,
+            "mae_imag": 0.0005691257686299098,
+            "mae_real": 0.0012580927970181708,
+            "max_abs_error_imag": 0.0018453575910923892,
+            "max_abs_error_real": 0.002514944398682384,
+            "pearson_imag": 0.9999995094103817,
+            "pearson_real": 0.9999984160402052,
+            "phase_rmse_rad": 0.0010875316306339139,
+            "r2_imag": 0.9999990170174077,
+            "r2_real": 0.9999957929013666,
+            "residual_relative_complex": 0.00021992760594002903,
+            "residual_rms_complex": 0.008682393468916416,
+            "residual_rms_imag": 0.006249622441828251,
+            "residual_rms_real": 0.00602711969986558,
+            "rmse_imag": 0.0007044999188272744,
+            "rmse_real": 0.001419016725636837
+          },
+          "sign_x": -1,
+          "sign_y": -1,
+          "training": {
+            "adam_epochs": 6506,
+            "adam_seconds": 145.62896466255188,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.0016447216039523482,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 1039,
+            "lbfgs_seconds": 42.989033699035645,
+            "num_layers": 5,
+            "physics_weight": 0.1,
+            "seed": 42,
+            "sign_x": -1,
+            "sign_y": -1,
+            "source": "independent_cold_start",
+            "training_seconds": 188.61799836158752
+          }
+        },
+        "mp": {
+          "arrays": "results/nb02/multidirectional/arrays/direction_mp.npz",
+          "arrays_sha256": "ae4290a1a6e2c26f268c3697adc4980ce9aa8979986b0bd6e6271c0e17f24853",
+          "checkpoint": "results/nb02/multidirectional/models/nb02_direction_mp.pt",
+          "checkpoint_sha256": "f29217d8549ba13dbdf5e06aeb96969476c758a0222ab8e6d47ff445d29558b2",
+          "kx_normalized": -4.442882938158366,
+          "ky_normalized": 4.442882938158366,
+          "label": "(-kx,+ky), 135°",
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.11657414285228664,
+            "l2_component_mean_percent": 0.10995126431490101,
+            "l2_imag_percent": 0.15420772061441362,
+            "l2_intensity_percent": 0.16524217090433033,
+            "l2_real_percent": 0.06569480801538842,
+            "mae_imag": 0.0009140777029012465,
+            "mae_real": 0.0003598706203333103,
+            "max_abs_error_imag": 0.0021963136136528283,
+            "max_abs_error_real": 0.0021398067474365234,
+            "pearson_imag": 0.9999988348195357,
+            "pearson_real": 0.9999998006636698,
+            "phase_rmse_rad": 0.0008223039606693137,
+            "r2_imag": 0.9999976219978903,
+            "r2_real": 0.9999995544050292,
+            "residual_relative_complex": 0.00020963340648449957,
+            "residual_rms_complex": 0.008275995030999184,
+            "residual_rms_imag": 0.005603456404060125,
+            "residual_rms_real": 0.006090432405471802,
+            "rmse_imag": 0.0010644242240685276,
+            "rmse_real": 0.000475346346773219
+          },
+          "sign_x": -1,
+          "sign_y": 1,
+          "training": {
+            "adam_epochs": 6844,
+            "adam_seconds": 164.97863674163818,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.0011004036059603095,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 1024,
+            "lbfgs_seconds": 46.03688955307007,
+            "num_layers": 5,
+            "physics_weight": 0.1,
+            "seed": 42,
+            "sign_x": -1,
+            "sign_y": 1,
+            "source": "independent_cold_start",
+            "training_seconds": 211.01552629470825
+          }
+        },
+        "pm": {
+          "arrays": "results/nb02/multidirectional/arrays/direction_pm.npz",
+          "arrays_sha256": "58fce295e6107bdef2505059017febc1c80db00d0baf5f5bfd4dcf02705c6307",
+          "checkpoint": "results/nb02/multidirectional/models/nb02_direction_pm.pt",
+          "checkpoint_sha256": "d907cebe9ac8da2c2c1fbfb8be25bfae8baecba70189961f6016f10ec02c792e",
+          "kx_normalized": 4.442882938158366,
+          "ky_normalized": -4.442882938158366,
+          "label": "(+kx,-ky), -45°",
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.19150484452851582,
+            "l2_component_mean_percent": 0.17967033657634665,
+            "l2_imag_percent": 0.1213174970482197,
+            "l2_intensity_percent": 0.2776365826525178,
+            "l2_real_percent": 0.23802317610447363,
+            "mae_imag": 0.0007352165959944283,
+            "mae_real": 0.001474972230317573,
+            "max_abs_error_imag": 0.0022437553638393615,
+            "max_abs_error_real": 0.003699235815601054,
+            "pearson_imag": 0.9999992969786864,
+            "pearson_real": 0.9999971295980773,
+            "phase_rmse_rad": 0.001319490040097141,
+            "r2_imag": 0.999998528206491,
+            "r2_real": 0.9999941505278596,
+            "residual_relative_complex": 0.00019192301260773093,
+            "residual_rms_complex": 0.007576816715300083,
+            "residual_rms_imag": 0.005853070877492428,
+            "residual_rms_real": 0.004811414983123541,
+            "rmse_imag": 0.0008373982972251858,
+            "rmse_real": 0.0017222585867381983
+          },
+          "sign_x": 1,
+          "sign_y": -1,
+          "training": {
+            "adam_epochs": 9075,
+            "adam_seconds": 202.38221979141235,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.0008029323653317988,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 1052,
+            "lbfgs_seconds": 45.1136519908905,
+            "num_layers": 5,
+            "physics_weight": 0.1,
+            "seed": 42,
+            "sign_x": 1,
+            "sign_y": -1,
+            "source": "independent_cold_start",
+            "training_seconds": 247.49587178230286
+          }
+        },
+        "pp": {
+          "arrays": "results/nb02/multidirectional/arrays/direction_pp.npz",
+          "arrays_sha256": "3f64503d7c89b4f78fadacf877240d84070c7fbf0fead3614115d149d7d287fe",
+          "checkpoint": "results/nb02/multidirectional/models/nb02_direction_pp.pt",
+          "checkpoint_sha256": "92fb6414273030e38b3495eb09ae62023a9b3d1596ab52fed442770e09b792ae",
+          "kx_normalized": 4.442882938158366,
+          "ky_normalized": 4.442882938158366,
+          "label": "(+kx,+ky), 45°",
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.18968348122405207,
+            "l2_component_mean_percent": 0.18981685244225255,
+            "l2_imag_percent": 0.17927048533277912,
+            "l2_intensity_percent": 0.2692707013737937,
+            "l2_real_percent": 0.20036321955172598,
+            "mae_imag": 0.0011109584153495278,
+            "mae_real": 0.0011995012127058566,
+            "max_abs_error_imag": 0.0026021706193877225,
+            "max_abs_error_real": 0.0025441566497355073,
+            "pearson_imag": 0.9999983668818155,
+            "pearson_real": 0.999998033936836,
+            "phase_rmse_rad": 0.00133620111321917,
+            "r2_imag": 0.9999966888329046,
+            "r2_real": 0.999995975667042,
+            "residual_relative_complex": 0.00018003906006924808,
+            "residual_rms_complex": 0.007107656914740801,
+            "residual_rms_imag": 0.005503877531737089,
+            "residual_rms_real": 0.004497346002608538,
+            "rmse_imag": 0.0012930001722521942,
+            "rmse_real": 0.0013878518867239857
+          },
+          "sign_x": 1,
+          "sign_y": 1,
+          "training": {
+            "adam_epochs": 10684,
+            "adam_seconds": 244.61128664016724,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.0010653177741914988,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 1038,
+            "lbfgs_seconds": 46.21916961669922,
+            "num_layers": 5,
+            "physics_weight": 0.1,
+            "seed": 42,
+            "sign_x": 1,
+            "sign_y": 1,
+            "source": "principal_current_run",
+            "training_seconds": 290.83045625686646
+          }
+        }
+      },
+      "producer_cell": "nb02-12-robustness",
+      "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+      "role": "derived_multidirectional_validation",
+      "run_id": "nb02-20261002T161100Z",
+      "schema_version": 2,
+      "scope_note": "Four controlled plane-wave directions; not a complete basis of all 2D Helmholtz solutions."
+    },
+    "multiseed": {
+      "producer_cell": "nb02-12-robustness",
+      "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+      "role": "derived_multiseed_results",
+      "run_id": "nb02-20261002T161100Z",
+      "schema_version": 2,
+      "seeds": {
+        "123": {
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.16412949028299312,
+            "l2_component_mean_percent": 0.15843699728543564,
+            "l2_imag_percent": 0.10870570492411351,
+            "l2_intensity_percent": 0.26152019137545335,
+            "l2_real_percent": 0.20816828964675782,
+            "phase_rmse_rad": 0.0009932297701870452
+          },
+          "source": "independent_cold_start",
+          "training": {
+            "adam_epochs": 8715,
+            "adam_seconds": 200.4019694328308,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.0014948335010558367,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 652,
+            "lbfgs_seconds": 31.80984115600586,
+            "num_layers": 5,
+            "physics_weight": 0.1,
+            "seed": 123,
+            "sign_x": 1,
+            "sign_y": 1,
+            "training_seconds": 232.21181058883667
+          }
+        },
+        "42": {
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.18968348122405207,
+            "l2_component_mean_percent": 0.18981685244225255,
+            "l2_imag_percent": 0.17927048533277912,
+            "l2_intensity_percent": 0.2692707013737937,
+            "l2_real_percent": 0.20036321955172598,
+            "phase_rmse_rad": 0.00133620111321917
+          },
+          "source": "principal_current_run",
+          "training": {
+            "adam_epochs": 10684,
+            "adam_seconds": 244.61128664016724,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.0010653177741914988,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 1038,
+            "lbfgs_seconds": 46.21916961669922,
+            "num_layers": 5,
+            "physics_weight": 0.1,
+            "seed": 42,
+            "sign_x": 1,
+            "sign_y": 1,
+            "training_seconds": 290.83045625686646
+          }
+        },
+        "777": {
+          "metrics": {
+            "accepted_l2_below_5_percent": true,
+            "l2_complex_percent": 0.23116282491690612,
+            "l2_component_mean_percent": 0.22995524156719252,
+            "l2_imag_percent": 0.2460221550531817,
+            "l2_intensity_percent": 0.33746648709196203,
+            "l2_real_percent": 0.2138883280812033,
+            "phase_rmse_rad": 0.0015792357285331628
+          },
+          "source": "independent_cold_start",
+          "training": {
+            "adam_epochs": 12009,
+            "adam_seconds": 272.5126507282257,
+            "adam_stopped_early": true,
+            "best_adam_loss": 0.0008840712253004313,
+            "hidden_dim": 128,
+            "lbfgs_closure_evaluations": 1025,
+            "lbfgs_seconds": 43.025519371032715,
+            "num_layers": 5,
+            "physics_weight": 0.1,
+            "seed": 777,
+            "sign_x": 1,
+            "sign_y": 1,
+            "training_seconds": 315.5381700992584
+          }
+        }
+      },
+      "summary": {
+        "mean_component_l2_percent": 0.19273636376496026,
+        "n": 3,
+        "std_component_l2_percent": 0.029270092541236536,
+        "values_component_l2_percent": [
+          0.18981685244225255,
+          0.15843699728543564,
+          0.22995524156719252
+        ]
+      }
+    },
+    "ntk_diagnostic": {
+      "component": "real output and real PDE residual only",
+      "eigenvalues_data_top10": [
+        4938.8994140625,
+        2999.4853515625,
+        2081.40380859375,
+        1400.8092041015625,
+        534.7745361328125,
+        482.4407958984375,
+        292.41552734375,
+        221.913818359375,
+        84.62403106689453,
+        51.65609359741211
+      ],
+      "eigenvalues_physics_top10": [
+        7632785.0,
+        1689151.5,
+        785188.6875,
+        337147.21875,
+        286968.53125,
+        189228.421875,
+        93598.90625,
+        62648.80859375,
+        53894.8203125,
+        36894.85546875
+      ],
+      "limitation": "Local diagnostic; not a complete convergence guarantee.",
+      "max_eigenvalue_data": 4938.8994140625,
+      "max_eigenvalue_physics": 7632785.0,
+      "n_parameters": 66690,
+      "n_points_per_term": 80,
+      "producer_cell": "nb02-12-robustness",
+      "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+      "role": "derived_ntk_diagnostic",
+      "run_id": "nb02-20261002T161100Z",
+      "schema_version": 2,
+      "trace_data": 13147.0849609375,
+      "trace_physics": 11240930.0,
+      "trace_ratio_physics_over_data": 855.0131100087167
+    }
+  },
+  "role": "derived_validation_snapshot",
+  "run_id": "nb02-20261002T161100Z",
+  "schema_version": 4,
+  "scientific_cell_ids": [
+    "nb02-02-setup",
+    "nb02-04-configuration",
+    "nb02-06-helpers",
+    "nb02-08-main-training",
+    "nb02-10-evaluation",
+    "nb02-12-robustness"
+  ],
+  "scientific_source_sha256": "a53b3639326f636d531137fe3627b3fe760d84406979f2a8b3ce8540bfaafd58",
+  "source_hash_policy": "scientific_cells_separate_from_presentation",
+  "training": {
+    "adam_epochs": 10684,
+    "adam_seconds": 244.61128664016724,
+    "adam_stopped_early": true,
+    "best_adam_loss": 0.0010653177741914988,
+    "hidden_dim": 128,
+    "lbfgs_closure_evaluations": 1038,
+    "lbfgs_seconds": 46.21916961669922,
+    "num_layers": 5,
+    "physics_weight": 0.1,
+    "seed": 42,
+    "sign_x": 1,
+    "sign_y": 1,
+    "training_seconds": 290.83045625686646
+  },
+  "training_constraints": {
+    "boundary": "1200 rows; 300 per edge",
+    "interior": "3000 LHS points"
+  }
+}

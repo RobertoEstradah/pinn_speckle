@@ -1,0 +1,37 @@
+{
+  "architecture": {
+    "hidden_dim": 128,
+    "n_parameters": 50178,
+    "num_layers": 4
+  },
+  "comparison_main_component_l2_percent": 0.18981685244225255,
+  "metrics": {
+    "accepted_l2_below_5_percent": true,
+    "l2_complex_percent": 0.16351897141283978,
+    "l2_component_mean_percent": 0.16106391436863732,
+    "l2_imag_percent": 0.1255834441138396,
+    "l2_intensity_percent": 0.23623065759909978,
+    "l2_real_percent": 0.19654438462343507,
+    "phase_rmse_rad": 0.0011305036079208774
+  },
+  "producer_cell": "nb02-12-robustness",
+  "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+  "role": "derived_depth_ablation",
+  "run_id": "nb02-20261002T161100Z",
+  "schema_version": 2,
+  "training": {
+    "adam_epochs": 12696,
+    "adam_seconds": 235.52825927734375,
+    "adam_stopped_early": true,
+    "best_adam_loss": 0.000938667100854218,
+    "hidden_dim": 128,
+    "lbfgs_closure_evaluations": 1026,
+    "lbfgs_seconds": 41.22466421127319,
+    "num_layers": 4,
+    "physics_weight": 0.1,
+    "seed": 42,
+    "sign_x": 1,
+    "sign_y": 1,
+    "training_seconds": 276.75292348861694
+  }
+}

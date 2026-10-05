@@ -1,0 +1,93 @@
+{
+  "producer_cell": "nb02-12-robustness",
+  "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+  "results": {
+    "0.01": {
+      "metrics": {
+        "accepted_l2_below_5_percent": true,
+        "l2_complex_percent": 0.15944166607367224,
+        "l2_component_mean_percent": 0.15409294288614594,
+        "l2_imag_percent": 0.10644187658776817,
+        "l2_intensity_percent": 0.23898233421467974,
+        "l2_real_percent": 0.20174400918452373,
+        "phase_rmse_rad": 0.001054770156039254
+      },
+      "source": "independent_cold_start",
+      "status": "completed",
+      "training": {
+        "adam_epochs": 7057,
+        "adam_seconds": 205.35525608062744,
+        "adam_stopped_early": true,
+        "best_adam_loss": 7.557416392955929e-05,
+        "hidden_dim": 128,
+        "lbfgs_closure_evaluations": 436,
+        "lbfgs_seconds": 16.903316020965576,
+        "num_layers": 5,
+        "physics_weight": 0.01,
+        "seed": 42,
+        "sign_x": 1,
+        "sign_y": 1,
+        "training_seconds": 222.25857210159302
+      }
+    },
+    "0.1": {
+      "metrics": {
+        "accepted_l2_below_5_percent": true,
+        "l2_complex_percent": 0.18968348122405207,
+        "l2_component_mean_percent": 0.18981685244225255,
+        "l2_imag_percent": 0.17927048533277912,
+        "l2_intensity_percent": 0.2692707013737937,
+        "l2_real_percent": 0.20036321955172598,
+        "phase_rmse_rad": 0.00133620111321917
+      },
+      "source": "principal_current_run",
+      "status": "completed",
+      "training": {
+        "adam_epochs": 10684,
+        "adam_seconds": 244.61128664016724,
+        "adam_stopped_early": true,
+        "best_adam_loss": 0.0010653177741914988,
+        "hidden_dim": 128,
+        "lbfgs_closure_evaluations": 1038,
+        "lbfgs_seconds": 46.21916961669922,
+        "num_layers": 5,
+        "physics_weight": 0.1,
+        "seed": 42,
+        "sign_x": 1,
+        "sign_y": 1,
+        "training_seconds": 290.83045625686646
+      }
+    },
+    "1.0": {
+      "metrics": {
+        "accepted_l2_below_5_percent": true,
+        "l2_complex_percent": 3.2482121748782724,
+        "l2_component_mean_percent": 3.2461541229896445,
+        "l2_imag_percent": 2.9400563769598484,
+        "l2_intensity_percent": 4.45528007164378,
+        "l2_real_percent": 3.5522518690194413,
+        "phase_rmse_rad": 0.023488969472200836
+      },
+      "source": "independent_cold_start",
+      "status": "completed",
+      "training": {
+        "adam_epochs": 8380,
+        "adam_seconds": 193.01501369476318,
+        "adam_stopped_early": true,
+        "best_adam_loss": 0.3543289303779602,
+        "hidden_dim": 128,
+        "lbfgs_closure_evaluations": 1029,
+        "lbfgs_seconds": 43.487462520599365,
+        "num_layers": 5,
+        "physics_weight": 1.0,
+        "seed": 42,
+        "sign_x": 1,
+        "sign_y": 1,
+        "training_seconds": 236.50247621536255
+      }
+    }
+  },
+  "role": "derived_lambda_ablation",
+  "run_id": "nb02-20261002T161100Z",
+  "schema_version": 2
+}

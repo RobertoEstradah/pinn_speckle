@@ -1,0 +1,205 @@
+{
+  "schema_version": 4,
+  "role": "derived_validation_snapshot",
+  "producer_notebook": "notebooks/01_validacion_helmholtz_1d_normalizada.ipynb",
+  "notebook_source_sha256": "5d54eff1d37acf6a4a00fa5a3819f59993cb25ce56537d4264b501bf80a67d8f",
+  "run_id": "nb01-20261002T093605Z",
+  "full_rebuild": {
+    "started_at_utc": "2026-10-02T09:36:05.967920+00:00",
+    "finished_at_utc": "2026-10-02T09:46:51.811867+00:00",
+    "duration_seconds": 645.843947,
+    "sequential_clean_kernel": true,
+    "mode": "FULL_REBUILD"
+  },
+  "physics": {
+    "equation": "d2E_dx2 + k^2 E = 0",
+    "domain": [
+      0.0,
+      1.0
+    ],
+    "solutions": {
+      "cosine": "cos(kx)",
+      "sine": "sin(kx)"
+    },
+    "independent_networks": true
+  },
+  "configuration": {
+    "seed": 42,
+    "k": 6.283185307179586,
+    "hidden_dim": 64,
+    "num_layers": 5,
+    "omega_0": 1.0,
+    "lambda_phys": 1.0,
+    "n_collocation": 2000,
+    "n_validation": 1000,
+    "adam_learning_rate": 0.001,
+    "adam_max_epochs": 15000,
+    "adam_stop_loss": 0.0001,
+    "lbfgs_learning_rate": 1.0,
+    "lbfgs_max_iter": 500,
+    "lbfgs_history_size": 50,
+    "l2_acceptance_percent": 5.0
+  },
+  "n_parameters_per_network": 16833,
+  "training_constraints": {
+    "x_known": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "n_collocation": 2000,
+    "sine_derivative_in_loss": false
+  },
+  "post_training_validation": {
+    "n_points": 1000,
+    "grid": "linspace(0,1,n_validation+2)[1:-1]",
+    "exact_overlap_with_training": 0,
+    "classification": "independent_disjoint_grid"
+  },
+  "metrics": {
+    "cosine": {
+      "l2_relative_percent": 0.000981997743211912,
+      "rmse": 6.940299878627775e-06,
+      "mae": 6.274836435086181e-06,
+      "max_abs": 1.1495386595616885e-05,
+      "r2": 0.9999999999035678,
+      "pearson": 0.9999999999699823,
+      "residual_rms": 0.001648284111203321,
+      "residual_max": 0.00388336181640625,
+      "residual_relative": 5.907547165920555e-05
+    },
+    "sine": {
+      "l2_relative_percent": 0.003574414481793118,
+      "rmse": 2.5287561494280166e-05,
+      "mae": 2.2767461577194862e-05,
+      "max_abs": 3.72201876265299e-05,
+      "r2": 0.9999999987223561,
+      "pearson": 0.9999999999652535,
+      "residual_rms": 0.0012499787314087015,
+      "residual_max": 0.00249481201171875,
+      "residual_relative": 4.475648162888718e-05
+    }
+  },
+  "sine_cauchy_check": {
+    "E_at_zero": 9.46875661611557e-06,
+    "dE_dx_at_zero": 6.282968044281006,
+    "exact_dE_dx_at_zero": 6.283185307179586,
+    "derivative_abs_error": 0.00021726289858037262,
+    "classification": "post_training_independent_derivative_check",
+    "note": "E(0) sí fue restricción de entrenamiento; la derivada no estuvo en la loss."
+  },
+  "acceptance": {
+    "cosine": true,
+    "sine": true
+  },
+  "robustness": {
+    "omega0_sweep": [
+      {
+        "omega_0": 1.0,
+        "adam_epochs": 3000,
+        "final_loss": 0.2636585235595703,
+        "l2_relative_percent": 62.56435688795852,
+        "status": "completed"
+      },
+      {
+        "omega_0": 5.0,
+        "adam_epochs": 3000,
+        "final_loss": 0.6935875415802002,
+        "l2_relative_percent": 51.99223374766188,
+        "status": "completed"
+      },
+      {
+        "omega_0": 15.0,
+        "adam_epochs": 3000,
+        "final_loss": 0.44935956597328186,
+        "l2_relative_percent": 82.91210571355715,
+        "status": "completed"
+      },
+      {
+        "omega_0": 30.0,
+        "adam_epochs": 3000,
+        "final_loss": 0.6029604077339172,
+        "l2_relative_percent": 100.09742151397509,
+        "status": "completed"
+      }
+    ],
+    "depth_ablation_4_layers": {
+      "num_layers": 4,
+      "hidden_dim": 64,
+      "omega_0": 1.0,
+      "n_parameters": 12673,
+      "l2_relative_percent": 0.0035545880147186864,
+      "adam_epochs": 15000,
+      "lbfgs_closure_evaluations": 84,
+      "status": "completed"
+    }
+  },
+  "training_history": {
+    "path": "results/nb01/training_history.json",
+    "sha256": "091435a9834138bf40774a62ccf0b6e07a7983df99610056c36bfc27247d31b9",
+    "history_type": "full_training_log",
+    "full_epoch_history_available": true
+  },
+  "checkpoints": {
+    "cosine": {
+      "path": "results/nb01/models/nb01_helmholtz1d_normalizado_gpu.pt",
+      "sha256": "7e239d9b7adb89d95ee2691006b8ee60f33eb17063d6a9ebaf8d7d571687f627"
+    },
+    "sine": {
+      "path": "results/nb01/models/nb01_helmholtz1d_seno_normalizado_gpu.pt",
+      "sha256": "f3fd54e978066eac54c1d07cc504e9cc22525f62474f7b353c1857147c9760b0"
+    }
+  },
+  "figures": [
+    "results/nb01/figures/metricas_adicionales_1d_normalizado.png",
+    "results/nb01/figures/metricas_adicionales_1d_seno_normalizado.png",
+    "results/nb01/figures/resultados_pinn_1d_normalizado.png",
+    "results/nb01/figures/resultados_pinn_1d_seno_normalizado.png"
+  ],
+  "environment": {
+    "python": "3.14.0",
+    "pytorch": "2.11.0+cu128",
+    "cuda_available": true,
+    "cuda_runtime": "12.8",
+    "cudnn": 91900,
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "deterministic_algorithms": true,
+    "cudnn_deterministic": true,
+    "cudnn_benchmark": false,
+    "cublas_workspace_config": ":4096:8"
+  },
+  "historical_comparison": {
+    "reference": {
+      "provenance": "validation_summary.json histórico; commits 07ebc59/b2a9561",
+      "cosine_l2_relative_percent": 0.005517248995602131,
+      "sine_l2_relative_percent": 0.003090077778324485
+    },
+    "cosine_l2_delta_percent_points": -0.004535251252390219,
+    "sine_l2_delta_percent_points": 0.0004843367034686333,
+    "interpretation": "comparación informativa; los valores nuevos no se fuerzan a coincidir"
+  },
+  "provenance_assessment": "demonstrated",
+  "scientific_source_sha256": "a2ea7a9d3f05c58dc6af6300157533a67be54a969296643d5179e10c25158a22",
+  "source_hash_policy": "scientific_cells_separate_from_presentation",
+  "scientific_cell_ids": [
+    "nb01-02-setup",
+    "nb01-05-config",
+    "nb01-07-data",
+    "nb01-09-training",
+    "nb01-11-evaluation",
+    "nb01-15-robustness"
+  ],
+  "presentation_only_cell_ids": [
+    "nb01-13-figures"
+  ],
+  "provenance_migration": {
+    "baseline_commit": "5a0a9ea73caf155252d833220b41360ba76a8e2a",
+    "legacy_full_source_sha256": "5d54eff1d37acf6a4a00fa5a3819f59993cb25ce56537d4264b501bf80a67d8f",
+    "scientific_equivalence": "demonstrated",
+    "reason": "revisión visual sin cambios en cálculo científico"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "producer_cell": "nb02-12-robustness",
+  "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+  "role": "derived_multiseed_results",
+  "run_id": "nb02-20261002T161100Z",
+  "schema_version": 2,
+  "seeds": {
+    "123": {
+      "metrics": {
+        "accepted_l2_below_5_percent": true,
+        "l2_complex_percent": 0.16412949028299312,
+        "l2_component_mean_percent": 0.15843699728543564,
+        "l2_imag_percent": 0.10870570492411351,
+        "l2_intensity_percent": 0.26152019137545335,
+        "l2_real_percent": 0.20816828964675782,
+        "phase_rmse_rad": 0.0009932297701870452
+      },
+      "source": "independent_cold_start",
+      "training": {
+        "adam_epochs": 8715,
+        "adam_seconds": 200.4019694328308,
+        "adam_stopped_early": true,
+        "best_adam_loss": 0.0014948335010558367,
+        "hidden_dim": 128,
+        "lbfgs_closure_evaluations": 652,
+        "lbfgs_seconds": 31.80984115600586,
+        "num_layers": 5,
+        "physics_weight": 0.1,
+        "seed": 123,
+        "sign_x": 1,
+        "sign_y": 1,
+        "training_seconds": 232.21181058883667
+      }
+    },
+    "42": {
+      "metrics": {
+        "accepted_l2_below_5_percent": true,
+        "l2_complex_percent": 0.18968348122405207,
+        "l2_component_mean_percent": 0.18981685244225255,
+        "l2_imag_percent": 0.17927048533277912,
+        "l2_intensity_percent": 0.2692707013737937,
+        "l2_real_percent": 0.20036321955172598,
+        "phase_rmse_rad": 0.00133620111321917
+      },
+      "source": "principal_current_run",
+      "training": {
+        "adam_epochs": 10684,
+        "adam_seconds": 244.61128664016724,
+        "adam_stopped_early": true,
+        "best_adam_loss": 0.0010653177741914988,
+        "hidden_dim": 128,
+        "lbfgs_closure_evaluations": 1038,
+        "lbfgs_seconds": 46.21916961669922,
+        "num_layers": 5,
+        "physics_weight": 0.1,
+        "seed": 42,
+        "sign_x": 1,
+        "sign_y": 1,
+        "training_seconds": 290.83045625686646
+      }
+    },
+    "777": {
+      "metrics": {
+        "accepted_l2_below_5_percent": true,
+        "l2_complex_percent": 0.23116282491690612,
+        "l2_component_mean_percent": 0.22995524156719252,
+        "l2_imag_percent": 0.2460221550531817,
+        "l2_intensity_percent": 0.33746648709196203,
+        "l2_real_percent": 0.2138883280812033,
+        "phase_rmse_rad": 0.0015792357285331628
+      },
+      "source": "independent_cold_start",
+      "training": {
+        "adam_epochs": 12009,
+        "adam_seconds": 272.5126507282257,
+        "adam_stopped_early": true,
+        "best_adam_loss": 0.0008840712253004313,
+        "hidden_dim": 128,
+        "lbfgs_closure_evaluations": 1025,
+        "lbfgs_seconds": 43.025519371032715,
+        "num_layers": 5,
+        "physics_weight": 0.1,
+        "seed": 777,
+        "sign_x": 1,
+        "sign_y": 1,
+        "training_seconds": 315.5381700992584
+      }
+    }
+  },
+  "summary": {
+    "mean_component_l2_percent": 0.19273636376496026,
+    "n": 3,
+    "std_component_l2_percent": 0.029270092541236536,
+    "values_component_l2_percent": [
+      0.18981685244225255,
+      0.15843699728543564,
+      0.22995524156719252
+    ]
+  }
+}

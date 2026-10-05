@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "role": "derived_global_validation_snapshot",
+  "producer_notebook": "notebooks/02b_validacion_puente_arquitectura_modal_nb03.ipynb",
+  "run_id": "nb02b-20261004T191736Z",
+  "notebook_source_sha256": "238b465f701ec991f67f923a2634b2b0a82fa0d753f7b29ef8b2611c429c5278",
+  "module_hashes": {
+    "src/modal/modal_pinn_siren.py": "a532733c4374198f8b53501ec2f6d86f82f903e5465aa6cfa0bceab123e02c03",
+    "src/models.py": "6a8babebf9e1d3efc808185aed45bf8bbf16de9b3640f70637a50f67339c03a5"
+  },
+  "configuration": {
+    "schema_version": 1,
+    "time_convention": "exp(-i*omega*t)",
+    "channel_order": "interleaved_real_imag_per_mode",
+    "dtype": "float32",
+    "modal_architecture": {
+      "class": "src.modal.modal_pinn_siren.ModalSiren",
+      "hidden_dim": 128,
+      "num_layers": 4,
+      "first_omega": 1.0,
+      "hidden_omega": 1.0
+    },
+    "basis": {
+      "k": 6.283185307179586,
+      "kx": 3.7699111843077517,
+      "kz": 5.026548245743669,
+      "distance": 1.0,
+      "seed": 2026,
+      "n_z_train": 512,
+      "n_z_eval": 1001,
+      "n_x_eval": 256,
+      "lbfgs_outer_stages": 80,
+      "lbfgs_inner_max_iter": 20
+    },
+    "bridge": {
+      "k": 6.283185307179586,
+      "width": 20.0,
+      "distance": 1.0,
+      "seed": 2026,
+      "case_counts": [
+        1,
+        5,
+        41
+      ],
+      "n_z_eval": 301,
+      "n_x_eval": 512,
+      "stages": [
+        {
+          "name": "adam_initial",
+          "optimizer": "adam",
+          "epochs": 2500,
+          "n_z_train": 256,
+          "learning_rate": 0.0002
+        },
+        {
+          "name": "adam_refinement",
+          "optimizer": "adam",
+          "epochs": 6000,
+          "n_z_train": 256,
+          "learning_rate": 5e-05
+        },
+        {
+          "name": "lbfgs_refinement",
+          "optimizer": "lbfgs",
+          "outer_stages": 80,
+          "inner_max_iter": 20,
+          "n_z_train": 512
+        }
+      ]
+    },
+    "bvp": {
+      "seed": 42,
+      "q": 1.625,
+      "modes": [
+        -1,
+        0,
+        1
+      ],
+      "n_boundary_per_side": 300,
+      "n_collocation": 3000,
+      "physics_weight": 0.1,
+      "direct_adam_epochs": 8000,
+      "direct_lbfgs_max_iter": 500,
+      "modal_adam_epochs": 5000,
+      "n_eval": 256
+    },
+    "acceptance": {
+      "relative_l2": 0.05,
+      "coherence": 0.9,
+      "normalized_residual_rmse": 0.05,
+      "hard_cauchy": 1e-05
+    }
+  },
+  "environment": {
+    "python": "3.14.0",
+    "pytorch": "2.11.0+cu128",
+    "numpy": "2.3.4",
+    "cuda_available": true,
+    "cuda_runtime": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+    "device": "cuda",
+    "dtype": "float32",
+    "deterministic_algorithms": false,
+    "cudnn_deterministic": false,
+    "cudnn_benchmark": false
+  },
+  "git": {
+    "head": "488b1026921a10fe7a47d9c8861337d76d3b3252",
+    "scoped_status_during_run": [
+      " M notebooks/02b_validacion_puente_arquitectura_modal_nb03.ipynb",
+      " D results/nb02b/bien_vs_mal_puesto/README.md",
+      " M results/nb02b/bien_vs_mal_puesto/nb02b_bvp_vs_cauchy.json",
+      " M results/nb02b/figures/nb02b_basis_cosine.png",
+      " M results/nb02b/figures/nb02b_basis_general.png",
+      " M results/nb02b/figures/nb02b_basis_sine.png",
+      " M results/nb02b/figures/nb02b_basis_summary.png",
+      " M results/nb02b/figures/nb02b_bridge_modes_01.png",
+      " M results/nb02b/figures/nb02b_bridge_modes_05.png",
+      " M results/nb02b/figures/nb02b_bridge_modes_41.png",
+      " M results/nb02b/figures/nb02b_bridge_summary.png",
+      " M results/nb02b/modal_basis/summary.json",
+      " M results/nb02b/modal_bridge/summary.json",
+      "?? results/nb02b/bien_vs_mal_puesto/A_dirichlet_directa_training_history.json",
+      "?? results/nb02b/bien_vs_mal_puesto/B_cauchy_directa_training_history.json",
+      "?? results/nb02b/bien_vs_mal_puesto/C_cauchy_modal_training_history.json",
+      "?? results/nb02b/figures/nb02b_bvp_cauchy_modal.png",
+      "?? results/nb02b/modal_basis/cosine_training_history.json",
+      "?? results/nb02b/modal_basis/general_training_history.json",
+      "?? results/nb02b/modal_basis/sine_training_history.json",
+      "?? results/nb02b/modal_bridge/case_01_training_history.json",
+      "?? results/nb02b/modal_bridge/case_05_training_history.json",
+      "?? results/nb02b/modal_bridge/case_41_training_history.json"
+    ]
+  },
+  "full_rebuild": {
+    "started_at": "2026-10-04T13:17:36.697973-06:00",
+    "finished_at": "2026-10-04T13:49:34.371556-06:00",
+    "duration_seconds": 1917.673583,
+    "sequential_clean_kernel": true
+  },
+  "summaries": {
+    "basis": "modal_basis/summary.json",
+    "bridge": "modal_bridge/summary.json",
+    "bvp": "bien_vs_mal_puesto/nb02b_bvp_vs_cauchy.json"
+  },
+  "artifact_hashes": {
+    "bien_vs_mal_puesto/A_dirichlet_directa.npz": "3f613d0971e5a745c7f35f9309306eb91f212d9bc9ad2cefc005146a97a7bb4f",
+    "bien_vs_mal_puesto/A_dirichlet_directa.pt": "5cc1c3a4f3221c8b4561fa1f601da55cadeed6ffc92a2904394bf6c1d4e82d67",
+    "bien_vs_mal_puesto/A_dirichlet_directa_training_history.json": "1ecf1dccfeb34c781272899f76035fb9520cf01c225c202e76b773843736eec8",
+    "bien_vs_mal_puesto/B_cauchy_directa.npz": "47f63008ddf88babd08bf9fda436ebffff809c0970105b3f8e546aada9f0f42e",
+    "bien_vs_mal_puesto/B_cauchy_directa.pt": "a74428b494447ae453a53edf20f0a47719aff5a9c087b05d86e153bac6cbd014",
+    "bien_vs_mal_puesto/B_cauchy_directa_training_history.json": "28f7ee44a5f53ef756d010c79466a8bbd0b087be7bae064a3ec222f79bbd1139",
+    "bien_vs_mal_puesto/C_cauchy_modal.npz": "fc7fd9ea804c431162d82eee5b43a4c11ffa49c9888aeefb0049af426705304d",
+    "bien_vs_mal_puesto/C_cauchy_modal.pt": "d618061769627c139c8c8523dc4ccd2390cb6fe9ffc294bfe8511e23e9064296",
+    "bien_vs_mal_puesto/C_cauchy_modal_training_history.json": "dd811c9c1591c19c49461983bb0f8202c500efe4c08ee35daac92e581441ad41",
+    "bien_vs_mal_puesto/nb02b_bvp_vs_cauchy.json": "47905e0e1ed9c7afad5676c3229036ee202ab3f75d0e2d3f3d37e2b08b6ee4c1",
+    "modal_basis/cosine.npz": "475029f84d269bf9e53034edefe9d8ec2fae106f3bd6af526fc4402a24426ef2",
+    "modal_basis/cosine_training_history.json": "8771dda8889af0f3c47265623835ff2223863b92d4e0fa79f1808aa3faeb3ebc",
+    "modal_basis/general.npz": "e4f0b8ac3309cc3012868e7673ce0ddb439ed0379464df5e0cfb32bba541296d",
+    "modal_basis/general_training_history.json": "0351dd10254cc2f72d0b7bf782676a1b96eb28617d4159a92fec3a97871eae5d",
+    "modal_basis/models/cosine.pt": "e9b5102f7dcb38394f80dc9f54c73b34700f0b60df95c7b4db4aaa0d804bf57c",
+    "modal_basis/models/general.pt": "d02346181c488b06a7bd19c382bb342ceae4c5e2a7dd9bd509bf2201edec2a55",
+    "modal_basis/models/sine.pt": "d6b053eac3d1438f5e6e6aa30fa68e025ec443f9accff7298ed0fed035190755",
+    "modal_basis/sine.npz": "2a1f65d51d6ba243788ce8535ec0b23f3ebc8cdf0d365164210268386b3b1b1f",
+    "modal_basis/sine_training_history.json": "322c761fed7294700e72093534895f293c7bb7f462dbeed118bb20600ac04cc3",
+    "modal_basis/summary.json": "989e185ce142ac2d283a93c1b7facf935f3863004e15d86d17a7db84f9cdc5d5",
+    "modal_bridge/case_01_modes.npz": "216e3cd7fae8f493172e2b788fcdf9e4b34c21a2cbba7247132e3395850abc82",
+    "modal_bridge/case_01_training_history.json": "58a42327d8212916f21101b1e491d7c247c9a3ac1130a79dcf7e1c67a258dc5e",
+    "modal_bridge/case_05_modes.npz": "fd149abf6a7087fe5f1d52df0f180f5073cbef460a37ce46986e23196bf38d10",
+    "modal_bridge/case_05_training_history.json": "23bcf8a271321bb1f6517f0962a8f524f261319bfd2ff0c9e1c5cdf7cfb62fff",
+    "modal_bridge/case_41_modes.npz": "4f810bf54934da057e63e4f2b698c5adf37eb309131136aecd265671d27a690e",
+    "modal_bridge/case_41_training_history.json": "b2b77054814cd04d80be18940c92eaa2319f383fc70fecffb9bd7b6f848f4515",
+    "modal_bridge/models/case_01_modes.pt": "64e5d83b8f3e3b69e4faf7753d0cd350ed2ab293e3d83064454fa9613416d6ac",
+    "modal_bridge/models/case_05_modes.pt": "068b2084b9405a5e34c5dfddd0bbc0cfa6ea9685d05e5708332521653926e1d9",
+    "modal_bridge/models/case_41_modes.pt": "a375696758f07367a533c6ec287b42cd99a1db96040e0792f30ee4f468a97ed2",
+    "modal_bridge/summary.json": "ad3fff3caf688acbe3575a27ab1697cb7b0452f58458b68fb0dfd7b61e923b1c"
+  },
+  "expected_nb02b": [
+    "bien_vs_mal_puesto/A_dirichlet_directa.npz",
+    "bien_vs_mal_puesto/A_dirichlet_directa.pt",
+    "bien_vs_mal_puesto/A_dirichlet_directa_training_history.json",
+    "bien_vs_mal_puesto/B_cauchy_directa.npz",
+    "bien_vs_mal_puesto/B_cauchy_directa.pt",
+    "bien_vs_mal_puesto/B_cauchy_directa_training_history.json",
+    "bien_vs_mal_puesto/C_cauchy_modal.npz",
+    "bien_vs_mal_puesto/C_cauchy_modal.pt",
+    "bien_vs_mal_puesto/C_cauchy_modal_training_history.json",
+    "bien_vs_mal_puesto/nb02b_bvp_vs_cauchy.json",
+    "figures/nb02b_basis_cosine.png",
+    "figures/nb02b_basis_general.png",
+    "figures/nb02b_basis_sine.png",
+    "figures/nb02b_basis_summary.png",
+    "figures/nb02b_bridge_modes_01.png",
+    "figures/nb02b_bridge_modes_05.png",
+    "figures/nb02b_bridge_modes_41.png",
+    "figures/nb02b_bridge_summary.png",
+    "figures/nb02b_bvp_cauchy_modal.png",
+    "modal_basis/cosine.npz",
+    "modal_basis/cosine_training_history.json",
+    "modal_basis/general.npz",
+    "modal_basis/general_training_history.json",
+    "modal_basis/models/cosine.pt",
+    "modal_basis/models/general.pt",
+    "modal_basis/models/sine.pt",
+    "modal_basis/sine.npz",
+    "modal_basis/sine_training_history.json",
+    "modal_basis/summary.json",
+    "modal_bridge/case_01_modes.npz",
+    "modal_bridge/case_01_training_history.json",
+    "modal_bridge/case_05_modes.npz",
+    "modal_bridge/case_05_training_history.json",
+    "modal_bridge/case_41_modes.npz",
+    "modal_bridge/case_41_training_history.json",
+    "modal_bridge/models/case_01_modes.pt",
+    "modal_bridge/models/case_05_modes.pt",
+    "modal_bridge/models/case_41_modes.pt",
+    "modal_bridge/summary.json",
+    "validation_summary.json"
+  ],
+  "acceptance": {
+    "basis": true,
+    "bridge": true,
+    "load_only_verified": true
+  },
+  "historical_reference": {
+    "available_scopes": [
+      "basis",
+      "bridge",
+      "bvp"
+    ],
+    "metrics_before_full_rebuild": {
+      "basis_coefficient_relative_l2": {
+        "cosine": 4.964663264921034e-05,
+        "sine": 7.913823077180855e-05,
+        "general": 8.286574773274536e-05
+      },
+      "bridge_global_complex_relative_l2": {
+        "1": 0.00014924710841599437,
+        "5": 0.0001117262047230654,
+        "41": 7.77947491973847e-05
+      },
+      "bvp_l2_relative": {
+        "A_dirichlet_directa": 0.0007695408953707373,
+        "B_cauchy_directa": 0.4513538210458382,
+        "C_cauchy_modal": 0.0015537398276431673
+      }
+    },
+    "note": "Historical values were retained only for comparison and were not used as training targets."
+  },
+  "scope": {
+    "demonstrated": [
+      "modal basis",
+      "hard Cauchy",
+      "controlled 1, 5 and 41 mode scaling",
+      "same-data BVP versus direct and modal Cauchy comparison"
+    ],
+    "not_demonstrated": [
+      "universal Cauchy stability",
+      "arbitrary mode counts",
+      "evanescent bridge modes",
+      "complete speckle statistics"
+    ]
+  }
+}

@@ -1,0 +1,292 @@
+{
+  "experiment": "NB02B analytic bridge for NB03 modal PINN-SIREN",
+  "purpose": "Validar la arquitectura exacta de NB03 con soluciones complejas multimodales conocidas antes de usar una pantalla aleatoria.",
+  "physics": {
+    "coordinates": "Cartesian normalized (x_tilde, z_tilde)",
+    "equation": "d2E/dx2 + d2E/dz2 + (2*pi)^2 E = 0",
+    "domain_x_lambda": [
+      -10.0,
+      10.0
+    ],
+    "domain_z_lambda": [
+      0.0,
+      1.0
+    ],
+    "exact_field": "sum_m A_m exp(i*(kx_m*x+kz_m*z))",
+    "interior_training_labels": 0,
+    "hard_cauchy": "a_m(0), a_m'(0)=i*kz_m*a_m(0)"
+  },
+  "architecture": {
+    "source": "src/modal/modal_pinn_siren.py",
+    "hidden_dim": 128,
+    "num_hidden_layers": 4,
+    "first_omega": 1.0,
+    "hidden_omega": 1.0
+  },
+  "training": {
+    "seed": 2026,
+    "stages": [
+      {
+        "name": "adam_initial",
+        "optimizer": "adam",
+        "epochs": 2500,
+        "n_z_train": 256,
+        "learning_rate": 0.0002
+      },
+      {
+        "name": "adam_refinement",
+        "optimizer": "adam",
+        "epochs": 6000,
+        "n_z_train": 256,
+        "learning_rate": 5e-05
+      },
+      {
+        "name": "lbfgs_refinement",
+        "optimizer": "lbfgs",
+        "outer_stages": 80,
+        "inner_max_iter": 20,
+        "n_z_train": 512
+      }
+    ],
+    "external_resume": false,
+    "continuation_within_run": true,
+    "stage_wall_seconds": {
+      "adam_initial": 324.0239634513855,
+      "adam_refinement": 775.1211242675781,
+      "lbfgs_refinement": 121.72367787361145
+    }
+  },
+  "acceptance_criteria": {
+    "global_complex_relative_l2": "< 0.05",
+    "target_complex_relative_l2": "< 0.05",
+    "target_complex_coherence": "> 0.90",
+    "normalized_helmholtz_residual_rmse": "< 0.05"
+  },
+  "cases": [
+    {
+      "n_complex_modes": 1,
+      "mode_indices": [
+        0
+      ],
+      "training_seconds": 391.9947407245636,
+      "stage_epochs": 80,
+      "cumulative_recorded_epochs": 8580,
+      "resumed_from": null,
+      "optimizer": "lbfgs",
+      "best_training_loss": 1.3962031744085834e-06,
+      "metrics": {
+        "global_complex_relative_l2": 0.00014924710841599437,
+        "target_complex_relative_l2": 3.0267189318306613e-05,
+        "global_complex_coherence": 0.9999999910188191,
+        "target_complex_coherence": 0.9999999999999998,
+        "global_intensity_relative_l2": 0.00020051851502710805,
+        "target_intensity_relative_l2": 7.391892055119695e-06,
+        "global_phase_mae_rad": 9.643194716206663e-05,
+        "target_phase_mae_rad": 3.004062994321841e-05,
+        "max_l2_over_z": 0.0003113400965963523,
+        "helmholtz_field_residual_normalized_rmse": 0.0017360853888255953,
+        "helmholtz_field_residual_normalized_max_abs": 0.008104154709967823,
+        "hard_cauchy_coefficient_rmse": 0.0,
+        "hard_cauchy_derivative_rmse": 1.7484556025237907e-07
+      },
+      "acceptance": {
+        "global_complex_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "target_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "accepted": true
+      },
+      "continuation_within_run": true,
+      "external_resume": false,
+      "checkpoint": "modal_bridge/models/case_01_modes.pt",
+      "npz": "modal_bridge/case_01_modes.npz",
+      "history": "modal_bridge/case_01_training_history.json",
+      "artifact_hashes": {
+        "checkpoint": "64e5d83b8f3e3b69e4faf7753d0cd350ed2ab293e3d83064454fa9613416d6ac",
+        "npz": "216e3cd7fae8f493172e2b788fcdf9e4b34c21a2cbba7247132e3395850abc82",
+        "history": "58a42327d8212916f21101b1e491d7c247c9a3ac1130a79dcf7e1c67a258dc5e"
+      }
+    },
+    {
+      "n_complex_modes": 5,
+      "mode_indices": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "training_seconds": 400.82406306266785,
+      "stage_epochs": 80,
+      "cumulative_recorded_epochs": 8580,
+      "resumed_from": null,
+      "optimizer": "lbfgs",
+      "best_training_loss": 1.2277996574994177e-06,
+      "metrics": {
+        "global_complex_relative_l2": 0.0001117262047230654,
+        "target_complex_relative_l2": 6.97728133458393e-05,
+        "global_complex_coherence": 0.9999999947541607,
+        "target_complex_coherence": 0.9999999985891509,
+        "global_intensity_relative_l2": 0.000131892195346251,
+        "target_intensity_relative_l2": 4.006766872136557e-05,
+        "global_phase_mae_rad": 7.878220173487688e-05,
+        "target_phase_mae_rad": 6.814601191685262e-05,
+        "max_l2_over_z": 0.0002073503569812399,
+        "helmholtz_field_residual_normalized_rmse": 0.001553337858559873,
+        "helmholtz_field_residual_normalized_max_abs": 0.011833220792793569,
+        "hard_cauchy_coefficient_rmse": 8.851339251846761e-09,
+        "hard_cauchy_derivative_rmse": 6.676046125040123e-08
+      },
+      "acceptance": {
+        "global_complex_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "target_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "accepted": true
+      },
+      "continuation_within_run": true,
+      "external_resume": false,
+      "checkpoint": "modal_bridge/models/case_05_modes.pt",
+      "npz": "modal_bridge/case_05_modes.npz",
+      "history": "modal_bridge/case_05_training_history.json",
+      "artifact_hashes": {
+        "checkpoint": "068b2084b9405a5e34c5dfddd0bbc0cfa6ea9685d05e5708332521653926e1d9",
+        "npz": "fd149abf6a7087fe5f1d52df0f180f5073cbef460a37ce46986e23196bf38d10",
+        "history": "23bcf8a271321bb1f6517f0962a8f524f261319bfd2ff0c9e1c5cdf7cfb62fff"
+      }
+    },
+    {
+      "n_complex_modes": 41,
+      "mode_indices": [
+        -20,
+        -19,
+        -18,
+        -17,
+        -16,
+        -15,
+        -14,
+        -13,
+        -12,
+        -11,
+        -10,
+        -9,
+        -8,
+        -7,
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "training_seconds": 419.6762399673462,
+      "stage_epochs": 80,
+      "cumulative_recorded_epochs": 8580,
+      "resumed_from": null,
+      "optimizer": "lbfgs",
+      "best_training_loss": 6.050353249520413e-07,
+      "metrics": {
+        "global_complex_relative_l2": 7.77947491973847e-05,
+        "target_complex_relative_l2": 7.337518927284591e-05,
+        "global_complex_coherence": 0.9999999970345055,
+        "target_complex_coherence": 0.9999999979920048,
+        "global_intensity_relative_l2": 8.331385879954349e-05,
+        "target_intensity_relative_l2": 9.500075690522778e-05,
+        "global_phase_mae_rad": 6.395232836208444e-05,
+        "target_phase_mae_rad": 6.237050717850098e-05,
+        "max_l2_over_z": 0.0001146620575581972,
+        "helmholtz_field_residual_normalized_rmse": 0.0013211984783185926,
+        "helmholtz_field_residual_normalized_max_abs": 0.01303643860425909,
+        "hard_cauchy_coefficient_rmse": 3.9727042247367306e-09,
+        "hard_cauchy_derivative_rmse": 2.4838062854210745e-08
+      },
+      "acceptance": {
+        "global_complex_l2_below_5_percent": true,
+        "target_complex_l2_below_5_percent": true,
+        "target_coherence_above_0_90": true,
+        "normalized_residual_rmse_below_0_05": true,
+        "accepted": true
+      },
+      "continuation_within_run": true,
+      "external_resume": false,
+      "checkpoint": "modal_bridge/models/case_41_modes.pt",
+      "npz": "modal_bridge/case_41_modes.npz",
+      "history": "modal_bridge/case_41_training_history.json",
+      "artifact_hashes": {
+        "checkpoint": "a375696758f07367a533c6ec287b42cd99a1db96040e0792f30ee4f468a97ed2",
+        "npz": "4f810bf54934da057e63e4f2b698c5adf37eb309131136aecd265671d27a690e",
+        "history": "b2b77054814cd04d80be18940c92eaa2319f383fc70fecffb9bd7b6f848f4515"
+      }
+    }
+  ],
+  "all_cases_accepted": true,
+  "schema_version": 2,
+  "role": "modal_bridge_validation_snapshot",
+  "producer_notebook": "notebooks/02b_validacion_puente_arquitectura_modal_nb03.ipynb",
+  "producer_cell": "nb02b-08-run-basis-bridge",
+  "run_id": "nb02b-20261004T191736Z",
+  "shared_module": {
+    "path": "src/modal/modal_pinn_siren.py",
+    "sha256": "a532733c4374198f8b53501ec2f6d86f82f903e5465aa6cfa0bceab123e02c03"
+  },
+  "configuration": {
+    "k": 6.283185307179586,
+    "width": 20.0,
+    "distance": 1.0,
+    "seed": 2026,
+    "case_counts": [
+      1,
+      5,
+      41
+    ],
+    "n_z_eval": 301,
+    "n_x_eval": 512,
+    "stages": [
+      {
+        "name": "adam_initial",
+        "optimizer": "adam",
+        "epochs": 2500,
+        "n_z_train": 256,
+        "learning_rate": 0.0002
+      },
+      {
+        "name": "adam_refinement",
+        "optimizer": "adam",
+        "epochs": 6000,
+        "n_z_train": 256,
+        "learning_rate": 5e-05
+      },
+      {
+        "name": "lbfgs_refinement",
+        "optimizer": "lbfgs",
+        "outer_stages": 80,
+        "inner_max_iter": 20,
+        "n_z_train": 512
+      }
+    ]
+  },
+  "time_convention": "exp(-i*omega*t)",
+  "channel_order": "interleaved_real_imag_per_mode",
+  "scope_note": "Controlled scaling test through 41 modes; includes two cutoff modes at kz=0 and is not a universal stability result."
+}

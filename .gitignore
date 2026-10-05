@@ -1,0 +1,227 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+/build/
+*.so
+
+# ── Node.js ───────────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Office (archivos de bloqueo temporal) ─────────────────────────────────────
+~$*.pptx
+~$*.docx
+~$*.xlsx
+
+# ── Entornos virtuales ────────────────────────────────────────────────────────
+.env
+.venv
+env/
+venv/
+ENV/
+
+# ── Jupyter Notebook ──────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+*.ipynb_checkpoints
+
+# ── PyTorch — modelos entrenados ──────────────────────────────────────────────
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# ── Resultados grandes (usar Git LFS si es necesario) ────────────────────────
+results/figures/*.png
+results/figures/*.pdf
+results/metrics/*.csv
+
+# ── MacOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Windows ───────────────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── VS Code ───────────────────────────────────────────────────────────────────
+.vscode/
+*.code-workspace
+
+# ── Datos sensibles ───────────────────────────────────────────────────────────
+*.key
+*.secret
+.env.local
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Temporales ────────────────────────────────────────────────────────────────
+*.tmp
+*.bak
+*.swp
+tmp/
+temp/
+
+# ── LaTeX auxiliares (generados por compilación) ──────────────────────────────
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.run.xml
+*.xdv
+*-SAVE-ERROR
+paper/main.log
+
+# ── Memoria y registros locales de sesión ────────────────────────────────────
+# La operación compartida del proyecto se documenta en PROJECT_GUIDELINES.md.
+MEMORY.md
+SESSION_REPORT.md
+explorations/
+
+
+# ── Logs de experimentos ──────────────────────────────────────────────────────
+results/**/*.txt
+results/.matplotlib_cache/
+
+# ── Evidencia cruda de NB03 importada desde la copia paralela (2026-09-15) ────
+# Los campos .npz y los pesos .pt de estos experimentos pesan ~570 MB. Se
+# conservan EN DISCO como evidencia y son regenerables desde la seccion final
+# de su notebook. Las metricas (.json), figuras (.png) y documentacion
+# (.md) de esas mismas carpetas SI se rastrean: son lo que la tesis cita.
+# Rama 3D (NB_3D_01 a NB_3D_03). Misma politica que las carpetas de arriba y
+# por el mismo motivo: sus .npz suman ~655 MB, con seis archivos de 90 MB cada
+# uno, y este repositorio es publico. Se conservan EN DISCO como evidencia y son
+# regenerables desde la seccion final de cada NB_3D_*. Los validation_summary.json,
+# las figuras y los notebooks SI se rastrean: son lo verificable.
+results/nb_3d_*/**/*.npz
+results/nb_3d_*/**/*.pt
+results/nb_3d_*/*.npz
+results/nb_3d_*/*.pt
+
+results/nb03_distance_pilot/**/*.npz
+results/nb03b/**/*.npz
+results/nb03c/**/*.npz
+results/nb03d/**/*.npz
+results/nb03e/**/*.npz
+results/nb03_distance_pilot/**/*.pt
+results/nb03_holdout/**/*.npz
+results/nb03_holdout/**/*.pt
+results/nb03_refinement/**/*.npz
+results/nb03_refinement/**/*.pt
+
+# ── Vista previa comercial de Born y Wolf (2026-09-15) ───────────────────────
+# Extracto de 99 paginas de "Principles of Optics" (Cambridge University Press),
+# generado por la plataforma de distribucion de la editorial como muestra de
+# venta. Se conserva EN DISCO para verificar las citas de born1999principles,
+# pero no se versiona: redistribuir contenido comercial fuera del canal del
+# titular en un repositorio publico es lo unico del lote sin defensa razonable.
+# El origen, la edicion y el DOI estan documentados en el _SOURCE.md contiguo.
+master_supporting_docs/supporting_papers/referencias/Born_Wolf_1999_Principles_of_Optics_Legal_Preview.pdf
+
+# ── Muestra oficial de Goodman 2.a ed. (SPIE, 2020) — 2026-09-15 ─────────────
+# Preliminares (creditos, indice, prefacio) de "Speckle Phenomena in Optics",
+# descargados de https://spie.org/samples/PM312.pdf. Llevan la nota "All rights
+# reserved. No part of this publication may be reproduced or distributed".
+# Mismo criterio que la vista previa de Born y Wolf: se conserva en disco para
+# consulta y se excluye del repositorio publico.
+master_supporting_docs/supporting_papers/referencias/Goodman_2020_SpecklePhenomena_2ed_SPIE_Muestra.pdf
+
+# NB02B: campos crudos del puente modal (~9.8 MB). Regenerables en <1 min con
+# FORCE_RETRAIN=True en notebooks/02b_...ipynb. Las metricas (summary.json) y
+# las figuras si se rastrean.
+results/nb02b/modal_bridge/*.npz
+
+# Cache de bytecode: nunca debe versionarse
+__pycache__/
+*.py[cod]
+
+# La sincronizacion desde la copia tecnica reintroduce campos crudos de
+# formulaciones ya abandonadas (retirados en e669708, ver results/README.md).
+# Se conservan en disco como evidencia; no vuelven al repositorio.
+results/nb03_pinn_reference_comparison_*.npz
+results/nb03_pinn_slabs_comparison_*.npz
+results/nb03_frequency_curriculum*.npz
+results/nb03_angular_spectrum_reference_z1_corr0.2*.npz
+results/nb03_angular_spectrum_reference_z1_corr0.3*.npz
+results/nb03_angular_spectrum_reference_z1_corr0.4*.npz
+results/nb03_angular_spectrum_reference_z1_corr0.5*.npz
+results/nb03_angular_spectrum_reference_z1_*_verif.npz
+results/nb03_modal_pinn_siren_*scaled*.npz
+results/nb03_modal_pinn_siren_smoke.npz
+
+# Metadatos del espejo de sincronizacion: no son evidencia del proyecto.
+.codex-sync/
+results/nb03_modal_pinn_siren_z1_modal1.npz
+
+# NB02B: campos crudos de la validacion de la base modal (~13 MB).
+# Se conservan en disco y se regeneran con el script experimental; las
+# metricas JSON y las figuras permanecen versionadas como evidencia.
+results/nb02b/modal_basis/*.npz
+
+# Ecuaciones renderizadas del .docx de ReDTIS: las regenera
+# herramientas/construye_redtis_docx.py y ademas van incrustadas en el .docx.
+paper/papers_plantillas/*/trabajo/ecuaciones/
+
+# ── Estructura de results/ (2026-09-27) ──────────────────────────────────────
+# Cada notebook escribe en results/<su_notebook>/; las pruebas van a
+# results/_exploracion/. Ni las pruebas ni el archivo se versionan: se
+# conservan en disco. explorations/ ya no se usa (su contenido esta en archive/).
+results/_exploracion/
+archive/
+
+# Arreglos numericos: fuera de git salvo los ocho pequenos que usan la tesis,
+# el verificador de cifras o el notebook 03 (unos 2.2 MB en total).
+*.npz
+!results/nb03/referencias/nb03_angular_spectrum_reference_z1_corr0.10.npz
+!results/nb03/barrido_omega0/nb03_modal_pinn_siren_z1_omega1.npz
+!results/nb03/barrido_omega0/nb03_modal_pinn_siren_z1_omega5.npz
+!results/nb03/barrido_omega0/nb03_modal_pinn_siren_z1_omega15.npz
+!results/nb03/barrido_omega0/nb03_modal_pinn_siren_z1_omega30.npz
+!results/nb03/nb03_modal_multiseed_z1_omega1_l2_curves.npz
+!results/nb03/historico_omega30/nb03_modal_multiseed_z1_l2_curves.npz
+!results/nb03/corridas/nb03_modal_pinn_siren_z1_screen42_omega1_finetune.npz
+
+# Documentos de apoyo: los PDF y PPTX se conservan en disco, no en el
+# repositorio publico. Sus _SOURCE.md si se versionan.
+master_supporting_docs/**/*.pdf
+master_supporting_docs/**/*.pptx
+
+# Resumen parcial de la validacion multidireccional: el script lo borra al
+# terminar bien; solo sobrevive si la corrida se interrumpio.
+results/**/validation_summary.partial.json
+
+# ── Artefactos de compilacion de los directorios fuente (29/09/2026) ─────────
+# El entregable de cada edicion vive en compilado/ con su nombre propio; el
+# main.pdf del directorio fuente lo regenera latexmk y duplicaba 11.2 MB en el
+# historial. Lo mismo con el indice y las listas de figuras y tablas.
+tesis/Tesis_Actual/main.pdf
+# tesis/fuente_base/main.pdf NO se ignora: esa edicion no tiene entregable en
+# compilado/, asi que su PDF compilado es la unica copia que existe.
+paper/fuente_validacion1D2D/main.pdf
+paper/papers_plantillas/*/fuente/main.pdf
+paper/papers_plantillas/*/fuente/*/main.pdf
+*.toc
+*.lof
+*.lot
+
+# ── Los seis .pt que un clon necesita para no estar roto (29/09/2026) ─────────
+# Los notebooks cargan en vez de reentrenar, asi que sin estos puntos de control
+# fallan en la primera celda de carga. Pesan 1 MB entre los seis; los otros 294
+# siguen fuera, igual que los campos crudos .npz.
+!results/nb01/models/nb01_helmholtz1d_normalizado_gpu.pt
+!results/nb01/models/nb01_helmholtz1d_seno_normalizado_gpu.pt
+!results/nb02/models/nb02_helmholtz2d_normalizado_gpu.pt
+!results/nb03/models/nb03_modal_pinn_siren_z1_screen42_omega1_finetune.pt
+!results/nb_3d_01/pinn_3d_siren_plane_wave.pt
+!results/nb_3d_03/models/physical_transfer_z1cm.pt

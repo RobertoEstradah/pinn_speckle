@@ -1,0 +1,40 @@
+{
+  "component": "real output and real PDE residual only",
+  "eigenvalues_data_top10": [
+    4938.8994140625,
+    2999.4853515625,
+    2081.40380859375,
+    1400.8092041015625,
+    534.7745361328125,
+    482.4407958984375,
+    292.41552734375,
+    221.913818359375,
+    84.62403106689453,
+    51.65609359741211
+  ],
+  "eigenvalues_physics_top10": [
+    7632785.0,
+    1689151.5,
+    785188.6875,
+    337147.21875,
+    286968.53125,
+    189228.421875,
+    93598.90625,
+    62648.80859375,
+    53894.8203125,
+    36894.85546875
+  ],
+  "limitation": "Local diagnostic; not a complete convergence guarantee.",
+  "max_eigenvalue_data": 4938.8994140625,
+  "max_eigenvalue_physics": 7632785.0,
+  "n_parameters": 66690,
+  "n_points_per_term": 80,
+  "producer_cell": "nb02-12-robustness",
+  "producer_notebook": "notebooks/02_validacion_helmholtz_2d_normalizada.ipynb",
+  "role": "derived_ntk_diagnostic",
+  "run_id": "nb02-20261002T161100Z",
+  "schema_version": 2,
+  "trace_data": 13147.0849609375,
+  "trace_physics": 11240930.0,
+  "trace_ratio_physics_over_data": 855.0131100087167
+}
